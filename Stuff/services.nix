@@ -12,11 +12,11 @@
       PIDFile = "/run/nbfc.pid";
     };
   };  
-  services.picom = {
-    enable = true;
-    fade = true;
-    shadow = true;
-    activeOpacity = 0.96;
-    inactiveOpacity = 0.86;
-  };
+ # services.picom = {
+ #   enable = true;
+ #   fade = true;
+ #   shadow = true;
+ #   activeOpacity = 0.96;
+ #   inactiveOpacity = 0.86;
+ # };
 }
