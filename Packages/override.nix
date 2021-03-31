@@ -29,9 +29,16 @@
       colemak-dh = writeText "colemak-dh.map" (builtins.readFile ./colemak-dh.map);
       postInstall = "${oldAttrs.postInstall}\n cp ${colemak-dh} $out/share/keymaps/i386/colemak/colemak-dh.map\n gzip $out/share/keymaps/i386/colemak/colemak-dh.map";
     }))
-    (ncmpcpp.overrideAttrs (_ :{
-      visualizerSupport = true;
-      clockSupport = true;
-    }))
+    ncmpcpp
+  ];
+  nixpkgs.overlays = [
+    ( self: super:
+    {
+      ncmpcpp = super.ncmpcpp.override {
+        visualizerSupport = true;
+        clockSupport = true;
+      };
+    }
+    )
   ];
 }
