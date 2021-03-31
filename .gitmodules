@@ -1,0 +1,3 @@
+[submodule "Packages/scripts"]
+	path = Packages/scripts
+	url = https://github.com/idcretard/custom-scripts
