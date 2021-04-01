@@ -4,7 +4,6 @@
   imports =
     [
       (modulesPath + "/installer/scan/not-detected.nix")
-      ./Hardware/boot.nix
       ./Hardware/power.nix
       ./Hardware/xorg.nix
       ./Hardware/graphicshit.nix

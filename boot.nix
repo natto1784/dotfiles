@@ -4,12 +4,23 @@
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot = {
+    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPatches = [
+      {
+        name = "zenwithmuqqs";
+        patch = null;
+        structuredExtraConfig = ''
+          SCHED_MUQQS y
+        '';
+        ignoreConfigErrors = true;
+      }
+    ];
     initrd={
-      availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" ];
+      availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod"];
       kernelModules = [ ];
     };
-    kernelModules = [ "kvm-intel" ];
-    extraModulePackages = [ ];
+    kernelModules = [ "kvm-intel"];
+    extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
     loader = {
       efi = {
         canTouchEfiVariables = true;

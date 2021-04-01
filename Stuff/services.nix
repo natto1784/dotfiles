@@ -12,6 +12,13 @@
       PIDFile = "/run/nbfc.pid";
     };
   };  
+  services = {
+    tor.enable = true;
+    mysql = {
+      enable = true;
+      package = pkgs.mariadb;
+         };
+       };
  # services.picom = {
  #   enable = true;
  #   fade = true;
