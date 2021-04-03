@@ -5,20 +5,22 @@
     (callPackage ./customscripts.nix {})
     (callPackage ./mpd_discord_richpresence.nix {})
     (dwm.overrideAttrs (oldAttrs: rec {
-      src = fetchFromGitHub {
-        owner = "idcretard";
-        repo = "dwm";
-        rev = "363951cb05142f4c423af561a05658e74be7c768";
-        sha256 ="003sl6w5dkycw8wcymvhi843xjngsys6qsl3fc5b9vpyd1l7i0sr";
-      };
+      src = ./dwm;
+  #    src = fetchFromGitHub {
+   #     owner = "natto1784";
+    #    repo = "dwm";
+     #   rev = "363951cb05142f4c423af561a05658e74be7c768";
+    #    sha256 ="003sl6w5dkycw8wcymvhi843xjngsys6qsl3fc5b9vpyd1l7i0sr";
+   #   };
     }))
     (st.overrideAttrs (oldAttrs: rec {
-      src = fetchFromGitHub {
-        owner = "idcretard";
-        repo = "st";
-        rev = "0cd1e394e6d07c5f605ae23070c40de9690bafb1";
-        sha256 = "0riqg63aghx71v3rrpic3mxhcxqhry20312bicwbf3ks7ndl13hi";
-      };
+     src = ./st;
+     #src = fetchFromGitHub {
+       # owner = "natto1784";
+      #  repo = "st";
+      #  rev = "0cd1e394e6d07c5f605ae23070c40de9690bafb1";
+      #  sha256 = "0riqg63aghx71v3rrpic3mxhcxqhry20312bicwbf3ks7ndl13hi";
+  #    };
     }))
    (dmenu.overrideAttrs (oldAttrs: rec {
      configFile = writeText "config.def.h" (builtins.readFile ./dmenu/config.def.h);

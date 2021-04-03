@@ -19,7 +19,7 @@
       enable = true;
       extraRules = [
         {
-          users = [ "otaku619" ];
+          users = [ "natto" ];
           keepEnv = true;
           persist = true;
         }

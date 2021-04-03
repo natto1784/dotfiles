@@ -27,17 +27,17 @@
   fileSystems."/mnt/Stuff" = 
   { device = "/dev/sda2";
     fsType = "ntfs";
-    options = ["uid=otaku619" "gid=users" "umask=0022" "rw"];
+    options = ["uid=natto" "gid=users" "umask=0022" "rw"];
   };
   fileSystems."/mnt/Games" = 
   { device = "/dev/sda4";
     fsType = "ntfs";
-    options = ["uid=otaku619" "gid=users" "umask=0022" "rw"];
+    options = ["uid=natto" "gid=users" "umask=0022" "rw"];
   };
   fileSystems."/mnt/Extra" = 
   { device = "/dev/sda3";
     fsType = "ntfs";
-    options = ["uid=otaku619" "gid=users" "umask=0022" "rw"];
+    options = ["uid=natto" "gid=users" "umask=0022" "rw"];
   };
   fileSystems."/mnt/LinuxGames" = 
   { device = "/dev/sda5";

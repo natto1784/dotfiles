@@ -1,3 +1,9 @@
 [submodule "Packages/scripts"]
 	path = Packages/scripts
 	url = https://github.com/idcretard/custom-scripts
+[submodule "Packages/dwm"]
+	path = Packages/dwm
+	url = https://github.com/natto1784/dwm
+[submodule "Packages/st"]
+	path = Packages/st
+	url = https://github.com/natto1784/st

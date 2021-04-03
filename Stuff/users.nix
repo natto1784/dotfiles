@@ -1,10 +1,10 @@
 {lib, config, pkgs, ... }:
 
 {
-  users.users.otaku619 = {
+  users.users.natto = {
     isNormalUser = true;
     shell = pkgs.fish;
-    home = "/home/otaku619";
+    home = "/home/natto";
     extraGroups = [ "wheel" "video" "audio" ];
   };
 }

@@ -9,9 +9,9 @@
       {
         name = "zenwithmuqqs";
         patch = null;
-        structuredExtraConfig = ''
-          SCHED_MUQQS y
-        '';
+        structuredExtraConfig = with lib.kernel; {
+          SCHED_MUQSS = yes;
+          };
         ignoreConfigErrors = true;
       }
     ];
