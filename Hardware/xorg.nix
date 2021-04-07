@@ -7,9 +7,9 @@
       enable = true;
       libinput= {
         enable = true;
-        mouse = {
-          accelSpeed = "0";
-        };
+ #       mouse = {
+ #         accelSpeed = "0";
+ #       };
         touchpad = {
           middleEmulation = false;
           clickMethod = "buttonareas";
