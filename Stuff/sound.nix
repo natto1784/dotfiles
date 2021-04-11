@@ -3,10 +3,10 @@
 {
   services.pipewire = {
     enable = true;
-#    alsa = {
-#      enable = true;
-#      support32Bit = true;
-#    };
+    alsa = {
+      enable = true;
+      support32Bit = true;
+    };
     pulse = {
       enable = true;
     };
@@ -17,7 +17,7 @@
     }; 
     config.pipewire-pulse = {
       context.modules = {
-        pulse.min.req = "4/24000";           
+        pulse.min.req = "4/48000";           
         pulse.min.quantum = "4/24000";
       };
       stream.properties = {

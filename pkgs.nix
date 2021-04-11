@@ -7,6 +7,7 @@
   environment.systemPackages = with pkgs; [
     xclip
     dunst
+    xorg.xkbcomp
     glibc
     proxychains
     #qt5.qmake
@@ -22,7 +23,7 @@
     mono
     vim
     mpd
-    wineWowPackages.stable
+    wineWowPackages.staging
     neofetch
     tor-browser-bundle-bin
     w3m

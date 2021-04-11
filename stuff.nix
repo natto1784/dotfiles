@@ -5,6 +5,7 @@
     ./Stuff/fonts.nix
     ./Stuff/users.nix
     ./Stuff/services.nix
+    ./Stuff/xorg.nix
   ];
   time.timeZone = "Asia/Kolkata";
   environment = {

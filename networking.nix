@@ -4,10 +4,17 @@
   networking = {
     hostName = "nixchod";
     wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-    useDHCP = false;
     interfaces = {
       enp7s0.useDHCP = true;
-      wlp0s20f3.useDHCP = true;
+      wlp0s20f3 = {
+        useDHCP = true;
+        ipv4.addresses = [ {
+          prefixLength = 24;
+          address = "192.168.0.111";
+        } ];
+      };
     };
+    defaultGateway = "192.168.0.1";
+    nameservers = [ "192.168.0.1" ];
   };
 }

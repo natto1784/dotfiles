@@ -5,7 +5,6 @@
     [
       (modulesPath + "/installer/scan/not-detected.nix")
       ./Hardware/power.nix
-      ./Hardware/xorg.nix
       ./Hardware/graphicshit.nix
     ];
   
