@@ -17,8 +17,10 @@
     mysql = {
       enable = true;
       package = pkgs.mariadb;
-         };
-       };
+    };
+    openssh.enable = true;
+    logmein-hamachi.enable = true;
+  };
  # services.picom = {
  #   enable = true;
  #   fade = true;

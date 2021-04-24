@@ -28,9 +28,15 @@
     };
   };
   nix.gc = {
-    automatic = true;
+    automatic = false;
     dates = "20:15";
   };
   nixpkgs.config.allowUnfree = true;
-  programs.fish.enable = true;
+  programs = { 
+    fish.enable = true;
+    dconf.enable = true;
+  };
+  nixpkgs.config.allowBroken = true;
+  nix.extraOptions = ''experimental-features = nix-command flakes ca-references'';
+
 }
