@@ -1,17 +1,16 @@
 {lib,stdenv,fetchFromGitHub}:
 stdenv.mkDerivation rec{
   name = "customscripts";
-  src = ./scripts;
+  src = fetchFromGitHub {
+    owner = "idcretard";
+    repo = "custom-scripts";
+    rev = "a996a52831316cc2c282904352654bd20c82f7bd";
+    sha256 = "sha256-nw21YmcmQMF8NADnuHOc7eF2Yaj/r/1mYBn77fYK7s8=";
+  };
   unpackPhase = ":";
   installPhase = ''
     mkdir -p $out/bin
     cp -r $src/* $out/bin
     for x in $out/bin/*;do chmod +x "$x";done
 '';
- # src = fetchFromGitHub {
- #   owner = "idcretard";
- #   repo = "custom-scripts";
- #   rev = "86eaba74a01c8bafd8c81885eddbe9cd6f381e64";
- #   sha256 = "1g1z3mlp7h2ig1rmgabsbhcdnpgy65yki0dj3pr100jw202i6jqq";
- # };
 }

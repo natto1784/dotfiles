@@ -44,6 +44,12 @@
     feh
     sxiv
     mpv
+    dwm
+    dmenu
+    st
+    kbd
+    picom
+    ncmpcpp
   ];
   programs.steam.enable = true;
   nix = {
