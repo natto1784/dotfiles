@@ -2,6 +2,8 @@
 
 {
   environment.systemPackages = with pkgs; [
+    mpd_discord_richpresence
+    customscripts
     xclip
     dunst
     xorg.xkbcomp
