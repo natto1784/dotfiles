@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+echo "You're about to switch your home-manager configuration as '$USER'"
+read -p "Continue (y/n)?" conf
+read -p "Do you want to use doas instead of sudo? (y/n)" conf2
+elev="sudo"
+if [ ${conf2,,} == "y" ]; then
+  elev="doas"
+fi
+
+if [ ${conf,,} == "n" ]; then
+  echo "If this is not you, then log into your profile first!"
+  exit 1
+else
+  $elev nix build .\#hm-configs.$USER.activationPackage -o hm-result
+  ./hm-result/activate
+  $elev unlink hm-result
+fi
+
