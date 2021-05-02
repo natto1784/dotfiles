@@ -1,0 +1,14 @@
+set statusbar-h-padding 0
+set statusbar-v-padding 0
+set page-padding 1
+map w scroll half-up
+map r scroll half-down
+map s reload
+map S rotate
+map f zoom in
+map q zoom out
+map p follow link
+map m left
+map i right
+map n down
+map e up

@@ -2,7 +2,7 @@
 
 ## TODO
 1. Add user specific traditional dotfiles.
-2. Try home-manager for nix (Trying out right now)
+2. ~~Try home-manager for nix~~ (Still in the middle of updating)
 3. ~~Try nix flakes~~
 
 ## How install workey

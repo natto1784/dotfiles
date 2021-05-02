@@ -1,4 +1,4 @@
-{lib, config, pkgs, ... }:
+{lib, config, ... }:
 {
   imports = [
     ./Stuff/sound.nix

@@ -4,17 +4,12 @@
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_zen;
-    kernelPatches = [
-      {
-        name = "zenwithmuqqs";
-        patch = null;
-        structuredExtraConfig = with lib.kernel; {
-          SCHED_MUQSS = yes;
-          };
-        ignoreConfigErrors = true;
-      }
-    ];
+    kernelPackages = pkgs.linuxPackagesFor (pkgs.linux_zen.override {
+      structuredExtraConfig = with lib.kernel; {
+        CONFIG_SCHED_MUQSS = yes;
+      };
+      ignoreConfigErrors = true;
+      });
     initrd={
       availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod"];
       kernelModules = [ ];

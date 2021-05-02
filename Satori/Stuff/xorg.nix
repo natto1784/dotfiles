@@ -1,5 +1,5 @@
 
-{ config, lib, pkgs, modulesPath, ... }:
+{ config, lib, ... }:
 
 #let
 #  compiledLayout = pkgs.runCommand "keyboard-layout" {} ''

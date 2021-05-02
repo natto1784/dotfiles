@@ -29,6 +29,18 @@
         homeDirectory = "/home/natto";
         username = "natto";
       };
+
+    root = home-manager.lib.homeManagerConfiguration {
+        configuration = { pkgs, lib, ... }: {
+          imports = [ ./home/root.nix ];
+          nixpkgs = {
+            overlays = builtins.attrValues self.overlays;
+          };
+        };
+        system = "${system}";
+        homeDirectory = "/root";
+        username = "root";
+      };
     };
 
     nixosConfigurations.Satori = nixpkgs.lib.nixosSystem {

@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =4
+let g:netrw_dirhist_4='/home/natto/.config/deemix'
+let g:netrw_dirhist_3='/mnt/Stuff/Bruhniggacode/C++'
+let g:netrw_dirhist_2='/home/natto/.config/ncmpcpp'
+let g:netrw_dirhist_1='/home/otaku619/.config/mpd'
