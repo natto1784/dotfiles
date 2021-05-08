@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+mkdir spectrals; cd spectrals; for x in ../*$1;do sox "$x" -n spectrogram -o "$(echo $(ffprobe -loglevel error -show_entries format_tags=track -of default=noprint_wrappers=1:nokey=1 "$x") - $(ffprobe -loglevel error -show_entries format_tags=TITLE -of default=noprint_wrappers=1:nokey=1 "$x")).png"; done

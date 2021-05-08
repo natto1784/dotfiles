@@ -1,15 +1,24 @@
 {
+
   inputs = {
-    stable.url = "github:nixos/nixpkgs/nixos-20.09";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    stable.url = github:nixos/nixpkgs/nixos-20.09;
+    nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = github:nix-community/home-manager;
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nur = {
+      url = github:nix-community/NUR;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    agenix.url = github:ryantm/agenix;
   };
-  outputs = inputs@{self, nixpkgs, stable, home-manager,... }:
+
+  outputs = {self, nixpkgs, stable, home-manager, nur, agenix, ... }:
+
   let
     system = "x86_64-linux";
+    ov = (builtins.attrValues self.overlays) ++ [ nur.overlay ];
   in
   {
     overlays = {
@@ -20,26 +29,14 @@
     hm-configs = {
       natto = home-manager.lib.homeManagerConfiguration {
         configuration = { pkgs, lib, ... }: {
-          imports = [ ./home/natto.nix ];
-          nixpkgs = {
-            overlays = builtins.attrValues self.overlays;
-          };
+          imports = [ 
+            ./home/natto.nix 
+          ];
+          nixpkgs.overlays = ov;
         };
         system = "${system}";
         homeDirectory = "/home/natto";
         username = "natto";
-      };
-
-    root = home-manager.lib.homeManagerConfiguration {
-        configuration = { pkgs, lib, ... }: {
-          imports = [ ./home/root.nix ];
-          nixpkgs = {
-            overlays = builtins.attrValues self.overlays;
-          };
-        };
-        system = "${system}";
-        homeDirectory = "/root";
-        username = "root";
       };
     };
 
@@ -47,8 +44,13 @@
       system = "${system}";
       modules = [ 
         ./Satori/configuration.nix 
-        { nixpkgs.overlays = builtins.attrValues self.overlays; }
+        agenix.nixosModules.age
+        home-manager.nixosModules.home-manager
+        {
+          nixpkgs.overlays = ov;
+        }
       ];
     };
+
   };
 }

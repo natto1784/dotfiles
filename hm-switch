@@ -12,7 +12,7 @@ if [ ${conf,,} == "n" ]; then
   echo "If this is not you, then log into your profile first!"
   exit 1
 else
-  $elev nix build .\#hm-configs.$USER.activationPackage -o hm-result
+  $elev nix build .\#hm-configs.$USER.activationPackage -o hm-result --impure
   ./hm-result/activate
   $elev unlink hm-result
 fi

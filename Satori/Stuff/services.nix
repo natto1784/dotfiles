@@ -2,8 +2,8 @@
 
 {
   systemd.services.nbfc = {
-    wantedBy = [ "multi-user.target" ]; 
     description = "Notebook Fancontrol";
+    wantedBy = lib.mkForce []; 
     serviceConfig = {
       Type = "forking";
       Restart = "on-failure";
@@ -15,12 +15,24 @@
   services = {
     tor.enable = true;
     logmein-hamachi.enable = true;
+    mysql = {
+      enable = true;
+      package = pkgs.mysql;
+      dataDir = "/var/db";
+    };
+    sshd.enable = true;
+    
+ /*   vault = {
+      enable = true;
+      storageBackend = "mysql";
+      storagePath = "/var/db";
+    };*/
   };
- # services.picom = {
- #   enable = true;
- #   fade = true;
- #   shadow = true;
- #   activeOpacity = 0.96;
- #   inactiveOpacity = 0.86;
- # };
+  systemd.services = {
+    tor.wantedBy = lib.mkForce [];
+    logmein-hamachi.wantedBy = lib.mkForce [];
+    sshd.wantedBy = lib.mkForce [];
+    mysql.wantedBy = lib.mkForce [];
+    #vault.wantedBy = lib.mkForce [];
+  };
 }

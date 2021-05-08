@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+if [ $1 == "flac" ]; then
+  for x in *.flac; do
+    flac "$x" --compression-level-8 -o "bruh.$x"
+    mv "bruh.$x" "$x"
+  done
+else
+  echo "bruh"
+fi

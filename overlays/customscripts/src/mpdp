@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+mpd
+mpdas &
+mpd_discord_richpresence &

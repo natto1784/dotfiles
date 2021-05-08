@@ -5,7 +5,6 @@
     xclip
     xorg.xkbcomp
     xorg.xmodmap
-    ffmpeg
     p7zip
     git
     glxinfo
@@ -32,11 +31,22 @@
     st
     kbd
   ];
-  programs.steam.enable = true;
+  programs = {
+    steam.enable = true;
+    gnupg = {
+      agent = {
+        enableSSHSupport = true;
+        enable = true;
+        pinentryFlavor = "curses";
+      };
+    };
+    fish.enable = true;
+    dconf.enable = true;
+  };
   nix = {
     package = pkgs.nixUnstable;
     extraOptions = ''
-      experimental-features = nix-command flakes
+      experimental-features = nix-command ca-references flakes
     '';
   };
 }

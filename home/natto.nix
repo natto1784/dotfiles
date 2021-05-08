@@ -1,20 +1,41 @@
-{ config, pkgs, ... }:
-
+{ config, pkgs, lib, ... }:
+let
+  home = config.home.homeDirectory;
+in
 {
   imports = [
-    ./modules/programs.nix 
-    ./modules/xsession.nix
-    ./modules/files.nix
-    ./modules/services.nix
-    ./modules/gtk.nix
+    ./stuff/programs.nix 
+    ./stuff/xsession.nix
+    ./stuff/secret.nix
+    ./stuff/services.nix
+    ./stuff/gtk.nix
   ];
   nixpkgs = {
     config = {
       allowUnfree = true;
     };
   };
+
+  age = {
+    sshKeyPaths = [ "${home}/.ssh/id_ed25519" ];
+    secrets = {
+      fish_variables = {
+        file = ./secrets/fish_variables.age;
+        path = "${home}/.config/fish/fish_variables";
+      };
+      mpdasrc = {
+        file = ./secrets/mpdasrc.age;
+        path = "${home}/.config/mpdasrc";
+      };
+    };
+  };
   home = {
     packages = with pkgs; [
+      ffmpeg
+      sox
+      rage
+      curl
+      pamixer
       mpdas
       mpd
       dunst
@@ -31,8 +52,30 @@
       tor-browser-bundle-bin
       mpc_cli
       flameshot
+      hexchat
       luajit
       mpv
+      jmtpfs
+      youtube-dl
     ];
+
+    file = {
+      ncmpcpp = {
+        source = ./config/ncmpcpp/config;
+        target = "${home}/.config/ncmpcpp/config";
+      };
+      mpd = {
+        source = ./config/mpd/mpd.conf;
+        target = "${home}/.config/mpd/mpd.conf";
+      };
+      dwm-autostart = {
+        source = ./config/dwm/autostart.sh;
+        target = "${home}/.dwm/autostart.sh";
+      };
+      dwm-status = {
+        source = ./config/dwm/bruhstatus.sh;
+        target = "${home}/.dwm/bruhstatus.sh";
+      };
+    };
   };
 }

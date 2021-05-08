@@ -1,7 +1,8 @@
-{ config, lib, ... }:
+{ config, ... }:
 
 {
   powerManagement = {
-    cpuFreqGovernor = lib.mkDefault "powersave";
+    enable = true;
+    cpuFreqGovernor = "ondemand";
   };
 }

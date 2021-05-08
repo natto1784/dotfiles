@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+for x in $@; do
+  curl -F "file=@\"$x\"" https://x0.at/
+  echo " "
+done

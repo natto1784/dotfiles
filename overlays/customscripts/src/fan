@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#Script to control fans via nbfc in /opt/nbfc
+if [[ $1 = "a" ]]; then
+	mono /opt/nbfc/nbfc.exe set -f 0 -a
+else
+	mono /opt/nbfc/nbfc.exe set -f 0 -s $1
+fi
+
+if [[ $2 = "a" ]]; then
+	mono /opt/nbfc/nbfc.exe set -f 1 -a
+else
+	mono /opt/nbfc/nbfc.exe set -f 1 -s $2
+fi

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+if [ $# -eq 0 ]; then echo "bruh"; exit 1; fi
+FILE=$1
+if [ $# -eq 2 ]; then
+    TARGET="$2.age"
+elif [ $# -eq 1 ]; then
+    TARGET="$FILE.age"
+else
+    echo "bruh"
+    exit 1
+fi
+rage -o "$TARGET" -r "$(cat ~/.ssh/*.pub)" "$1"

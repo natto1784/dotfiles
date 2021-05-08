@@ -14,8 +14,8 @@ final: prev: {
     src = prev.fetchFromGitHub {
       owner = "natto1784";
       repo = "dwm";
-      rev = "cd69bb00b0ecd941cdb5d048df029f3b762eea8c";
-      sha256 = "sha256-dZyF7GnVJZzzAy8DO2pqCoIj7t1vZLdfhHm1cJKXah0=";
+      rev = "a3896f13d20218ce07a7b646459cd5ce6ed2f27d";
+      sha256 = "sha256-iyUFeZwqZ6veMs+3lBcpBLENN4r27QlkARfAL3OJvks=";
     };
   });
 
@@ -25,7 +25,7 @@ final: prev: {
       repo = "st";
       rev = "0cd1e394e6d07c5f605ae23070c40de9690bafb1";
       sha256 = "sha256-EY5Amz16Drc4i0uEAYTPEHcGex0s3pzHDqfDp4Z5OGY=";
-    };
+    }; 
   });
 
   kbd = prev.kbd.overrideAttrs (oldAttrs: rec{

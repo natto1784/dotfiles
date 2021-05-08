@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+youtube-dl -f bestaudio -o "ytmp3.%(title)s.%(ext)s" "$1"
+file=$(echo ytmp3.*.*)
+newfile=$(echo $file | cut -c 7-)
+mv "$file" "$newfile"
+ffmpeg -i "$newfile" -c:a mp3 "${newfile%.*}.mp3"
+rm "$newfile"

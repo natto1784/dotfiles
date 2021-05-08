@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+IFS=$'\n'
+for i in $(ls *$3)
+do
+    if [ $1 = "320" ]; then
+	    ffmpeg -i "$i" -codec:a libmp3lame -b:a 320k -map_metadata 0 -id3v2_version 3 "$2/${i%.$3}".mp3
+    elif [ $1 = "v0" ]; then
+	    ffmpeg -i "$i" -codec:a libmp3lame -q:a 0 -map_metadata 0 -id3v2_version 3 "$2/${i%.$3}".mp3
+    elif [ $1 = "alactoflac" ]; then
+	    ffmpeg -i "$i" -codec:a flac -map_metadata 0 -id3v2_version 3 "$2/${i%.$3}".flac
+    else
+	    sox "$i" -G -b 16 "$2/${i%.$3}".flac rate -v -L 48000 dither
+    fi
+    echo $i
+done

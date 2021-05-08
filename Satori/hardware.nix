@@ -11,7 +11,7 @@
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/4c02ddf5-d00e-4d84-856f-c327ae44d047";
       fsType = "btrfs";
-      options = ["compress=zstd"];
+      options = ["compress=zstd:9"];
     };
 
   fileSystems."/boot/efi" =

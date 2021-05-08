@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+killall mpd
+killall mpd_discord_richpresence
+killall mpdas
