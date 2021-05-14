@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
-mpd
+#!/usr/bin/env sh
+systemctl start mpd.service --user
+#systemctl start mpd.socket --user
 mpdas &
 mpd_discord_richpresence &

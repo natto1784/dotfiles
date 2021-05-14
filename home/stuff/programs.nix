@@ -2,6 +2,7 @@
 {
   imports = [
     ./programs/nvim.nix
+    ./programs/ncmpcpp.nix
   ];
   programs = {
     firefox = {
@@ -19,11 +20,8 @@
       options = {
         recolor = true;
         recolor-lightcolor = "rgba(0,0,0,0)";
-        default-bg = "rgba(0,0,0,0.7)";
+        default-bg = "rgba(0,0,0,0.8)";
       };
-    };
-    ncmpcpp = {
-      enable = true;
     };
     mpv = {
       enable = true;
@@ -32,6 +30,9 @@
         keep-open = "yes";
         save-position-on-quit = "yes";
       };
+    };
+    emacs = {
+      enable = true;
     };
   };
 }

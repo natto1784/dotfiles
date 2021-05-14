@@ -44,5 +44,36 @@ in
         enable = false;
         extraConfig = builtins.readFile ./config/sxhkd/sxhkdrc;
       };
+
+      mpd = {
+        enable = true;
+        musicDirectory = "${config.home.homeDirectory}/Music";
+        extraConfig = ''
+          playlist_directory              "~/.config/mpd/playlists"
+          db_file                         "~/.config/mpd/database"
+          log_file                        "~/.config/mpd/log"
+          pid_file                        "~/.config/mpd/pid"
+          state_file                      "~/.config/mpd/state"
+          bind_to_address                 "~/.config/mpd/socket"
+          bind_to_address                 "localhost"
+          port                            "6600"
+          restore_paused "yes"
+          input {
+                  plugin "curl"
+          }
+          audio_output {
+                  type "pulse"
+                  name "pulse audio"
+          }
+          audio_output {
+                  type "fifo"
+                  name "Visualizer feed"
+                  path "/tmp/g.fifo"
+                  format "44100:16:2"
+          }
+          filesystem_charset "UTF-8"
+          '';
+        network.startWhenNeeded = true;
+      };
     };
   }

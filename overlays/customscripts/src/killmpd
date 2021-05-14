@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
-killall mpd
-killall mpd_discord_richpresence
+#!/usr/bin/env sh
 killall mpdas
+killall mpd_discord_richpresence
+systemctl stop mpd.socket --user
+systemctl stop mpd.service --user

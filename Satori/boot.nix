@@ -26,7 +26,7 @@
 #        useOSProber = true;
         efiSupport =  true;
         device = "nodev";
-        splashImage = "/etc/cirno.png"; #hehe
+        splashImage = ../modules/cirno.png;
         splashMode = "stretch";
         configurationName = "nixbruh";
       };

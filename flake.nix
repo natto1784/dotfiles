@@ -1,5 +1,4 @@
 {
-
   inputs = {
     stable.url = github:nixos/nixpkgs/nixos-20.09;
     nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
@@ -14,11 +13,11 @@
     agenix.url = github:ryantm/agenix;
   };
 
-  outputs = {self, nixpkgs, stable, home-manager, nur, agenix, ... }:
+  outputs = inputs@{self, nixpkgs, ... }:
 
   let
     system = "x86_64-linux";
-    ov = (builtins.attrValues self.overlays) ++ [ nur.overlay ];
+    ov = (builtins.attrValues self.overlays) ++ [ inputs.nur.overlay ];
   in
   {
     overlays = {
@@ -27,7 +26,7 @@
     };
 
     hm-configs = {
-      natto = home-manager.lib.homeManagerConfiguration {
+      natto = inputs.home-manager.lib.homeManagerConfiguration {
         configuration = { pkgs, lib, ... }: {
           imports = [ 
             ./home/natto.nix 
@@ -43,14 +42,14 @@
     nixosConfigurations.Satori = nixpkgs.lib.nixosSystem {
       system = "${system}";
       modules = [ 
-        ./Satori/configuration.nix 
-        agenix.nixosModules.age
-        home-manager.nixosModules.home-manager
+        ./satori.nix 
+        inputs.agenix.nixosModules.age
+        inputs.home-manager.nixosModules.home-manager
         {
           nixpkgs.overlays = ov;
+          #environment.systemPackages = with inputs; [ claudius ];
         }
       ];
     };
-
   };
 }

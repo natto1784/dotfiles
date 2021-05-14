@@ -37,13 +37,14 @@ in
       curl
       pamixer
       mpdas
-      mpd
       dunst
       pavucontrol
       anup
       proxychains
       cmake
       xfce.thunar
+      xfce.xfconf
+      xfce.tumbler
       discord
       customscripts
       mpd_discord_richpresence
@@ -60,14 +61,6 @@ in
     ];
 
     file = {
-      ncmpcpp = {
-        source = ./config/ncmpcpp/config;
-        target = "${home}/.config/ncmpcpp/config";
-      };
-      mpd = {
-        source = ./config/mpd/mpd.conf;
-        target = "${home}/.config/mpd/mpd.conf";
-      };
       dwm-autostart = {
         source = ./config/dwm/autostart.sh;
         target = "${home}/.dwm/autostart.sh";

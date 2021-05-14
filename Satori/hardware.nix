@@ -4,14 +4,12 @@
   imports =
     [
       (modulesPath + "/installer/scan/not-detected.nix")
-      ./Hardware/power.nix
-      ./Hardware/graphicshit.nix
     ];
   
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/4c02ddf5-d00e-4d84-856f-c327ae44d047";
       fsType = "btrfs";
-      options = ["compress=zstd:9"];
+      options = ["compress=zstd:15"];
     };
 
   fileSystems."/boot/efi" =
@@ -46,4 +44,8 @@
   };
 
   swapDevices = [ {device = "/dev/nvme0n1p7";} ];
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = "powersave";
+  };
 }
