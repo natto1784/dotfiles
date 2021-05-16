@@ -9,7 +9,7 @@
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/4c02ddf5-d00e-4d84-856f-c327ae44d047";
       fsType = "btrfs";
-      options = ["compress=zstd:10"];
+      options = ["compress-force=zstd:4"];
     };
 
   fileSystems."/boot/efi" =
@@ -40,7 +40,7 @@
   fileSystems."/mnt/LinuxGames" = 
   { device = "/dev/sda5";
     fsType = "btrfs";
-    options = ["rw"];
+    options = ["rw" "compress-force=zstd:4"];
   };
 
   swapDevices = [ {device = "/dev/nvme0n1p7";} ];

@@ -22,6 +22,7 @@ in
       fish_variables = {
         file = ./secrets/fish_variables.age;
         path = "${home}/.config/fish/fish_variables";
+        mode = "660";
       };
       mpdasrc = {
         file = ./secrets/mpdasrc.age;

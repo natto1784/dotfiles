@@ -62,8 +62,8 @@ in
       enable = true;
       vimAlias = true;
       viAlias = false;
-      withNodeJs = true;
-      withPython = true;
+ #     withNodeJs = true;
+ #     withPython = true;
       extraConfig = ''
         let g:gruvbox_italic=1
         let g:gruvbox_contrast_dark="hard"

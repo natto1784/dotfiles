@@ -1,5 +1,4 @@
-#!/usr/bin/env nix-shell
-#! nix-shell -i sh -p ncmpcpp python39Packages.ueberzug
+#!/usr/bin/env sh
 #credits: https://github.com/alnj/ncmpcpp-ueberzug
 export FIFO_UEBERZUG="/tmp/mpd-ueberzug-${PPID}"
 

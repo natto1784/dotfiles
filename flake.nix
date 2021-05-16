@@ -20,15 +20,13 @@
 
   outputs = inputs@{self, nixpkgs, ... }:
   inputs.utils.lib.eachDefaultSystem (system: {
-    pkgs = import nixpkgs {
+    packages = import nixpkgs {
       inherit system;
       overlays = self.overlays ++ [ inputs.nur.overlay inputs.emacs.overlay ];
       config.allowUnfree = true;
     };
   }) //
   (  
-  let
-  in
   {
     overlays = [
       (import ./overlays/overridesandshit.nix)
@@ -41,7 +39,7 @@
           imports = [ 
             ./home/natto.nix 
           ];
-          nixpkgs.overlays = self.pkgs.x86_64-linux.overlays;
+          nixpkgs.overlays = self.packages.x86_64-linux.overlays;
           nixpkgs.config.allowUnfree = true;
         };
         homeDirectory = "/home/natto";
@@ -55,7 +53,7 @@
         ./satori.nix 
         inputs.agenix.nixosModules.age
         inputs.home-manager.nixosModules.home-manager
-        { nixpkgs.pkgs = self.pkgs.x86_64-linux; }
+        { nixpkgs.pkgs = self.packages.x86_64-linux; }
       ];
     };
   });

@@ -13,7 +13,7 @@ cd dotfiles
 nixos-rebuild switch --flake .#Satori 
 ```
 or 
-`nixos-rebuild switch --flake github:natto1784/dotfiles#Satori`
+`nixos-rebuild switch --flake github:natto1784/dotfiles#Satori`\
 Replace Satori with whatever system you want or replace to whatever hostname you want in the config
 
 ## How home-manager workey
@@ -27,7 +27,7 @@ You can unlink "hm-result" after that
 replace {USER} with 'natto' or whatever is availabe (or change it in the config)
 
 ## How packages workey
-To build or run any of the packages in this flake do
+To build or run any of the packages in this flake do\
 `nix <"run"/"build"> github:natto1784/dotfiles#pkgs.<your_arch>.<package_name>`
 
 Following are the people whose configs I took inspiration from and learned stuff from
