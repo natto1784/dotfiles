@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        pkgs:
+        pkg:
         - anup
         - customscripts
         - mpd_discord_richpresence
@@ -25,14 +25,14 @@ jobs:
         with:
           name: natto1784
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-      - run: nix build -L .#${{ matrix.pkgs }}
+      - run: nix build -L .#${{ matrix.pkg }}
 
   nixos:
     name: build nixos configurations
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        hosts:
+        host:
         - Satori
     steps:
       - uses: actions/checkout@v2.3.4
