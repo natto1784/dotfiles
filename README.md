@@ -26,9 +26,13 @@ nix build github:natto1784/dotfiles#hm-configs.{USER}.activationPackage -o hm-re
 You can unlink "hm-result" after that
 replace {USER} with 'natto' or whatever is availabe (or change it in the config)
 
-Following are the people whose configs I took inspiration from and learned stuff from
-- @fufexan
-- @NobbZ
-- @dramforever
+## How packages workey
+To build or run any of the packages in this flake do
+`nix <"run"/"build"> github:natto1784/dotfiles#pkgs.<your_arch>.<package_name>`
 
-I'm thankful to all of them
+Following are the people whose configs I took inspiration from and learned stuff from
+- [fufexan](https://github.com/fufexan)
+- [NobbZ](https://github.com/NobbZ)
+- [dramforever](https://github.com/dramforever)
+
+I'm grateful to all of them
