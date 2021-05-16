@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/env nix-shell
+#! nix-shell -i bash -p rage
 if [ $# -eq 0 ]; then echo "bruh"; exit 1; fi
 FILE=$1
 if [ $# -eq 2 ]; then

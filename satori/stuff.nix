@@ -1,9 +1,9 @@
 {lib, config, agenix, pkgs, ... }:
 {
   imports = [
-    ./Stuff/fonts.nix
-    ./Stuff/users.nix
-    ./Stuff/services.nix
+    ./stuff/fonts.nix
+    ./stuff/users.nix
+    ./stuff/services.nix
   ];
   time.timeZone = "Asia/Kolkata";
   environment = {

@@ -6,5 +6,7 @@
     font-awesome-ttf
     powerline-fonts
     vistafonts
+    noto-fonts-cjk
+    noto-fonts-emoji
   ];
 }

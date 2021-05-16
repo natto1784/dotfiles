@@ -1,7 +1,9 @@
-#!/usr/bin/env bash
+#!/usr/bin/env nix-shell
+#! nix-shell -i bash -p ffmpeg youtube-dl
 youtube-dl -f bestaudio -o "ytmp3.%(title)s.%(ext)s" "$1"
 file=$(echo ytmp3.*.*)
 newfile=$(echo $file | cut -c 7-)
 mv "$file" "$newfile"
 ffmpeg -i "$newfile" -c:a mp3 "${newfile%.*}.mp3"
 rm "$newfile"
+#trust me ive a reason for lossy->lossy transcoding

@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/env nix-shell
+#! nix-shell -i bash -p flac
 if [ $1 == "flac" ]; then
   for x in *.flac; do
     flac "$x" --compression-level-8 -o "bruh.$x"

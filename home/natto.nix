@@ -37,7 +37,6 @@ in
       curl
       pamixer
       mpdas
-      dunst
       pavucontrol
       anup
       proxychains
@@ -52,11 +51,12 @@ in
       qbittorrent
       tor-browser-bundle-bin
       mpc_cli
-      flameshot
       hexchat
       luajit
       mpv
       jmtpfs
+      dunst 
+      flameshot
       youtube-dl
     ];
 

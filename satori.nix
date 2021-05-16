@@ -3,12 +3,12 @@
 {
   imports =
     [
-      ./Satori/hardware.nix
-      ./Satori/stuff.nix
-      ./Satori/pkgs.nix
-      ./Satori/networking.nix
-      ./Satori/boot.nix
-#      ./modules/nvidia-offload.nix
+      ./satori/hardware.nix
+      ./satori/stuff.nix
+      ./satori/pkgs.nix
+      ./satori/networking.nix
+      ./satori/boot.nix
+      ./modules/nvidia-offload.nix
       ./modules/pipewire.nix
       ./modules/xorg.nix
     ];

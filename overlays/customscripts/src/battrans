@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/env nix-shell
+#! nix-shell -i bash -p ffmpeg sox
 IFS=$'\n'
 for i in $(ls *$3)
 do

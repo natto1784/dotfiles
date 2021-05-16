@@ -9,8 +9,6 @@
     git
     glxinfo
     sxiv
-    jq
-    mono
     vim
     wineWowPackages.staging
     neofetch
@@ -19,7 +17,7 @@
     pciutils
     jdk
     ntfs3g
-    python38
+    python3
     htop
     nodejs
     wget

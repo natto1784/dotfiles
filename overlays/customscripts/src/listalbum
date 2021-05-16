@@ -1,3 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env nix-shell
+#! nix-shell -i bash -p ffmpeg
 for x in *$1;do echo $(ffprobe -loglevel error -show_entries format_tags=track -of default=noprint_wrappers=1:nokey=1 "$x") - $(ffprobe -loglevel error -show_entries format_tags=TITLE -of default=noprint_wrappers=1:nokey=1 "$x"); done
 

@@ -35,7 +35,6 @@
 #          symbolsFile = ./colemak-dh;
 #        };
 #      };
-      videoDrivers = [ "nvidia" ];
       layout = "us";
       xkbVariant = "colemak";
     };

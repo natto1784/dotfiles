@@ -11,45 +11,52 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     agenix.url = github:ryantm/agenix;
+    emacs = {
+      url = github:nix-community/emacs-overlay;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    utils.url = github:numtide/flake-utils;
   };
 
   outputs = inputs@{self, nixpkgs, ... }:
-
+  inputs.utils.lib.eachDefaultSystem (system: {
+    pkgs = import nixpkgs {
+      inherit system;
+      overlays = self.overlays ++ [ inputs.nur.overlay inputs.emacs.overlay ];
+      config.allowUnfree = true;
+    };
+  }) //
+  (  
   let
-    system = "x86_64-linux";
-    ov = (builtins.attrValues self.overlays) ++ [ inputs.nur.overlay ];
   in
   {
-    overlays = {
-      overridesandshit = import ./overlays/overridesandshit.nix;
-      packages = import ./overlays/packages.nix;
-    };
-
+    overlays = [
+      (import ./overlays/overridesandshit.nix)
+      (import ./overlays/packages.nix)
+    ];
     hm-configs = {
       natto = inputs.home-manager.lib.homeManagerConfiguration {
-        configuration = { pkgs, lib, ... }: {
+        system = "x86_64-linux";
+        configuration = { lib, ... }: {
           imports = [ 
             ./home/natto.nix 
           ];
-          nixpkgs.overlays = ov;
+          nixpkgs.overlays = self.pkgs.x86_64-linux.overlays;
+          nixpkgs.config.allowUnfree = true;
         };
-        system = "${system}";
         homeDirectory = "/home/natto";
         username = "natto";
       };
     };
 
     nixosConfigurations.Satori = nixpkgs.lib.nixosSystem {
-      system = "${system}";
+      system = "x86_64-linux";
       modules = [ 
         ./satori.nix 
         inputs.agenix.nixosModules.age
         inputs.home-manager.nixosModules.home-manager
-        {
-          nixpkgs.overlays = ov;
-          #environment.systemPackages = with inputs; [ claudius ];
-        }
+        { nixpkgs.pkgs = self.pkgs.x86_64-linux; }
       ];
     };
-  };
+  });
 }

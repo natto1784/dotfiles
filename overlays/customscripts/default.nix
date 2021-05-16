@@ -1,4 +1,4 @@
-{lib, stdenv, fetchFromGitHub, rage, curl, sox, ffmpeg}:
+{lib, stdenv, fetchFromGitHub}:
 stdenv.mkDerivation rec{
   name = "customscripts";
   src = ./src;
@@ -8,7 +8,6 @@ stdenv.mkDerivation rec{
     rev = "a996a52831316cc2c282904352654bd20c82f7bd";
     sha256 = "sha256-nw21YmcmQMF8NADnuHOc7eF2Yaj/r/1mYBn77fYK7s8=";
   };*/
-  buildInputs = [ rage curl sox ffmpeg ];
   unpackPhase = ":";
   installPhase = ''
     mkdir -p $out/bin

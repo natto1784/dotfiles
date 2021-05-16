@@ -1,4 +1,4 @@
-{lib, config, pkgs, ... }:
+{config, pkgs, ... }:
 
 {
   users.users.natto = {
