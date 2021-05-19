@@ -2,7 +2,6 @@ final: prev: {
 
   dmenu = prev.dmenu.overrideAttrs (oldAttrs: rec {
     configFile = prev.writeText "config.def.h" (builtins.readFile ./dmenu/config.def.h);
-    postPatch = "${oldAttrs.postPatch}\n cp ${configFile} config.def.h";
   });
 
   ncmpcpp = prev.ncmpcpp.override {
@@ -26,6 +25,8 @@ final: prev: {
       rev = "0cd1e394e6d07c5f605ae23070c40de9690bafb1";
       sha256 = "sha256-EY5Amz16Drc4i0uEAYTPEHcGex0s3pzHDqfDp4Z5OGY=";
     }; 
+ #   patch = prev.writeText "st.patch" (builtins.readFile ./st.patch);
+ #   patchPhase = "patch -t < ${patch}";
   });
 
   kbd = prev.kbd.overrideAttrs (oldAttrs: rec{

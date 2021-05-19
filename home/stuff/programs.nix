@@ -3,6 +3,7 @@
   imports = [
     ./programs/nvim.nix
     ./programs/ncmpcpp.nix
+    ./programs/emacs.nix
   ];
   programs = {
     firefox = {
@@ -30,9 +31,6 @@
         keep-open = "yes";
         save-position-on-quit = "yes";
       };
-    };
-    emacs = {
-      enable = true;
     };
   };
 }

@@ -13,7 +13,7 @@ let
         let g:floaterm_width=0.8
         let g:floaterm_height=0.8
         let g:floaterm_wintitle=0
-        let g:floaterm_shell="/usr/bin/env fish"
+        let g:floaterm_shell="/usr/bin/env zsh"
         '';
       plugin = pkgs.vimPlugins.vim-floaterm;
     };
@@ -60,10 +60,10 @@ in
   {
     programs.neovim = {
       enable = true;
-      vimAlias = true;
+      vimAlias = false;
       viAlias = false;
- #     withNodeJs = true;
- #     withPython = true;
+      withNodeJs = false;
+      withPython = false;
       extraConfig = ''
         let g:gruvbox_italic=1
         let g:gruvbox_contrast_dark="hard"
@@ -75,7 +75,7 @@ in
         builtins.readFile ../../config/nvim/utils.vim;
       plugins = with plugs; [
         auto-pairs
-        #nvim-colorizer
+       # nvim-colorizer
         floaterm
         vim-rooter
         nerdcommenter

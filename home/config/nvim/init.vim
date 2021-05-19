@@ -25,11 +25,13 @@ set autoindent
 set number
 set relativenumber
 set background=dark
+syntax sync minlines=100
 set showtabline=2
 set noshowmode
 set nobackup
 set nowritebackup
 set updatetime=300
+set lazyredraw
 set timeoutlen=100
 set formatoptions-=cro
 set clipboard=unnamedplus

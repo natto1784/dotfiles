@@ -1,10 +1,5 @@
-{lib, config, agenix, pkgs, ... }:
+{config, agenix, pkgs, ... }:
 {
-  imports = [
-    ./stuff/fonts.nix
-    ./stuff/users.nix
-    ./stuff/services.nix
-  ];
   time.timeZone = "Asia/Kolkata";
   environment = {
     sessionVariables = {
@@ -30,8 +25,16 @@
     automatic = false;
     dates = "20:15";
   };
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowBroken = true;
+  fonts.fonts = with pkgs; [
+    fira-mono
+    font-awesome
+    vistafonts
+    noto-fonts-cjk
+  ];
+  users.users.natto = {
+    isNormalUser = true;
+    shell = pkgs.zsh;
+    home = "/home/natto";
+    extraGroups = [ "wheel" "adbusers" ];
   };
 }

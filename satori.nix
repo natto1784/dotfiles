@@ -8,6 +8,7 @@
       ./satori/pkgs.nix
       ./satori/networking.nix
       ./satori/boot.nix
+      ./satori/services.nix
       ./modules/nvidia-offload.nix
       ./modules/pipewire.nix
       ./modules/xorg.nix

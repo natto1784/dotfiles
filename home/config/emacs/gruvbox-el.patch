@@ -1,0 +1,19 @@
+--- a/gruvbox.el	2021-05-17 21:19:07.731014155 +0530
++++ b/gruvbox.el	2021-05-17 21:20:11.297990471 +0530
+@@ -162,11 +162,11 @@
+ 
+ 
+      ;; line numbers
+-     (line-number                               (:foreground gruvbox-dark4 :background gruvbox-dark1))
+-     (line-number-current-line                  (:foreground gruvbox-bright_orange :background gruvbox-dark2))
+-     (linum                                     (:foreground gruvbox-dark4 :background gruvbox-dark1))
+-     (linum-highlight-face                      (:foreground gruvbox-bright_orange :background gruvbox-dark2))
+-     (linum-relative-current-face               (:foreground gruvbox-bright_orange :background gruvbox-dark2))
++     (line-number                               (:foreground gruvbox-dark4 :background nil))
++     (line-number-current-line                  (:foreground gruvbox-bright_orange :background gruvbox-dark1))
++     (linum                                     (:foreground gruvbox-dark4 :background nil))
++     (linum-highlight-face                      (:foreground gruvbox-bright_orange :background gruvbox-dark1))
++     (linum-relative-current-face               (:foreground gruvbox-bright_orange :background gruvbox-dark1))
+ 
+      ;; Highlight indentation mode
+      (highlight-indentation-current-column-face (:background gruvbox-dark2))

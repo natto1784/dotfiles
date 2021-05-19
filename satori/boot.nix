@@ -1,8 +1,6 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{lib, config, pkgs, ... }:
 
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
-
   boot = {
     kernelPackages = pkgs.linuxPackagesFor (pkgs.linux_zen.override {
       structuredExtraConfig = with lib.kernel; {
