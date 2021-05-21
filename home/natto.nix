@@ -19,14 +19,20 @@ in
   age = {
     sshKeyPaths = [ "${home}/.ssh/id_ed25519" ];
     secrets = {
-      fish_variables = {
+ /*     fish_variables = {
         file = ./secrets/fish_variables.age;
         path = "${home}/.config/fish/fish_variables";
         mode = "660";
-      };
+        };
+*/
       mpdasrc = {
         file = ./secrets/mpdasrc.age;
         path = "${home}/.config/mpdasrc";
+      };
+      zshrc = {
+        file = ./secrets/.zshrc.age;
+        path = "${home}/.zshrc";
+        mode = "660";
       };
     };
   };

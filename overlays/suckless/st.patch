@@ -1,7 +1,7 @@
-diff '--color=auto' -u a/config.def.h b/config.def.h
---- a/config.def.h	2021-05-18 08:15:14.270294000 +0530
-+++ b/config.def.h	2021-05-18 07:53:37.126991600 +0530
-@@ -3,9 +3,8 @@
+diff --color -u a/config.def.h b/config.def.h
+--- a/config.def.h	2020-06-19 14:59:45.000000000 +0530
++++ b/config.def.h	2021-05-21 05:21:13.476454500 +0530
+@@ -3,9 +3,10 @@
  /*
   * appearance
   *
@@ -9,10 +9,12 @@ diff '--color=auto' -u a/config.def.h b/config.def.h
   */
 -static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
 +static char *font = "Fira Mono:style=Regular:pixelsize=16";
++static char *font2[] = { "Font Awesome 5 Free Solid:pixelsize=15",
++                         "Font Awesome 5 Brands:pixelsize=15" };
  static int borderpx = 2;
  
  /*
-@@ -16,7 +15,7 @@
+@@ -16,7 +17,7 @@
   * 4: value of shell in /etc/passwd
   * 5: value of shell in config.h
   */
@@ -21,7 +23,7 @@ diff '--color=auto' -u a/config.def.h b/config.def.h
  char *utmp = NULL;
  /* scroll program: to enable use a string like "scroll" */
  char *scroll = NULL;
-@@ -95,42 +94,37 @@
+@@ -95,42 +96,37 @@
  
  /* Terminal colors (16 first used in escape sequence) */
  static const char *colorname[] = {
@@ -90,7 +92,7 @@ diff '--color=auto' -u a/config.def.h b/config.def.h
  
  /*
   * Default shape of cursor
-@@ -154,7 +148,6 @@
+@@ -154,7 +150,6 @@
  static unsigned int mouseshape = XC_xterm;
  static unsigned int mousefg = 7;
  static unsigned int mousebg = 0;
@@ -98,7 +100,7 @@ diff '--color=auto' -u a/config.def.h b/config.def.h
  /*
   * Color used to display font attributes when fontconfig selected a font which
   * doesn't match the ones requested.
-@@ -173,32 +166,36 @@
+@@ -173,32 +168,36 @@
   * Beware that overloading Button1 will disable the selection.
   */
  static MouseShortcut mshortcuts[] = {
@@ -155,7 +157,7 @@ diff '--color=auto' -u a/config.def.h b/config.def.h
  };
  
  /*
-@@ -226,229 +223,229 @@
+@@ -226,229 +225,229 @@
   * If you want keys other than the X11 function keys (0xFD00 - 0xFFFF)
   * to be mapped below, add them to this array.
   */
@@ -597,7 +599,7 @@ diff '--color=auto' -u a/config.def.h b/config.def.h
  };
  
  /*
-@@ -459,14 +456,13 @@
+@@ -459,14 +458,13 @@
   * If no match is found, regular selection is used.
   */
  static uint selmasks[] = {
@@ -616,9 +618,11 @@ diff '--color=auto' -u a/config.def.h b/config.def.h
 +static char ascii_printable[] = " !\"#$%&'()*+,-./0123456789:;<=>?"
 +                                "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
 +                                "`abcdefghijklmnopqrstuvwxyz{|}~";
-diff '--color=auto' -u a/st.c b/st.c
---- a/st.c	2021-05-18 08:15:14.274578800 +0530
-+++ b/st.c	2021-03-19 01:52:39.516045300 +0530
+Only in b: config.def.h.orig
+Only in b: config.def.h.rej
+diff --color -u a/st.c b/st.c
+--- a/st.c	2020-06-19 14:59:45.000000000 +0530
++++ b/st.c	2021-05-21 05:07:22.806708800 +0530
 @@ -35,6 +35,7 @@
  #define ESC_ARG_SIZ   16
  #define STR_BUF_SIZ   ESC_BUF_SIZ
@@ -647,67 +651,18 @@ diff '--color=auto' -u a/st.c b/st.c
  	int *dirty;   /* dirtyness of lines */
  	TCursor c;    /* cursor */
  	int ocx;      /* old cursor col */
-@@ -184,20 +191,20 @@
+@@ -184,8 +191,8 @@
  static void tputtab(int);
  static void tputc(Rune);
  static void treset(void);
 -static void tscrollup(int, int);
 -static void tscrolldown(int, int);
--static void tsetattr(const int *, int);
--static void tsetchar(Rune, const Glyph *, int, int);
 +static void tscrollup(int, int, int);
 +static void tscrolldown(int, int, int);
-+static void tsetattr(int *, int);
-+static void tsetchar(Rune, Glyph *, int, int);
+ static void tsetattr(int *, int);
+ static void tsetchar(Rune, Glyph *, int, int);
  static void tsetdirt(int, int);
- static void tsetscroll(int, int);
- static void tswapscreen(void);
--static void tsetmode(int, int, const int *, int);
-+static void tsetmode(int, int, int *, int);
- static int twrite(const char *, int, int);
- static void tfulldirt(void);
- static void tcontrolcode(uchar );
- static void tdectest(char );
- static void tdefutf8(char);
--static int32_t tdefcolor(const int *, int *, int);
-+static int32_t tdefcolor(int *, int *, int);
- static void tdeftran(char);
- static void tstrsequence(uchar);
- 
-@@ -226,10 +233,10 @@
- static int cmdfd;
- static pid_t pid;
- 
--static const uchar utfbyte[UTF_SIZ + 1] = {0x80,    0, 0xC0, 0xE0, 0xF0};
--static const uchar utfmask[UTF_SIZ + 1] = {0xC0, 0x80, 0xE0, 0xF0, 0xF8};
--static const Rune utfmin[UTF_SIZ + 1] = {       0,    0,  0x80,  0x800,  0x10000};
--static const Rune utfmax[UTF_SIZ + 1] = {0x10FFFF, 0x7F, 0x7FF, 0xFFFF, 0x10FFFF};
-+static uchar utfbyte[UTF_SIZ + 1] = {0x80,    0, 0xC0, 0xE0, 0xF0};
-+static uchar utfmask[UTF_SIZ + 1] = {0xC0, 0x80, 0xE0, 0xF0, 0xF8};
-+static Rune utfmin[UTF_SIZ + 1] = {       0,    0,  0x80,  0x800,  0x10000};
-+static Rune utfmax[UTF_SIZ + 1] = {0x10FFFF, 0x7F, 0x7FF, 0xFFFF, 0x10FFFF};
- 
- ssize_t
- xwrite(int fd, const char *s, size_t len)
-@@ -269,14 +276,12 @@
- }
- 
- char *
--xstrdup(const char *s)
-+xstrdup(char *s)
- {
--	char *p;
--
--	if ((p = strdup(s)) == NULL)
-+	if ((s = strdup(s)) == NULL)
- 		die("strdup: %s\n", strerror(errno));
- 
--	return p;
-+	return s;
- }
- 
- size_t
-@@ -416,10 +421,10 @@
+@@ -414,10 +421,10 @@
  {
  	int i = term.col;
  
@@ -720,16 +675,7 @@ diff '--color=auto' -u a/st.c b/st.c
  		--i;
  
  	return i;
-@@ -520,7 +525,7 @@
- {
- 	int newx, newy, xt, yt;
- 	int delim, prevdelim;
--	const Glyph *gp, *prevgp;
-+	Glyph *gp, *prevgp;
- 
- 	switch (sel.snap) {
- 	case SNAP_WORD:
-@@ -528,7 +533,7 @@
+@@ -526,7 +533,7 @@
  		 * Snap around if the word wraps around at the end or
  		 * beginning of a line.
  		 */
@@ -738,7 +684,7 @@ diff '--color=auto' -u a/st.c b/st.c
  		prevdelim = ISDELIM(prevgp->u);
  		for (;;) {
  			newx = *x + direction;
-@@ -543,14 +548,14 @@
+@@ -541,14 +548,14 @@
  					yt = *y, xt = *x;
  				else
  					yt = newy, xt = newx;
@@ -755,7 +701,7 @@ diff '--color=auto' -u a/st.c b/st.c
  			delim = ISDELIM(gp->u);
  			if (!(gp->mode & ATTR_WDUMMY) && (delim != prevdelim
  					|| (delim && gp->u != prevgp->u)))
-@@ -571,14 +576,14 @@
+@@ -569,14 +576,14 @@
  		*x = (direction < 0) ? 0 : term.col - 1;
  		if (direction < 0) {
  			for (; *y > 0; *y += direction) {
@@ -772,16 +718,7 @@ diff '--color=auto' -u a/st.c b/st.c
  						& ATTR_WRAP)) {
  					break;
  				}
-@@ -593,7 +598,7 @@
- {
- 	char *str, *ptr;
- 	int y, bufsize, lastx, linelen;
--	const Glyph *gp, *last;
-+	Glyph *gp, *last;
- 
- 	if (sel.ob.x == -1)
- 		return NULL;
-@@ -609,13 +614,13 @@
+@@ -607,13 +614,13 @@
  		}
  
  		if (sel.type == SEL_RECTANGULAR) {
@@ -798,16 +735,7 @@ diff '--color=auto' -u a/st.c b/st.c
  		while (last >= gp && last->u == ' ')
  			--last;
  
-@@ -760,7 +765,7 @@
- }
- 
- int
--ttynew(const char *line, char *cmd, const char *out, char **args)
-+ttynew(char *line, char *cmd, char *out, char **args)
- {
- 	int m, s;
- 
-@@ -850,6 +855,9 @@
+@@ -848,6 +855,9 @@
  ttywrite(const char *s, size_t n, int may_echo)
  {
  	const char *next;
@@ -817,7 +745,7 @@ diff '--color=auto' -u a/st.c b/st.c
  
  	if (may_echo && IS_SET(MODE_ECHO))
  		twrite(s, n, 1);
-@@ -1061,13 +1069,53 @@
+@@ -1059,13 +1069,53 @@
  }
  
  void
@@ -872,7 +800,7 @@ diff '--color=auto' -u a/st.c b/st.c
  	tsetdirt(orig, term.bot-n);
  	tclearregion(0, term.bot-n+1, term.col-1, term.bot);
  
-@@ -1077,17 +1125,28 @@
+@@ -1075,17 +1125,28 @@
  		term.line[i-n] = temp;
  	}
  
@@ -903,7 +831,7 @@ diff '--color=auto' -u a/st.c b/st.c
  	tclearregion(0, orig, term.col-1, orig+n-1);
  	tsetdirt(orig+n, term.bot);
  
-@@ -1097,7 +1156,8 @@
+@@ -1095,7 +1156,8 @@
  		term.line[i+n] = temp;
  	}
  
@@ -913,7 +841,7 @@ diff '--color=auto' -u a/st.c b/st.c
  }
  
  void
-@@ -1126,7 +1186,7 @@
+@@ -1124,7 +1186,7 @@
  	int y = term.c.y;
  
  	if (y == term.bot) {
@@ -922,19 +850,7 @@ diff '--color=auto' -u a/st.c b/st.c
  	} else {
  		y++;
  	}
-@@ -1188,9 +1248,9 @@
- }
- 
- void
--tsetchar(Rune u, const Glyph *attr, int x, int y)
-+tsetchar(Rune u, Glyph *attr, int x, int y)
- {
--	static const char *vt100_0[62] = { /* 0x41 - 0x7e */
-+	static char *vt100_0[62] = { /* 0x41 - 0x7e */
- 		"↑", "↓", "→", "←", "█", "▚", "☃", /* A - G */
- 		0, 0, 0, 0, 0, 0, 0, 0, /* H - O */
- 		0, 0, 0, 0, 0, 0, 0, 0, /* P - W */
-@@ -1291,18 +1351,18 @@
+@@ -1289,14 +1351,14 @@
  tinsertblankline(int n)
  {
  	if (BETWEEN(term.c.y, term.top, term.bot))
@@ -951,33 +867,7 @@ diff '--color=auto' -u a/st.c b/st.c
  }
  
  int32_t
--tdefcolor(const int *attr, int *npar, int l)
-+tdefcolor(int *attr, int *npar, int l)
- {
- 	int32_t idx = -1;
- 	uint r, g, b;
-@@ -1352,7 +1412,7 @@
- }
- 
- void
--tsetattr(const int *attr, int l)
-+tsetattr(int *attr, int l)
- {
- 	int i;
- 	int32_t idx;
-@@ -1470,9 +1530,9 @@
- }
- 
- void
--tsetmode(int priv, int set, const int *args, int narg)
-+tsetmode(int priv, int set, int *args, int narg)
- {
--	int alt; const int *lim;
-+	int alt, *lim;
- 
- 	for (lim = args + narg; args < lim; ++args) {
- 		if (priv) {
-@@ -1735,11 +1795,11 @@
+@@ -1733,11 +1795,11 @@
  		break;
  	case 'S': /* SU -- Scroll <n> line up */
  		DEFAULT(csiescseq.arg[0], 1);
@@ -991,16 +881,23 @@ diff '--color=auto' -u a/st.c b/st.c
  		break;
  	case 'L': /* IL -- Insert <n> blank lines */
  		DEFAULT(csiescseq.arg[0], 1);
-@@ -2022,7 +2082,7 @@
- tdumpline(int n)
- {
- 	char buf[UTF_SIZ];
--	const Glyph *bp, *end;
-+	Glyph *bp, *end;
- 
- 	bp = &term.line[n][0];
- 	end = &bp[MIN(tlinelen(n), term.col) - 1];
-@@ -2251,7 +2311,7 @@
+@@ -1853,7 +1915,15 @@
+ 	case ']': /* OSC -- Operating System Command */
+ 		switch (par) {
+ 		case 0:
++			if (narg > 1) {
++				xsettitle(strescseq.args[1]);
++				xseticontitle(strescseq.args[1]);
++			}
++			return;
+ 		case 1:
++			if (narg > 1)
++				xseticontitle(strescseq.args[1]);
++			return;
+ 		case 2:
+ 			if (narg > 1)
+ 				xsettitle(strescseq.args[1]);
+@@ -2241,7 +2311,7 @@
  		return 0;
  	case 'D': /* IND -- Linefeed */
  		if (term.c.y == term.bot) {
@@ -1009,7 +906,7 @@ diff '--color=auto' -u a/st.c b/st.c
  		} else {
  			tmoveto(term.c.x, term.c.y+1);
  		}
-@@ -2264,7 +2324,7 @@
+@@ -2254,7 +2324,7 @@
  		break;
  	case 'M': /* RI -- Reverse index */
  		if (term.c.y == term.top) {
@@ -1018,7 +915,7 @@ diff '--color=auto' -u a/st.c b/st.c
  		} else {
  			tmoveto(term.c.x, term.c.y-1);
  		}
-@@ -2474,7 +2534,7 @@
+@@ -2464,7 +2534,7 @@
  void
  tresize(int col, int row)
  {
@@ -1027,7 +924,7 @@ diff '--color=auto' -u a/st.c b/st.c
  	int minrow = MIN(row, term.row);
  	int mincol = MIN(col, term.col);
  	int *bp;
-@@ -2511,6 +2571,14 @@
+@@ -2501,6 +2571,14 @@
  	term.dirty = xrealloc(term.dirty, row * sizeof(*term.dirty));
  	term.tabs = xrealloc(term.tabs, col * sizeof(*term.tabs));
  
@@ -1042,7 +939,7 @@ diff '--color=auto' -u a/st.c b/st.c
  	/* resize each row to new width, zero-pad if needed */
  	for (i = 0; i < minrow; i++) {
  		term.line[i] = xrealloc(term.line[i], col * sizeof(Glyph));
-@@ -2569,7 +2637,7 @@
+@@ -2559,7 +2637,7 @@
  			continue;
  
  		term.dirty[y] = 0;
@@ -1051,7 +948,7 @@ diff '--color=auto' -u a/st.c b/st.c
  	}
  }
  
-@@ -2590,8 +2658,9 @@
+@@ -2580,8 +2658,9 @@
  		cx--;
  
  	drawregion(0, 0, term.col, term.row);
@@ -1063,9 +960,9 @@ diff '--color=auto' -u a/st.c b/st.c
  	term.ocx = cx;
  	term.ocy = term.c.y;
  	xfinishdraw();
-diff '--color=auto' -u a/st.h b/st.h
---- a/st.h	2021-05-18 08:15:14.275523400 +0530
-+++ b/st.h	2021-03-19 01:52:39.517474600 +0530
+diff --color -u a/st.h b/st.h
+--- a/st.h	2020-06-19 14:59:45.000000000 +0530
++++ b/st.h	2021-05-21 05:07:22.806891600 +0530
 @@ -81,6 +81,8 @@
  void redraw(void);
  void draw(void);
@@ -1075,62 +972,149 @@ diff '--color=auto' -u a/st.h b/st.h
  void printscreen(const Arg *);
  void printsel(const Arg *);
  void sendbreak(const Arg *);
-@@ -91,7 +93,7 @@
- void tresize(int, int);
- void tsetdirtattr(int);
- void ttyhangup(void);
--int ttynew(const char *, char *, const char *, char **);
-+int ttynew(char *, char *, char *, char **);
- size_t ttyread(void);
- void ttyresize(int, int);
- void ttywrite(const char *, size_t, int);
-@@ -109,7 +111,7 @@
- 
- void *xmalloc(size_t);
- void *xrealloc(void *, size_t);
--char *xstrdup(const char *);
-+char *xstrdup(char *);
- 
- /* config.h globals */
- extern char *utmp;
-diff '--color=auto' -u a/x.c b/x.c
---- a/x.c	2021-05-18 08:15:14.281235100 +0530
-+++ b/x.c	2021-03-19 01:52:25.361188800 +0530
-@@ -156,7 +156,7 @@
- static void xhints(void);
+diff --color -u a/win.h b/win.h
+--- a/win.h	2020-06-19 14:59:45.000000000 +0530
++++ b/win.h	2021-05-21 05:07:22.805511800 +0530
+@@ -30,6 +30,7 @@
+ void xfinishdraw(void);
+ void xloadcols(void);
+ int xsetcolorname(int, const char *);
++void xseticontitle(char *);
+ void xsettitle(char *);
+ int xsetcursor(int);
+ void xsetmode(int, unsigned int);
+diff --color -u a/x.c b/x.c
+--- a/x.c	2020-06-19 14:59:45.000000000 +0530
++++ b/x.c	2021-05-21 05:20:09.551000300 +0530
+@@ -93,7 +93,7 @@
+ 	Window win;
+ 	Drawable buf;
+ 	GlyphFontSpec *specbuf; /* font spec buffer used for rendering */
+-	Atom xembed, wmdeletewin, netwmname, netwmpid;
++	Atom xembed, wmdeletewin, netwmname, netwmiconname, netwmpid;
+ 	struct {
+ 		XIM xim;
+ 		XIC xic;
+@@ -157,6 +157,7 @@
  static int xloadcolor(int, const char *, Color *);
  static int xloadfont(Font *, FcPattern *);
--static void xloadfonts(const char *, double);
-+static void xloadfonts(char *, double);
+ static void xloadfonts(char *, double);
++static void xloadsparefont();
  static void xunloadfont(Font *);
  static void xunloadfonts(void);
  static void xsetenv(void);
-@@ -387,9 +387,7 @@
- 			button = 3;
- 		} else {
- 			button -= Button1;
--			if (button >= 7)
--				button += 128 - 7;
--			else if (button >= 3)
-+			if (button >= 3)
- 				button += 64 - 3;
- 		}
- 		if (e->xbutton.type == ButtonPress) {
-@@ -952,7 +950,7 @@
+@@ -306,6 +307,7 @@
+ {
+ 	xunloadfonts();
+ 	xloadfonts(usedfont, arg->f);
++	xloadsparefont();
+ 	cresize(0, 0);
+ 	redraw();
+ 	xhints();
+@@ -1020,6 +1022,67 @@
  }
  
  void
--xloadfonts(const char *fontstr, double fontsize)
-+xloadfonts(char *fontstr, double fontsize)
++xloadsparefont()
++{
++	FcPattern *fontpattern, *match;
++	FcResult result;
++
++	/* add font2 to font cache as first 4 entries */
++	if ( font2[0] == '-' )
++		fontpattern = XftXlfdParse(font2, False, False);
++	else
++		fontpattern = FcNameParse((FcChar8 *)font2);
++	if ( fontpattern ) {
++		/* Allocate memory for the new cache entries. */
++		frccap += 4;
++		frc = xrealloc(frc, frccap * sizeof(Fontcache));
++		/* add Normal */
++		match = FcFontMatch(NULL, fontpattern, &result);
++		if ( match ) 
++			frc[frclen].font = XftFontOpenPattern(xw.dpy, match);
++			if ( frc[frclen].font ) {
++				frc[frclen].flags = FRC_NORMAL;
++				frclen++;
++			} else
++				FcPatternDestroy(match);
++		/* add Italic */
++		FcPatternDel(fontpattern, FC_SLANT);
++		FcPatternAddInteger(fontpattern, FC_SLANT, FC_SLANT_ITALIC);
++		match = FcFontMatch(NULL, fontpattern, &result);
++		if ( match )
++			frc[frclen].font = XftFontOpenPattern(xw.dpy, match);
++			if ( frc[frclen].font ) {
++				frc[frclen].flags = FRC_ITALIC;
++				frclen++;
++			} else
++				FcPatternDestroy(match);
++		/* add Italic Bold */
++		FcPatternDel(fontpattern, FC_WEIGHT);
++		FcPatternAddInteger(fontpattern, FC_WEIGHT, FC_WEIGHT_BOLD);
++		match = FcFontMatch(NULL, fontpattern, &result);
++		if ( match )
++			frc[frclen].font = XftFontOpenPattern(xw.dpy, match);
++			if ( frc[frclen].font ) {
++				frc[frclen].flags = FRC_ITALICBOLD;
++				frclen++;
++			} else 
++				FcPatternDestroy(match);
++		/* add Bold */
++		FcPatternDel(fontpattern, FC_SLANT);
++		FcPatternAddInteger(fontpattern, FC_SLANT, FC_SLANT_ROMAN);
++		match = FcFontMatch(NULL, fontpattern, &result);
++		if ( match )
++			frc[frclen].font = XftFontOpenPattern(xw.dpy, match);
++			if ( frc[frclen].font ) {
++				frc[frclen].flags = FRC_BOLD;
++				frclen++;
++			} else 
++				FcPatternDestroy(match);
++		FcPatternDestroy(fontpattern);
++	}
++}
++
++void
+ xunloadfont(Font *f)
  {
- 	FcPattern *pattern;
- 	double fontval;
-@@ -960,7 +958,7 @@
- 	if (fontstr[0] == '-')
- 		pattern = XftXlfdParse(fontstr, False, False);
- 	else
--		pattern = FcNameParse((const FcChar8 *)fontstr);
-+		pattern = FcNameParse((FcChar8 *)fontstr);
+ 	XftFontClose(xw.dpy, f->match);
+@@ -1116,6 +1179,9 @@
+ 	usedfont = (opt_font == NULL)? font : opt_font;
+ 	xloadfonts(usedfont, 0);
  
- 	if (!pattern)
- 		die("can't open font %s\n", fontstr);
++	/* spare font (font2) */
++	xloadsparefont();
++
+ 	/* colors */
+ 	xw.cmap = XDefaultColormap(xw.dpy, xw.scr);
+ 	xloadcols();
+@@ -1186,6 +1252,7 @@
+ 	xw.xembed = XInternAtom(xw.dpy, "_XEMBED", False);
+ 	xw.wmdeletewin = XInternAtom(xw.dpy, "WM_DELETE_WINDOW", False);
+ 	xw.netwmname = XInternAtom(xw.dpy, "_NET_WM_NAME", False);
++	xw.netwmiconname = XInternAtom(xw.dpy, "_NET_WM_ICON_NAME", False);
+ 	XSetWMProtocols(xw.dpy, xw.win, &xw.wmdeletewin, 1);
+ 
+ 	xw.netwmpid = XInternAtom(xw.dpy, "_NET_WM_PID", False);
+@@ -1580,6 +1647,19 @@
+ }
+ 
+ void
++xseticontitle(char *p)
++{
++	XTextProperty prop;
++	DEFAULT(p, opt_title);
++
++	Xutf8TextListToTextProperty(xw.dpy, &p, 1, XUTF8StringStyle,
++			&prop);
++	XSetWMIconName(xw.dpy, xw.win, &prop);
++	XSetTextProperty(xw.dpy, xw.win, &prop, xw.netwmiconname);
++	XFree(prop.value);
++}
++
++void
+ xsettitle(char *p)
+ {
+ 	XTextProperty prop;
+Only in b: x.c.orig

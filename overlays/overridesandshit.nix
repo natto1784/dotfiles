@@ -1,32 +1,27 @@
 final: prev: {
 
   dmenu = prev.dmenu.overrideAttrs (oldAttrs: rec {
-    configFile = prev.writeText "config.def.h" (builtins.readFile ./dmenu/config.def.h);
+    src = builtins.fetchTarball {
+      url = "https://dl.suckless.org/tools/dmenu-5.0.tar.gz";
+      sha256 = "0gjjbh49j85rpbmiqj236g4c1zb1h8xh41mcjsvnzgwn72893mk6";
+    };
+    patches = [./suckless/dmenu.patch];
   });
 
-  ncmpcpp = prev.ncmpcpp.override {
-    visualizerSupport = true;
-    clockSupport = true;
-  };
-
   dwm = prev.dwm.overrideAttrs (oldAttrs: rec {
-    src = prev.fetchFromGitHub {
-      owner = "natto1784";
-      repo = "dwm";
-      rev = "a3896f13d20218ce07a7b646459cd5ce6ed2f27d";
-      sha256 = "sha256-iyUFeZwqZ6veMs+3lBcpBLENN4r27QlkARfAL3OJvks=";
+    src = builtins.fetchTarball {
+      url = "https://dl.suckless.org/dwm/dwm-6.2.tar.gz";
+      sha256 = "0qdh8amfkjpvbwffar0byybcqi5w7v1wdqb39h75521haa6mh8xg";
     };
+    patches = [./suckless/dwm.patch];
   });
 
   st = prev.st.overrideAttrs (oldAttrs: rec {
-    src = prev.fetchFromGitHub {
-      owner = "natto1784";
-      repo = "st";
-      rev = "0cd1e394e6d07c5f605ae23070c40de9690bafb1";
-      sha256 = "sha256-EY5Amz16Drc4i0uEAYTPEHcGex0s3pzHDqfDp4Z5OGY=";
-    }; 
- #   patch = prev.writeText "st.patch" (builtins.readFile ./st.patch);
- #   patchPhase = "patch -t < ${patch}";
+    src = builtins.fetchTarball {
+        url = "https://dl.suckless.org/st/st-0.8.4.tar.gz";
+        sha256 = "01z6i60fmdi5h6g80rgvqr6d00jxszphrldx07w4v6nq8cq2r4nr";
+      };
+    patches = [./suckless/st.patch];
   });
 
   kbd = prev.kbd.overrideAttrs (oldAttrs: rec{
@@ -34,6 +29,11 @@ final: prev: {
     colemak-dh = prev.writeText "colemak-dh.map" (builtins.readFile ./colemak-dh.map);
     postInstall = "${oldAttrs.postInstall}\n cp ${colemak-dh} $out/share/keymaps/i386/colemak/colemak-dh.map\n gzip $out/share/keymaps/i386/colemak/colemak-dh.map";
   });
+
+  ncmpcpp = prev.ncmpcpp.override {
+    visualizerSupport = true;
+    clockSupport = true;
+  };
 
   picom = prev.picom.overrideAttrs (oldAttrs: rec{
     version = "Next";
