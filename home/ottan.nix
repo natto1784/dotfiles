@@ -6,7 +6,18 @@ in
   imports = [
     ./stuff/programs/nvim.nix
     ./stuff/programs/emacs.nix
+    ./stuff/secret.nix
   ];
+ /* age = {
+    sshKeyPaths = [ "${home}/.ssh/id_ed25519" ];
+    secrets = {
+      zshrc = {
+        file = ./secrets/.zshrc.age;
+        path = "${home}/.zshrc";
+        mode = "660";
+      };
+    };
+  };*/
   home = {
     packages = with pkgs; [
       pamixer

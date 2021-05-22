@@ -2,12 +2,13 @@
 {
   imports = 
   [
-    ./modules/xorg.nix
-    ./modules/pipewire.nix
+    #<nixpkgs/nixos/modules/profiles/all-hardware.nix>
     ./marisa/pkgs.nix
     ./marisa/networking.nix
     ./marisa/stuff.nix
-    ./satori/hardware.nix
+    ./marisa/hardware.nix
+    ./marisa/boot.nix
+    ./marisa/services.nix
   ];
-  boot.loader.grub.enable = false;
+  system.stateVersion = "21.05";
 }

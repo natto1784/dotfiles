@@ -1,16 +1,12 @@
 {lib, config, pkgs, ...}:
 {
   environment.systemPackages = with pkgs; [
-    xclip
-    xorg.xkbcomp
     p7zip
     git
     gnumake
     neofetch
+    kbd
     htop
-    feh
-    st
-    dwm
     vim
     wget
   ];
@@ -26,9 +22,7 @@
     };
     gnupg = {
       agent = {
-        enableSSHSupport = true;
         enable = true;
-        pinentryFlavor = "curses";
       };
     };
   };

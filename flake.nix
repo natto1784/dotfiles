@@ -1,4 +1,4 @@
-{
+{ 
   inputs = {
     stable.url = github:nixos/nixpkgs/nixos-20.09;
     nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
