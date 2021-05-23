@@ -21,7 +21,6 @@ in
   home = {
     packages = with pkgs; [
       pamixer
-      customscripts
       curl
     ];
     file = {

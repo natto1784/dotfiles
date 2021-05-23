@@ -2,7 +2,7 @@
 {
   imports = 
   [
-    #<nixpkgs/nixos/modules/profiles/all-hardware.nix>
+ #   <nixpkgs/nixos/modules/profiles/all-hardware.nix>
     ./marisa/pkgs.nix
     ./marisa/networking.nix
     ./marisa/stuff.nix
