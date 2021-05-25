@@ -1,19 +1,16 @@
 {lib, config, pkgs, ...}:
 {
   environment.systemPackages = with pkgs; [
-    p7zip
     git
     gnumake
-    neofetch
-    kbd
     htop
     vim
-    wget
+    libraspberrypi
   ];
   programs = {
     zsh = {
       enable = true;
-      promptInit = "PROMPT='%F{cyan}%~ %F{blue}>%f '\nRPROMPT='%F{cyan}%n%f@%F{red}%m'";
+      promptInit = "PROMPT='%B%F{cyan}%~ %F{blue}>%f%b '\nRPROMPT='%B%F{cyan}%n%f@%F{red}%m%b'";
       histSize = 12000;
       enableCompletion = true;
       syntaxHighlighting.enable = true;
@@ -23,6 +20,7 @@
     gnupg = {
       agent = {
         enable = true;
+        pinentryFlavor = "curses";
       };
     };
   };
@@ -31,6 +29,6 @@
     extraOptions = ''
       experimental-features = nix-command ca-references flakes
     '';
-    trustedUsers = [ "root" "ottan" ];
+    trustedUsers = [ "root" ];
   };
 }

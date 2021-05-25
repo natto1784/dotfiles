@@ -2,8 +2,10 @@
 {
   networking = {
     hostName = "Marisa";
-    wireless.enable = false;
-    wireless.iwd.enable = true;
+    wireless = {
+      enable = false;
+      iwd.enable = true;
+    };
     interfaces = {
       wlan0 = {
         useDHCP = false;

@@ -18,5 +18,5 @@
   swapDevices = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
-  hardware.firmware = with pkgs; [ raspberrypiWirelessFirmware ]; 
+  hardware.firmware = [ pkgs.raspberrypiWirelessFirmware ];
 }

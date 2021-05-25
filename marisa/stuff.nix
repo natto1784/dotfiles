@@ -12,7 +12,7 @@
       enable = true;
       extraRules = [
         {
-          users = [ "ottan" ];
+          users = [ ];
           keepEnv = true;
           persist = true;
         }
@@ -22,10 +22,8 @@
   fonts.fonts = with pkgs; [
     fira-mono
   ];
-  users.users.ottan = {
-    isNormalUser = true;
-    shell = pkgs.zsh;
-    home = "/home/ottan";
-    extraGroups = [ "wheel" ];
-  };
+  documentation.enable = false;
+  users.extraUsers.root = {
+      shell = pkgs.zsh;
+    };
 }

@@ -16,21 +16,15 @@
 
   outputs = inputs@{self, nixpkgs, ... }:
   inputs.utils.lib.eachDefaultSystem (system: 
-  let
-    overlays = [
-      (import ./overlays/overridesandshit.nix)
-      (import ./overlays/packages.nix)
-    ];
-  in
   {
     packages = import nixpkgs {
       inherit system;
-      overlays = overlays ++ [ inputs.nur.overlay ];
+      overlays = self.overlays ++ [ inputs.nur.overlay ];
       config.allowUnfree = true;
       config.allowBroken = true;
     };
   }) //
-  (  
+  ( 
   {
     hm-configs = {
       natto = inputs.home-manager.lib.homeManagerConfiguration {
@@ -46,7 +40,8 @@
         homeDirectory = "/home/natto";
         username = "natto";
       };
-      ottan = inputs.home-manager.lib.homeManagerConfiguration {
+   /*
+     ottan = inputs.home-manager.lib.homeManagerConfiguration {
         system = "aarch64-linux";
         configuration = { lib, ... }: {
           imports = [ 
@@ -57,7 +52,7 @@
         homeDirectory = "/home/ottan";
         username = "ottan";
       };
-
+  */
     };
 
     nixosConfigurations = {
@@ -82,6 +77,20 @@
           }
         ];
       };
+      Marisus = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        modules = [ 
+          ./marisa.nix
+ #         inputs.home-manager.nixosModules.home-manager
+          {
+            nixpkgs.pkgs = self.packages.x86_64-linux // {crossSystem.config = "aarch64-unknown-linux-gnu";};
+          }
+        ];
+      };
     };
+    overlays = [
+      (import ./overlays/overridesandshit.nix)
+      (import ./overlays/packages.nix)
+    ];
   });
 }
