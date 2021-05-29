@@ -10,4 +10,10 @@ else
     echo "bruh"
     exit 1
 fi
-rage -o "$TARGET" -r "$(cat ~/.ssh/*.pub)" "$1"
+keys=""
+for x in ~/.ssh/*.pub
+do 
+    keys= "$keys -r $(cat 'x')"
+done
+echo "Encrypting with \n'$keys'"
+rage -o "$TARGET" "$keys" "$1"

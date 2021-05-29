@@ -2,34 +2,24 @@
 
 {
   environment.systemPackages = with pkgs; [
-    xclip
-    xorg.xkbcomp
-    xorg.xmodmap
-    p7zip
-    git
-    glxinfo
-    sxiv
-    vim
-    wineWowPackages.staging
-    neofetch
-    w3m
+    bc
     gnumake
     pciutils
-    jdk
+    git
     ntfs3g
     python3
     htop
     nodejs
+    wineWowPackages.staging
     wget
     ripgrep
-    patchelf
-    feh
-    dwm
-    dmenu
-    st
     kbd
     cachix
+    gcc
+    rustc
+    jdk
   ];
+
   programs = {
     steam.enable = true;
     gnupg = {
@@ -41,7 +31,7 @@
     };
     zsh = {
       enable = true;
-      promptInit = "PROMPT='%F{cyan}%~ %F{blue}>%f '\nRPROMPT='%F{cyan}%n%f@%F{red}%m'";
+      promptInit = "PROMPT='%B%F{cyan}%~ %F{blue}〉%f%b'\nRPROMPT='%B%F{cyan}%n%f@%F{red}%m%b'";
       histSize = 12000;
       enableCompletion = true;
       syntaxHighlighting.enable = true;

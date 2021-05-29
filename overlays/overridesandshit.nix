@@ -45,4 +45,7 @@ final: prev: {
       fetchSubmodules = true;
     };
   });
+  discord = prev.discord.overrideAttrs (_ : { 
+    src = builtins.fetchTarball { url = "https://discord.com/api/download/stable?platform=linux&format=tar.gz"; sha256="1ahj4bhdfd58jcqh54qcgafljqxl1747fqqwxhknqlasa83li75n";};
+    });
 }

@@ -12,14 +12,21 @@
     };
     agenix.url = github:ryantm/agenix;
     utils.url = github:numtide/flake-utils;
+    nvim.url = github:nix-community/neovim-nightly-overlay;
   };
 
   outputs = inputs@{self, nixpkgs, ... }:
   inputs.utils.lib.eachDefaultSystem (system: 
+  let
+    overlays = [
+      (import ./overlays/overridesandshit.nix)
+      (import ./overlays/packages.nix)
+    ];
+  in
   {
     packages = import nixpkgs {
       inherit system;
-      overlays = self.overlays ++ [ inputs.nur.overlay ];
+      overlays = overlays ++ [ inputs.nur.overlay inputs.nvim.overlay ];
       config.allowUnfree = true;
       config.allowBroken = true;
     };
@@ -88,9 +95,5 @@
         ];
       };
     };
-    overlays = [
-      (import ./overlays/overridesandshit.nix)
-      (import ./overlays/packages.nix)
-    ];
   });
 }

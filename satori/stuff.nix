@@ -4,7 +4,6 @@
   environment = {
     sessionVariables = {
       QT_X11_NO_MITSHM="1";
-      EDITOR = "nvim";
       QT_QPA_PLATFORMTHEME = "gtk3";
     };
   };

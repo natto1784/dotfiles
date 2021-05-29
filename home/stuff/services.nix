@@ -9,10 +9,10 @@ in
         extraOptions = 
         ''
           shadow = true;
-          shadow-radius = 7;
-          shadow-offset-x = -7;
-          shadow-offset-y = -7;
-           blurExclude = [ "class_g = 'dwm'" ];
+          shadow-radius = 20;
+          shadow-offset-x = -20;
+          shadow-offset-y = -20;
+          blurExclude = [ "class_g = 'dwm'" ]
 
           inactive-opacity = 0.92;
           active-opacity = 0.97;

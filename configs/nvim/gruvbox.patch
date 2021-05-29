@@ -1,0 +1,11 @@
+--- a/colors/gruvbox.vim	2021-05-28 01:06:40.516914044 +0530
++++ b/colors/gruvbox.vim	2021-05-28 01:07:38.279375184 +0530
+@@ -588,7 +588,7 @@
+ " try, catch, throw
+ hi! link Exception GruvboxRed
+ " sizeof, "+", "*", etc.
+-hi! link Operator Normal
++hi! link Operator GruvboxFg1
+ " Any other keyword
+ hi! link Keyword GruvboxRed
+ 

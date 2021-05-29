@@ -47,7 +47,6 @@ in
       pavucontrol
       anup
       proxychains
-      cmake
       xfce.thunar
       xfce.xfconf
       xfce.tumbler
@@ -65,6 +64,19 @@ in
       dunst 
       flameshot
       youtube-dl
+      xclip
+      xorg.xkbcomp
+      xorg.xmodmap
+      p7zip
+      glxinfo
+      sxiv
+      vim
+      w3m
+      feh
+      dwm
+      dmenu
+      st
+      neofetch 
     ];
 
     file = {

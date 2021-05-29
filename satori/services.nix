@@ -21,7 +21,6 @@
       dataDir = "/var/db";
     };
     sshd.enable = true;
-    
  /*   vault = {
       enable = true;
       storageBackend = "mysql";
@@ -33,6 +32,7 @@
     logmein-hamachi.wantedBy = lib.mkForce [];
     sshd.wantedBy = lib.mkForce [];
     mysql.wantedBy = lib.mkForce [];
+    #printing.wantedBy = lib.mkForce [];
     #vault.wantedBy = lib.mkForce [];
   };
 }

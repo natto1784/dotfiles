@@ -1,5 +1,6 @@
 { pkgs, config, ... }:
 {
+  #i dont really use emacs but eh
   programs.emacs = {
     enable = true;
     extraPackages = epkgs: with epkgs; [

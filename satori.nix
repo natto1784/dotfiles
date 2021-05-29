@@ -1,5 +1,4 @@
 { lib, config, ...}:
-
 {
   imports =
     [
@@ -9,9 +8,10 @@
       ./satori/networking.nix
       ./satori/boot.nix
       ./satori/services.nix
-      ./modules/nvidia-offload.nix
-      ./modules/pipewire.nix
-      ./modules/xorg.nix
+      ./common/nvidia-offload.nix
+      ./common/pipewire.nix
+      ./common/xorg.nix
+      ./configs/nvim.nix
     ];
   system.stateVersion = "20.09";
 }

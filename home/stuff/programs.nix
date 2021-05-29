@@ -1,7 +1,6 @@
 { pkgs, config, ...}: 
 {
   imports = [
-    ./programs/nvim.nix
     ./programs/ncmpcpp.nix
     ./programs/emacs.nix
   ];
