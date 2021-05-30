@@ -5,5 +5,6 @@
       enable = true;
       permitRootLogin = "yes";
     };
+    tailscale.enable = true;
   };
 }

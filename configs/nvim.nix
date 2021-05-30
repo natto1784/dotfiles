@@ -8,7 +8,6 @@
       customRC ="lua << EOF\n" + builtins.readFile ./nvim/init.lua + "\nEOF\n";
       packages.myVimPackage = with pkgs.vimPlugins; {
         start = [
-          nvim-colorizer-lua
           auto-pairs 
           vim-floaterm 
           vim-rooter

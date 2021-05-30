@@ -4,7 +4,6 @@ require'lspconfig'.clangd.setup{}
 require'lspconfig'.tsserver.setup{}
 require'lspconfig'.jedi_language_server.setup{}
 require'lspconfig'.purescriptls.setup{}
-require'colorizer'.setup{}
 
 local comm = vim.api.nvim_command
 local bind = vim.api.nvim_set_keymap

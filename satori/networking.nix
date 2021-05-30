@@ -4,6 +4,7 @@
   networking = {
     hostName = "Satori";
     wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+    firewall.allowedTCPPorts = [ 22 ];
     interfaces = {
       enp7s0.useDHCP = true;
       wlp0s20f3 = {

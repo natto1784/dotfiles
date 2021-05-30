@@ -5,7 +5,8 @@
     gnumake
     htop
     vim
-    libraspberrypi
+    tailscale
+    wireguard
   ];
   programs = {
     zsh = {

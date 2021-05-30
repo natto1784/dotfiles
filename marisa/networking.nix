@@ -2,6 +2,7 @@
 {
   networking = {
     hostName = "Marisa";
+    firewall.allowedTCPPorts = [ 22 80 ];
     wireless = {
       enable = false;
       iwd.enable = true;

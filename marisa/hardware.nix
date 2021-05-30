@@ -15,7 +15,13 @@
       options = [ "bind" ];
     };
 
-  swapDevices = [ ];
+  swapDevices = [
+    {
+      device = "/swapfile";
+      priority = 0;
+      size = 10240;
+    }
+  ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
   hardware.firmware = [ pkgs.raspberrypiWirelessFirmware ];
