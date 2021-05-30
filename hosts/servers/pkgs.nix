@@ -5,7 +5,6 @@
     gnumake
     htop
     vim
-    tailscale
     wireguard
   ];
   programs = {

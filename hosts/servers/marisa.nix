@@ -2,15 +2,14 @@
 {
   imports = 
   [
- #   <nixpkgs/nixos/modules/profiles/all-hardware.nix>
-    ./marisa/pkgs.nix
+    ./pkgs.nix
+    ./stuff.nix
     ./marisa/networking.nix
-    ./marisa/stuff.nix
     ./marisa/hardware.nix
     ./marisa/boot.nix
     ./marisa/services.nix
     ./marisa/cachix.nix
-    ./configs/nvim.nix
+    ../../configs/nvim.nix
   ];
   system.stateVersion = "21.05";
 }

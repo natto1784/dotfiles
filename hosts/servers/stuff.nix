@@ -19,9 +19,6 @@
       ];
     };
   };
-  fonts.fonts = with pkgs; [
-    fira-mono
-  ];
   documentation.enable = false;
   users.extraUsers.root = {
       shell = pkgs.zsh;

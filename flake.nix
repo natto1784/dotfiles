@@ -1,7 +1,7 @@
 { 
   inputs = {
-    stable.url = github:nixos/nixpkgs/nixos-20.09;
     nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
+    stable.url = github:nixos/nixpkgs/nixos-20.09;
     home-manager = {
       url = github:nix-community/home-manager;
       inputs.nixpkgs.follows = "nixpkgs";
@@ -15,7 +15,7 @@
     nvim.url = github:nix-community/neovim-nightly-overlay;
   };
 
-  outputs = inputs@{self, nixpkgs, ... }:
+  outputs = inputs@{self, nixpkgs, stable,  ... }:
   inputs.utils.lib.eachDefaultSystem (system: 
   let
     overlays = [
@@ -47,26 +47,14 @@
         homeDirectory = "/home/natto";
         username = "natto";
       };
-   /*
-     ottan = inputs.home-manager.lib.homeManagerConfiguration {
-        system = "aarch64-linux";
-        configuration = { lib, ... }: {
-          imports = [ 
-            ./home/ottan.nix 
-          ];
-          nixpkgs.overlays = self.packages.aarch64-linux.overlays;
-        };
-        homeDirectory = "/home/ottan";
-        username = "ottan";
-      };
-  */
     };
 
     nixosConfigurations = {
+      #Home laptop
       Satori = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [ 
-          ./satori.nix
+          ./hosts/personal/satori.nix
           inputs.agenix.nixosModules.age
           inputs.home-manager.nixosModules.home-manager
           {
@@ -74,23 +62,33 @@
           }
         ];
       };
+      #Home server (RPi4)
       Marisa = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [ 
-          ./marisa.nix
-          inputs.home-manager.nixosModules.home-manager
+          ./hosts/servers/marisa.nix
           {
             nixpkgs.pkgs = self.packages.aarch64-linux; 
           }
         ];
       };
+      #idk, maybe to try cross compiling Marisa on home laptop later?
       Marisus = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [ 
-          ./marisa.nix
- #         inputs.home-manager.nixosModules.home-manager
+          ./hosts/servers/marisa.nix
           {
-            nixpkgs.pkgs = self.packages.x86_64-linux // {crossSystem.config = "aarch64-unknown-linux-gnu";};
+            nixpkgs.pkgs = (self.packages.x86_64-linux) // {crossSystem.config = "aarch64-unknown-linux-gnu";};
+          }
+        ];
+      };
+      #Oracle Cloud VM
+      Remilia = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [ 
+          ./hosts/servers/remilia.nix
+          {
+            nixpkgs.pkgs = self.packages.x86_64-linux; 
           }
         ];
       };
