@@ -1,6 +1,7 @@
 {config, ...}:
 {
   boot = {
+    kernel.sysctl."net.ipv4.ip_forward" = 1;
     initrd.kernelModules = [ "bochs_drm" ];
     initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "virtio_scsi" ];
     kernelModules = [ "kvm-amd" ];
