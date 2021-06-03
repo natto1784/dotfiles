@@ -1,4 +1,4 @@
-{lib, config, ...}:
+{config, pkgs, ...}:
 {
   imports = 
   [
@@ -11,5 +11,9 @@
     ./marisa/cachix.nix
     ../../configs/nvim.nix
   ];
+  environment.systemPackages = with pkgs; [
+    docker_compose
+  ];
+  virtualisation.docker.enable = true;
   system.stateVersion = "21.05";
 }

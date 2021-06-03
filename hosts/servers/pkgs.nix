@@ -2,10 +2,10 @@
 {
   environment.systemPackages = with pkgs; [
     git
-    gnumake
     htop
     vim
     wireguard
+    vault
   ];
   programs = {
     zsh = {
