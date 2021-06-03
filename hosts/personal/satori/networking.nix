@@ -19,15 +19,15 @@
       };
     };
     wireguard.interfaces.wg0 = {
-      ips = [ "100.0.0.3/32" ];
+      ips = [ "10.55.0.3/32" ];
       listenPort = 17840;
       privateKeyFile = "/var/secrets/wg";
       peers = [
         {
         #Oracle VM1
         publicKey = "z0Y2VNEWcyVQVSqRHiwmiJ5/0MgSPM+HZfEcwIccSxM=";
-        allowedIPs = [ "100.0.0.0/24" ];
-        endpoint = "140.238.230.155:17840";
+        allowedIPs = [ "10.55.0.0/24" ];
+        endpoint = "weirdnatto.in:17840";
         persistentKeepalive = 25;
         }
       ];

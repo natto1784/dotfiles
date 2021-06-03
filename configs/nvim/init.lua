@@ -125,12 +125,30 @@ bind('n', "<F6>", ":call v:lua.Repl()<CR>", {silent=true})
 
 --PLUGINS CONFIG
 
+--nvim-tree.lua
+
+vim.g.nvim_tree_auto_close = 1
+vim.g.nvim_tree_auto_ignore_ft = { "startify" }
+vim.g.nvim_tree_follow = 1
+vim.g.nvim_tree_git_hl = 1
+vim.g.nvim_tree_highlight_opened_files = 1
+vim.g.nvim_tree_width_allow_resize = 1
+vim.g.nvim_tree_lsp_diagnostics = 1
+vim.g.nvim_tree_lsp_diagnostics = 1
+vim.g.nvim_tree_window_picker_exclude = {
+    ['buftype'] = { 'terminal' }
+}
+bind('n', "<M-o>", ":NvimTreeToggle<CR>", {noremap=true, silent=true})
+--bind('n', "<Space>r", ":NvimTreeRefresh<CR>", {noremap=true, silent=true})
+--bind('n', "<Space>f", ":NvimTreeFindFile<CR>", {noremap=true, silent=true})
+
 --gruvbox
 vim.g.gruvbox_italic=1
 vim.g.gruvbox_contrast_dark="hard"
 vim.g.gruvbox_contrast_light="hard"
 set("background=dark")
 comm("colorscheme gruvbox")
+
 --floaterm
 vim.g.floaterm_keymap_toggle = '<F1>'
 vim.g.floaterm_keymap_next   = '<F2>'
@@ -142,19 +160,23 @@ vim.g.floaterm_width=1.0
 vim.g.floaterm_height=0.3
 vim.g.floaterm_shell="/usr/bin/env zsh"
 vim.g.floaterm_wintype = "split"
+
 --closetag
 vim.g.closetag_filenames = "*.html,*.xhtml,*.phtml,*.js,*.erb,*.jsx"
 vim.g.closetag_xhtml_filenames = "*.xhtml,*.jsx,*.js,*.erb"
 vim.g.closetag_emptyTags_caseSensitive = 1
 vim.g.closetag_shortcut = '>'
+
 --nerdcommenter
 bind('n',"<C-c>","<plug>NERDCommenterToggle", {noremap=true, silent=true})
 bind('n',"<C-d>","<plug>NERDCommenterSexy", {noremap=true, silent=true})
+
 --barbar
 bind('n', "<M-,>", ":BufferPrevious<CR>", {silent=true, noremap=true})
 bind('n', "<M-.>", ":BufferNext<CR>", {silent=true, noremap=true})
 bind('n', "<M-<>", ":BufferMovePrevious<CR>", {silent=true, noremap=true})
 bind('n', "<M->>", ":BufferMoveNext<CR>", {silent=true, noremap=true})
+bind('n', "<M-w>", ":BufferClose<CR>", {silent=true, noremap=true})
 for i = 1,8,1
 do
     bind('n', string.format("<M-%d>", i), string.format(":BufferGoto %d<CR>", i), {silent=true, noremap=true})
@@ -163,7 +185,7 @@ end
 --lsp and compe stuff i got from various places
 vim.api.nvim_buf_set_keymap(0, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', {silent=true, noremap=true})
 vim.api.nvim_buf_set_keymap(0, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', {silent=true, noremap=true})
-vim.api.nvim_buf_set_keymap(0, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', {silent=true, noremap=true})
+vim.api.nvim_buf_set_keymap(0, 'n', 'gk', '<Cmd>lua vim.lsp.buf.hover()<CR>', {silent=true, noremap=true})
 vim.api.nvim_buf_set_keymap(0, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', {silent=true, noremap=true})
 vim.api.nvim_buf_set_keymap(0, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', {silent=true, noremap=true})
 vim.api.nvim_buf_set_keymap(0, 'n', "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", {silent=true, noremap=true})

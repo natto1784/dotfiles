@@ -18,8 +18,9 @@
           nvim-lspconfig
           barbar-nvim
           nvim-web-devicons
+          vim-rooter
           vim-polyglot
-          coc-explorer
+          nvim-tree-lua
           (gruvbox.overrideAttrs (oa: { patches = [ ./nvim/gruvbox.patch ]; }))
         ];
       };
