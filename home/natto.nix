@@ -71,7 +71,6 @@ in
       glxinfo
       sxiv
       vim
-      w3m
       feh
       dwm
       dmenu

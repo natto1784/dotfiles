@@ -11,7 +11,7 @@
       ./common/nvidia-offload.nix
       ./common/pipewire.nix
       ./common/xorg.nix
-      ./configs/nvim.nix
+      ../../configs/nvim.nix
     ];
   system.stateVersion = "20.09";
 }

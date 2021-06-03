@@ -79,6 +79,8 @@ bind('n', "<C-m>", "<C-w>h", {noremap=true})
 bind('n', "<C-n>", "<C-w>j", {noremap=true})
 bind('n', "<C-e>", "<C-w>k", {noremap=true})
 bind('n', "<C-i>", "<C-w>l", {noremap=true})
+bind('n', "<C-v>", ":vsplit<CR>", {noremap=true, silent=true})
+bind('n', "<C-h>", ":split<CR>", {noremap=true, silent=true})
 
 --RUN AND REPL (using vim-floaterm)
 

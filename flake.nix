@@ -13,6 +13,7 @@
     agenix.url = github:ryantm/agenix;
     utils.url = github:numtide/flake-utils;
     nvim.url = github:nix-community/neovim-nightly-overlay;
+    mailserver.url = gitlab:simple-nixos-mailserver/nixos-mailserver;
   };
 
   outputs = inputs@{self, nixpkgs, stable,  ... }:
@@ -26,7 +27,10 @@
   {
     packages = import nixpkgs {
       inherit system;
-      overlays = overlays ++ [ inputs.nur.overlay inputs.nvim.overlay ];
+      overlays = overlays ++ [ 
+        inputs.nur.overlay 
+        inputs.nvim.overlay 
+      ];
       config.allowUnfree = true;
       config.allowBroken = true;
     };
@@ -67,6 +71,7 @@
         system = "aarch64-linux";
         modules = [ 
           ./hosts/servers/marisa.nix
+          inputs.mailserver.nixosModules.mailserver
           {
             nixpkgs.pkgs = self.packages.aarch64-linux; 
           }

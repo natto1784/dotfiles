@@ -10,7 +10,6 @@
         start = [
           auto-pairs 
           vim-floaterm 
-          vim-rooter
           vim-closetag
           vim-floaterm
           nerdcommenter
@@ -20,8 +19,8 @@
           barbar-nvim
           nvim-web-devicons
           vim-polyglot
+          coc-explorer
           (gruvbox.overrideAttrs (oa: { patches = [ ./nvim/gruvbox.patch ]; }))
- #         (gruvbox.overrideAttrs (oa: { src = pkgs.fetchFromGitHub{} }))
         ];
       };
     };

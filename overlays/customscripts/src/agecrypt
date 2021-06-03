@@ -13,7 +13,6 @@ fi
 keys=""
 for x in ~/.ssh/*.pub
 do 
-    keys= "$keys -r $(cat 'x')"
+    keys="$keys -r \"$(cat "$x")\""
 done
-echo "Encrypting with \n'$keys'"
-rage -o "$TARGET" "$keys" "$1"
+echo rage -o $TARGET $keys $FILE

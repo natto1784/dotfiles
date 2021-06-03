@@ -20,7 +20,10 @@
       package = pkgs.mysql;
       dataDir = "/var/db";
     };
-    sshd.enable = true;
+    openssh = {
+      enable = true;
+      permitRootLogin = "yes";
+    };
  /*   vault = {
       enable = true;
       storageBackend = "mysql";
@@ -30,7 +33,7 @@
   systemd.services = {
     tor.wantedBy = lib.mkForce [];
     logmein-hamachi.wantedBy = lib.mkForce [];
-    sshd.wantedBy = lib.mkForce [];
+    openssh.wantedBy = lib.mkForce [];
     mysql.wantedBy = lib.mkForce [];
     #printing.wantedBy = lib.mkForce [];
     #vault.wantedBy = lib.mkForce [];

@@ -10,8 +10,8 @@
       package = pkgs.firefox-bin;
       profiles.natto = {
         name = "natto";
-        userChrome = builtins.readFile ../config/firefox/userChrome.css;
-        userContent = builtins.readFile ../config/firefox/userContent.css;
+ #       userChrome = builtins.readFile ../config/firefox/userChrome.css;
+ #       userContent = builtins.readFile ../config/firefox/userContent.css;
       };
     };
     zathura = {
