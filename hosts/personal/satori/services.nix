@@ -24,11 +24,34 @@
       enable = true;
       permitRootLogin = "yes";
     };
- /*   vault = {
+    vault-agent = {
       enable = true;
-      storageBackend = "mysql";
-      storagePath = "/var/db";
-    };*/
+      settings = {
+        vault = {
+          address = "https://10.55.0.2:8800";
+          client_cert = "/var/vault/cert.pem";
+          client_key = "/var/vault/key.pem";
+        };
+        auto_auth = {
+          method = [
+            {
+              "cert" = {
+                name = "Satori";
+              };
+            }
+          ];
+        };
+        template = [
+          {
+            source = pkgs.writeText "wg.tpl" ''
+              {{ with secret "kv/systems/Satori/wg" }}{{ .Data.data.private }}{{ end }}
+            '';
+            destination = "/var/secrets/wg.key";
+          }
+        ];
+      };
+    };
+
   };
   systemd.services = {
     tor.wantedBy = lib.mkForce [];
@@ -38,4 +61,5 @@
     #printing.wantedBy = lib.mkForce [];
     #vault.wantedBy = lib.mkForce [];
   };
+  security.pki.certificateFiles = [ ../../../cert.pem ];
 }

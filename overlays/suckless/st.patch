@@ -1,5 +1,5 @@
 diff --color -u a/config.def.h b/config.def.h
---- a/config.def.h	2020-06-19 14:59:45.000000000 +0530
+--- a/config.def.h	2021-05-28 03:15:40.807354500 +0530
 +++ b/config.def.h	2021-05-21 05:21:13.476454500 +0530
 @@ -3,9 +3,10 @@
  /*
@@ -985,7 +985,7 @@ diff --color -u a/win.h b/win.h
  void xsetmode(int, unsigned int);
 diff --color -u a/x.c b/x.c
 --- a/x.c	2020-06-19 14:59:45.000000000 +0530
-+++ b/x.c	2021-05-21 05:20:09.551000300 +0530
++++ b/x.c	2021-06-05 02:08:06.403477337 +0530
 @@ -93,7 +93,7 @@
  	Window win;
  	Drawable buf;
@@ -1117,4 +1117,13 @@ diff --color -u a/x.c b/x.c
  xsettitle(char *p)
  {
  	XTextProperty prop;
+@@ -1595,6 +1675,8 @@
+ int
+ xstartdraw(void)
+ {
++	if (IS_SET(MODE_VISIBLE))
++		XCopyArea(xw.dpy, xw.win, xw.buf, dc.gc, 0, 0, win.w, win.h, 0, 0);
+ 	return IS_SET(MODE_VISIBLE);
+ }
+ 
 Only in b: x.c.orig

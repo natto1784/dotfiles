@@ -58,6 +58,7 @@
       Satori = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [ 
+          ./modules/vault-agent.nix
           ./hosts/personal/satori.nix
           inputs.agenix.nixosModules.age
           inputs.home-manager.nixosModules.home-manager
