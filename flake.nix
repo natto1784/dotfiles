@@ -70,6 +70,7 @@
       Marisa = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [ 
+          ./modules/vault-agent.nix
           ./hosts/servers/marisa.nix
           inputs.mailserver.nixosModules.mailserver
           {

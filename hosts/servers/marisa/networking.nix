@@ -3,7 +3,7 @@
   networking = {
     hostName = "Marisa";
     firewall = {
-      allowedTCPPorts = [ 22 80 8000 6060 5001 ];
+      allowedTCPPorts = [ 22 80 6060 5001 8800 ];
       allowedUDPPorts = [ 17840 ];
     };
     wireless = {
@@ -20,17 +20,15 @@
       };
     };
     wireguard.interfaces.wg0 = {
-      ips = [ "100.0.0.2/24" ];
+      ips = [ "10.55.0.2/24" ];
       listenPort = 17840;
-#       postSetup = "${pkgs.iproute}/bin/ip route add weirdnatto.in via 192.168.0.1";
-#       postShutdown = "${pkgs.iproute}/bin/ip route del weirdnatto.in via 192.168.0.1";
-      privateKeyFile = "/var/secrets/wg";
+      privateKeyFile = "/var/secrets/wg.key";
       peers = [
         {
           #Oracle VM1
           publicKey = "z0Y2VNEWcyVQVSqRHiwmiJ5/0MgSPM+HZfEcwIccSxM=";
-          allowedIPs = [ "100.0.0.0/24" ];
-          endpoint = "140.238.230.155:17840";
+          allowedIPs = [ "10.55.0.0/24" ];
+          endpoint = "weirdnatto.in:17840";
           persistentKeepalive = 25;
         }
       ];
