@@ -6,7 +6,12 @@
     firewall = {
       interfaces = {
         ens3 = {
-          allowedTCPPorts = [ 22 80 443 ];
+          allowedTCPPorts = [ 
+            22
+            80 81
+            443 444
+            993 465 143 25 
+          ];
           allowedUDPPorts = [ 17840 ];
         };
       };
@@ -33,7 +38,7 @@
           ${pkgs.iptables}/bin/iptables -D FORWARD -i wg0 -j ACCEPT
           ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.55.0.0/24 -o ${config.networking.nat.externalInterface} -j MASQUERADE
         '';
-        privateKeyFile = "/var/secrets/wg";
+        privateKeyFile = "/var/secrets/wg.key";
         peers = [
           {
             publicKey = "m9SSpkj+r2QY4YEUMEoTkbOI/L7C39Kh6m45QZ5mkw4=";

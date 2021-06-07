@@ -73,7 +73,7 @@
         modules = [ 
           ./modules/vault-agent.nix
           ./hosts/servers/marisa.nix
-          inputs.mailserver.nixosModules.mailserver
+          #inputs.mailserver.nixosModules.mailserver
           {
             nixpkgs.pkgs = self.packages.aarch64-linux; 
           }
@@ -93,7 +93,9 @@
       Remilia = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [ 
+          ./modules/vault-agent.nix
           ./hosts/servers/remilia.nix
+          inputs.mailserver.nixosModules.mailserver
           {
             nixpkgs.pkgs = self.packages.x86_64-linux; 
           }

@@ -9,6 +9,7 @@
     ./remilia/boot.nix
     ./remilia/services.nix
     ./remilia/builder.nix
+    ./remilia/mailserver.nix
     ../../configs/nvim.nix
   ];
  # programs.gnupg.agent.enable = lib.mkForce false;
