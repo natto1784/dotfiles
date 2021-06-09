@@ -1,10 +1,4 @@
-require'lspconfig'.rust_analyzer.setup{}
-require'lspconfig'.tsserver.setup{}
-require'lspconfig'.clangd.setup{}
-require'lspconfig'.tsserver.setup{}
-require'lspconfig'.jedi_language_server.setup{}
-require'lspconfig'.purescriptls.setup{}
-
+local nvim_lsp = require('lspconfig')
 local comm = vim.api.nvim_command
 local bind = vim.api.nvim_set_keymap
 local set = function(a) comm("set " .. a) end
@@ -182,13 +176,24 @@ do
     bind('n', string.format("<M-%d>", i), string.format(":BufferGoto %d<CR>", i), {silent=true, noremap=true})
 end
 
+--presence.nvim
+vim.g.presence_neovim_image_text = "Ballin"
+vim.g.presence_main_image = "file"
+--vim.g.presence_log_level = "debug"
+
 --lsp and compe stuff i got from various places
-vim.api.nvim_buf_set_keymap(0, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', {silent=true, noremap=true})
-vim.api.nvim_buf_set_keymap(0, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', {silent=true, noremap=true})
-vim.api.nvim_buf_set_keymap(0, 'n', 'gk', '<Cmd>lua vim.lsp.buf.hover()<CR>', {silent=true, noremap=true})
-vim.api.nvim_buf_set_keymap(0, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', {silent=true, noremap=true})
-vim.api.nvim_buf_set_keymap(0, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', {silent=true, noremap=true})
-vim.api.nvim_buf_set_keymap(0, 'n', "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", {silent=true, noremap=true})
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', {silent=true, noremap=true})
+  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', {silent=true, noremap=true})
+  buf_set_keymap('n', 'gk', '<Cmd>lua vim.lsp.buf.hover()<CR>', {silent=true, noremap=true})
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', {silent=true, noremap=true})
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', {silent=true, noremap=true})
+  buf_set_keymap('n', "<M-f>", "<cmd>lua vim.lsp.buf.formatting()<CR>", {silent=true, noremap=true})
+end
+
 require'compe'.setup {
   enabled = true;
   autocomplete = true;
@@ -308,3 +313,8 @@ local statusline = {
 }
 vim.o.statusline = table.concat(statusline)
 vim.api.nvim_set_option("termguicolors", true)
+
+local servers = { "clangd", "rust_analyzer", "tsserver", "jedi_language_server" }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup { on_attach = on_attach }
+end
