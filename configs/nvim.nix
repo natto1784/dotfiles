@@ -31,6 +31,7 @@
               rev = "f4c1e227be0a0c863c2de201155401950eda572e";
               sha256 = "08s4az1gv6r5sl0jqkaf4yzibglibb7n2sivh7qccj8dz8id3883";
             };
+            patches = [./nvim/test.patch];
           })
         ];
       };

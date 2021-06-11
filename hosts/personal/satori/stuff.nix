@@ -20,14 +20,8 @@
       ];
     };
   };
-  nix.gc = {
-    automatic = false;
-    dates = "20:15";
-  };
   fonts.fonts = with pkgs; [
     fira-mono
-    font-awesome
-    vistafonts
     noto-fonts-cjk
   ];
   users.users.natto = {

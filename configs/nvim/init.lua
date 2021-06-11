@@ -179,7 +179,6 @@ end
 --presence.nvim
 vim.g.presence_neovim_image_text = "Ballin"
 vim.g.presence_main_image = "file"
---vim.g.presence_log_level = "debug"
 
 --lsp and compe stuff i got from various places
 local on_attach = function(client, bufnr)

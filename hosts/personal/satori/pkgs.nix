@@ -31,12 +31,41 @@
     };
     zsh = {
       enable = true;
-      promptInit = "PROMPT='%B%F{cyan}%~ %F{blue}〉%f%b'\nRPROMPT='%B%F{cyan}%n%f@%F{red}%m%b'";
+      promptInit = ''
+      RPROMPT='%B%F{cyan}%n%f@%F{red}%m%b'
+      function preexec() {
+        timer=$(date +%s%3N)
+      }
+      function precmd() {
+      if [ $timer ]; then
+        now=$(date +%s%3N)
+        elapsed=$(($now-$timer))
+        unset timer
+        unit="ms"
+        if [ $elapsed -gt 1000 ]; then
+          elapsed=$(echo "scale=1; $elapsed/1000" | ${pkgs.bc}/bin/bc -l)
+          unit="s"
+        fi
+        if (($(echo "$elapsed > 60" | bc -l ))); then
+          elapsed=$(echo "scale=2; $elapsed/60" | ${pkgs.bc}/bin/bc -l)
+          unit="m"
+        fi
+        RPROMPT='%B%F{cyan}%n%f@%F{red}%m %F{yellow}~%f %F{magenta}$elapsed $unit%f%b '
+      fi
+      }
+      '';
       histSize = 12000;
       enableCompletion = true;
+      enableBashCompletion = true;
       syntaxHighlighting.enable = true;
-      autosuggestions. enable = true;
-      ohMyZsh.enable = true;
+      autosuggestions = {
+        enable = true;
+        highlightStyle = "fg=yellow,bold";
+      };
+      ohMyZsh = {
+        enable = true;
+        theme = "awesomepanda";
+      };
     };
     dconf.enable = true;
     adb.enable = true;
