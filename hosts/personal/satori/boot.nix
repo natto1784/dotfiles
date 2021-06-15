@@ -2,12 +2,7 @@
 
 {
   boot = {
-    kernelPackages = pkgs.linuxPackagesFor (pkgs.linux_zen.override {
-      structuredExtraConfig = with lib.kernel; {
-        CONFIG_SCHED_MUQSS = yes;
-      };
-      ignoreConfigErrors = true;
-      });
+    kernelPackages = pkgs.linuxPackages_lqx;
     initrd={
       availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod"];
       kernelModules = [ ];

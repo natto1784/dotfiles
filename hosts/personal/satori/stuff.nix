@@ -23,6 +23,8 @@
   fonts.fonts = with pkgs; [
     fira-mono
     noto-fonts-cjk
+    nerdfonts
+    font-awesome
   ];
   users.users.natto = {
     isNormalUser = true;

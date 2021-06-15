@@ -72,10 +72,11 @@ in
       sxiv
       vim
       feh
-      dwm
       dmenu
       st
       neofetch 
+      xmobar
+      xdotool
     ];
 
     file = {

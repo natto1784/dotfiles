@@ -41,6 +41,7 @@ set("lazyredraw")
 set("timeoutlen=100")
 set("clipboard=unnamedplus")
 
+
 --KEYBINDS
 
 --Colemak-DH bind fuction for hjkl [mnei]) 
@@ -133,8 +134,8 @@ vim.g.nvim_tree_window_picker_exclude = {
     ['buftype'] = { 'terminal' }
 }
 bind('n', "<M-o>", ":NvimTreeToggle<CR>", {noremap=true, silent=true})
---bind('n', "<Space>r", ":NvimTreeRefresh<CR>", {noremap=true, silent=true})
---bind('n', "<Space>f", ":NvimTreeFindFile<CR>", {noremap=true, silent=true})
+bind('n', "<Space>r", ":NvimTreeRefresh<CR>", {noremap=true, silent=true})
+bind('n', "<Space>f", ":NvimTreeFindFile<CR>", {noremap=true, silent=true})
 
 --gruvbox
 vim.g.gruvbox_italic=1
@@ -317,3 +318,5 @@ local servers = { "clangd", "rust_analyzer", "tsserver", "jedi_language_server" 
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { on_attach = on_attach }
 end
+
+require'colorizer'.setup()

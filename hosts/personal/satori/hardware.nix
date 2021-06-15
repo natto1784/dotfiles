@@ -43,6 +43,12 @@
       options = ["compress-force=zstd:1"];
     };
   swapDevices = [ {device = "/dev/nvme0n1p7";} ];
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    memoryPercent = 50;
+    priority = -1;
+  };
   powerManagement = {
     enable = true;
     cpuFreqGovernor = "powersave";

@@ -10,8 +10,8 @@ in
         ''
           shadow = true;
           shadow-radius = 20;
-          shadow-offset-x = -20;
-          shadow-offset-y = -20;
+          shadow-offset-x = 30;
+          shadow-offset-y = 30;
           blurExclude = [ "class_g = 'dwm'" ]
 
           inactive-opacity = 0.92;
@@ -36,7 +36,7 @@ in
             popup_menu={opacity=0.8;};
             dropdown_menu={opacity=0.8;};
           };
-          shadow-exclude = ["x = 0 && y = 0 && override_redirect = true"]
+          shadow-exclude = ["x = 0 && y = 0 && override_redirect = true", "class_g = 'xmobar' && argb", "class_g = 'stalonetray' && argb"]
           '';
 
       };
@@ -74,6 +74,19 @@ in
           filesystem_charset "UTF-8"
           '';
         network.startWhenNeeded = true;
+      };
+      stalonetray = {
+        enable = true;
+        config = {
+          geometry = "5x1+1805";
+          window_type = "dock";
+          sticky = true;
+          icon_size = 23;
+          background = "#1d2021";
+        };
+        extraConfig = ''
+          kludges force_icons_size
+          '';
       };
     };
   }

@@ -6,9 +6,10 @@
     package = pkgs.neovim-nightly;
     defaultEditor = true;
     configure = {
-      customRC ="lua << EOF\n" + builtins.readFile ./nvim/init.lua + "\nEOF\n";
+      customRC = "lua << EOF\n" + builtins.readFile ./nvim/init.lua + "\nEOF\n";
       packages.myVimPackage = with pkgs.vimPlugins; {
         start = [
+          nvim-colorizer-lua
           auto-pairs 
           vim-floaterm 
           vim-closetag
@@ -22,6 +23,7 @@
           vim-rooter
           vim-polyglot
           nvim-tree-lua
+          indentLine
           (gruvbox.overrideAttrs (oa: { patches = [ ./nvim/gruvbox.patch ]; }))
           (pkgs.vimUtils.buildVimPlugin {
             name = "presence-nvim";
@@ -38,4 +40,3 @@
     };
   };
 }
-          
