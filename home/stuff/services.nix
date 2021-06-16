@@ -83,6 +83,7 @@ in
           sticky = true;
           icon_size = 23;
           background = "#1d2021";
+          icon_gravity = "E";
         };
         extraConfig = ''
           kludges force_icons_size

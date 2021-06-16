@@ -16,6 +16,7 @@
         config = ../config/xmonad/xmonad.hs;
         libFiles = {
           "xmobar.hs" = ../config/xmonad/xmobar.hs;
+          "nixos.xpm" = ../config/xmonad/nixos.xpm;
         };
       };
     };

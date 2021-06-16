@@ -80,13 +80,17 @@ in
     ];
 
     file = {
-      dwm-autostart = {
+       dwm-autostart = {
         source = ./config/dwm/autostart.sh;
         target = "${home}/.dwm/autostart.sh";
       };
       dwm-status = {
         source = ./config/dwm/bruhstatus.sh;
         target = "${home}/.dwm/bruhstatus.sh";
+      };
+      dunstrc = {
+        source = ./config/dunst/dunstrc;
+        target = "${home}/.config/dunst/dunstrc";
       };
     };
   };
