@@ -24,6 +24,6 @@
         configurationName = "nixbruh";
       };
     };
-    kernelParams = [ "nvidia-drm.modeset=1" "intel_pstate=active"]; 
+    kernelParams = [ "nvidia-drm.modeset=1" "intel_pstate=active" ]; 
   };
 }

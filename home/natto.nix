@@ -8,7 +8,6 @@ in
     ./stuff/xsession.nix
     ./stuff/secret.nix
     ./stuff/services.nix
-    ./stuff/gtk.nix
   ];
   nixpkgs = {
     config = {
@@ -77,6 +76,8 @@ in
       neofetch 
       xmobar
       xdotool
+      arc-theme
+      arc-icon-theme
     ];
 
     file = {

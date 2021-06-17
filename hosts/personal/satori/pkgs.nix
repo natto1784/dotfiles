@@ -69,6 +69,7 @@
     };
     dconf.enable = true;
     adb.enable = true;
+    light.enable = true;
   };
   nix = {
     package = pkgs.nixUnstable;

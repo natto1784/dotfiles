@@ -1,11 +1,8 @@
-xkb_keymap {
-	xkb_keycodes  { include "evdev+aliases(qwerty)"	};
-	xkb_types     { include "complete"	};
-	xkb_compat    { include "complete"	};
-	xkb_symbols   
-  {
-      include "pc+us(colemak)+inet(evdev)+terminate(ctrl_alt_bksp)"	
-      key <TLDE> { [        grave,   asciitilde,      dead_tilde,       asciitilde ] };
+default partial alphanumeric_keys modifier_keys
+xkb_symbols "basic" {
+    name[Group1] = "English (US Colemak-DH)";
+
+    key <TLDE> { [        grave,   asciitilde,      dead_tilde,       asciitilde ] };
     key <AE01> { [            1,       exclam,      exclamdown,      onesuperior ] };
     key <AE02> { [            2,           at,       masculine,      twosuperior ] };
     key <AE03> { [            3,   numbersign,     ordfeminine,    threesuperior ] };
@@ -56,7 +53,12 @@ xkb_keymap {
     key <LSGT> { [        minus,   underscore,          endash,           emdash ] };
     key <SPCE> { [        space,        space,           space,     nobreakspace ] };
     include "level3(ralt_switch)"
-		};
-
-	xkb_geometry  { include "pc(pc104)"	};
+};
+    
+partial alphanumeric_keys
+xkb_symbols "ganda-dh" {
+    include "us-colemak(basic)"
+    name[Group1] = "English (US Ganda-DH)";
+    key <CAPS> { [    BackSpace,    BackSpace,       BackSpace,        BackSpace ] };
+    include "level3(ralt_switch)"
 };

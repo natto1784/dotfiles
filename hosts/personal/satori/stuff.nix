@@ -32,6 +32,12 @@
     isNormalUser = true;
     shell = pkgs.zsh;
     home = "/home/natto";
-    extraGroups = [ "wheel" "adbusers" ];
+    extraGroups = [ "wheel" "adbusers" "video" ];
+  };
+  i18n.inputMethod = {
+ #   enabled = "fcitx5";
+ #  fcitx5.addons = with pkgs; [ fcitx5-m17n fcitx5-mozc ];
+    enabled = "fcitx";
+    fcitx.engines = with pkgs.fcitx-engines; [ m17n mozc ];
   };
 }

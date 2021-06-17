@@ -12,9 +12,9 @@
       enable = true;
       libinput= {
         enable = true;
- #       mouse = {
- #         accelSpeed = "0";
- #       };
+        mouse = {
+          accelSpeed = "0";
+        };
         touchpad = {
           middleEmulation = false;
           clickMethod = "buttonareas";
@@ -28,15 +28,17 @@
         }; 
 #       sessionCommands = "${pkgs.xorg.xkbcomp}/bin/xkbcomp ${compiledLayout} $DISPLAY";
       };
-#      extraLayouts = {
-#        colemak-dh = {
-#          description = "Colemak with MOD-dh";
-#          languages = [ "eng" ];
-#          symbolsFile = ./colemak-dh;
-#        };
-#      };
-      layout = "us";
-      xkbVariant = "colemak";
+      extraLayouts = {
+        us-colemak = {
+          description = "Colemak with MOD-dh";
+          languages = [ "eng" ];
+          symbolsFile = ./colemak-dh;
+        };
+      };
+      layout = "us-colemak";
+      xkbVariant = "basic";
+      autoRepeatDelay = 320;
+      autoRepeatInterval = 30;
     };
   };
 }

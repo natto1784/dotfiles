@@ -12,6 +12,7 @@ import XMonad.Layout.ThreeColumns
 import XMonad.Layout.ResizableTile
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.Run (spawnPipe)
+import Graphics.X11.ExtraTypes.XF86
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
@@ -75,6 +76,22 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   , ((modMask .|. shiftMask, xK_q),
      kill)
+
+  , ((modMask .|. mod1Mask, xK_0), spawn "light -A 5")
+
+  , ((modMask .|. mod1Mask, xK_9), spawn "light -U 5")
+
+  , ((modMask .|. shiftMask, xK_F1),
+     spawn "setxkbmap us-colemak")
+
+  , ((modMask .|. shiftMask, xK_F2),
+     spawn "setxkbmap us basic")
+
+  , ((modMask .|. shiftMask, xK_F3),
+     spawn "setxkbmap in deva")
+
+  , ((modMask .|. shiftMask, xK_F4),
+     spawn "setxkbmap in guru")
 
   , ((modMask, xK_space),
      sendMessage NextLayout)
