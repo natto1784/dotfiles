@@ -2,7 +2,7 @@
 
 {
   boot = {
-    kernelPackages = pkgs.linuxPackages_lqx;
+ #   kernelPackages = pkgs.linuxPackages_lqx;
     initrd={
       availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod"];
       kernelModules = [ ];
