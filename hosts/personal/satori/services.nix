@@ -15,41 +15,9 @@
   services = {
     tor.enable = true;
     logmein-hamachi.enable = true;
-    mysql = {
-      enable = true;
-      package = pkgs.mysql;
-      dataDir = "/var/db";
-    };
     openssh = {
       enable = true;
       permitRootLogin = "yes";
-    };
-    vault-agent = {
-      enable = true;
-      settings = {
-        vault = {
-          address = "https://10.55.0.2:8800";
-          client_cert = "/var/vault/cert.pem";
-          client_key = "/var/vault/key.pem";
-        };
-        auto_auth = {
-          method = [
-            {
-              "cert" = {
-                name = "Satori";
-              };
-            }
-          ];
-        };
-        template = [
-          {
-            source = pkgs.writeText "wg.tpl" ''
-              {{ with secret "kv/systems/Satori/wg" }}{{ .Data.data.private }}{{ end }}
-            '';
-            destination = "/var/secrets/wg.key";
-          }
-        ];
-      };
     };
     btrfs.autoScrub.enable = true;
     udev.extraRules = ''
@@ -60,9 +28,14 @@
     tor.wantedBy = lib.mkForce [];
     logmein-hamachi.wantedBy = lib.mkForce [];
     openssh.wantedBy = lib.mkForce [];
-    mysql.wantedBy = lib.mkForce [];
     #printing.wantedBy = lib.mkForce [];
     #vault.wantedBy = lib.mkForce [];
   };
   security.pki.certificateFiles = [ ../../../cert.pem ];
+ /* virtualisation.libvirtd = {
+    enable = true;
+    onBoot = "ignore";
+    onShutdown = "shutdown";
+    qemuRunAsRoot = false;
+  };*/
 }

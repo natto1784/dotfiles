@@ -1,7 +1,6 @@
 local nvim_lsp = require('lspconfig')
 local comm = vim.api.nvim_command
 local bind = vim.api.nvim_set_keymap
-local set = function(a) comm("set " .. a) end
 local setvar = vim.api.nvim_set_var
 local getvar = vim.api.nvim_get_var
 
@@ -13,33 +12,34 @@ end
 
 comm("syntax enable")
 comm("syntax sync minlines=100")
-set("cmdheight=1")
-set("modifiable")
-set("cursorline")
-set("hidden")
-set("encoding=utf-8")
-set("pumheight=10")
-set("fileencoding=utf-8")
-set("ruler")
-set("cmdheight=1")
-set("mouse=a")
-set("splitbelow")
-set("splitright")
-set("nowrap")
-set("conceallevel=0")
-set("tabstop=4")
-set("shiftwidth=4")
-set("smarttab")
-set("expandtab")
-set("smartindent")
-set("autoindent")
-set("number")
-set("relativenumber")
-set("showtabline=2")
-set("updatetime=300")
-set("lazyredraw")
-set("timeoutlen=100")
-set("clipboard=unnamedplus")
+vim.o.cmdheight = 1
+vim.o.modifiable = true
+vim.o.cursorline = true
+vim.o.hidden = true
+vim.o.encoding= "utf-8"
+vim.o.pumheight = 10
+vim.o.fileencoding = "utf-8"
+vim.o.ruler = true
+vim.o.cmdheight = 1
+vim.o.mouse = "a"
+vim.o.splitbelow = true
+vim.o.splitright = true
+comm("set nowrap")
+vim.o.conceallevel = 0
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.smarttab = true
+vim.o.expandtab = true
+vim.o.smartindent = true
+vim.o.autoindent = true
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.showtabline = 2
+vim.o.updatetime = 300
+vim.o.lazyredraw = true
+vim.o.timeoutlen = 100
+vim.o.clipboard = "unnamedplus"
+vim.o.completeopt = "menuone,noselect"
 
 
 --KEYBINDS
@@ -74,8 +74,8 @@ bind('n', "<C-m>", "<C-w>h", {noremap=true})
 bind('n', "<C-n>", "<C-w>j", {noremap=true})
 bind('n', "<C-e>", "<C-w>k", {noremap=true})
 bind('n', "<C-i>", "<C-w>l", {noremap=true})
-bind('n', "<C-v>", ":vsplit<CR>", {noremap=true, silent=true})
-bind('n', "<C-h>", ":split<CR>", {noremap=true, silent=true})
+bind('n', "<M-v>", ":vsplit<CR>", {noremap=true, silent=true})
+bind('n', "<M-h>", ":split<CR>", {noremap=true, silent=true})
 
 --RUN AND REPL (using vim-floaterm)
 
@@ -141,7 +141,7 @@ bind('n', "<Space>f", ":NvimTreeFindFile<CR>", {noremap=true, silent=true})
 vim.g.gruvbox_italic=1
 vim.g.gruvbox_contrast_dark="hard"
 vim.g.gruvbox_contrast_light="hard"
-set("background=dark")
+vim.o.background="dark"
 comm("colorscheme gruvbox")
 
 --floaterm
@@ -151,10 +151,10 @@ vim.g.floaterm_keymap_prev   = '<F3>'
 vim.g.floaterm_keymap_new    = '<F4>'
 vim.g.floaterm_gitcommit='floaterm'
 vim.g.floaterm_autoinsert=1
-vim.g.floaterm_width=1.0
-vim.g.floaterm_height=0.3
 vim.g.floaterm_shell="/usr/bin/env zsh"
-vim.g.floaterm_wintype = "split"
+vim.g.floaterm_position="bottom"
+vim.g.floaterm_width=0.99
+vim.g.floaterm_height=0.6
 
 --closetag
 vim.g.closetag_filenames = "*.html,*.xhtml,*.phtml,*.js,*.erb,*.jsx"
@@ -237,33 +237,37 @@ end
 _G.tab_complete = function()
   if vim.fn.pumvisible() == 1 then
     return t "<C-n>"
+  elseif vim.fn.call("vsnip#available", {1}) == 1 then
+    return t "<Plug>(vsnip-expand-or-jump)"
   elseif check_back_space() then
     return t "<Tab>"
   else
     return vim.fn['compe#complete']()
   end
 end
-
 _G.s_tab_complete = function()
   if vim.fn.pumvisible() == 1 then
-    return t "<C-p>"
+    return t "<C-e>"
   elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
     return t "<Plug>(vsnip-jump-prev)"
   else
+    -- If <S-Tab> is not working in your terminal, change it to <C-h>
     return t "<S-Tab>"
   end
 end
+
 vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true, silent = true})
 vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true, silent = true})
 vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true, silent = true})
 vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true, silent = true})
+vim.api.nvim_set_keymap("i", "<CR>", "compe#confirm('<CR>')", {expr = true, silent = true})
 
-set("shortmess+=c")
+comm("set shortmess+=c")
 
 --STATUSLINE
 
-set("noruler")
-set("laststatus=2")
+comm("set noruler")
+vim.o.laststatus = 2
 local function mode()
     local mode_map = {
         ['n'] = 'normal ',
@@ -314,9 +318,19 @@ local statusline = {
 vim.o.statusline = table.concat(statusline)
 vim.api.nvim_set_option("termguicolors", true)
 
-local servers = { "clangd", "rust_analyzer", "tsserver", "jedi_language_server" }
+local servers = { "ccls", "rust_analyzer", "tsserver", "pyls", "hls"}
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.resolveSupport = {
+  properties = {
+    'documentation',
+    'detail',
+    'additionalTextEdits',
+  }
+}
+
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup { on_attach = on_attach }
+  nvim_lsp[lsp].setup { capabilities = capabilities, on_attach = on_attach }
 end
 
 require'colorizer'.setup()

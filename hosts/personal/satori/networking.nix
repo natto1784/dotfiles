@@ -4,9 +4,10 @@
   networking = {
     hostName = "Satori";
     wireless.enable = true;
+    wireless.interfaces = [ "wlp0s20f3" ];
     firewall = {
-      allowedTCPPorts = [ 22 ];
-      allowedUDPPorts = [ 17840 ];
+      allowedTCPPorts = [ 22 18172 ];
+      allowedUDPPorts = [ 22 17840 18172 ];
     };
     interfaces = {
       enp7s0.useDHCP = true;
@@ -21,7 +22,7 @@
     wireguard.interfaces.wg0 = {
       ips = [ "10.55.0.3/32" ];
       listenPort = 17840;
-      privateKeyFile = "/var/secrets/wg.key";
+      privateKeyFile = "/var/wg";
       peers = [
         {
         #Oracle VM1

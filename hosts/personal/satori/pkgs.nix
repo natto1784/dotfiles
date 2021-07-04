@@ -18,6 +18,7 @@
     gcc
     rustc
     jdk
+    virtmanager
   ];
 
   programs = {
@@ -77,5 +78,7 @@
       experimental-features = nix-command ca-references flakes
     '';
     trustedUsers = [ "root" "natto" ];
+ #   binaryCaches = ["http://152.67.11.101/" "https://cache.nixos.org/"];
+ #   binaryCachePublicKeys = ["152.67.11.101:lbEG3jz8pB5IxxjCQcZwS1a85XK5HIYN7g2E9Zw0r1M="];
   };
 }

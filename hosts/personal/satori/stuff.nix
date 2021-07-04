@@ -32,7 +32,7 @@
     isNormalUser = true;
     shell = pkgs.zsh;
     home = "/home/natto";
-    extraGroups = [ "wheel" "adbusers" "video" ];
+    extraGroups = [ "wheel" "adbusers" "video" "libvirtd" ];
   };
   i18n.inputMethod = {
  #   enabled = "fcitx5";

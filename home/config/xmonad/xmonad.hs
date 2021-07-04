@@ -12,6 +12,8 @@ import XMonad.Layout.ThreeColumns
 import XMonad.Layout.ResizableTile
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.Run (spawnPipe)
+import XMonad.Actions.FloatKeys (keysMoveWindow,
+                                 keysResizeWindow)
 import Graphics.X11.ExtraTypes.XF86
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -123,16 +125,28 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      windows W.swapUp    )
 
   , ((mod1Mask, xK_m),
-     sendMessage Shrink)
+     withFocused (keysResizeWindow (-20, 0) (0, 0)))
 
   , ((mod1Mask, xK_i),
-     sendMessage Expand)
+     withFocused (keysResizeWindow (20, 0) (0, 0)))
 
   , ((mod1Mask, xK_n),
-     sendMessage MirrorShrink)
+     withFocused (keysResizeWindow (0, 20) (0, 0)))
 
   , ((mod1Mask, xK_e),
-     sendMessage MirrorExpand)
+     withFocused (keysResizeWindow (0, -20) (0, 0)))
+
+  , ((mod1Mask .|. shiftMask, xK_m),
+     withFocused (keysMoveWindow (-40, 0)))
+
+  , ((mod1Mask .|. shiftMask, xK_i),
+     withFocused (keysMoveWindow (40, 0)))
+
+  , ((mod1Mask .|. shiftMask, xK_n),
+     withFocused (keysMoveWindow (0, 40)))
+
+  , ((mod1Mask .|. shiftMask, xK_e),
+     withFocused (keysMoveWindow (0, -40)))
 
   , ((modMask, xK_t),
      withFocused $ windows . W.sink)
@@ -154,8 +168,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
     , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
 
+
 myLayoutHook = smartSpacing 8 $ smartBorders $ avoidStruts (
-    spiral (1/1) |||
+    spiral (6/7) |||
     tabbed shrinkText tabConfig |||
     ThreeCol 1 (3/100) (1/2) |||
     Tall 1 (3/100) (1/2) |||

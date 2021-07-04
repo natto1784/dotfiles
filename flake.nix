@@ -1,22 +1,17 @@
 { 
   inputs = {
-    nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
-    stable.url = github:nixos/nixpkgs/nixos-20.09;
-    home-manager = {
-      url = github:nix-community/home-manager;
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nur = {
-      url = github:nix-community/NUR;
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixpkgs.url = github:nixos/nixpkgs/nixpkgs-unstable;
+    stable.url = github:nixos/nixpkgs/nixos-21.05;
+    master.url = github:nixos/nixpkgs/master;
+    home-manager.url = github:nix-community/home-manager;
+    nur.url = github:nix-community/NUR;
     agenix.url = github:ryantm/agenix;
     utils.url = github:numtide/flake-utils;
     nvim.url = github:nix-community/neovim-nightly-overlay;
     mailserver.url = gitlab:simple-nixos-mailserver/nixos-mailserver;
   };
 
-  outputs = inputs@{self, nixpkgs, stable,  ... }:
+  outputs = inputs@{self, nixpkgs, stable, master,  ... }:
   inputs.utils.lib.eachDefaultSystem (system: 
   let
     overlays = [
@@ -30,6 +25,9 @@
       overlays = overlays ++ [ 
         inputs.nur.overlay 
         inputs.nvim.overlay 
+        (_:_: {unstable = nixpkgs.legacyPackages.${system};})
+        (_:_: {stable = stable.legacyPackages.${system};})
+        (_:_: {master = master.legacyPackages.${system};})
       ];
       config.allowUnfree = true;
       config.allowBroken = true;
@@ -58,7 +56,6 @@
       Satori = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [ 
-          ./modules/vault-agent.nix
           ./hosts/personal/satori.nix
           inputs.agenix.nixosModules.age
           inputs.home-manager.nixosModules.home-manager
