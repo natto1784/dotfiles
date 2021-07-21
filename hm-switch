@@ -3,7 +3,7 @@
 echo "You're about to switch your home-manager configuration as '$USER'"
 read -p "Continue (y/n)?" conf
 
-if [ ${conf,,} == "n" ]; then
+if [ ${conf,,} != "y" ]; then
   echo "If this is not you, then log into your profile first!"
   exit 1
 else

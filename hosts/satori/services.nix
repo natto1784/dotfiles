@@ -31,7 +31,7 @@
     #printing.wantedBy = lib.mkForce [];
     #vault.wantedBy = lib.mkForce [];
   };
-  security.pki.certificateFiles = [ ../../../cert.pem ];
+  security.pki.certificateFiles = [ ../../cert.pem ];
  /* virtualisation.libvirtd = {
     enable = true;
     onBoot = "ignore";

@@ -10,7 +10,7 @@
     configure = {
     customRC = ''
     lua << EOF
-    ${builtins.readFile ./nvim/init.lua}
+    ${builtins.readFile ./init.lua}
     EOF
     '';
       packages.myVimPackage = with pkgs.unstable.vimPlugins; {
@@ -30,7 +30,7 @@
           vim-vsnip
           nvim-treesitter
           vim-nix
-          (gruvbox.overrideAttrs (oa: { patches = [ ./nvim/gruvbox.patch ]; }))
+          (gruvbox.overrideAttrs (oa: { patches = [ ./gruvbox.patch ]; }))
         ];
       };
     };

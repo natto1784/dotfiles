@@ -6,8 +6,7 @@
       permitRootLogin = "yes";
     };
     vault = {
-      package = pkgs.vault-bin;
-      enable = true;
+      package = pkgs.vault-bin; enable = true;
       tlsCertFile = "/var/certs/cert.pem";
       tlsKeyFile = "/var/certs/key.pem";
       address = "0.0.0.0:8800";
@@ -97,5 +96,5 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPX1HDzWpoaOcU8GDEGuDzXgxkCpyeqxRR6gLs/8JgHw"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK06ZUa9BKmZ6m+xapBjOAm10OCLzxIm8ais20wQC47m"
   ];
-  security.pki.certificateFiles = [ ../../../cert.pem ];
+  security.pki.certificateFiles = [ ../../cert.pem ];
 }

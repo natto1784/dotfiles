@@ -6,7 +6,9 @@
     vim
     wireguard
     vault
+    tree-sitter
   ];
+
   programs = {
     zsh = {
       enable = true;
@@ -24,13 +26,12 @@
       };
     };
   };
+
   nix = {
     package = pkgs.nixUnstable;
     extraOptions = ''
       experimental-features = nix-command ca-references flakes
-      builders-use-substitutes = true
     '';
     trustedUsers = [ "root" ];
   };
-  documentation.enable = false;
 }

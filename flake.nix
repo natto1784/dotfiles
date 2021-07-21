@@ -40,6 +40,22 @@
     };
   }) //
   ( 
+  let 
+    personalModules = [
+      ./modules/nvidia-offload.nix
+      ./modules/pipewire.nix
+      ./modules/xorg.nix
+    ];
+    commonModules = [
+      ./modules/nvim
+      ./modules/vault-agent.nix
+    ];
+    serverModules = [
+      ./modules/builder.nix
+      ./modules/min-pkgs.nix
+      ./modules/min-stuff.nix
+    ];
+  in
   {
     hm-configs = {
       natto = inputs.home-manager.lib.homeManagerConfiguration {
@@ -61,48 +77,44 @@
       #Home laptop
       Satori = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ 
-          ./hosts/personal/satori.nix
+        modules = [
+          ./hosts/satori
           inputs.agenix.nixosModules.age
           inputs.home-manager.nixosModules.home-manager
           {
             nixpkgs.pkgs = self.legacyPackages.x86_64-linux; 
           }
-        ];
+        ]
+        ++ personalModules
+        ++ commonModules;
       };
+
       #Home server (RPi4)
       Marisa = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
-        modules = [ 
-          ./modules/vault-agent.nix
-          ./hosts/servers/marisa.nix
+        modules = [
+          ./hosts/marisa
           #inputs.mailserver.nixosModules.mailserver
           {
             nixpkgs.pkgs = self.legacyPackages.aarch64-linux; 
           }
-        ];
+        ]
+        ++ commonModules
+        ++ serverModules;
       };
-      #idk, maybe to try cross compiling Marisa on home laptop later?
-      Marisus = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
-        modules = [ 
-          ./hosts/servers/marisa.nix
-          {
-            nixpkgs.pkgs = (self.legacyPackages.x86_64-linux) // {crossSystem.config = "aarch64-unknown-linux-gnu";};
-          }
-        ];
-      };
+
       #Oracle Cloud VM
       Remilia = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ 
-          ./modules/vault-agent.nix
-          ./hosts/servers/remilia.nix
+        modules = [
+          ./hosts/remilia
           inputs.mailserver.nixosModules.mailserver
           {
             nixpkgs.pkgs = self.legacyPackages.x86_64-linux; 
           }
-        ];
+        ]
+        ++ commonModules
+        ++ serverModules;
       };
     };
   });

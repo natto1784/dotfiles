@@ -75,5 +75,5 @@
       "git.weirdnatto.in".email = "git+acme@weirdnatto.in";    
     };
   };
-  security.pki.certificateFiles = [ ../../../cert.pem ];
+  security.pki.certificateFiles = [ ../../cert.pem ];
 }
