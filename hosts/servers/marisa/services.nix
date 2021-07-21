@@ -5,10 +5,6 @@
       enable = true;
       permitRootLogin = "yes";
     };
-    dovecot2 = {
-      enable = true;
-      enableImap = true;
-    };
     vault = {
       package = pkgs.vault-bin;
       enable = true;
@@ -42,7 +38,7 @@
         template = [
           {
             source = pkgs.writeText "gitea.tpl" ''
-              {{ with secret "kv/systems/Marisa" }}{{ .Data.data.gitea }}{{ end }}
+              {{ with secret "kv/systems/Marisa/gitea" }}{{ .Data.data.gitea }}{{ end }}
             '';
             destination = "/var/secrets/gitea.key";
           }

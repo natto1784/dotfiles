@@ -7,13 +7,10 @@
     ./marisa/networking.nix
     ./marisa/hardware.nix
     ./marisa/boot.nix
- #   ./marisa/services.nix
-    ./marisa/cachix.nix
+    ./marisa/services.nix
+    ./marisa/builder.nix
     ../../configs/nvim.nix
   ];
-  environment.systemPackages = with pkgs; [
-    docker_compose
-  ];
-  virtualisation.docker.enable = true;
+  programs.gnupg.agent.enable = pkgs.lib.mkForce false;
   system.stateVersion = "21.05";
 }
