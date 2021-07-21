@@ -10,15 +10,15 @@
     python3
     htop
     nodejs
-    wineWowPackages.staging
     wget
     ripgrep
     kbd
     cachix
     gcc
     rustc
-    jdk
+    openjdk
     virtmanager
+    tree-sitter
   ];
 
   programs = {
@@ -71,6 +71,26 @@
     dconf.enable = true;
     adb.enable = true;
     light.enable = true;
+    noisetorch.enable = true;
+    proxychains = {
+      enable = true;
+      chain.type = "dynamic";
+      proxyDNS = true;
+      proxies = {
+        remilia = {
+          enable = true;
+          type = "socks5";
+          host = "127.0.0.1";
+          port = 2217;
+        };
+        remilia4 = {
+          enable = true;
+          type = "socks4";
+          host = "127.0.0.1";
+          port = 2217;
+        };
+      };
+    };
   };
   nix = {
     package = pkgs.nixUnstable;
@@ -78,7 +98,5 @@
       experimental-features = nix-command ca-references flakes
     '';
     trustedUsers = [ "root" "natto" ];
- #   binaryCaches = ["http://152.67.11.101/" "https://cache.nixos.org/"];
- #   binaryCachePublicKeys = ["152.67.11.101:lbEG3jz8pB5IxxjCQcZwS1a85XK5HIYN7g2E9Zw0r1M="];
   };
 }

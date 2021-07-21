@@ -1,33 +1,39 @@
 { 
   inputs = {
-    nixpkgs.url = github:nixos/nixpkgs/nixpkgs-unstable;
-    stable.url = github:nixos/nixpkgs/nixos-21.05;
+    nixpkgs.url = github:nixos/nixpkgs/nixos-21.05;
+    unstable.url = github:nixos/nixpkgs/nixpkgs-unstable;
     master.url = github:nixos/nixpkgs/master;
-    home-manager.url = github:nix-community/home-manager;
+    home-manager-unstable.url = github:nix-community/home-manager;
+    home-manager.url = github:nix-community/home-manager/release-21.05;
     nur.url = github:nix-community/NUR;
     agenix.url = github:ryantm/agenix;
     utils.url = github:numtide/flake-utils;
     nvim.url = github:nix-community/neovim-nightly-overlay;
     mailserver.url = gitlab:simple-nixos-mailserver/nixos-mailserver;
+    osu-nix.url = github:fufexan/osu.nix;
   };
 
-  outputs = inputs@{self, nixpkgs, stable, master,  ... }:
+  outputs = inputs@{self, nixpkgs, unstable, master,  ... }:
   inputs.utils.lib.eachDefaultSystem (system: 
   let
+    channels = final: prev: {
+      unstable = unstable.legacyPackages.${prev.system};
+      master = master.legacyPackages.${prev.system};
+      stable = nixpkgs.legacyPackages.${prev.system};
+    };
     overlays = [
       (import ./overlays/overridesandshit.nix)
       (import ./overlays/packages.nix)
     ];
   in
   {
-    packages = import nixpkgs {
+    legacyPackages = import nixpkgs {
       inherit system;
       overlays = overlays ++ [ 
         inputs.nur.overlay 
-        inputs.nvim.overlay 
-        (_:_: {unstable = nixpkgs.legacyPackages.${system};})
-        (_:_: {stable = stable.legacyPackages.${system};})
-        (_:_: {master = master.legacyPackages.${system};})
+        inputs.nvim.overlay
+        channels
+        (_:_: {osu-nix = inputs.osu-nix.defaultPackage.${system};})
       ];
       config.allowUnfree = true;
       config.allowBroken = true;
@@ -42,7 +48,7 @@
           imports = [ 
             ./home/natto.nix 
           ];
-          nixpkgs.overlays = self.packages.x86_64-linux.overlays;
+          nixpkgs.overlays = self.legacyPackages.x86_64-linux.overlays;
           nixpkgs.config.allowUnfree = true;
           nixpkgs.config.allowBroken = true;
         };
@@ -60,7 +66,7 @@
           inputs.agenix.nixosModules.age
           inputs.home-manager.nixosModules.home-manager
           {
-            nixpkgs.pkgs = self.packages.x86_64-linux; 
+            nixpkgs.pkgs = self.legacyPackages.x86_64-linux; 
           }
         ];
       };
@@ -72,7 +78,7 @@
           ./hosts/servers/marisa.nix
           #inputs.mailserver.nixosModules.mailserver
           {
-            nixpkgs.pkgs = self.packages.aarch64-linux; 
+            nixpkgs.pkgs = self.legacyPackages.aarch64-linux; 
           }
         ];
       };
@@ -82,7 +88,7 @@
         modules = [ 
           ./hosts/servers/marisa.nix
           {
-            nixpkgs.pkgs = (self.packages.x86_64-linux) // {crossSystem.config = "aarch64-unknown-linux-gnu";};
+            nixpkgs.pkgs = (self.legacyPackages.x86_64-linux) // {crossSystem.config = "aarch64-unknown-linux-gnu";};
           }
         ];
       };
@@ -94,7 +100,7 @@
           ./hosts/servers/remilia.nix
           inputs.mailserver.nixosModules.mailserver
           {
-            nixpkgs.pkgs = self.packages.x86_64-linux; 
+            nixpkgs.pkgs = self.legacyPackages.x86_64-linux; 
           }
         ];
       };

@@ -7,7 +7,7 @@
     ./marisa/networking.nix
     ./marisa/hardware.nix
     ./marisa/boot.nix
-    ./marisa/services.nix
+ #   ./marisa/services.nix
     ./marisa/cachix.nix
     ../../configs/nvim.nix
   ];

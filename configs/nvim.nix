@@ -3,11 +3,17 @@
 {
   programs.neovim = {
     enable = true;
-    package = pkgs.neovim-nightly;
+    package = pkgs.neovim-unwrapped.overrideAttrs (_:{
+      nativeBuildInputs = with pkgs.unstable; [ unzip cmake pkgconfig gettext tree-sitter ];
+    });
     defaultEditor = true;
     configure = {
-      customRC = "lua << EOF\n" + builtins.readFile ./nvim/init.lua + "\nEOF\n";
-      packages.myVimPackage = with pkgs.vimPlugins; {
+    customRC = ''
+    lua << EOF
+    ${builtins.readFile ./nvim/init.lua}
+    EOF
+    '';
+      packages.myVimPackage = with pkgs.unstable.vimPlugins; {
         start = [
           nvim-colorizer-lua
           auto-pairs 
@@ -15,17 +21,15 @@
           vim-closetag
           vim-floaterm
           nerdcommenter
-          vim-startify
           nvim-compe
           nvim-lspconfig
           barbar-nvim
-          nvim-web-devicons
-          vim-rooter
-          vim-polyglot
-          nvim-tree-lua
           presence-nvim
-          indentLine
+          nvim-web-devicons
+          nvim-tree-lua
           vim-vsnip
+          nvim-treesitter
+          vim-nix
           (gruvbox.overrideAttrs (oa: { patches = [ ./nvim/gruvbox.patch ]; }))
         ];
       };

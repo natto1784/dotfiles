@@ -2,7 +2,7 @@
 
 {
   boot = {
- #   kernelPackages = pkgs.linuxPackages_lqx;
+    kernelPackages = pkgs.linuxPackages_latest;
     initrd={
       availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" "vfio-pci"];
  /*     preDeviceCommands = ''
@@ -32,5 +32,6 @@
         configurationName = "nixbruh";
       };
     };
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
 }

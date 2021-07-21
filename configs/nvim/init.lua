@@ -1,3 +1,4 @@
+vim.api.nvim_set_option("termguicolors", true)
 local nvim_lsp = require('lspconfig')
 local comm = vim.api.nvim_command
 local bind = vim.api.nvim_set_keymap
@@ -40,6 +41,7 @@ vim.o.lazyredraw = true
 vim.o.timeoutlen = 100
 vim.o.clipboard = "unnamedplus"
 vim.o.completeopt = "menuone,noselect"
+vim.o.cursorcolumn = true
 
 
 --KEYBINDS
@@ -181,6 +183,21 @@ end
 vim.g.presence_neovim_image_text = "Ballin"
 vim.g.presence_main_image = "file"
 
+--treesitter-nvim
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "all",
+  highlight = {
+    enable = true,            
+    additional_vim_regex_highlighting = true,
+  },
+  indent = {
+    enable = true
+  }
+}
+
+--misc
+require'colorizer'.setup()
+
 --lsp and compe stuff i got from various places
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -256,16 +273,15 @@ _G.s_tab_complete = function()
   end
 end
 
-vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true, silent = true})
-vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true, silent = true})
-vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true, silent = true})
-vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true, silent = true})
-vim.api.nvim_set_keymap("i", "<CR>", "compe#confirm('<CR>')", {expr = true, silent = true})
+bind("i", "<Tab>", "v:lua.tab_complete()", {expr = true, silent = true})
+bind("s", "<Tab>", "v:lua.tab_complete()", {expr = true, silent = true})
+bind("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true, silent = true})
+bind("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true, silent = true})
+bind("i", "<CR>", "compe#confirm('<CR>')", {expr = true, silent = true})
 
 comm("set shortmess+=c")
 
 --STATUSLINE
-
 comm("set noruler")
 vim.o.laststatus = 2
 local function mode()
@@ -316,9 +332,8 @@ local statusline = {
     '%c '
 }
 vim.o.statusline = table.concat(statusline)
-vim.api.nvim_set_option("termguicolors", true)
 
-local servers = { "ccls", "rust_analyzer", "tsserver", "pyls", "hls"}
+local servers = { "ccls", "rust_analyzer", "tsserver", "hls", "pylsp" }
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {
@@ -332,5 +347,3 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { capabilities = capabilities, on_attach = on_attach }
 end
-
-require'colorizer'.setup()

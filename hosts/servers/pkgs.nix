@@ -6,6 +6,7 @@
     vim
     wireguard
     vault
+    tree-sitter
   ];
   programs = {
     zsh = {

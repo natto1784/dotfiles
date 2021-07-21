@@ -45,7 +45,6 @@ in
       mpdas
       pavucontrol
       anup
-      proxychains
       xfce.thunar
       xfce.xfconf
       xfce.tumbler
@@ -54,7 +53,7 @@ in
       mpd_discord_richpresence
       sox
       qbittorrent
-      tor-browser-bundle-bin
+      #tor-browser-bundle-bin
       mpc_cli
       hexchat
       luajit
@@ -67,6 +66,8 @@ in
       xorg.xkbcomp
       xorg.xmodmap
       p7zip
+      unrar
+      wineWowPackages.staging
       glxinfo
       sxiv
       vim
@@ -78,6 +79,7 @@ in
       xdotool
       arc-theme
       arc-icon-theme
+      osu-nix
     ];
 
     file = {
