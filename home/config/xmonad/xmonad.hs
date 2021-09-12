@@ -15,6 +15,7 @@ import XMonad.Util.Run (spawnPipe)
 import XMonad.Actions.FloatKeys (keysMoveWindow,
                                  keysResizeWindow)
 import Graphics.X11.ExtraTypes.XF86
+import XMonad.Actions.CycleWindows
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
@@ -74,10 +75,12 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn "pamixer --allow-boost -i 5")
 
   , ((modMask .|. shiftMask, xK_comma),
-     spawn "pamixer -d 5")
+     spawn "pamixer --allow-boost -d 5")
 
-  , ((modMask .|. shiftMask, xK_q),
-     kill)
+  , ((modMask .|. shiftMask, xK_q), kill)
+
+  , ((mod1Mask, xK_Tab), 
+     cycleRecentWindows [xK_Alt_L] xK_Tab xK_q)
 
   , ((modMask .|. mod1Mask, xK_0), spawn "light -A 5")
 
@@ -125,28 +128,28 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      windows W.swapUp    )
 
   , ((mod1Mask, xK_m),
-     withFocused (keysResizeWindow (-20, 0) (0, 0)))
+     sendMessage Expand)
 
   , ((mod1Mask, xK_i),
-     withFocused (keysResizeWindow (20, 0) (0, 0)))
+     sendMessage Shrink)
 
   , ((mod1Mask, xK_n),
-     withFocused (keysResizeWindow (0, 20) (0, 0)))
+     sendMessage MirrorExpand)
 
   , ((mod1Mask, xK_e),
-     withFocused (keysResizeWindow (0, -20) (0, 0)))
+     sendMessage MirrorShrink)
 
   , ((mod1Mask .|. shiftMask, xK_m),
-     withFocused (keysMoveWindow (-40, 0)))
+     withFocused (keysMoveWindow (-30, 0)))
 
   , ((mod1Mask .|. shiftMask, xK_i),
-     withFocused (keysMoveWindow (40, 0)))
+     withFocused (keysMoveWindow (30, 0)))
 
   , ((mod1Mask .|. shiftMask, xK_n),
-     withFocused (keysMoveWindow (0, 40)))
+     withFocused (keysMoveWindow (0, 30)))
 
   , ((mod1Mask .|. shiftMask, xK_e),
-     withFocused (keysMoveWindow (0, -40)))
+     withFocused (keysMoveWindow (0, -30)))
 
   , ((modMask, xK_t),
      withFocused $ windows . W.sink)
@@ -170,6 +173,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
 
 myLayoutHook = smartSpacing 8 $ smartBorders $ avoidStruts (
+    ResizableTall 1 (3/100) (3/5) [] |||
     spiral (6/7) |||
     tabbed shrinkText tabConfig |||
     ThreeCol 1 (3/100) (1/2) |||
@@ -185,39 +189,9 @@ toggleFullscreen =
         let isFullFloat = w `M.lookup` W.floating ws == Just fullRect
         windows $ if isFullFloat then W.sink w else W.float w fullRect
 --}}}
---{{{
---couldnt get fullScreenEventHook to work normally so using this for now
---source code: https://github.com/xmonad/xmonad-contrib/blob/v0.16/XMonad/Hooks/EwmhDesktops.hs
-
-fullscreenFix :: XConfig a -> XConfig a
-fullscreenFix c = c {
-                      startupHook = startupHook c +++ setSupportedWithFullscreen
-                    }
-                  where x +++ y = mappend x y
-
-setSupportedWithFullscreen :: X ()
-setSupportedWithFullscreen = withDisplay $ \dpy -> do
-    r <- asks theRoot
-    a <- getAtom "_NET_SUPPORTED"
-    c <- getAtom "ATOM"
-    supp <- mapM getAtom ["_NET_WM_STATE_HIDDEN"
-                         ,"_NET_WM_STATE_FULLSCREEN"
-                         ,"_NET_NUMBER_OF_DESKTOPS"
-                         ,"_NET_CLIENT_LIST"
-                         ,"_NET_CLIENT_LIST_STACKING"
-                         ,"_NET_CURRENT_DESKTOP"
-                         ,"_NET_DESKTOP_NAMES"
-                         ,"_NET_ACTIVE_WINDOW"
-                         ,"_NET_WM_DESKTOP"
-                         ,"_NET_WM_STRUT"
-                         ]
-    io $ changeProperty32 dpy r a c propModeReplace (fmap fromIntegral supp)
-
-    setWMName "xmonad"
---}}}
 
 main = do xmproc <- spawnPipe ("xmobar " ++ myXmobarrc)
-          xmonad $ docks $ fullscreenFix $ ewmh def
+          xmonad $ docks $ ewmh def
               { borderWidth        = myBorderWidth
               , manageHook         = manageDocks <+> myManageHook 
               , handleEventHook    = handleEventHook def <+> fullscreenEventHook

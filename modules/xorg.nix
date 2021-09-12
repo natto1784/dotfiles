@@ -13,7 +13,7 @@
       libinput= {
         enable = true;
         mouse = {
-          accelSpeed = "0";
+          accelSpeed = null;
         };
         touchpad = {
           middleEmulation = false;

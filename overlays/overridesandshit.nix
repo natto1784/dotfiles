@@ -36,12 +36,11 @@ final: prev: {
   };
 
   picom = prev.picom.overrideAttrs (oldAttrs: rec{
-    version = "Next";
     src = prev.fetchFromGitHub {
-      owner = "yshui";
+      owner = "jonaburg";
       repo = "picom";
-      rev = "v${version}";
-      sha256 = "0asp2hg1jx909kl7i876mcx00vwg9w2swr9i6d786iwgs247dc9i";
+      rev = "a8445684fe18946604848efb73ace9457b29bf80";
+      sha256 = "sha256-R+YUGBrLst6CpUgG9VCwaZ+LiBSDWTp0TLt1Ou4xmpQ=";
       fetchSubmodules = true;
     };
   });
@@ -52,4 +51,9 @@ final: prev: {
   proxychains = prev.proxychains.overrideAttrs (_ : { 
     postInstall = ":";
   });
+
+ /* tor-browser-bundle-bin = prev.tor-browser-bundle-bin.overrideAttrs (_ : { 
+    src = builtins.fetchurl { url = "https://www.torproject.org/dist/torbrowser/10.5.2/tor-browser-linux64-10.5.2_en-US.tar.xz"; sha256="16zk7d0sxm2j00vb002mjj38wxcxxlahnfdb9lmkmkfms9p9xfkb";};
+  });*/
+  
 }

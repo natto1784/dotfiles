@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-killall mpdas
-killall mpd_discord_richpresence
-systemctl stop mpd.socket --user
-systemctl stop mpd.service --user

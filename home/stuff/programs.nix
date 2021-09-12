@@ -14,6 +14,10 @@
  #       userContent = builtins.readFile ../config/firefox/userContent.css;
       };
     };
+   /* chromium = {
+      enable = true;
+      package = pkgs.ungoogled-chromium;
+    };*/
     zathura = {
       enable = true;
       extraConfig = builtins.readFile ../config/zathura/zathurarc;
@@ -31,5 +35,6 @@
         save-position-on-quit = "yes";
       };
     };
+    go.enable = true;
   };
 }

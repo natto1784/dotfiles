@@ -10,16 +10,20 @@
     utils.url = github:numtide/flake-utils;
     nvim.url = github:nix-community/neovim-nightly-overlay;
     mailserver.url = gitlab:simple-nixos-mailserver/nixos-mailserver;
-    osu-nix.url = github:fufexan/osu.nix;
+    nbfc.url = github:natto1784/nbfc-linux/yawr;
   };
 
   outputs = inputs@{self, nixpkgs, unstable, master,  ... }:
   inputs.utils.lib.eachDefaultSystem (system: 
   let
+    mkPkgs = channel: system: import channel {
+      inherit system;
+      config.allowUnfree = true;
+    };
     channels = final: prev: {
-      unstable = unstable.legacyPackages.${prev.system};
-      master = master.legacyPackages.${prev.system};
-      stable = nixpkgs.legacyPackages.${prev.system};
+      unstable = mkPkgs unstable prev.system;
+      stable   = mkPkgs nixpkgs  prev.system;
+      master   = mkPkgs master   prev.system;
     };
     overlays = [
       (import ./overlays/overridesandshit.nix)
@@ -33,7 +37,7 @@
         inputs.nur.overlay 
         inputs.nvim.overlay
         channels
-        (_:_: {osu-nix = inputs.osu-nix.defaultPackage.${system};})
+        (_:_:{nbfc-linux=inputs.nbfc.defaultPackage.${system};})
       ];
       config.allowUnfree = true;
       config.allowBroken = true;
@@ -93,7 +97,7 @@
       Marisa = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [
-          ./hosts/marisa
+          ./hosts/servers/marisa.nix
           #inputs.mailserver.nixosModules.mailserver
           {
             nixpkgs.pkgs = self.legacyPackages.aarch64-linux; 
@@ -107,7 +111,7 @@
       Remilia = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./hosts/remilia
+          ./hosts/servers/remilia.nix
           inputs.mailserver.nixosModules.mailserver
           {
             nixpkgs.pkgs = self.legacyPackages.x86_64-linux; 

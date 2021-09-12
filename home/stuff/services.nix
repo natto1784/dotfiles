@@ -20,7 +20,7 @@ in
           blur-background = true;
           blur-method = "dual_kawase";
           blur-strength = 3;
-          blur-kern = "3x3box";
+          blur-kern = "11x11gaussian";
           fading = true;
           fade-in-step = 0.05;
           fade-out-step = 0.05;

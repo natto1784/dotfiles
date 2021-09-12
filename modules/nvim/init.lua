@@ -27,8 +27,8 @@ vim.o.splitbelow = true
 vim.o.splitright = true
 comm("set nowrap")
 vim.o.conceallevel = 0
-vim.o.tabstop = 4
-vim.o.shiftwidth = 4
+vim.o.tabstop = 2
+vim.o.shiftwidth = 2
 vim.o.smarttab = true
 vim.o.expandtab = true
 vim.o.smartindent = true

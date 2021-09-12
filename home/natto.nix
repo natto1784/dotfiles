@@ -44,7 +44,7 @@ in
       pamixer
       mpdas
       pavucontrol
-      anup
+      unstable.anup
       xfce.thunar
       xfce.xfconf
       xfce.tumbler
@@ -67,7 +67,6 @@ in
       xorg.xmodmap
       p7zip
       unrar
-      wineWowPackages.staging
       glxinfo
       sxiv
       vim
@@ -79,7 +78,15 @@ in
       xdotool
       arc-theme
       arc-icon-theme
-      osu-nix
+      tor-browser-bundle-bin
+      wineWowPackages.stable
+      (master.winetricks.override { wine = wineWowPackages.stable; })
+      csvtool
+      pmidi
+      dosbox
+      authy
+      unstable.premid
+      nbfc-linux
     ];
 
     file = {
