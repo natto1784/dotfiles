@@ -28,6 +28,7 @@
     lohit-fonts.gurmukhi
     nerdfonts
     font-awesome
+    monoid
   ];
   users.users.natto = {
     isNormalUser = true;

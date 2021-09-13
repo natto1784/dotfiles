@@ -11,6 +11,7 @@
     nvim.url = github:nix-community/neovim-nightly-overlay;
     mailserver.url = gitlab:simple-nixos-mailserver/nixos-mailserver;
     nbfc.url = github:natto1784/nbfc-linux/yawr;
+    emacs.url = github:nix-community/emacs-overlay;
   };
 
   outputs = inputs@{self, nixpkgs, unstable, master,  ... }:
@@ -36,6 +37,7 @@
       overlays = overlays ++ [ 
         inputs.nur.overlay 
         inputs.nvim.overlay
+        inputs.emacs.overlay
         channels
         (_:_:{nbfc-linux=inputs.nbfc.defaultPackage.${system};})
       ];
@@ -49,6 +51,7 @@
       ./modules/nvidia-offload.nix
       ./modules/pipewire.nix
       ./modules/xorg.nix
+      ./modules/emacs
     ];
     commonModules = [
       ./modules/nvim

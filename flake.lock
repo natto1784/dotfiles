@@ -34,6 +34,21 @@
         "type": "gitlab"
       }
     },
+    "emacs": {
+      "locked": {
+        "lastModified": 1631467754,
+        "narHash": "sha256-lZbeo1Y/jni/KW1W+DnaeCPgIu+W+ks8qp3xlRtUYFQ=",
+        "owner": "nix-community",
+        "repo": "emacs-overlay",
+        "rev": "e00f171142307b3c9bb962beeaaf09d0254f9e31",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "emacs-overlay",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -339,6 +354,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "emacs": "emacs",
         "home-manager": "home-manager",
         "home-manager-unstable": "home-manager-unstable",
         "mailserver": "mailserver",

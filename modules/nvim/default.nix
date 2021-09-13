@@ -29,7 +29,7 @@
           nvim-tree-lua
           vim-vsnip
           nvim-treesitter
-          vim-polyglot
+          vim-nix
           (gruvbox.overrideAttrs (oa: { patches = [ ./gruvbox.patch ]; }))
         ];
       };
