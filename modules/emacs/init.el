@@ -1,3 +1,26 @@
+;; -*- lexical-binding:t -*-
+
+;;colors
+(setq
+c-bg        "#1d2021"
+c-fg        "#d5c4a1"
+c-red       "#cc241d"
+c-green     "#98971a"
+c-yellow    "#d79921"
+c-blue      "#458588"
+c-magenta   "#b16286"
+c-cyan      "#689d6a"
+c-white     "#a89984"
+c-black     "#928374"
+c-red-2     "#fb4934"
+c-green-2   "#b8bb26"
+c-yellow-2  "#fabd2f"
+c-blue-2    "#83a598"
+c-magenta-2 "#d3869b"
+c-cyan-2    "#8ec07c"
+c-white-2   "#ebdbb2")
+;(setq vc-handled-backends nil) ; vc is slow as fuck with git
+
 ;;settings
 (setq display-line-numbers-type 'relative)
 (setq inhibit-startup-screen t)
@@ -9,6 +32,7 @@
 (fringe-mode 0)
 (global-display-line-numbers-mode 1)
 (setq initial-major-mode 'emacs-lisp-mode)
+(setq frame-resize-pixelwise t)
 
 ;;add packages and shit
 (require 'package)
@@ -19,11 +43,13 @@
 
 ;;package config and modes
 (use-package gruvbox-theme
-  :init
-  (load-theme 'gruvbox-dark-hard t))
+  :init (load-theme 'gruvbox-dark-hard t))
 
 (use-package ivy
   :config
+  (define-key ivy-minibuffer-map (kbd "C-n") 'ivy-next-line)
+  (define-key ivy-minibuffer-map (kbd "C-e") 'ivy-previous-line)
+  (define-key ivy-minibuffer-map (kbd "C-i") 'ivy-done)
   (ivy-mode 1))
 
 (use-package elcord
@@ -32,6 +58,7 @@
 
 (use-package evil
   :config
+  (setq evil-undo-system 'undo-redo)
   (evil-mode 1))
 
 (use-package evil-colemak-basics
@@ -46,15 +73,16 @@
   (treemacs-git-mode 'deferred))
 
 (use-package treemacs-evil
-  :bind (:map evil-treemacs-state-map
-              ("n" . treemacs-next-line)
-              ("e" . treemacs-previous-line)
-              ("M-n" . treemacs-next-neighbour)
-              ("M-e" . treemacs-previous-neighbour)
-              ("M-N" . treemacs-next-line-other-window)
-              ("M-E" . treemacs-previous-line-other-window)
-              ("M" . treemacs-collapse-parent-node))
-  :init
+  :config
+  (define-key evil-treemacs-state-map (kbd "n")   #'treemacs-next-line)
+  (define-key evil-treemacs-state-map (kbd "e")   #'treemacs-previous-line)
+  (define-key evil-treemacs-state-map (kbd "M-n") #'treemacs-next-neighbour)
+  (define-key evil-treemacs-state-map (kbd "M-e") #'treemacs-previous-neighbour)
+  (define-key evil-treemacs-state-map (kbd "M-N") #'treemacs-next-line-other-window)
+  (define-key evil-treemacs-state-map (kbd "M-E") #'treemacs-previous-line-other-window)
+  (define-key evil-treemacs-state-map (kbd "M")   #'treemacs-collapse-parent-node)
+  (evil-define-key 'treemacs treemacs-mode-map (kbd "m") #'treemacs-COLLAPSE-action)
+  (evil-define-key 'treemacs treemacs-mode-map (kbd "i") #'treemacs-RET-action))
 
 (use-package lsp-mode
   :config
@@ -81,21 +109,53 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-;(use-package rustic)
+(use-package flex-autopair
+  :config
+  (flex-autopair-mode 1))
 
-;;keybinds
-;ivy
-(define-key ivy-minibuffer-map (kbd "C-n") 'ivy-next-line)
-(define-key ivy-minibuffer-map (kbd "C-e") 'ivy-previous-line)
-(define-key ivy-minibuffer-map (kbd "C-i") 'ivy-done)
+(use-package rainbow-mode
+  :config
+  (rainbow-mode 1))
 
-;evil-treemacs
-(evil-define-key 'treemacs treemacs-mode-map (kbd "m") #'treemacs-COLLAPSE-action)
-(evil-define-key 'treemacs treemacs-mode-map (kbd "i") #'treemacs-RET-action))
+(use-package rustic)
 
-;;hooks
-;exclude line numbers
+(use-package magit)
+
+(defface bufname
+  `((t :foreground ,c-fg
+       :background ,c-bg
+       :weight bold
+     ))
+  "Custom faces for buffer name"
+  :group 'mode-line-faces )
+
+(defface gitmode
+  `((t :foreground ,c-fg
+       :background ,c-red-2
+       :weight bold
+     ))
+  "Custom face for git branch"
+  :group 'mode-line-faces )
+
+(setq-default mode-line-format
+	      '((:propertize " %b " face bufname)
+		(vc-mode (:propertize (" " vc-mode " " ) face gitmode))))
+
+
 (setq exclude-ln '(term-mode-hook eshell-mode-hook shell-mode-hook))
 (while exclude-ln
        (add-hook (car exclude-ln) (lambda () (display-line-numbers-mode 0)))
        (setq exclude-ln (cdr exclude-ln)))
+(let ((default-color (cons (face-background 'mode-line)
+                           (face-foreground 'mode-line))))
+  (add-hook 'post-command-hook
+       (lambda ()
+         (let ((color (cond ((minibufferp) default-color)
+                            ((evil-insert-state-p) (cons c-magenta c-fg))
+                            ((evil-visual-state-p) (cons c-cyan    c-fg))
+                            ((evil-normal-state-p) (cons c-fg      c-bg))
+                            ((buffer-modified-p)   (cons c-blue    c-fg))
+                            (t default-color))))
+	   (set-face-background 'bufname (car color))
+	   (set-face-foreground 'bufname (cdr color))
+	   ))))

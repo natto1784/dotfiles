@@ -57,13 +57,13 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn "flameshot full -p /home/natto/Pictures -d 10000")
 
   , ((modMask, xK_p),
-     spawn "mpc toggle")
+     spawn "playerctl play-pause")
 
   , ((modMask, xK_h),
-     spawn "mpc next")
+     spawn "playerctl next")
 
   , ((modMask, xK_k),
-     spawn "mpc prev")
+     spawn "playerctl previous")
 
   , ((modMask .|. shiftMask, xK_a),
      spawn "mpc seek -00:00:05")
@@ -188,6 +188,37 @@ toggleFullscreen =
         let fullRect = W.RationalRect 0 0 1 1
         let isFullFloat = w `M.lookup` W.floating ws == Just fullRect
         windows $ if isFullFloat then W.sink w else W.float w fullRect
+--}}}
+
+--{{{
+--couldnt get fullScreenEventHook to work normally so using this for now
+--source code: https://github.com/xmonad/xmonad-contrib/blob/v0.16/XMonad/Hooks/EwmhDesktops.hs
+
+fullscreenFix :: XConfig a -> XConfig a
+fullscreenFix c = c {
+                      startupHook = startupHook c +++ setSupportedWithFullscreen
+                    }
+                  where x +++ y = mappend x y
+
+setSupportedWithFullscreen :: X ()
+setSupportedWithFullscreen = withDisplay $ \dpy -> do
+    r <- asks theRoot
+    a <- getAtom "_NET_SUPPORTED"
+    c <- getAtom "ATOM"
+    supp <- mapM getAtom ["_NET_WM_STATE_HIDDEN"
+                         ,"_NET_WM_STATE_FULLSCREEN"
+                         ,"_NET_NUMBER_OF_DESKTOPS"
+                         ,"_NET_CLIENT_LIST"
+                         ,"_NET_CLIENT_LIST_STACKING"
+                         ,"_NET_CURRENT_DESKTOP"
+                         ,"_NET_DESKTOP_NAMES"
+                         ,"_NET_ACTIVE_WINDOW"
+                         ,"_NET_WM_DESKTOP"
+                         ,"_NET_WM_STRUT"
+                         ]
+    io $ changeProperty32 dpy r a c propModeReplace (fmap fromIntegral supp)
+
+    setWMName "xmonad"
 --}}}
 
 main = do xmproc <- spawnPipe ("xmobar " ++ myXmobarrc)

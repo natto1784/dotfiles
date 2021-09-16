@@ -54,7 +54,8 @@ in
       sox
       qbittorrent
       #tor-browser-bundle-bin
-      mpc_cli
+      #mpc_cli
+      playerctl
       hexchat
       luajit
       mpv
@@ -86,6 +87,7 @@ in
       dosbox
       authy
       unstable.premid
+      master.tauon
       nbfc-linux
     ];
 

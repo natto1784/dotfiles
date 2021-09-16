@@ -3,6 +3,7 @@
   environment.systemPackages = with pkgs; [
     (emacsWithPackagesFromUsePackage {
       config = ./init.el;
+      package = emacsGcc;
       alwaysEnsure = true;
       extraEmacsPackages = epkgs: with epkgs; [
         use-package
