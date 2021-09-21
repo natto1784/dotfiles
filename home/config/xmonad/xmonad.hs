@@ -222,7 +222,7 @@ setSupportedWithFullscreen = withDisplay $ \dpy -> do
 --}}}
 
 main = do xmproc <- spawnPipe ("xmobar " ++ myXmobarrc)
-          xmonad $ docks $ ewmh def
+          xmonad $ docks $ fullscreenFix $ ewmh def
               { borderWidth        = myBorderWidth
               , manageHook         = manageDocks <+> myManageHook 
               , handleEventHook    = handleEventHook def <+> fullscreenEventHook

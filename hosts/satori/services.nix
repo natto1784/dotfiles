@@ -1,17 +1,6 @@
 {lib, config, pkgs, ... }:
 
 {
-  systemd.services.nbfc = {
-    description = "Notebook Fancontrol";
-    wantedBy = lib.mkForce []; 
-    serviceConfig = {
-      Type = "forking";
-      Restart = "on-failure";
-      ExecStart = "${pkgs.mono}/bin/mono-service -l:/run/nbfc.pid -m:NbfcService /opt/nbfc/NbfcService.exe";
-      ExecStop = "kill -SIGTERM $(cat /run/nbfc.pid)";
-      PIDFile = "/run/nbfc.pid";
-    };
-  };  
   services = {
     tor.enable = true;
     logmein-hamachi.enable = true;

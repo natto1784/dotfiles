@@ -45,12 +45,15 @@
   swapDevices = [ {device = "/dev/nvme0n1p7";} ];
   zramSwap = {
     enable = true;
-    algorithm = "zstd";
-    memoryPercent = 50;
+    algorithm = "lz4";
+    memoryPercent = 30;
     priority = -1;
   };
   powerManagement = {
     enable = true;
     cpuFreqGovernor = "powersave";
+  };
+  hardware = {
+    bluetooth.enable = true;
   };
 }

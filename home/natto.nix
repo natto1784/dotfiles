@@ -87,7 +87,10 @@ in
       dosbox
       authy
       unstable.premid
-      master.tauon
+      taa
+      (master.tauon.overrideAttrs (oa: {
+        pythonPath = oa.pythonPath ++ [ unstable.python39Packages.pypresence ];
+      }))
       nbfc-linux
     ];
 
