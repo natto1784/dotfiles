@@ -33,6 +33,8 @@
         force-window = "yes";
         keep-open = "yes";
         save-position-on-quit = "yes";
+ #       autofit="100%";
+#        no-keepaspect-window = "yes";
       };
     };
     go.enable = true;

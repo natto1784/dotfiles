@@ -51,7 +51,7 @@
   };
   powerManagement = {
     enable = true;
-    cpuFreqGovernor = "powersave";
+    cpuFreqGovernor = "schedutil";
   };
   hardware = {
     bluetooth.enable = true;

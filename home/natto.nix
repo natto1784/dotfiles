@@ -37,7 +37,9 @@ in
   };
   home = {
     packages = with pkgs; [
-      ffmpeg
+ /*     (ffmpeg-full.override {
+      	libaom = libaom;
+      })*/
       sox
       rage
       curl
@@ -48,14 +50,13 @@ in
       xfce.thunar
       xfce.xfconf
       xfce.tumbler
-      discord
+      master.discord
       customscripts
       mpd_discord_richpresence
       sox
       qbittorrent
       #tor-browser-bundle-bin
-      #mpc_cli
-      playerctl
+      mpc_cli
       hexchat
       luajit
       mpv
@@ -80,18 +81,23 @@ in
       arc-theme
       arc-icon-theme
       tor-browser-bundle-bin
-      wineWowPackages.stable
-      (master.winetricks.override { wine = wineWowPackages.stable; })
+      games.wine-tkg
+      master.winetricks
+      games.winestreamproxy
+    /*  (games.osu-stable.overrideAttrs (_:{
+        tricks = [ "gdiplus" "dotnet46" "meiryo" ];
+      }))*/
       csvtool
       pmidi
       dosbox
       authy
       unstable.premid
-      taa
-      (master.tauon.overrideAttrs (oa: {
-        pythonPath = oa.pythonPath ++ [ unstable.python39Packages.pypresence ];
-      }))
+      (master.tauon.override { withDiscordRPC = true; })
       nbfc-linux
+      pulseaudio
+      (texlive.combine { inherit (texlive) scheme-small babel lm graphics-def url; })
+      qjackctl
+      carla
     ];
 
     file = {

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+if [ $# != 2 ]; then
+  echo "Two args required"
+  exit 1
+fi
+
+if [ $1 == "on" ]; then
+  xinput --set-prop $2 'libinput Accel Profile Enabled' 0, 1
+else
+  xinput --set-prop $2 'libinput Accel Profile Enabled' 1, 0
+fi

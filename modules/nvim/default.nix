@@ -3,9 +3,10 @@
 {
   programs.neovim = {
     enable = true;
-    package = pkgs.neovim-unwrapped.overrideAttrs (_:{
-      nativeBuildInputs = with pkgs.unstable; [ unzip cmake pkgconfig gettext tree-sitter ];
-    });
+    package = pkgs.neovim-nightly;
+ #   package = pkgs.neovim-nightly.overrideAttrs (_:{
+ #     nativeBuildInputs = with pkgs; [ unzip cmake pkgconfig gettext tree-sitter ];
+ #   });
     defaultEditor = true;
     configure = {
     customRC = ''
@@ -19,7 +20,6 @@
           auto-pairs 
           vim-floaterm 
           vim-closetag
-          vim-floaterm
           nerdcommenter
           nvim-compe
           nvim-lspconfig
@@ -29,7 +29,7 @@
           nvim-tree-lua
           vim-vsnip
           nvim-treesitter
-          vim-nix
+          vim-latex-live-preview
           (gruvbox.overrideAttrs (oa: { patches = [ ./gruvbox.patch ]; }))
         ];
       };

@@ -16,10 +16,12 @@ in
       opengl = {
         driSupport32Bit = true;
         #package = pkgs.mesa_drivers;
+        extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
         enable = true;
       };
       nvidia = {
         prime = {
+    #      sync.enable = true;
           offload = { enable = true; };
           intelBusId = "PCI:0:2:0";
           nvidiaBusId = "PCI:1:0:0";
@@ -31,5 +33,8 @@ in
         };
       };
     };
-    services.xserver.videoDrivers = [ "nvidia" ];
+    services.xserver = {
+      videoDrivers = [ "nvidia" ];
+      dpi = 96;
+    };
   }

@@ -8,7 +8,7 @@ map S rotate
 map f zoom in
 map q zoom out
 map p follow link
-map m scroll left
-map i scroll right
-map n scroll down
-map e scroll up
+#map m scroll left
+#map i scroll right
+#map n scroll down
+#map e scroll up

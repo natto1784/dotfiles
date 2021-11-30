@@ -24,12 +24,6 @@ final: prev: {
     patches = [./patches/st.patch];
   });
 
-  kbd = prev.kbd.overrideAttrs (oldAttrs: rec{
-    buildInputs = oldAttrs.buildInputs ++ [ prev.gzip ];
-    colemak-dh = prev.writeText "colemak-dh.map" (builtins.readFile ./colemak-dh.map);
-    postInstall = "${oldAttrs.postInstall}\n cp ${colemak-dh} $out/share/keymaps/i386/colemak/colemak-dh.map\n gzip $out/share/keymaps/i386/colemak/colemak-dh.map";
-  });
-
   ncmpcpp = prev.ncmpcpp.override {
     visualizerSupport = true;
     clockSupport = true;
@@ -43,9 +37,6 @@ final: prev: {
       sha256 = "sha256-R+YUGBrLst6CpUgG9VCwaZ+LiBSDWTp0TLt1Ou4xmpQ=";
       fetchSubmodules = true;
     };
-  });
-  discord = prev.discord.overrideAttrs (_ : { 
-    src = builtins.fetchTarball { url = "https://discord.com/api/download/stable?platform=linux&format=tar.gz"; sha256="1ahj4bhdfd58jcqh54qcgafljqxl1747fqqwxhknqlasa83li75n";};
   });
 
   proxychains = prev.proxychains.overrideAttrs (_ : { 

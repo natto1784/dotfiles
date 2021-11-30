@@ -7,13 +7,15 @@
 #  '';
 #in
 {
+  console.useXkbConfig = true;
   services = {
     xserver = {
       enable = true;
       libinput= {
         enable = true;
         mouse = {
-          accelSpeed = null;
+          accelSpeed = "0";
+ #         accelProfile = "flat";
         };
         touchpad = {
           middleEmulation = false;
@@ -26,7 +28,8 @@
         startx = {
           enable = true; 
         }; 
-#       sessionCommands = "${pkgs.xorg.xkbcomp}/bin/xkbcomp ${compiledLayout} $DISPLAY";
+ #       lightdm.enable = true;
+ #      sessionCommands = "${pkgs.xorg.xkbcomp}/bin/xkbcomp ${compiledLayout} $DISPLAY";
       };
       extraLayouts = {
         us-colemak = {

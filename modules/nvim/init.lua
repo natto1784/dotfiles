@@ -1,5 +1,5 @@
 vim.api.nvim_set_option("termguicolors", true)
-local nvim_lsp = require('lspconfig')
+local nvimlsp = require('lspconfig')
 local comm = vim.api.nvim_command
 local bind = vim.api.nvim_set_keymap
 local setvar = vim.api.nvim_set_var
@@ -11,8 +11,6 @@ end
 
 --SETTINGS
 
-comm("syntax enable")
-comm("syntax sync minlines=100")
 vim.o.cmdheight = 1
 vim.o.modifiable = true
 vim.o.cursorline = true
@@ -25,7 +23,7 @@ vim.o.cmdheight = 1
 vim.o.mouse = "a"
 vim.o.splitbelow = true
 vim.o.splitright = true
-comm("set nowrap")
+--comm("set nowrap")
 vim.o.conceallevel = 0
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
@@ -66,6 +64,7 @@ cdhbind('k', 'n')
 cdhbind('f', 'e')
 cdhbind('t', 'f')
 cdhbind('j', 't')
+
 bind('n', "<M-s>", ":w<CR>", {noremap=true})
 bind('n', "<M-n>", ":resize -2<CR>", {noremap=true, silent=true})
 bind('n', "<M-e>", ":resize +2<CR>", {noremap=true, silent=true})
@@ -90,9 +89,9 @@ function _G.CompileRun()
         ['java']      = 'java ' .. file,
         ['lisp']      = 'clisp ' .. file,
         ['python']    = 'python3 ' .. file,
-        ['c']         = 'gcc ' .. file .. ' -o ' .. noext .. ' && ' .. noext .. ' && rm ' .. noext,
+        ['c']         = 'gcc ' .. file .. ' -o ' .. noext ..  ' -Wno-unused-result ' .. ' && ' .. noext .. ' && rm ' .. noext,
         ['rust']      = 'rustc ' .. file .. ' -o ' .. noext .. ' && ' .. noext .. ' && rm ' .. noext,
-        ['cpp']       = 'g++ -std=c++17 ' .. file .. ' -o ' .. noext .. ' && ' .. noext .. ' && rm ' .. noext,
+        ['cpp']       = 'g++ -std=c++17 ' .. file .. ' -o ' .. noext .. ' -Wno-unused-result ' .. ' && ' .. noext .. ' && rm ' .. noext,
         ['haskell']   = 'ghc -dynamic ' .. file .. ' && ' .. noext .. ' && rm ' .. noext .. ' ' .. noext .. '.o ' .. noext .. '.hi',
         ['sh']        = 'sh ' .. file,
         ['javascript']= 'node ' .. file,
@@ -126,14 +125,15 @@ bind('n', "<F6>", ":call v:lua.Repl()<CR>", {silent=true})
 
 --nvim-tree.lua
 
-vim.g.nvim_tree_auto_close = 1
 vim.g.nvim_tree_auto_ignore_ft = { "startify" }
-vim.g.nvim_tree_follow = 1
 vim.g.nvim_tree_git_hl = 1
 vim.g.nvim_tree_highlight_opened_files = 1
 vim.g.nvim_tree_width_allow_resize = 1
-vim.g.nvim_tree_lsp_diagnostics = 1
-vim.g.nvim_tree_lsp_diagnostics = 1
+require'nvim-tree'.setup {
+  nvim_tree_auto_close = 1,
+  nvim_tree_follow = 1,
+  nvim_tree_lsp_diagnostics = 1
+}
 vim.g.nvim_tree_window_picker_exclude = {
     ['buftype'] = { 'terminal' }
 }
@@ -187,7 +187,7 @@ vim.g.presence_main_image = "file"
 
 --treesitter-nvim
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = "all",
+  ensure_install = "all",
   highlight = {
     enable = true,            
     additional_vim_regex_highlighting = true,
@@ -197,7 +197,11 @@ require'nvim-treesitter.configs'.setup {
   }
 }
 
---misc
+--vim-latex-live-preview
+vim.g.livepreview_previewer = "zathura"
+
+
+
 require'colorizer'.setup()
 
 --lsp and compe stuff i got from various places
@@ -235,6 +239,7 @@ require'compe'.setup {
     spell = true;
     treesitter = true;
     nvim_lua = true;
+    vsnip = true;
   };
 }
 
@@ -250,6 +255,7 @@ local check_back_space = function()
     end
 end
 
+vim.g.vsnip_snippet_dir = "/home/natto/.vsnip"
 -- Use (s-)tab to:
 --- move to prev/next item in completion menuone
 --- jump to prev/next snippet's placeholder
@@ -335,7 +341,7 @@ local statusline = {
 }
 vim.o.statusline = table.concat(statusline)
 
-local servers = { "ccls", "rust_analyzer", "tsserver", "hls", "pylsp" }
+local servers = { "ccls", "rust_analyzer", "tsserver", "hls", "pylsp", "texlab", "rnix" }
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {
@@ -347,5 +353,8 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 }
 
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup { capabilities = capabilities, on_attach = on_attach }
+  nvimlsp[lsp].setup { capabilities = capabilities, on_attach = on_attach }
 end
+
+vim.g.tex_flavor = "latex"
+comm("set syntax=on")

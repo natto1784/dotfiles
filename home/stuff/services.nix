@@ -5,40 +5,43 @@ in
   {
     services = {
       picom = {
+        experimentalBackends = true;
         enable = true;
+        shadow = true;
+        shadowOffsets = [ (6) (6) ];
+        shadowExclude = [
+          "! name~=''"
+          "window_type = 'dock'"
+          "name = 'Dunst'"
+          "_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'"
+        ];
+        blur = true;
+        blurExclude = [
+          "window_type = 'dock'"
+          "window_type = 'desktop'"
+          "class_g = 'dwm'"
+        ];
+        inactiveOpacity = "0.92";
+        activeOpacity = "0.97";
+        fade = true;
+        fadeSteps = [ "0.04" "0.04" ];
+        backend = "glx";
+        menuOpacity = "0.8";
+        vSync = false;
+        opacityRule = [
+          "100:class_i='Tauon Music Box'"
+          "100:class_g='firefox'"
+        ];
         extraOptions = 
         ''
-          shadow = true;
-          shadow-radius = 20;
-          shadow-offset-x = 30;
-          shadow-offset-y = 30;
-          blurExclude = [ "class_g = 'dwm'" ]
-
-          inactive-opacity = 0.92;
-          active-opacity = 0.97;
+          shadow-radius = 8;
           inactive-opacity-override = true;
-          blur-background = true;
           blur-method = "dual_kawase";
           blur-strength = 3;
           blur-kern = "11x11gaussian";
-          fading = true;
-          fade-in-step = 0.05;
-          fade-out-step = 0.05;
-
-          backend = "glx";
           detect-rounded-corners = true;
           detect-client-opacity = true;
-          experimental-backends = true;
-          vsync = false;
-          wintypes:
-          {
-            tooltip = { fade = true; shadow = true; opacity = 0.75; focus = true; };
-            popup_menu={opacity=0.8;};
-            dropdown_menu={opacity=0.8;};
-          };
-          shadow-exclude = ["x = 0 && y = 0 && override_redirect = true", "class_g = 'xmobar' && argb", "class_g = 'stalonetray' && argb"]
-          '';
-
+        '';
       };
       sxhkd = {
         enable = false;
@@ -48,15 +51,17 @@ in
       mpd = {
         enable = true;
         musicDirectory = "${config.home.homeDirectory}/Music";
+        dbFile = "${config.home.homeDirectory}/.config/mpd/database";
+        dataDir = "${config.home.homeDirectory}/.config/mpd";
+        network = {
+          startWhenNeeded = true;
+          listenAddress = "any";
+          port = 6600;
+        };
         extraConfig = ''
-          playlist_directory              "~/.config/mpd/playlists"
-          db_file                         "~/.config/mpd/database"
           log_file                        "~/.config/mpd/log"
           pid_file                        "~/.config/mpd/pid"
-          state_file                      "~/.config/mpd/state"
-          bind_to_address                 "~/.config/mpd/socket"
-          bind_to_address                 "localhost"
-          port                            "6600"
+ #         bind_to_address                 "~/.config/mpd/socket"
           restore_paused "yes"
           input {
                   plugin "curl"
@@ -71,9 +76,14 @@ in
                   path "/tmp/g.fifo"
                   format "44100:16:2"
           }
+          audio_output {
+                  type        "httpd"
+                  name        "My HTTP Stream"
+                  port        "8000"
+                  max_clients     "4"
+          }
           filesystem_charset "UTF-8"
           '';
-        network.startWhenNeeded = true;
       };
       stalonetray = {
         enable = true;

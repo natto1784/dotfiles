@@ -19,20 +19,19 @@ c-blue-2    "#83a598"
 c-magenta-2 "#d3869b"
 c-cyan-2    "#8ec07c"
 c-white-2   "#ebdbb2")
-;(setq vc-handled-backends nil) ; vc is slow as fuck with git
-
 ;;settings
 (setq display-line-numbers-type 'relative)
 (setq inhibit-startup-screen t)
 (set-face-attribute 'default nil :font "Monoid" :height 120)
 (global-hl-line-mode 1)
-(scroll-bar-mode 0)
-(tool-bar-mode 0)
+(scroll-bar-mode 0) (tool-bar-mode 0)
 (menu-bar-mode 0)
 (fringe-mode 0)
 (global-display-line-numbers-mode 1)
 (setq initial-major-mode 'emacs-lisp-mode)
 (setq frame-resize-pixelwise t)
+(setq auto-window-vscroll nil)
+(setq scroll-step 1)
 
 ;;add packages and shit
 (require 'package)
@@ -56,9 +55,13 @@ c-white-2   "#ebdbb2")
   :config
   (elcord-mode 1))
 
+(use-package undo-tree
+  :config
+  (global-undo-tree-mode 1))
+
 (use-package evil
   :config
-  (setq evil-undo-system 'undo-redo)
+  (evil-set-undo-system 'undo-tree)
   (evil-mode 1))
 
 (use-package evil-colemak-basics
@@ -82,7 +85,8 @@ c-white-2   "#ebdbb2")
   (define-key evil-treemacs-state-map (kbd "M-E") #'treemacs-previous-line-other-window)
   (define-key evil-treemacs-state-map (kbd "M")   #'treemacs-collapse-parent-node)
   (evil-define-key 'treemacs treemacs-mode-map (kbd "m") #'treemacs-COLLAPSE-action)
-  (evil-define-key 'treemacs treemacs-mode-map (kbd "i") #'treemacs-RET-action))
+  (evil-define-key 'treemacs treemacs-mode-map (kbd "i") #'treemacs-RET-action)
+ )
 
 (use-package lsp-mode
   :config
@@ -121,12 +125,22 @@ c-white-2   "#ebdbb2")
 
 (use-package magit)
 
+(use-package nix-mode
+  :mode "\\.nix\\'")
+
 (defface bufname
   `((t :foreground ,c-fg
        :background ,c-bg
        :weight bold
      ))
-  "Custom faces for buffer name"
+  "Custom face for buffer name"
+  :group 'mode-line-faces )
+
+(defface majmode
+  `((t :foreground ,c-fg
+       :background ,c-bg
+     ))
+  "Custom face for major mode"
   :group 'mode-line-faces )
 
 (defface gitmode
@@ -134,13 +148,23 @@ c-white-2   "#ebdbb2")
        :background ,c-red-2
        :weight bold
      ))
-  "Custom face for git branch"
+  "Custom face for VC"
+  :group 'mode-line-faces )
+(defface infomode
+  `((t :foreground ,c-bg
+       :background ,c-green
+       :weight bold
+     ))
+  "For showing line and column number"
   :group 'mode-line-faces )
 
-(setq-default mode-line-format
-	      '((:propertize " %b " face bufname)
-		(vc-mode (:propertize (" " vc-mode " " ) face gitmode))))
 
+(setq-default mode-line-format
+              '((:propertize " %b " face bufname)
+                (vc-mode (:propertize (" " vc-mode " " ) face gitmode))
+                (:propertize (" " mode-name " ") face majmode)
+                (:propertize ("[[ %l | %c || %p . %+%@ ]]") face infomode)
+                ("%-")))
 
 (setq exclude-ln '(term-mode-hook eshell-mode-hook shell-mode-hook))
 (while exclude-ln

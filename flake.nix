@@ -1,10 +1,10 @@
 { 
   inputs = {
-    nixpkgs.url = github:nixos/nixpkgs/nixos-21.05;
-    unstable.url = github:nixos/nixpkgs/nixpkgs-unstable;
+    stable.url = github:nixos/nixpkgs/nixos-21.05;
+    nixpkgs.url = github:nixos/nixpkgs/nixpkgs-unstable;
     master.url = github:nixos/nixpkgs/master;
-    home-manager-unstable.url = github:nix-community/home-manager;
-    home-manager.url = github:nix-community/home-manager/release-21.05;
+    home-manager.url = github:nix-community/home-manager;
+    home-manager-stable.url = github:nix-community/home-manager/release-21.05;
     nur.url = github:nix-community/NUR;
     agenix.url = github:ryantm/agenix;
     utils.url = github:numtide/flake-utils;
@@ -12,9 +12,10 @@
     mailserver.url = gitlab:simple-nixos-mailserver/nixos-mailserver;
     nbfc.url = github:natto1784/nbfc-linux/yawr;
     emacs.url = github:nix-community/emacs-overlay;
+    nix-gaming.url = github:fufexan/nix-gaming;
   };
 
-  outputs = inputs@{self, nixpkgs, unstable, master,  ... }:
+  outputs = inputs@{self, nixpkgs, stable, master,  ... }:
   inputs.utils.lib.eachDefaultSystem (system: 
   let
     mkPkgs = channel: system: import channel {
@@ -22,9 +23,9 @@
       config.allowUnfree = true;
     };
     channels = final: prev: {
-      unstable = mkPkgs unstable prev.system;
-      stable   = mkPkgs nixpkgs  prev.system;
-      master   = mkPkgs master   prev.system;
+      stable   = mkPkgs stable  prev.system;
+      unstable = mkPkgs nixpkgs prev.system;
+      master   = mkPkgs master  prev.system;
     };
     overlays = [
       (import ./overlays/overridesandshit.nix)
@@ -39,7 +40,10 @@
         inputs.nvim.overlay
         inputs.emacs.overlay
         channels
-        (_:_:{nbfc-linux=inputs.nbfc.defaultPackage.${system};})
+        ( _: _: {
+          nbfc-linux=inputs.nbfc.defaultPackage.${system};
+          games = inputs.nix-gaming.packages.${system};
+        })
       ];
       config.allowUnfree = true;
       config.allowBroken = true;
@@ -71,9 +75,14 @@
           imports = [ 
             ./home/natto.nix 
           ];
-          nixpkgs.overlays = self.legacyPackages.x86_64-linux.overlays;
-          nixpkgs.config.allowUnfree = true;
-          nixpkgs.config.allowBroken = true;
+          nixpkgs = {
+            overlays = self.legacyPackages.x86_64-linux.overlays;
+            config.allowUnfree = true;
+            config.allowBroken = true;
+            config.permittedInsecurePackages = [
+              "electron-9.4.4"
+            ];
+          };
         };
         homeDirectory = "/home/natto";
         username = "natto";
@@ -87,7 +96,6 @@
         modules = [
           ./hosts/satori
           inputs.agenix.nixosModules.age
-          inputs.home-manager.nixosModules.home-manager
           {
             nixpkgs.pkgs = self.legacyPackages.x86_64-linux; 
           }

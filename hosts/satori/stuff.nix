@@ -1,7 +1,15 @@
-{config, agenix, pkgs, ... }:
+{lib, config, agenix, pkgs, ... }:
 {
   time.timeZone = "Asia/Kolkata";
+
   environment = {
+  etc."current-system-packages".text =
+    let
+      packages = builtins.map (p: "${p.name}") config.environment.systemPackages;
+      sortedUnique = builtins.sort builtins.lessThan (lib.unique packages);
+      formatted = builtins.concatStringsSep "\n" sortedUnique;
+    in
+    formatted;
     sessionVariables = {
       QT_X11_NO_MITSHM="1";
       QT_QPA_PLATFORMTHEME = "gtk3";
@@ -34,7 +42,7 @@
     isNormalUser = true;
     shell = pkgs.zsh;
     home = "/home/natto";
-    extraGroups = [ "wheel" "adbusers" "video" "libvirtd" ];
+    extraGroups = [ "wheel" "adbusers" "video" "libvirtd" "docker" ];
   };
   i18n = {
     inputMethod = {
@@ -44,5 +52,6 @@
       fcitx.engines = with pkgs.fcitx-engines; [ m17n mozc ];
     };
   };
+  virtualisation.docker.enable = true;
   gtk.iconCache.enable = true;
 }

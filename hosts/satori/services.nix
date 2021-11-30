@@ -12,9 +12,14 @@
     udev.extraRules = ''
       ACTION=="add|change", KERNEL=="sda", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="bfq"
     '';
+    mysql = {
+      enable = true;
+      package = pkgs.mysql;
+    };
   };
   systemd.services = {
     tor.wantedBy = lib.mkForce [];
+    mysql.wantedBy = lib.mkForce [];
     logmein-hamachi.wantedBy = lib.mkForce [];
     openssh.wantedBy = lib.mkForce [];
     #printing.wantedBy = lib.mkForce [];

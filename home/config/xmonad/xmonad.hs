@@ -57,13 +57,13 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn "flameshot full -p /home/natto/Pictures -d 10000")
 
   , ((modMask, xK_p),
-     spawn "playerctl play-pause")
+     spawn "mpc toggle")
 
-  , ((modMask, xK_h),
-     spawn "playerctl next")
+  , ((modMask, xK_n),
+     spawn "mpc next")
 
-  , ((modMask, xK_k),
-     spawn "playerctl previous")
+  , ((modMask, xK_e),
+     spawn "mpc prev")
 
   , ((modMask .|. shiftMask, xK_a),
      spawn "mpc seek -00:00:05")
@@ -110,45 +110,45 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_r),
      refresh)
 
-  , ((modMask, xK_n),
+  , ((modMask, xK_j),
      windows W.focusDown)
 
-  , ((modMask, xK_e), windows W.focusUp  )
+  , ((modMask, xK_k), windows W.focusUp  )
 
-  , ((modMask .|. shiftMask, xK_m),
+  , ((modMask .|. shiftMask, xK_h),
      windows W.focusMaster  )
 
   , ((modMask .|. shiftMask, xK_Return),
      windows W.swapMaster)
 
-  , ((modMask .|. shiftMask, xK_n),
+  , ((modMask .|. shiftMask, xK_j),
      windows W.swapDown  )
 
-  , ((modMask .|. shiftMask, xK_e),
+  , ((modMask .|. shiftMask, xK_k),
      windows W.swapUp    )
 
-  , ((mod1Mask, xK_m),
+  , ((mod1Mask, xK_h),
      sendMessage Expand)
 
-  , ((mod1Mask, xK_i),
+  , ((mod1Mask, xK_l),
      sendMessage Shrink)
 
-  , ((mod1Mask, xK_n),
+  , ((mod1Mask, xK_j),
      sendMessage MirrorExpand)
 
-  , ((mod1Mask, xK_e),
+  , ((mod1Mask, xK_k),
      sendMessage MirrorShrink)
 
-  , ((mod1Mask .|. shiftMask, xK_m),
+  , ((mod1Mask .|. shiftMask, xK_h),
      withFocused (keysMoveWindow (-30, 0)))
 
-  , ((mod1Mask .|. shiftMask, xK_i),
+  , ((mod1Mask .|. shiftMask, xK_l),
      withFocused (keysMoveWindow (30, 0)))
 
-  , ((mod1Mask .|. shiftMask, xK_n),
+  , ((mod1Mask .|. shiftMask, xK_j),
      withFocused (keysMoveWindow (0, 30)))
 
-  , ((mod1Mask .|. shiftMask, xK_e),
+  , ((mod1Mask .|. shiftMask, xK_k),
      withFocused (keysMoveWindow (0, -30)))
 
   , ((modMask, xK_t),
