@@ -1,7 +1,8 @@
-{lib, config, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
+    tmux
     bc
     gnumake
     pciutils
@@ -15,11 +16,19 @@
     kbd
     cachix
     gcc
-    rustc
     stable.openjdk
     virtmanager
     tree-sitter
     docker-compose
+    nodePackages.typescript
+    rust-bin.nightly.latest.default
+    #language servers
+    rust-analyzer
+    ccls
+    nodePackages.typescript-language-server
+    rnix-lsp
+    python3Packages.python-lsp-server
+    haskell-language-server
   ];
 
   programs = {
@@ -34,27 +43,27 @@
     zsh = {
       enable = true;
       promptInit = ''
-      RPROMPT='%B%F{cyan}%n%f@%F{red}%m%b'
-      function preexec() {
-        timer=$(date +%s%3N)
-      }
-      function precmd() {
-      if [ $timer ]; then
-        now=$(date +%s%3N)
-        elapsed=$(($now-$timer))
-        unset timer
-        unit="ms"
-        if [ $elapsed -gt 1000 ]; then
-          elapsed=$(echo "scale=1; $elapsed/1000" | ${pkgs.bc}/bin/bc -l)
-          unit="s"
+        RPROMPT='%B%F{cyan}%n%f@%F{red}%m%b'
+        function preexec() {
+          timer=$(date +%s%3N)
+        }
+        function precmd() {
+        if [ $timer ]; then
+          now=$(date +%s%3N)
+          elapsed=$(($now-$timer))
+          unset timer
+          unit="ms"
+          if [ $elapsed -gt 1000 ]; then
+            elapsed=$(echo "scale=1; $elapsed/1000" | ${pkgs.bc}/bin/bc -l)
+            unit="s"
+          fi
+          if (($(echo "$elapsed > 60" | bc -l ))); then
+            elapsed=$(echo "scale=2; $elapsed/60" | ${pkgs.bc}/bin/bc -l)
+            unit="m"
+          fi
+          RPROMPT='%B%F{cyan}%n%f@%F{red}%m %F{yellow}~%f %F{magenta}$elapsed $unit%f%b '
         fi
-        if (($(echo "$elapsed > 60" | bc -l ))); then
-          elapsed=$(echo "scale=2; $elapsed/60" | ${pkgs.bc}/bin/bc -l)
-          unit="m"
-        fi
-        RPROMPT='%B%F{cyan}%n%f@%F{red}%m %F{yellow}~%f %F{magenta}$elapsed $unit%f%b '
-      fi
-      }
+        }
       '';
       histSize = 12000;
       enableCompletion = true;
@@ -98,7 +107,7 @@
       experimental-features = nix-command ca-references flakes
     '';
     trustedUsers = [ "root" "natto" ];
-        binaryCaches = [
+    binaryCaches = [
       "https://nix-gaming.cachix.org"
       "https://nix-community.cachix.org"
       "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"

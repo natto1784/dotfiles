@@ -61,7 +61,8 @@ in
         extraConfig = ''
           log_file                        "~/.config/mpd/log"
           pid_file                        "~/.config/mpd/pid"
- #         bind_to_address                 "~/.config/mpd/socket"
+          bind_to_address                 "0.0.0.0"
+          bind_to_address                 "~/.config/mpd/socket"
           restore_paused "yes"
           input {
                   plugin "curl"
@@ -80,7 +81,7 @@ in
                   type        "httpd"
                   name        "My HTTP Stream"
                   port        "8000"
-                  max_clients     "4"
+                  max_clients "4"
           }
           filesystem_charset "UTF-8"
           '';

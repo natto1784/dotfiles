@@ -15,7 +15,7 @@
       kernelModules = [];
     };
     kernelParams = [ "intel_pstate=active" "intel_iommu=on" ]; 
-    kernelModules = [ "kvm-intel" ];
+    kernelModules = [ "kvm-intel" "snd-seq" "snd-rawmidi" ];
     extraModulePackages = with config.boot.kernelPackages; [ nvidia_x11 v4l2loopback];
     loader = {
       efi = {

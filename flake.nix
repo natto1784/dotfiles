@@ -1,10 +1,10 @@
 { 
   inputs = {
-    stable.url = github:nixos/nixpkgs/nixos-21.05;
+    stable.url = github:nixos/nixpkgs/nixos-21.11;
     nixpkgs.url = github:nixos/nixpkgs/nixpkgs-unstable;
     master.url = github:nixos/nixpkgs/master;
     home-manager.url = github:nix-community/home-manager;
-    home-manager-stable.url = github:nix-community/home-manager/release-21.05;
+    home-manager-stable.url = github:nix-community/home-manager/release-21.11;
     nur.url = github:nix-community/NUR;
     agenix.url = github:ryantm/agenix;
     utils.url = github:numtide/flake-utils;
@@ -13,6 +13,7 @@
     nbfc.url = github:natto1784/nbfc-linux/yawr;
     emacs.url = github:nix-community/emacs-overlay;
     nix-gaming.url = github:fufexan/nix-gaming;
+    rust.url = github:oxalica/rust-overlay;
   };
 
   outputs = inputs@{self, nixpkgs, stable, master,  ... }:
@@ -38,6 +39,7 @@
       overlays = overlays ++ [ 
         inputs.nur.overlay 
         inputs.nvim.overlay
+        inputs.rust.overlay
         inputs.emacs.overlay
         channels
         ( _: _: {
@@ -53,9 +55,9 @@
   let 
     personalModules = [
       ./modules/nvidia-offload.nix
-      ./modules/pipewire.nix
+      ./modules/sound.nix
       ./modules/xorg.nix
-      ./modules/emacs
+     # ./modules/emacs
     ];
     commonModules = [
       ./modules/nvim

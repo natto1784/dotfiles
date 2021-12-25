@@ -4,8 +4,7 @@ let
 in
 {
   imports = [
-    ./stuff/programs.nix 
-    ./stuff/xsession.nix
+    ./stuff/programs.nix ./stuff/xsession.nix
     ./stuff/secret.nix
     ./stuff/services.nix
   ];
@@ -18,12 +17,12 @@ in
   age = {
     sshKeyPaths = [ "${home}/.ssh/id_ed25519" ];
     secrets = {
- /*     fish_variables = {
+      /*     fish_variables = {
         file = ./secrets/fish_variables.age;
         path = "${home}/.config/fish/fish_variables";
         mode = "660";
         };
-*/
+      */
       mpdasrc = {
         file = ./secrets/mpdasrc.age;
         path = "${home}/.config/mpdasrc";
@@ -37,9 +36,7 @@ in
   };
   home = {
     packages = with pkgs; [
- /*     (ffmpeg-full.override {
-      	libaom = libaom;
-      })*/
+      ffmpeg-full
       sox
       rage
       curl
@@ -61,7 +58,7 @@ in
       luajit
       mpv
       jmtpfs
-      dunst 
+      dunst
       flameshot
       youtube-dl
       xclip
@@ -75,18 +72,18 @@ in
       feh
       dmenu
       st
-      neofetch 
+      neofetch
       xmobar
       xdotool
       arc-theme
       arc-icon-theme
       tor-browser-bundle-bin
-      games.wine-tkg
+      wineWowPackages.stable
       master.winetricks
       games.winestreamproxy
-    /*  (games.osu-stable.overrideAttrs (_:{
+      /*  (games.osu-stable.overrideAttrs (_:{
         tricks = [ "gdiplus" "dotnet46" "meiryo" ];
-      }))*/
+        }))*/
       csvtool
       pmidi
       dosbox
@@ -96,12 +93,16 @@ in
       nbfc-linux
       pulseaudio
       (texlive.combine { inherit (texlive) scheme-small babel lm graphics-def url; })
-      qjackctl
+      (qjackctl.override { jackSession = true; })
+      ardour
       carla
+      electrum
+      anki-bin
+      spotify
     ];
 
     file = {
-       dwm-autostart = {
+      dwm-autostart = {
         source = ./config/dwm/autostart.sh;
         target = "${home}/.dwm/autostart.sh";
       };

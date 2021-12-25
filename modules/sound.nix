@@ -1,4 +1,4 @@
-{lib, config, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
 {
   services = {
@@ -9,15 +9,18 @@
         support32Bit = true;
       };
       pulse.enable = true;
-      #jack.enable = true;
+      jack.enable = true;
+      socketActivation = true;
+
+    #  https://nixos.wiki/wiki/PipeWire#Low-latency_setup
       config.pipewire = {
         context.objects = [
           {
             factory = "spa-node-factory";
             args = {
-              factory.name     = "support.node.driver";
-              node.name        = "Dummy-Driver";
-              priority.driver  = 8000;
+              factory.name = "support.node.driver";
+              node.name = "Dummy-Driver";
+              priority.driver = 8000;
             };
           }
         ];
@@ -45,7 +48,7 @@
           }
           {
             name = "libpipewire-module-access";
-            args = {};
+            args = { };
           }
           { name = "libpipewire-module-adapter"; }
           { name = "libpipewire-module-link-factory"; }
@@ -62,7 +65,7 @@
           {
             name = "libpipewire-module-protocol-pulse";
             args = {
-              pulse.min.req = "32/48000";           
+              pulse.min.req = "32/48000";
               pulse.min.quantum = "32/48000";
               pulse.min.frag = "32/48000";
             };
@@ -76,8 +79,11 @@
     };
   };
   sound.enable = true;
-#  hardware = {
-#    pulseaudio.enable = true;
-#    pulseaudio.support32Bit = true;
-#  };
+  /*  hardware = {
+    pulseaudio = {
+    enable = true;
+    support32Bit = true;
+    package = pkgs.pulseaudio.override { jackaudioSupport = true; };
+    };
+    };*/
 }

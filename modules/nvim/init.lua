@@ -1,5 +1,4 @@
 vim.api.nvim_set_option("termguicolors", true)
-local nvimlsp = require('lspconfig')
 local comm = vim.api.nvim_command
 local bind = vim.api.nvim_set_keymap
 local setvar = vim.api.nvim_set_var
@@ -352,9 +351,10 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
   }
 }
 
+local nvimlsp = require('lspconfig')
 for _, lsp in ipairs(servers) do
   nvimlsp[lsp].setup { capabilities = capabilities, on_attach = on_attach }
 end
 
 vim.g.tex_flavor = "latex"
-comm("set syntax=on")
+comm("set syntax=off")
