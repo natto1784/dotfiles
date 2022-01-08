@@ -59,10 +59,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_p),
      spawn "mpc toggle")
 
-  , ((modMask, xK_n),
+  , ((modMask, xK_h),
      spawn "mpc next")
 
-  , ((modMask, xK_e),
+  , ((modMask, xK_k),
      spawn "mpc prev")
 
   , ((modMask .|. shiftMask, xK_a),
@@ -110,10 +110,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_r),
      refresh)
 
-  , ((modMask, xK_j),
+  , ((modMask, xK_n),
      windows W.focusDown)
 
-  , ((modMask, xK_k), windows W.focusUp  )
+  , ((modMask, xK_e), windows W.focusUp  )
 
   , ((modMask .|. shiftMask, xK_h),
      windows W.focusMaster  )
@@ -121,34 +121,34 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask .|. shiftMask, xK_Return),
      windows W.swapMaster)
 
-  , ((modMask .|. shiftMask, xK_j),
+  , ((modMask .|. shiftMask, xK_n),
      windows W.swapDown  )
 
-  , ((modMask .|. shiftMask, xK_k),
+  , ((modMask .|. shiftMask, xK_e),
      windows W.swapUp    )
 
-  , ((mod1Mask, xK_h),
+  , ((mod1Mask, xK_m),
      sendMessage Expand)
 
-  , ((mod1Mask, xK_l),
+  , ((mod1Mask, xK_i),
      sendMessage Shrink)
 
-  , ((mod1Mask, xK_j),
+  , ((mod1Mask, xK_n),
      sendMessage MirrorExpand)
 
-  , ((mod1Mask, xK_k),
+  , ((mod1Mask, xK_e),
      sendMessage MirrorShrink)
 
-  , ((mod1Mask .|. shiftMask, xK_h),
+  , ((modMask .|. mod1Mask .|. shiftMask, xK_m),
      withFocused (keysMoveWindow (-30, 0)))
 
-  , ((mod1Mask .|. shiftMask, xK_l),
+  , ((modMask .|. mod1Mask .|. shiftMask, xK_i),
      withFocused (keysMoveWindow (30, 0)))
 
-  , ((mod1Mask .|. shiftMask, xK_j),
+  , ((modMask .|. mod1Mask .|. shiftMask, xK_n),
      withFocused (keysMoveWindow (0, 30)))
 
-  , ((mod1Mask .|. shiftMask, xK_k),
+  , ((modMask .|. mod1Mask .|. shiftMask, xK_e),
      withFocused (keysMoveWindow (0, -30)))
 
   , ((modMask, xK_t),

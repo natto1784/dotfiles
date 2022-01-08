@@ -2,6 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
+    w3m
     tmux
     bc
     gnumake
@@ -11,6 +12,7 @@
     python3
     htop
     nodejs
+    ghc
     wget
     ripgrep
     kbd
@@ -29,10 +31,16 @@
     rnix-lsp
     python3Packages.python-lsp-server
     haskell-language-server
+    fly
+    (steam.override {
+      extraLibraries = pkgs: [ pkgs.pipewire ];
+      extraProfile = ''
+        unset VK_ICD_FILENAMES
+        export VK_ICD_FILENAMES=${config.hardware.nvidia.package}/share/vulkan/icd.d/nvidia_icd.json:${config.hardware.nvidia.package.lib32}/share/vulkan/icd.d/nvidia_icd32.json'';
+    })
   ];
 
   programs = {
-    steam.enable = true;
     gnupg = {
       agent = {
         enableSSHSupport = true;
@@ -104,7 +112,7 @@
   nix = {
     package = pkgs.nixUnstable;
     extraOptions = ''
-      experimental-features = nix-command ca-references flakes
+      experimental-features = nix-command flakes
     '';
     trustedUsers = [ "root" "natto" ];
     binaryCaches = [

@@ -29,6 +29,7 @@
       fsType = "btrfs";
       options = [ "compress-force=zstd:3" ];
     };
+
   swapDevices = [ ];
   zramSwap = {
     enable = true;

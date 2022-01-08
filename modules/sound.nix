@@ -12,7 +12,7 @@
       jack.enable = true;
       socketActivation = true;
 
-    #  https://nixos.wiki/wiki/PipeWire#Low-latency_setup
+      #  https://nixos.wiki/wiki/PipeWire#Low-latency_setup
       config.pipewire = {
         context.objects = [
           {
@@ -20,7 +20,7 @@
             args = {
               factory.name = "support.node.driver";
               node.name = "Dummy-Driver";
-              priority.driver = 8000;
+              priority.driver= 8000;
             };
           }
         ];

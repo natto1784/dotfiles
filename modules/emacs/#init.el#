@@ -1,4 +1,5 @@
 ;; -*- lexical-binding:t -*-
+
 ;;colors
 (setq
 c-bg        "#1d2021"
@@ -26,6 +27,7 @@ c-white-2   "#ebdbb2")
 (scroll-bar-mode 0)
 (tool-bar-mode 0)
 (menu-bar-mode 0)
+(tab-bar-mode t)
 (fringe-mode 0)
 (global-display-line-numbers-mode 1)
 (setq initial-major-mode 'emacs-lisp-mode)
@@ -73,10 +75,11 @@ c-white-2   "#ebdbb2")
 (use-package treemacs
   :config
   (treemacs-filewatch-mode 1)
-; (treemacs-display-current-project-exclusively)
+;  (treemacs-display-current-project-exclusively)
   (treemacs-git-mode 'deferred))
 
-(use-package treemacs-evil :config
+(use-package treemacs-evil
+  :config
   (define-key evil-treemacs-state-map (kbd "n")   #'treemacs-next-line)
   (define-key evil-treemacs-state-map (kbd "e")   #'treemacs-previous-line)
   (define-key evil-treemacs-state-map (kbd "M-n") #'treemacs-next-neighbour)
@@ -140,23 +143,6 @@ c-white-2   "#ebdbb2")
 (use-package nix-mode
   :mode "\\.nix\\'")
 
-(use-package projectile)
-
-(use-package vterm)
-
-(use-package vterm-toggle
-  :config
-  (setq vterm-toggle-fullscreen-p nil)
-  (add-to-list 'display-buffer-alist
-               '((lambda(bufname _) (with-current-buffer bufname (equal major-mode 'vterm-mode)))
-                 (display-buffer-reuse-window display-buffer-at-bottom)
-                 (reusable-frames . visible)
-                 (window-height . 0.4)))
-  (global-set-key [f1] 'vterm-toggle)
-  (global-set-key [C-f1] 'vterm-toggle-cd)
-  (define-key vterm-mode-map (kbd "C-N")   'vterm-toggle-forward)
-  (define-key vterm-mode-map (kbd "C-E")   'vterm-toggle-backward))
-
 (defface bufname
   `((t :foreground ,c-fg
        :background ,c-bg
@@ -164,6 +150,7 @@ c-white-2   "#ebdbb2")
      ))
   "Custom face for buffer name"
   :group 'mode-line-faces )
+
 (defface majmode
   `((t :foreground ,c-fg
        :background ,c-bg
@@ -213,6 +200,11 @@ c-white-2   "#ebdbb2")
 	   ))))
 
 ;;keybinds
+
+(add-hook 'emacs-startup-hook (lambda ()
+                                (when (get-buffer "*scratch*")
+                                  (kill-buffer "*scratch*"))))
+
 (global-set-key (kbd "M-o") 'treemacs)
 (global-set-key (kbd "M-v") 'split-window-vertically)
 (global-set-key (kbd "M-h") 'split-window-horizontally)
@@ -224,6 +216,6 @@ c-white-2   "#ebdbb2")
 (global-set-key (kbd "C-S-i") 'windmove-right)
 (global-set-key (kbd "C-S-e")  'windmove-up)
 (global-set-key (kbd "C-S-n")  'windmove-down)
-(global-set-key (kbd "M->")  'previous-buffer)
-(global-set-key (kbd "M-<")  'next-buffer)
-(global-set-key (kbd "M-C-S-q")  'kill-buffer)
+(global-set-key (kbd "M-S-,")  'previous-buffer)
+(global-set-key (kbd "M-S-.")  'next-buffer)
+(global-set-key (kbd "M-C-S-q")  '(kill-buffer))

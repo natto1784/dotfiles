@@ -57,7 +57,7 @@
       ./modules/nvidia-offload.nix
       ./modules/sound.nix
       ./modules/xorg.nix
-     # ./modules/emacs
+      ./modules/emacs
     ];
     commonModules = [
       ./modules/nvim

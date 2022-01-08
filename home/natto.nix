@@ -48,7 +48,6 @@ in
       xfce.xfconf
       xfce.tumbler
       master.discord
-      customscripts
       mpd_discord_richpresence
       sox
       qbittorrent
@@ -94,11 +93,18 @@ in
       pulseaudio
       (texlive.combine { inherit (texlive) scheme-small babel lm graphics-def url; })
       (qjackctl.override { jackSession = true; })
-      ardour
       carla
       electrum
       anki-bin
       spotify
+      deluge
+      teams
+      libreoffice
+      google-drive-ocamlfuse
+      customscripts
+      stable.ardour
+      stable.calf
+      stable.blender
     ];
 
     file = {

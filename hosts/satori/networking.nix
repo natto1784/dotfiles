@@ -1,4 +1,4 @@
-{config, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   networking = {
@@ -13,10 +13,10 @@
       enp7s0.useDHCP = true;
       wlp0s20f3 = {
         useDHCP = true;
-        ipv4.addresses = [ {
+        ipv4.addresses = [{
           prefixLength = 24;
           address = "192.168.0.109";
-        } ];
+        }];
       };
     };
     wireguard.interfaces.wg0 = {
@@ -25,11 +25,11 @@
       privateKeyFile = "/var/wg";
       peers = [
         {
-        #Oracle VM1
-        publicKey = "z0Y2VNEWcyVQVSqRHiwmiJ5/0MgSPM+HZfEcwIccSxM=";
-        allowedIPs = [ "10.55.0.0/24" ];
-        endpoint = "weirdnatto.in:17840";
-        persistentKeepalive = 25;
+          #Oracle VM1
+          publicKey = "z0Y2VNEWcyVQVSqRHiwmiJ5/0MgSPM+HZfEcwIccSxM=";
+          allowedIPs = [ "10.55.0.0/24" ];
+          endpoint = "weirdnatto.in:17840";
+          persistentKeepalive = 25;
         }
       ];
     };

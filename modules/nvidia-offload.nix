@@ -15,8 +15,7 @@ in
     hardware = {
       opengl = {
         driSupport32Bit = true;
-        #package = pkgs.mesa_drivers;
-        extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
+      #  extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
         enable = true;
       };
       nvidia = {

@@ -2,7 +2,7 @@
 
 {
   boot = {
-    kernelPackages = pkgs.unstable.linuxPackages_latest;
+    kernelPackages = pkgs.unstable.linuxPackages_zen;
     initrd={
       availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" "vfio-pci"];
  /*     preDeviceCommands = ''
@@ -15,7 +15,7 @@
       kernelModules = [];
     };
     kernelParams = [ "intel_pstate=active" "intel_iommu=on" ]; 
-    kernelModules = [ "kvm-intel" "snd-seq" "snd-rawmidi" ];
+    kernelModules = [ "kvm-intel" "snd-seq" "snd-rawmidi" "joydev" ];
     extraModulePackages = with config.boot.kernelPackages; [ nvidia_x11 v4l2loopback];
     loader = {
       efi = {
