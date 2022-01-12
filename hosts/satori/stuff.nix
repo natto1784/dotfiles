@@ -37,6 +37,7 @@
     nerdfonts
     font-awesome
     monoid
+    office-code-pro
   ];
   users.users.natto = {
     isNormalUser = true;

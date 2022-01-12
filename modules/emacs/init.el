@@ -1,4 +1,4 @@
-;; -*- lexical-binding:t -*-
+; -*- lexical-binding: t; -*-
 ;;colors
 (setq
 c-bg        "#1d2021"
@@ -19,19 +19,20 @@ c-magenta-2 "#d3869b"
 c-cyan-2    "#8ec07c"
 c-white-2   "#ebdbb2")
 ;;settings
-(setq display-line-numbers-type 'relative)
-(setq inhibit-startup-screen t)
 (set-face-attribute 'default nil :font "Monoid" :height 120)
 (global-hl-line-mode 1)
 (scroll-bar-mode 0)
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (fringe-mode 0)
+(cua-mode 1)
 (global-display-line-numbers-mode 1)
-(setq initial-major-mode 'emacs-lisp-mode)
-(setq frame-resize-pixelwise t)
-(setq auto-window-vscroll nil)
-(setq scroll-step 1)
+(setq initial-major-mode 'emacs-lisp-mode
+      frame-resize-pixelwise t
+      auto-window-vscroll nil
+      scroll-step 1
+      display-line-numbers-type 'relative
+      inhibit-startup-screen t)
 
 ;;add packages and shit
 (require 'package)
@@ -39,10 +40,20 @@ c-white-2   "#ebdbb2")
 (package-initialize)
 (require 'use-package)
 
-
 ;;package config and modes
-(use-package gruvbox-theme
-  :init (load-theme 'gruvbox-dark-hard t))
+;(use-package gruvbox-theme
+;  :init (load-theme 'gruvbox-dark-hard t))
+
+(use-package doom-themes
+  :config
+  (setq doom-themes-enable-bold t   
+        doom-themes-enable-italic t
+        doom-themes-treemacs-theme "doom-colors"
+        doom-gruvbox-dark-variant "hard")
+  (load-theme 'doom-gruvbox t)
+  (doom-themes-visual-bell-config)
+  (doom-themes-treemacs-config)
+  (doom-themes-org-config))
 
 (use-package ivy
   :config
@@ -73,7 +84,7 @@ c-white-2   "#ebdbb2")
 (use-package treemacs
   :config
   (treemacs-filewatch-mode 1)
-; (treemacs-display-current-project-exclusively)
+  (treemacs-display-current-project-exclusively)
   (treemacs-git-mode 'deferred))
 
 (use-package treemacs-evil :config
@@ -83,7 +94,7 @@ c-white-2   "#ebdbb2")
   (define-key evil-treemacs-state-map (kbd "M-e") #'treemacs-previous-neighbour)
   (define-key evil-treemacs-state-map (kbd "M-N") #'treemacs-next-line-other-window)
   (define-key evil-treemacs-state-map (kbd "M-E") #'treemacs-previous-line-other-window)
-  (define-key evil-treemacs-state-map (kbd "M")   #'treemacs-collapse-parent-node)
+;  (define-key evil-treemacs-state-map (kbd "M")   #'treemacs-collapse-parent-node)
   (evil-define-key 'treemacs treemacs-mode-map (kbd "m") #'treemacs-COLLAPSE-action)
   (evil-define-key 'treemacs treemacs-mode-map (kbd "i") #'treemacs-RET-action)
  )
@@ -142,20 +153,40 @@ c-white-2   "#ebdbb2")
 
 (use-package projectile)
 
-(use-package vterm)
-
-(use-package vterm-toggle
+(use-package vterm
   :config
-  (setq vterm-toggle-fullscreen-p nil)
-  (add-to-list 'display-buffer-alist
-               '((lambda(bufname _) (with-current-buffer bufname (equal major-mode 'vterm-mode)))
-                 (display-buffer-reuse-window display-buffer-at-bottom)
-                 (reusable-frames . visible)
-                 (window-height . 0.4)))
-  (global-set-key [f1] 'vterm-toggle)
-  (global-set-key [C-f1] 'vterm-toggle-cd)
-  (define-key vterm-mode-map (kbd "C-N")   'vterm-toggle-forward)
-  (define-key vterm-mode-map (kbd "C-E")   'vterm-toggle-backward))
+  (setq vterm-timer-delay 0.005)
+  )
+
+(use-package all-the-icons)
+
+(use-package centaur-tabs
+  :config
+  (setq centaur-tabs-style "bar"
+        centaur-tabs-set-bar 'left
+        centaur-tabs-height 18
+        centaur-tabs-set-icons t)
+  (centaur-tabs-group-buffer-groups)
+  (centaur-tabs-mode 1)
+  (centaur-tabs-headline-match)
+  (set-face-attribute 'tab-line nil :background c-bg :foreground c-fg)
+  (set-face-attribute 'centaur-tabs-active-bar-face nil :background c-red-2)
+  (set-face-attribute 'centaur-tabs-selected nil :background c-fg :foreground c-bg)
+  (set-face-attribute 'centaur-tabs-unselected nil :background c-bg :foreground c-fg))
+
+(use-package general)
+
+ (use-package vterm-toggle 
+   :config
+   (setq vterm-toggle-fullscreen-p nil)
+   (add-to-list 'display-buffer-alist
+                '((lambda(bufname _) (with-current-buffer bufname (equal major-mode 'vterm-mode)))
+                  (display-buffer-reuse-window display-buffer-at-bottom)
+                  (reusable-frames . visible)
+                  (window-height . 0.4)))
+   (define-key vterm-mode-map (kbd "<f2>")   'vterm-toggle-forward)
+   (define-key vterm-mode-map (kbd "<f3>")   'vterm-toggle-backward))
+
 
 (defface bufname
   `((t :foreground ,c-fg
@@ -213,17 +244,89 @@ c-white-2   "#ebdbb2")
 	   ))))
 
 ;;keybinds
-(global-set-key (kbd "M-o") 'treemacs)
-(global-set-key (kbd "M-v") 'split-window-vertically)
-(global-set-key (kbd "M-h") 'split-window-horizontally)
-(global-set-key (kbd "M-C-m") 'shrink-window-horizontally)
-(global-set-key (kbd "M-C-i") 'enlarge-window-horizontally)
-(global-set-key (kbd "M-C-e") 'shrink-window)
-(global-set-key (kbd "M-C-n") 'enlarge-window)
-(global-set-key (kbd "C-S-m")  'windmove-left)
-(global-set-key (kbd "C-S-i") 'windmove-right)
-(global-set-key (kbd "C-S-e")  'windmove-up)
-(global-set-key (kbd "C-S-n")  'windmove-down)
-(global-set-key (kbd "M->")  'previous-buffer)
-(global-set-key (kbd "M-<")  'next-buffer)
-(global-set-key (kbd "M-C-S-q")  'kill-buffer)
+;(global-set-key (kbd "M-o") 'treemacs)
+;(global-set-key (kbd "M-v") 'split-window-vertically)
+;(global-set-key (kbd "M-h") 'split-window-horizontally)
+;(global-set-key (kbd "M-C-m") 'shrink-window-horizontally)
+;(global-set-key (kbd "M-C-i") 'enlarge-window-horizontally)
+;(global-set-key (kbd "M-C-e") 'shrink-window)
+;(global-set-key (kbd "M-C-n") 'enlarge-window)
+;(global-set-key (kbd "C-S-m")  'windmove-left)
+;(global-set-key (kbd "C-S-i") 'windmove-right)
+;(global-set-key (kbd "C-S-e")  'windmove-up)
+;(global-set-key (kbd "C-S-n")  'windmove-down)
+;(global-set-key (kbd "M->")  'previous-buffer)
+;(global-set-key (kbd "M-<")  'next-buffer)
+;(global-set-key (kbd "M-C-S-q")  'kill-buffer)
+
+
+;; stolen from https://www.reddit.com/r/emacs/comments/ft84xy/run_shell_command_in_new_vterm/
+(defun run-in-vterm-kill (process event)
+  "A process sentinel. Kills PROCESS's buffer if it is live."
+  (let ((b (process-buffer process)))
+    (and (buffer-live-p b)
+         (kill-buffer b))))
+
+(defun run-in-vterm (command)
+  "Execute string COMMAND in a new vterm.
+
+Interactively, prompt for COMMAND with the current buffer's file
+name supplied. When called from Dired, supply the name of the
+file at point.
+
+Like `async-shell-command`, but run in a vterm for full terminal features.
+
+The new vterm buffer is named in the form `*foo bar.baz*`, the
+command and its arguments in earmuffs.
+
+When the command terminates, the shell remains open, but when the
+shell exits, the buffer is killed."
+  (interactive
+   (list
+    (let* ((f (cond (buffer-file-name)
+                    ((eq major-mode 'dired-mode)
+                     (dired-get-filename nil t))))
+           (filename (concat " " (shell-quote-argument (and f (file-relative-name f))))))
+      (read-shell-command "Terminal command: "
+                          (cons filename 0)
+                          (cons 'shell-command-history 1)
+                          (list filename)))))
+  (with-current-buffer (vterm (concat "*" command "*"))
+    (set-process-sentinel vterm--process #'run-in-vterm-kill)
+    (vterm-send-string (concat command))
+    (vterm-send-return)))
+
+
+(general-define-key
+  :states '(normal emacs visual motion treemacs Eshell)
+  :keymaps '(normal emacs override Eshell)
+  "M-o" 'treemacs
+  "M-v" 'split-window-vertically
+  "M-h" 'split-window-horizontally
+  "M-C-m" 'shrink-window-horizontally
+  "M-C-i" 'enlarge-window-horizontally
+  "M-C-e" 'shrink-window
+  "M-C-n" 'enlarge-window
+  "C-m" 'windmove-left
+  "C-i" 'windmove-right
+  "C-n" 'windmove-down
+  "C-e" 'windmove-up
+  "M-,"  'previous-buffer
+  "M-."  'next-buffer
+  "M-C-S-q"  'kill-buffer-and-window
+  "M-w"  'centaur-tabs--kill-this-buffer-dont-ask
+  "M-S-w"  'kill-window
+  "M-S-," 'centaur-tabs-backward
+  "M-S-." 'centaur-tabs-forward
+  "<f4>"  (lambda () (interactive) (vterm t))
+  "C-<f1>" 'vterm-toggle-cd
+  "<f1>" 'vterm-toggle
+  "f5" (lambda () (interactive) (run-in-vterm (concat "gcc " buffer-file-name " -o " (file-name-sans-extension buffer-file-name) " && " (file-name-sans-extension buffer-file-name)))))
+
+(general-define-key
+  :states '(normal insert)
+  :keymaps 'VTerm
+  "C-S-v" 'vterm-yank
+  )
+
+

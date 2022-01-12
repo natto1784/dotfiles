@@ -30,7 +30,11 @@
       options = [ "compress-force=zstd:3" ];
     };
 
-  swapDevices = [ ];
+  swapDevices = [
+    {
+      device = "/dev/disk/by-uuid/d4cef4cd-19b0-4d1b-8569-9985ff42270c";
+    }
+  ];
   zramSwap = {
     enable = true;
     algorithm = "lz4";

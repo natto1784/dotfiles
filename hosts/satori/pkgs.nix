@@ -50,6 +50,9 @@
     };
     zsh = {
       enable = true;
+      shellAliases = {
+        "ec" = "emacsclient";
+      };
       promptInit = ''
         RPROMPT='%B%F{cyan}%n%f@%F{red}%m%b'
         function preexec() {
