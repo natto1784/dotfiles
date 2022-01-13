@@ -27,6 +27,7 @@
     #language servers
     rust-analyzer
     ccls
+    clang-tools
     nodePackages.typescript-language-server
     rnix-lsp
     python3Packages.python-lsp-server

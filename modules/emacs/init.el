@@ -32,7 +32,11 @@ c-white-2   "#ebdbb2")
       auto-window-vscroll nil
       scroll-step 1
       display-line-numbers-type 'relative
+      confirm-kill-processes nil
       inhibit-startup-screen t)
+(add-hook 'emacs-startup-hook
+          (lambda () (delete-other-windows)) t)
+
 
 ;;add packages and shit
 (require 'package)
@@ -43,6 +47,7 @@ c-white-2   "#ebdbb2")
 ;;package config and modes
 ;(use-package gruvbox-theme
 ;  :init (load-theme 'gruvbox-dark-hard t))
+
 
 (use-package doom-themes
   :config
@@ -63,6 +68,7 @@ c-white-2   "#ebdbb2")
   (ivy-mode 1))
 
 (use-package elcord
+  :defer 0
   :config
   (elcord-mode 1))
 
@@ -72,6 +78,7 @@ c-white-2   "#ebdbb2")
 
 (use-package evil
   :config
+  (evil-set-initial-state 'vterm-mode 'insert)
   (evil-set-undo-system 'undo-tree)
   (evil-mode 1))
 
@@ -100,16 +107,19 @@ c-white-2   "#ebdbb2")
  )
 
 (use-package lsp-mode
+  :defer 0
   :init
   (setq )
   :config
   (lsp-mode 1))
 
 (use-package lsp-treemacs
+  :defer 0
   :config
   (lsp-treemacs-sync-mode 1))
 
 (use-package lsp-ui
+  :defer 0
   :init
   (setq lsp-ui-doc-show-with-cursor t)
   :config
@@ -117,12 +127,16 @@ c-white-2   "#ebdbb2")
   (lsp-ui-doc-enable 1))
 
 (use-package company
+  :defer 0
   :after lsp-mode
   :config
   (define-key company-active-map (kbd "C-n") 'company-select-next)
   (define-key company-active-map (kbd "C-e") 'company-select-previous)
   (define-key company-search-map (kbd "C-n") 'company-select-next)
   (define-key company-search-map (kbd "C-e") 'company-select-previous))
+
+(use-package company-quickhelp
+  :hook (company-mode . company-quickhelp-mode))
 
 (use-package tree-sitter-langs)
 
@@ -146,6 +160,9 @@ c-white-2   "#ebdbb2")
 
 (use-package rustic)
 
+(add-hook 'c-mode-hook 'lsp)
+(add-hook 'c++-mode-hook 'lsp)
+
 (use-package magit)
 
 (use-package nix-mode
@@ -165,14 +182,19 @@ c-white-2   "#ebdbb2")
   (setq centaur-tabs-style "bar"
         centaur-tabs-set-bar 'left
         centaur-tabs-height 18
+        centaur-tabs-set-modified-marker t
         centaur-tabs-set-icons t)
   (centaur-tabs-group-buffer-groups)
   (centaur-tabs-mode 1)
   (centaur-tabs-headline-match)
   (set-face-attribute 'tab-line nil :background c-bg :foreground c-fg)
   (set-face-attribute 'centaur-tabs-active-bar-face nil :background c-red-2)
+  (set-face-attribute 'centaur-tabs-modified-marker-selected nil :foreground c-red-2)
+  (set-face-attribute 'centaur-tabs-modified-marker-unselected nil :foreground c-red-2)
   (set-face-attribute 'centaur-tabs-selected nil :background c-fg :foreground c-bg)
-  (set-face-attribute 'centaur-tabs-unselected nil :background c-bg :foreground c-fg))
+  (set-face-attribute 'centaur-tabs-unselected nil :background c-bg :foreground c-fg)
+  (set-face-attribute 'centaur-tabs-selected-modified nil :background c-fg :foreground c-bg)
+  (set-face-attribute 'centaur-tabs-unselected-modified nil :background c-bg :foreground c-fg))
 
 (use-package general)
 
@@ -186,6 +208,12 @@ c-white-2   "#ebdbb2")
                   (window-height . 0.4)))
    (define-key vterm-mode-map (kbd "<f2>")   'vterm-toggle-forward)
    (define-key vterm-mode-map (kbd "<f3>")   'vterm-toggle-backward))
+
+(use-package org)
+
+ (use-package org-bullets
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
 
 (defface bufname
@@ -268,19 +296,6 @@ c-white-2   "#ebdbb2")
          (kill-buffer b))))
 
 (defun run-in-vterm (command)
-  "Execute string COMMAND in a new vterm.
-
-Interactively, prompt for COMMAND with the current buffer's file
-name supplied. When called from Dired, supply the name of the
-file at point.
-
-Like `async-shell-command`, but run in a vterm for full terminal features.
-
-The new vterm buffer is named in the form `*foo bar.baz*`, the
-command and its arguments in earmuffs.
-
-When the command terminates, the shell remains open, but when the
-shell exits, the buffer is killed."
   (interactive
    (list
     (let* ((f (cond (buffer-file-name)
@@ -291,15 +306,29 @@ shell exits, the buffer is killed."
                           (cons filename 0)
                           (cons 'shell-command-history 1)
                           (list filename)))))
-  (with-current-buffer (vterm (concat "*" command "*"))
+  (with-current-buffer (vterm-toggle)
     (set-process-sentinel vterm--process #'run-in-vterm-kill)
     (vterm-send-string (concat command))
     (vterm-send-return)))
 
+(defun candrun ()
+  (let ((full buffer-file-name)
+        (file (file-name-sans-extension buffer-file-name)))
+    (pcase (file-name-extension full)
+           ("c" (concat "gcc " full " -o " file " && " file " && rm " file))
+           ("java" (concat "java" full))
+           ("py" (concat "python" full))
+           ("cpp" (concat "g++ " full " -o " file " && " file " && rm " file))
+           ("hs" (concat "ghc -dynamic" full " && " file " && rm " file " " file ".o"))
+           ("sh" (concat "sh" full))
+           ("bash" (concat "bash" full))
+           ("zsh" (concat "zsh" full))
+           ("js" (concat "node" full))
+           ("ts" (concat "tsc" full " && node " file ".js && rm " file ".js" ))
+           ("rs" (concat "rustc" full " -o " file " && " file " && rm " file)))))
 
 (general-define-key
-  :states '(normal emacs visual motion treemacs Eshell)
-  :keymaps '(normal emacs override Eshell)
+  :states '(normal emacs visual motion treemacs Eshell override)
   "M-o" 'treemacs
   "M-v" 'split-window-vertically
   "M-h" 'split-window-horizontally
@@ -317,11 +346,16 @@ shell exits, the buffer is killed."
   "M-w"  'centaur-tabs--kill-this-buffer-dont-ask
   "M-S-w"  'kill-window
   "M-S-," 'centaur-tabs-backward
-  "M-S-." 'centaur-tabs-forward
+  "M-S-." 'centaur-tabs-forward)
+
+(general-define-key
+  :states '(override insert normal visual treemacs motion)
+  "M-f" 'lsp-format-buffer
   "<f4>"  (lambda () (interactive) (vterm t))
   "C-<f1>" 'vterm-toggle-cd
   "<f1>" 'vterm-toggle
-  "f5" (lambda () (interactive) (run-in-vterm (concat "gcc " buffer-file-name " -o " (file-name-sans-extension buffer-file-name) " && " (file-name-sans-extension buffer-file-name)))))
+  "<f5>" (lambda () (interactive) (run-in-vterm (candrun))))
+
 
 (general-define-key
   :states '(normal insert)
