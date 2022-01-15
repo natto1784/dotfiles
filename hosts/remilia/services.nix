@@ -1,13 +1,14 @@
 {config, pkgs, ...}:
 {
   services = {
-    openssh = { enable = true;
+    openssh = {
+      enable = true;
       permitRootLogin = "yes";
     };
     nginx = {
       enable = true;
       package = (pkgs.nginx.overrideAttrs(oa: {
-        configureFlags = oa.configureFlags ++ [ "--with-mail" "--with-mail_ssl_module" ];
+        configureFlags = oa.configureFlags ++ [ "--with-mail" "--with-mail_ssl_module" "--with-stream" ];
       }));
       virtualHosts = {
         "weirdnatto.in" = {
@@ -27,6 +28,16 @@
           };
         };
       };
+      streamConfig = ''
+      upstream gitea {
+        server 10.55.0.2:22;
+      }
+
+      server {
+        listen 22001;
+        proxy_pass gitea;
+      }
+      '';
     };
     vault-agent = {
       enable = true;
