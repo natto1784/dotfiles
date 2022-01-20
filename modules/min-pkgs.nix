@@ -7,6 +7,8 @@
     wireguard
     vault
     tree-sitter
+    rnix-lsp
+    nmap
   ];
 
   programs = {

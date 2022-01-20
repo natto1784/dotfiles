@@ -1,9 +1,9 @@
-{config, pkgs, ...}:
+{ config, pkgs, ... }:
 {
   networking = {
     hostName = "Marisa";
     firewall = {
-      allowedTCPPorts = [ 22 80 6060 5001 8800 8888 ];
+      allowedTCPPorts = [ 22 80 6060 5001 8800 8888 4444 4445 ];
       allowedUDPPorts = [ 17840 ];
     };
     wireless = {
@@ -13,10 +13,10 @@
     interfaces = {
       wlan0 = {
         useDHCP = false;
-        ipv4.addresses = [ {
+        ipv4.addresses = [{
           prefixLength = 24;
           address = "192.168.0.159";
-        } ];
+        }];
       };
     };
     wireguard.interfaces.wg0 = {
