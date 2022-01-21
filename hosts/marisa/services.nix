@@ -1,36 +1,58 @@
 { lib, config, pkgs, ... }:
 {
+  systemd.services.nomad.after = [ "consul.service" ];
   services = {
     openssh = {
       enable = true;
       permitRootLogin = "yes";
     };
- /*   nomad = {
-      enable = true;
+    nomad = {
+      enable = false;
       enableDocker = true;
       settings = {
+        bind_addr = "0.0.0.0";
         data_dir = "/var/lib/nomad";
+        datacenter = "n1";
+        log_file = "/var/log/nomad/nomad.log";
         server = {
-          enable = true;
+          enabled = true;
           bootstrap_expect = 1;
+          encrypt = "nY1vuN+1ecJkwJu0s2x6Ge6UX/txvTxVqNrDMqruMlg=";
+        };
+        client = {
+          enabled = true;
         };
         vault = {
           enabled = true;
-          address = "https://10.55.0.2:6060";
-          ca_path = "../../cert.pem";
+          token = "s.WaNfk6ZISRbwsEx43UokG3HU";
+          address = "https://10.55.0.2:8800";
+          ca_file = "/var/rootcert/cert.pem";
           cert_file = "/var/vault/cert.pem";
           key_file = "/var/vault/key.pem";
-#          allow_unauthenticated = true;
+          allow_unauthenticated = false;
           create_from_role = "nomad-cluster";
         };
-
+        consul = {
+          address = "10.55.0.2:4444";
+          ssl = true;
+          allow_unauthenticated = false;
+          auto_advertise = true;
+          server_auto_join = true;
+          client_auto_join = true;
+          ca_file = "/var/certs/cert.pem";
+          cert_file = "/var/vault/cert.pem";
+          key_file = "/var/vault/key.pem";
+        };
+        acl = {
+          enabled = true;
+        };
       };
-    };*/
+    };
     vault = {
       package = pkgs.vault-bin;
       enable = true;
-      tlsCertFile = "/var/certs/cert.pem";
-      tlsKeyFile = "/var/certs/key.pem";
+      tlsCertFile = "/var/rootcert/cert.pem";
+      tlsKeyFile = "/var/rootcert/key.pem";
       address = "0.0.0.0:8800";
       storageBackend = "file";
       storagePath = "/var/lib/vault";
@@ -40,7 +62,7 @@
       '';
     };
     consul = {
-      enable = true;
+      enable = false;
       webUi = true;
       extraConfig = rec {
         bootstrap = true;
@@ -55,8 +77,10 @@
         connect = {
           enabled = true;
         };
-        encrypt = "zdlcIl2Z4D01SdNQMv6fSfBN6OkQU10LAyPvwdQDwn4=";
-        ca_file = "../../cert.pem";
+        encrypt = "dXoYbVt1Rb1cTFTWVBGO6CaFIBmc90MPCjhqttBlXi0=";
+        ca_file = "/var/rootcert/cert.pem";
+        cert_file = "/var/certs/cert.pem";
+        key_file = "/var/certs/key.pem";
         ports = {
           http = 4444;
           grpc = 4445;
@@ -68,8 +92,8 @@
       settings = {
         vault = {
           address = "https://10.55.0.2:8800";
-          client_cert = "/var/vault/cert.pem";
-          client_key = "/var/vault/key.pem";
+          client_cert = "/var/certs/cert.pem";
+          client_key = "/var/certs/key.pem";
         };
         auto_auth = {
           method = [
@@ -125,7 +149,7 @@
       };
       settings = {
         oauth2_client = {
-         UPDATE_AVATAR = true;
+          UPDATE_AVATAR = true;
         };
         ui = {
           DEFAULT_THEME = "arc-green";
@@ -139,7 +163,6 @@
       };
     };
   };
-  #  systemd.services.consul.serviceConfig.Type = "notify";
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJHingN2Aho+KGgEvBMjtoez+W1svl9uVoa4vG0d646j"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPX1HDzWpoaOcU8GDEGuDzXgxkCpyeqxRR6gLs/8JgHw"

@@ -33,8 +33,8 @@
       settings = {
         vault = {
           address = "https://10.55.0.2:8800";
-          client_cert = "/var/vault/cert.pem";
-          client_key = "/var/vault/key.pem";
+          client_cert = "/var/certs/cert.pem";
+          client_key = "/var/certs/key.pem";
         };
         auto_auth = {
           method = [

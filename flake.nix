@@ -110,7 +110,7 @@
       Marisa = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [
-          ./hosts/servers/marisa.nix
+          ./hosts/marisa
           #inputs.mailserver.nixosModules.mailserver
           {
             nixpkgs.pkgs = self.legacyPackages.aarch64-linux; 
@@ -124,7 +124,7 @@
       Remilia = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./hosts/servers/remilia.nix
+          ./hosts/remilia
           inputs.mailserver.nixosModules.mailserver
           {
             nixpkgs.pkgs = self.legacyPackages.x86_64-linux; 
