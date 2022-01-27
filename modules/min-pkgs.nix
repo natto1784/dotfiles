@@ -9,6 +9,8 @@
     tree-sitter
     rnix-lsp
     nmap
+    gcc
+    fly
   ];
 
   programs = {
