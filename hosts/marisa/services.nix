@@ -1,7 +1,25 @@
 { lib, config, pkgs, ... }:
 {
 
-  # Add secrets to conul and nomad configs
+  # Add secrets to nomad, consul and vault
+  systemd.tmpfiles.rules = lib.singleton "d /run/vault - vault vault 1h";
+  systemd.services.vault.preStart =
+    let
+      originalCfg = pkgs.writeText "vaultConfiguration.json" (builtins.toJSON rec {
+        storage."consul" = {
+          address = "10.55.0.2:8500";
+          path = "vault";
+          token = "+++vault_consul_token+++";
+        };
+        api_addr = "https://127.0.0.1:8800";
+        ui = true;
+      });
+    in
+    lib.mkForce ''
+      mkdir -p /run/vault
+      sed -e 's,+++vault_consul_token+++,'"$(cat /var/secrets/vault_consul.key)"',' \
+             ${originalCfg} > /run/vault/vault.json
+    '';
   systemd.services.consul.preStart =
     let
       originalCfg = pkgs.writeText "consulConfiguration.json" (builtins.toJSON rec {
@@ -20,8 +38,9 @@
         acl = {
           enabled = true;
           default_policy = "deny";
+          enable_token_persistence = true;
           tokens = {
-            agent = "+++consul_marisa+++";
+            agent = "+++consul_token+++";
           };
         };
         server = true;
@@ -40,11 +59,11 @@
     lib.mkForce ''
       mkdir -p /run/consul
       sed -e 's,+++consul_encryption+++,'"$(cat /var/secrets/consul_encryption.key)"',' \
-          -e 's,+++consul_marisa+++,'"$(cat /var/secrets/consul_marisa.token)"',' \
+          -e 's,+++consul_token+++,'"$(cat /var/secrets/consul_bootstrap.token)"',' \
              ${originalCfg} > /run/consul/consul.json
     '';
 
-  systemd.services.nomad.after = [ "consul.service" ];
+  systemd.services.nomad.after = [ "vault.service" ];
   systemd.services.nomad.preStart =
     let
       originalCfg = pkgs.writeText "nomadConfiguration.json"
@@ -63,6 +82,11 @@
               allow_privileged = true;
               volumes.enabled = true;
               pull_activity_timeout = "30m";
+            };
+          };
+          plugin."raw_exec" = {
+            config = {
+              enabled = true;
             };
           };
           client = {
@@ -126,12 +150,9 @@
       tlsCertFile = "/var/rootcert/cert.pem";
       tlsKeyFile = "/var/rootcert/key.pem";
       address = "0.0.0.0:8800";
-      storageBackend = "file";
-      storagePath = "/var/lib/vault";
-      extraConfig = ''
-        api_addr = "https://127.0.0.1:8800"
-        ui = true
-      '';
+     # storageBackend = "file";
+     # storagePath = "/var/lib/vault";
+           extraSettingsPaths = lib.singleton "/run/vault/vault.json";
     };
 
     consul = {
@@ -158,34 +179,10 @@
         };
         template = [
           {
-            source = pkgs.writeText "gitea.tpl" ''
-              {{ with secret "kv/systems/Marisa/gitea" }}{{ .Data.data.gitea }}{{ end }}
-            '';
-            destination = "/var/secrets/gitea.key";
-          }
-          {
             source = pkgs.writeText "wg.tpl" ''
               {{ with secret "kv/systems/Marisa/wg" }}{{ .Data.data.private }}{{ end }}
             '';
             destination = "/var/secrets/wg.key";
-          }
-          {
-            source = pkgs.writeText "consul_marisa.tpl" ''
-              {{ with secret "kv/systems/Marisa/consul" }}{{ .Data.data.agentToken }}{{ end }}
-            '';
-            destination = "/var/secrets/consul_marisa.token";
-          }
-          {
-            source = pkgs.writeText "consul_bootstrap.tpl" ''
-              {{ with secret "kv/consul" }}{{ .Data.data.bootstrapToken }}{{ end }}
-            '';
-            destination = "/var/secrets/consul_bootstrap.token";
-          }
-          {
-            source = pkgs.writeText "consul_encryption.tpl" ''
-              {{ with secret "kv/consul" }}{{ .Data.data.encryptionKey }}{{ end }}
-            '';
-            destination = "/var/secrets/consul_encryption.key";
           }
           {
             source = pkgs.writeText "nomad_vault.tpl" ''
@@ -206,54 +203,6 @@
             destination = "/var/secrets/nomad_encryption.key";
           }
         ];
-      };
-    };
-    postgresql = {
-      enable = true;
-      port = 6060;
-      enableTCPIP = true;
-      authentication = ''
-        local gitea all ident map=gitea-map
-        host vault all 10.55.0.2/32 md5
-        host all all 192.168.0.110/32 md5
-      '';
-      identMap = ''
-        gitea-map gitea gitea
-      '';
-    };
-    gitea = {
-      enable = false;
-      appName = "Natto Tea";
-      rootUrl = "https://git.weirdnatto.in/";
-      cookieSecure = true;
-      dump = {
-        enable = true;
-        backupDir = "/tmp/gitea";
-        type = "tar.gz";
-        file = "gitnigger";
-      };
-      httpPort = 5001;
-      database = rec {
-        createDatabase = false;
-        port = 6060;
-        name = "gitea";
-        user = name;
-        passwordFile = "/var/secrets/gitea.key";
-        type = "postgres";
-      };
-      settings = {
-        oauth2_client = {
-          UPDATE_AVATAR = true;
-        };
-        ui = {
-          DEFAULT_THEME = "arc-green";
-        };
-        security = {
-          LOGIN_REMEMBER_DAYS = 50;
-        };
-        server = {
-          SSH_PORT = lib.mkForce 22001;
-        };
       };
     };
   };
