@@ -3,7 +3,7 @@
   networking = {
     hostName = "Marisa";
     firewall = {
-      allowedTCPPorts = [ 22 80 6060 5001 8800 8888 4444 4646 8500 8080 ];
+      allowedTCPPorts = [ 22 80 6060 5001 8800 7777 4444 4646 8500 8888 22001 ];
       allowedUDPPorts = [ 17840 ];
     };
     wireless = {
@@ -22,7 +22,7 @@
     wireguard.interfaces.wg0 = {
       ips = [ "10.55.0.2/24" ];
       listenPort = 17840;
-      privateKeyFile = "/var/wg";
+      privateKeyFile = "/var/secrets/wg.key";
       peers = [
         {
           #Oracle VM1
