@@ -340,7 +340,7 @@ local statusline = {
 }
 vim.o.statusline = table.concat(statusline)
 
-local servers = { "ccls", "rust_analyzer", "tsserver", "hls", "pylsp", "texlab", "rnix" }
+local servers = { "ccls", "rust_analyzer", "tsserver", "hls", "pylsp", "texlab", "rnix", "terraform_lsp" }
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {

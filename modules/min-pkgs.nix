@@ -11,6 +11,7 @@
     nmap
     gcc
     fly
+    postgresql #for the client cli
   ];
 
   programs = {
