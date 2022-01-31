@@ -4,7 +4,8 @@ let
 in
 {
   imports = [
-    ./stuff/programs.nix ./stuff/xsession.nix
+    ./stuff/programs.nix
+    ./stuff/xsession.nix
     ./stuff/secret.nix
     ./stuff/services.nix
   ];
@@ -59,7 +60,7 @@ in
       jmtpfs
       dunst
       flameshot
-      youtube-dl
+      yt-dlp
       xclip
       xorg.xkbcomp
       xorg.xmodmap
@@ -79,13 +80,12 @@ in
       tor-browser-bundle-bin
       wineWowPackages.stable
       master.winetricks
-      games.winestreamproxy
+      games.wine-discord-ipc-bridge
       /*  (games.osu-stable.overrideAttrs (_:{
         tricks = [ "gdiplus" "dotnet46" "meiryo" ];
         }))*/
-      csvtool
       pmidi
-      dosbox
+      #   dosbox
       authy
       unstable.premid
       (master.tauon.override { withDiscordRPC = true; })
@@ -93,8 +93,8 @@ in
       pulseaudio
       (texlive.combine { inherit (texlive) scheme-small babel lm graphics-def url; })
       (qjackctl.override { jackSession = true; })
-      carla
-      electrum
+      #    carla
+      #      electrum
       anki-bin
       spotify
       deluge
@@ -102,20 +102,22 @@ in
       libreoffice
       google-drive-ocamlfuse
       customscripts
-      stable.ardour
-      stable.calf
-      stable.blender
+      #     stable.ardour
+      #     stable.calf
+      #     stable.blender
+      neomutt
+      mailcap
     ];
 
     file = {
-      dwm-autostart = {
+      /*  dwm-autostart = {
         source = ./config/dwm/autostart.sh;
         target = "${home}/.dwm/autostart.sh";
-      };
-      dwm-status = {
+        };
+        dwm-status = {
         source = ./config/dwm/bruhstatus.sh;
         target = "${home}/.dwm/bruhstatus.sh";
-      };
+        };*/
       dunstrc = {
         source = ./config/dunst/dunstrc;
         target = "${home}/.config/dunst/dunstrc";

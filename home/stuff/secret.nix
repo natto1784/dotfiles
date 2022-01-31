@@ -1,5 +1,4 @@
-/* Module by @ryantm in github:ryantm/agenix 
-Modified by @natto1784 for 'personal' home-manager config */
+/* Module by @ryantm in github:ryantm/agenix */
 
 { config, lib, pkgs, ... }:
 
