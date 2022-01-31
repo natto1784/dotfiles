@@ -30,10 +30,10 @@
         bootstrap = true;
         log_level = "DEBUG";
         enable_syslog = true;
-        datacenter = "dc1";
         bind_addr = "10.55.0.2";
         client_addr = bind_addr;
-        primary_datacenter = "dc1";
+        datacenter = "cirno";
+        primary_datacenter = "cirno";
         node_name = "Marisa";
         acl = {
           enabled = true;
@@ -71,8 +71,9 @@
           bind_addr = "0.0.0.0";
           data_dir = "/var/lib/nomad";
           disable_update_check = true;
-          datacenter = "n1";
+          datacenter = "nazrin";
           log_file = "/var/log/nomad/nomad.log";
+          name = "Marisa";
           server = {
             enabled = true;
             encrypt = "+++nomad_encryption+++";
@@ -90,6 +91,10 @@
             };
           };
           client = {
+
+            meta = {
+              "connect.sidecar_image" = "envoyproxy/envoy:v1.20.1";
+            };
             options = {
               "docker.privileged.enabled" = true;
               "docker.volumes.enabled" = true;
@@ -150,9 +155,9 @@
       tlsCertFile = "/var/rootcert/cert.pem";
       tlsKeyFile = "/var/rootcert/key.pem";
       address = "0.0.0.0:8800";
-     # storageBackend = "file";
-     # storagePath = "/var/lib/vault";
-           extraSettingsPaths = lib.singleton "/run/vault/vault.json";
+      # storageBackend = "file";
+      # storagePath = "/var/lib/vault";
+      extraSettingsPaths = lib.singleton "/run/vault/vault.json";
     };
 
     consul = {
