@@ -31,13 +31,13 @@
   };
   fonts.fonts = with pkgs; [
     fira-mono
-    noto-fonts-cjk
     lohit-fonts.devanagari
     lohit-fonts.gurmukhi
     nerdfonts
     font-awesome
     monoid
     office-code-pro
+    noto-fonts-cjk
   ];
   users.users.natto = {
     isNormalUser = true;

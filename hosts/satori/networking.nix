@@ -22,7 +22,7 @@
     wireguard.interfaces.wg0 = {
       ips = [ "10.55.0.3/32" ];
       listenPort = 17840;
-      privateKeyFile = "/var/wg";
+      privateKeyFile = "/var/secrets/wg.key";
       peers = [
         {
           #Oracle VM1
