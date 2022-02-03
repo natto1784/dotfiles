@@ -1,6 +1,7 @@
 { 
   inputs = {
     stable.url = github:nixos/nixpkgs/nixos-21.11;
+    old.url = github:nixos/nixpkgs/nixos-21.05;
     nixpkgs.url = github:nixos/nixpkgs/nixpkgs-unstable;
     master.url = github:nixos/nixpkgs/master;
     home-manager.url = github:nix-community/home-manager;
@@ -16,7 +17,7 @@
     rust.url = github:oxalica/rust-overlay;
   };
 
-  outputs = inputs@{self, nixpkgs, stable, master,  ... }:
+  outputs = inputs@{self, nixpkgs, stable, master, old, ... }:
   inputs.utils.lib.eachDefaultSystem (system: 
   let
     mkPkgs = channel: system: import channel {
@@ -27,6 +28,7 @@
       stable   = mkPkgs stable  prev.system;
       unstable = mkPkgs nixpkgs prev.system;
       master   = mkPkgs master  prev.system;
+      old      = mkPkgs old     prev.system;
     };
     overlays = [
       (import ./overlays/overridesandshit.nix)
@@ -64,10 +66,10 @@
       ./modules/vault-agent.nix
     ];
     serverModules = [
-      ./modules/builder.nix
       ./modules/min-pkgs.nix
       ./modules/min-stuff.nix
     ];
+    builder = [ ./modules/builder.nix ];
   in
   {
     hm-configs = {
@@ -131,7 +133,8 @@
           }
         ]
         ++ commonModules
-        ++ serverModules;
+        ++ serverModules
+        ++ builder;
       };
     };
   });

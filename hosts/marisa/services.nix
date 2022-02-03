@@ -2,6 +2,7 @@
 {
 
   # Add secrets to nomad, consul and vault
+  systemd.enableUnifiedCgroupHierarchy = false;
   systemd.tmpfiles.rules = lib.singleton "d /run/vault - vault vault 1h";
   systemd.services.vault.preStart =
     let
@@ -11,7 +12,7 @@
           path = "vault";
           token = "+++vault_consul_token+++";
         };
-        api_addr = "https://127.0.0.1:8800";
+        api_addr = "https://10.55.0.2:8800";
         ui = true;
       });
     in
@@ -216,6 +217,7 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPX1HDzWpoaOcU8GDEGuDzXgxkCpyeqxRR6gLs/8JgHw"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOSQnDNrNP69tIK7U2D7qaMjycfIjpgx0at4U2D5Ufib"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK5V/hdkTTQSkDLXaEwY8xb/T8+sWtw5c6UjYOPaTrO8"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKFyKi0HYfkgvEDvjzmDRGwAq2z2KOkfv7scTVSnonBh"
   ];
   security.pki.certificateFiles = [ ../../cert.pem ../../consul-agent-ca.pem ];
 

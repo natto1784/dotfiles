@@ -3,7 +3,7 @@
   networking = {
     hostName = "Marisa";
     firewall = {
-      allowedTCPPorts = [ 22 80 6060 5001 8800 7777 4444 4646 8500 8888 22001 ];
+      allowedTCPPorts = [ 22 80 6060 5001 8800 5555 4444 4646 8500 22001 ];
       allowedUDPPorts = [ 17840 ];
     };
     wireless = {
