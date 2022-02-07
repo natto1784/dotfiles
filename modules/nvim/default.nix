@@ -30,7 +30,8 @@
           vim-vsnip
           nvim-treesitter
           vim-latex-live-preview
-          (gruvbox.overrideAttrs (oa: { patches = [ ./gruvbox.patch ]; }))
+        # (gruvbox.overrideAttrs (oa: { patches = [ ./gruvbox.patch ]; }))
+          base16-vim
         ];
       };
     };

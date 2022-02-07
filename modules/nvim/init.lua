@@ -140,12 +140,12 @@ bind('n', "<M-o>", ":NvimTreeToggle<CR>", {noremap=true, silent=true})
 bind('n', "<Space>r", ":NvimTreeRefresh<CR>", {noremap=true, silent=true})
 bind('n', "<Space>f", ":NvimTreeFindFile<CR>", {noremap=true, silent=true})
 
---gruvbox
-vim.g.gruvbox_italic=1
-vim.g.gruvbox_contrast_dark="hard"
-vim.g.gruvbox_contrast_light="hard"
+--theme
+--im.g.gruvbox_italic=1
+--vim.g.gruvbox_contrast_dark="hard"
+--vim.g.gruvbox_contrast_light="hard"
 vim.o.background="dark"
-comm("colorscheme gruvbox")
+comm("colorscheme base16-tomorrow-night")
 
 --floaterm
 vim.g.floaterm_keymap_toggle = '<F1>'
@@ -311,9 +311,9 @@ local function mode()
     return mode_map[m]
 end
 
-hi("Light", "guibg=#fbf1c7 guifg=#1d2021")
-hi("Dark", "guibg=#1d2021 guifg=#fbf1c7")
-hi("Gray", "guifg=#fbf1c7 guibg=#665c54")
+hi("Light", "guibg=#c5c8c6 guifg=#1d1f21")
+hi("Dark", "guibg=#1d1f21 guifg=#c5c8c6")
+hi("Gray", "guifg=#1d1f21 guibg=#b294bb")
 
 local function git()
     local branch = io.popen([[git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n']]):read("*a")

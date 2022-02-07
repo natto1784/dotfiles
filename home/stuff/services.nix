@@ -89,7 +89,8 @@ in
       stalonetray = {
         enable = true;
         config = {
-          geometry = "5x1+1805";
+          geometry = "5x1-0+0";
+          no_shrink = true;
           window_type = "dock";
           sticky = true;
           icon_size = 23;

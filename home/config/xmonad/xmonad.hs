@@ -19,20 +19,30 @@ import XMonad.Actions.CycleWindows
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
+--colors
+bgColor = "#1d1f21"
+fgColor = "#c5c8c6"
+activeWinColor = "#f0c674"
+inactiveWinColor = "#b294bb"
+urgentWinColor = "#cc6666"
+miscColor = "#8abeb7"
+
 myBorderWidth = 2
 myTerminal = "/usr/bin/env st"
 myFocusFollowsMouse = True
-myNormalBorderColor = "#1d2021"
+myNormalBorderColor = bgColor
 myModMask = mod4Mask
-myFocusedBorderColor = "#d5c4a1"
+myFocusedBorderColor = fgColor
 myManageHook = composeAll
-    [ className =? "Discord" --> doFloat ]
+    [ className =? "Discord" --> doFloat 
+    , className =? "Anki"    --> doFloat
+    ]
 
 tabConfig = defaultTheme {
-    activeTextColor = "#1d2021",
-    activeColor = "#d5c4a1",
-    inactiveTextColor = "#d5c4a1",
-    inactiveColor = "#1d2021"
+    activeTextColor = bgColor,
+    activeColor = fgColor,
+    inactiveTextColor = fgColor,
+    inactiveColor = bgColor
 }
 
 myXmobarrc = "~/.xmonad/lib/xmobar.hs"
@@ -236,12 +246,12 @@ main = do xmproc <- spawnPipe ("xmobar " ++ myXmobarrc)
               , workspaces         = myWorkspaces
               , logHook            = dynamicLogWithPP xmobarPP
                   { ppOutput = hPutStrLn xmproc
-                  , ppCurrent = xmobarColor "#b8bb26" "" . wrap "+" ""
-                  , ppVisible = xmobarColor "#b8bb26" ""
-                  , ppHidden = xmobarColor "#d3869b" ""
-                  , ppTitle = xmobarColor "#ebdbb2" "" . shorten 60
+                  , ppCurrent = xmobarColor activeWinColor "" . wrap "(" ")"
+                    , ppVisible = xmobarColor activeWinColor ""
+                    , ppHidden = xmobarColor inactiveWinColor ""
+                  , ppTitle = xmobarColor fgColor "" . shorten 40
                   , ppLayout = const ""
-                  , ppUrgent = xmobarColor "#fabd2f" "" . wrap "!" ""
-                  , ppSep = "<fc=#83a598> ║ </fc>"
+                  , ppUrgent = xmobarColor urgentWinColor "" . wrap "!" ""
+                  , ppSep = "<fc=" ++ miscColor ++ "> ║ </fc>"
                   }
               }
