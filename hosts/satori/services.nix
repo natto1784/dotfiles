@@ -13,6 +13,7 @@
       ACTION=="add|change", KERNEL=="sda", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="bfq"
     '';
   };
+  systemd.enableUnifiedCgroupHierarchy = false;
   systemd.services = {
     tor.wantedBy = lib.mkForce [ ];
     logmein-hamachi.wantedBy = lib.mkForce [ ];

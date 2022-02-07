@@ -1,23 +1,24 @@
 ; -*- lexical-binding: t; -*-
 ;;colors
 (setq
-c-bg        "#1d2021"
-c-fg        "#d5c4a1"
-c-red       "#cc241d"
-c-green     "#98971a"
-c-yellow    "#d79921"
-c-blue      "#458588"
-c-magenta   "#b16286"
-c-cyan      "#689d6a"
-c-white     "#a89984"
-c-black     "#928374"
-c-red-2     "#fb4934"
-c-green-2   "#b8bb26"
-c-yellow-2  "#fabd2f"
-c-blue-2    "#83a598"
-c-magenta-2 "#d3869b"
-c-cyan-2    "#8ec07c"
-c-white-2   "#ebdbb2")
+c-bg        "#1d1f21"
+c-fg        "#c5c8c6"
+c-red       "#912226"
+c-green     "#778900"
+c-yellow    "#ae7b00"
+c-blue      "#1d2594"
+c-magenta   "#682a9b"
+c-cyan      "#2b6651"
+c-white     "#929593"
+c-black     "#969896"
+c-red-2     "#cc6666"
+c-green-2   "#b5bd68"
+c-yellow-2  "#f0c674"
+c-blue-2    "#81a2be"
+c-magenta-2 "#b294bb"
+c-cyan-2    "#8abeb7"
+c-white-2   "#ecebec")
+
 ;;settings
 (set-face-attribute 'default nil :font "Monoid" :height 120)
 (global-hl-line-mode 1)
@@ -44,18 +45,16 @@ c-white-2   "#ebdbb2")
 (package-initialize)
 (require 'use-package)
 
-;;package config and modes
-;(use-package gruvbox-theme
-;  :init (load-theme 'gruvbox-dark-hard t))
-
+(use-package solaire-mode
+  :config
+  (solaire-mode))
 
 (use-package doom-themes
   :config
   (setq doom-themes-enable-bold t   
         doom-themes-enable-italic t
-        doom-themes-treemacs-theme "doom-colors"
-        doom-gruvbox-dark-variant "hard")
-  (load-theme 'doom-gruvbox t)
+        doom-themes-treemacs-theme "doom-colors")
+  (load-theme 'doom-tomorrow-night t)
   (doom-themes-visual-bell-config)
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
@@ -168,6 +167,11 @@ c-white-2   "#ebdbb2")
 (use-package nix-mode
   :mode "\\.nix\\'")
 
+(use-package hcl-mode
+  :mode 
+  "\\.hcl\\'"
+  "\\.nomad\\'")
+
 (use-package projectile)
 
 (use-package vterm
@@ -179,22 +183,15 @@ c-white-2   "#ebdbb2")
 
 (use-package centaur-tabs
   :config
-  (setq centaur-tabs-style "bar"
-        centaur-tabs-set-bar 'left
+  (setq centaur-tabs-style "box"
+;        centaur-tabs-set-bar 'left
         centaur-tabs-height 18
         centaur-tabs-set-modified-marker t
         centaur-tabs-set-icons t)
   (centaur-tabs-group-buffer-groups)
   (centaur-tabs-mode 1)
   (centaur-tabs-headline-match)
-  (set-face-attribute 'tab-line nil :background c-bg :foreground c-fg)
-  (set-face-attribute 'centaur-tabs-active-bar-face nil :background c-red-2)
-  (set-face-attribute 'centaur-tabs-modified-marker-selected nil :foreground c-red-2)
-  (set-face-attribute 'centaur-tabs-modified-marker-unselected nil :foreground c-red-2)
-  (set-face-attribute 'centaur-tabs-selected nil :background c-fg :foreground c-bg)
-  (set-face-attribute 'centaur-tabs-unselected nil :background c-bg :foreground c-fg)
-  (set-face-attribute 'centaur-tabs-selected-modified nil :background c-fg :foreground c-bg)
-  (set-face-attribute 'centaur-tabs-unselected-modified nil :background c-bg :foreground c-fg))
+  (set-face-attribute 'tab-line nil :inherit 'centaur-tabs-unselected))
 
 (use-package general)
 
@@ -270,23 +267,6 @@ c-white-2   "#ebdbb2")
 	   (set-face-background 'bufname (car color))
 	   (set-face-foreground 'bufname (cdr color))
 	   ))))
-
-;;keybinds
-;(global-set-key (kbd "M-o") 'treemacs)
-;(global-set-key (kbd "M-v") 'split-window-vertically)
-;(global-set-key (kbd "M-h") 'split-window-horizontally)
-;(global-set-key (kbd "M-C-m") 'shrink-window-horizontally)
-;(global-set-key (kbd "M-C-i") 'enlarge-window-horizontally)
-;(global-set-key (kbd "M-C-e") 'shrink-window)
-;(global-set-key (kbd "M-C-n") 'enlarge-window)
-;(global-set-key (kbd "C-S-m")  'windmove-left)
-;(global-set-key (kbd "C-S-i") 'windmove-right)
-;(global-set-key (kbd "C-S-e")  'windmove-up)
-;(global-set-key (kbd "C-S-n")  'windmove-down)
-;(global-set-key (kbd "M->")  'previous-buffer)
-;(global-set-key (kbd "M-<")  'next-buffer)
-;(global-set-key (kbd "M-C-S-q")  'kill-buffer)
-
 
 ;; stolen from https://www.reddit.com/r/emacs/comments/ft84xy/run_shell_command_in_new_vterm/
 (defun run-in-vterm-kill (process event)

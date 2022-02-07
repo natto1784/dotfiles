@@ -1,6 +1,6 @@
 #!/usr/bin/env nix-shell
-#! nix-shell -i bash -p ffmpeg youtube-dl
-youtube-dl -f bestaudio -o "ytmp3.%(title)s.%(ext)s" "$1"
+#! nix-shell -i bash -p ffmpeg yt-dlp
+yt-dlp -f bestaudio -o "ytmp3.%(title)s.%(ext)s" "$1"
 file=$(echo ytmp3.*.*)
 newfile=$(echo $file | cut -c 7-)
 mv "$file" "$newfile"
