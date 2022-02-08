@@ -89,17 +89,17 @@ in
       stalonetray = {
         enable = true;
         config = {
-          geometry = "5x1-0+0";
-          no_shrink = true;
+          geometry = "1x1-0";
+          max_geometry = "5x0";
           window_type = "dock";
           sticky = true;
+          scrollbars = "horizontal";
           icon_size = 23;
           background = "#1d2021";
+          grow_gravity = "E";
           icon_gravity = "E";
+          kludges = "force_icons_size";
         };
-        extraConfig = ''
-          kludges force_icons_size
-          '';
       };
     };
   }
