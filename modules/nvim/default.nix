@@ -21,15 +21,23 @@
           vim-floaterm 
           vim-closetag
           nerdcommenter
-          nvim-compe
+          nvim-cmp
+          cmp_luasnip
+          cmp-nvim-lsp
+          cmp-path
+          cmp-calc
+          cmp-emoji
+ #         cmp-look
+          cmp-buffer
           nvim-lspconfig
           barbar-nvim
           presence-nvim
           nvim-web-devicons
           nvim-tree-lua
-          vim-vsnip
+          luasnip
           nvim-treesitter
           vim-latex-live-preview
+          lspkind-nvim
         # (gruvbox.overrideAttrs (oa: { patches = [ ./gruvbox.patch ]; }))
           base16-vim
         ];

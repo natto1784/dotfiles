@@ -90,15 +90,15 @@ in
         enable = true;
         config = {
           geometry = "1x1-0";
-          max_geometry = "5x0";
+          max_geometry = "10x0";
           window_type = "dock";
           sticky = true;
-          scrollbars = "horizontal";
           icon_size = 23;
           background = "#1d2021";
-          grow_gravity = "E";
           icon_gravity = "E";
+          grow_gravity = "E";
           kludges = "force_icons_size";
+          window_layer = "top";
         };
       };
     };

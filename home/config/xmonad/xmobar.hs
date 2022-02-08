@@ -42,7 +42,7 @@ config =
         ],
       sepChar = "*",
       alignSep = "--",
-      template = "<action=`dmenu_run` button=1><icon=/home/natto/.xmonad/lib/nixos.xpm/></action> *UnsafeStdinReader* " ++ sep ++ " <fn=1></fn>*mpd* -- *multicpu* " ++ sep ++ " *memory* " ++ sep ++ " *wlp0s20f3* " ++ sep ++ " *battery* " ++ sep ++ " <fn=1>\xf028</fn> <fc=" ++ green ++ ">*pamixer*%</fc> " ++ sep ++ " *date* - *time* *tray*"
+      template = "<action=`dmenu_run` button=1><icon=/home/natto/.xmonad/lib/nixos.xpm/></action> *UnsafeStdinReader* " ++ sep ++ " <fn=1></fn>*mpd* -- *multicpu* " ++ sep ++ " *memory* " ++ sep ++ " *wlp0s20f3* " ++ sep ++ " *battery* " ++ sep ++ " <fn=1>\xf028</fn> <fc=" ++ green ++ ">*pamixer*%</fc> " ++ sep ++ " *date* - *time* " ++ sep ++ "*tray*"
     }
 
 main :: IO ()

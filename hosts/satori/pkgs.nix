@@ -29,6 +29,7 @@
     ccls
     clang-tools
     nodePackages.typescript-language-server
+    nodePackages.svelte-language-server
     rnix-lsp
     python3Packages.python-lsp-server
     haskell-language-server
