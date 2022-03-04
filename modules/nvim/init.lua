@@ -196,7 +196,7 @@ vim.g.livepreview_previewer = "zathura"
 
 require'colorizer'.setup()
 
---lsp and compe stuff i got from various places
+--lsp and cmp stuff i got from various places
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -209,7 +209,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', "<M-f>", "<cmd>lua vim.lsp.buf.formatting()<CR>", {silent=true, noremap=true})
 end
 
-local servers = { "ccls", "rust_analyzer", "tsserver", "hls", "pylsp", "texlab", "rnix", "terraform_lsp" }
+local servers = { "ccls", "rust_analyzer", "tsserver", "hls", "pylsp", "texlab", "rnix", "terraform_lsp", "html", "cssls", "jsonls", "svelte", "gopls" }
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {
@@ -226,7 +226,15 @@ for _, lsp in ipairs(servers) do
 end
 
 
+--luasnip
 local luasnip = require 'luasnip'
+luasnip.snippets = {
+  html = {}
+}
+luasnip.snippets.javascript = luasnip.snippets.html
+luasnip.snippets.javascriptreact = luasnip.snippets.html
+require("luasnip/loaders/from_vscode").lazy_load()
+
 local cmp = require 'cmp'
 cmp.setup {
   snippet = {
@@ -287,26 +295,6 @@ cmp.setup {
       }),
     },
 }
-  cmp.setup.cmdline('/', {
-    sources = {
-      { name = 'buffer' }
-    }
-  })
-
-  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline(':', {
-    sources = cmp.config.sources({
-      { name = 'path' }
-    }, {
-      { name = 'cmdline' }
-    })
-  })
-
---bind("i", "<Tab>", "v:lua.tab_complete()", {expr = true, silent = true})
---bind("s", "<Tab>", "v:lua.tab_complete()", {expr = true, silent = true})
---bind("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true, silent = true})
---bind("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true, silent = true})
---bind("i", "<CR>", "compe#confirm('<CR>')", {expr = true, silent = true})
 
 comm("set shortmess+=c")
 
@@ -365,3 +353,4 @@ vim.o.statusline = table.concat(statusline)
 
 vim.g.tex_flavor = "latex"
 comm("set syntax=off")
+

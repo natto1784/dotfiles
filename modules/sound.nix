@@ -20,7 +20,7 @@
             args = {
               factory.name = "support.node.driver";
               node.name = "Dummy-Driver";
-              priority.driver= 8000;
+              priority.driver = 8000;
             };
           }
         ];

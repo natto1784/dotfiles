@@ -81,9 +81,9 @@ in
       wineWowPackages.stable
       master.winetricks
       games.wine-discord-ipc-bridge
-      /*  (games.osu-stable.overrideAttrs (_:{
-        tricks = [ "gdiplus" "dotnet46" "meiryo" ];
-        }))*/
+      (games.osu-stable.overrideAttrs (_: {
+        tricks = [ "gdiplus" "dotnet48" "meiryo" ];
+      }))
       pmidi
       #   dosbox
       authy
@@ -92,21 +92,22 @@ in
       nbfc-linux
       pulseaudio
       (texlive.combine { inherit (texlive) scheme-small babel lm graphics-def url; })
-      (qjackctl.override { jackSession = true; })
       #    carla
       #      electrum
       anki-bin
       spotify
       deluge
       teams
-      libreoffice
+#      libreoffice
       google-drive-ocamlfuse
       customscripts
-      #     stable.ardour
-      #     stable.calf
+      (qjackctl.override { jackSession = true; })
+      stable.ardour
+      calf
       #     stable.blender
       neomutt
       mailcap
+      cantata
     ];
 
     file = {

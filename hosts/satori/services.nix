@@ -14,13 +14,6 @@
     '';
   };
   systemd.enableUnifiedCgroupHierarchy = false;
-  systemd.services = {
-    tor.wantedBy = lib.mkForce [ ];
-    logmein-hamachi.wantedBy = lib.mkForce [ ];
-    openssh.wantedBy = lib.mkForce [ ];
-    #printing.wantedBy = lib.mkForce [];
-    #vault.wantedBy = lib.mkForce [];
-  };
   security.pki.certificateFiles = [ ../../cert.pem ];
   virtualisation.libvirtd = {
     enable = true;

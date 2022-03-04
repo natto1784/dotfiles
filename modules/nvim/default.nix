@@ -17,11 +17,14 @@
       packages.myVimPackage = with pkgs.unstable.vimPlugins; {
         start = [
           nvim-colorizer-lua
+          bracey-vim
           auto-pairs 
           vim-floaterm 
           vim-closetag
           nerdcommenter
           nvim-cmp
+          luasnip
+          friendly-snippets
           cmp_luasnip
           cmp-nvim-lsp
           cmp-path
@@ -34,7 +37,6 @@
           presence-nvim
           nvim-web-devicons
           nvim-tree-lua
-          luasnip
           nvim-treesitter
           vim-latex-live-preview
           lspkind-nvim

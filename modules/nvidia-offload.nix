@@ -26,10 +26,10 @@ in
           nvidiaBusId = "PCI:1:0:0";
         };
         modesetting = { enable = true; };
-        powerManagement = {
+ /*       powerManagement = {
           enable = true;
           finegrained = true;
-        };
+        };*/
       };
     };
     services.xserver = {

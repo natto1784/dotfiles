@@ -58,13 +58,13 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn "/usr/bin/env dmenu_run -l 20")
 
   , ((shiftMask, xK_Print),
-     spawn "flameshot gui -p /home/natto/Pictures")
+     spawn "flameshot gui")
 
   , ((0, xK_Print),
      spawn "flameshot full -p /home/natto/Pictures")
 
   , ((mod1Mask, xK_Print),
-     spawn "flameshot full -p /home/natto/Pictures -d 10000")
+     spawn "flameshot gui -d 10000")
 
   , ((modMask, xK_p),
      spawn "mpc toggle")

@@ -72,14 +72,10 @@ in
                   name "pulse audio"
           }
           audio_output {
-                  type "fifo"
-                  name "Visualizer feed"
-                  path "/tmp/g.fifo"
-                  format "44100:16:2"
-          }
-          audio_output {
+                  encoder     "vorbis"
                   type        "httpd"
-                  name        "My HTTP Stream"
+                  quality     "9"
+                  name        "Vorbis Stream"
                   port        "8000"
                   max_clients "4"
           }
