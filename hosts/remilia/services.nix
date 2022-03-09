@@ -36,27 +36,27 @@
           }
           {
             name = "consul.weirdnatto.in";
-            value = genericHttpRProxy { addr = "https://10.55.0.2:8500"; };
+            value = genericHttpRProxy { addr = "http://10.55.0.2:8500"; };
           }
           {
             name = "ci.weirdnatto.in";
-            value = genericHttpRProxy { addr = "https://10.55.0.2:6666"; };
+            value = genericHttpRProxy { addr = "http://10.55.0.2:6666"; };
           }
           {
             name = "radio.weirdnatto.in";
-            value = genericHttpRProxy { addr = "https://10.55.0.3:8000"; };
+            value = genericHttpRProxy { addr = "http://10.55.0.3:8000"; };
           }
           {
             name = "git.weirdnatto.in";
             value = genericHttpRProxy {
-              addr = "https://10.55.0.3:5000";
+              addr = "http://10.55.0.2:5000";
               conf = "client_max_body_size 64M;";
             };
           }
           {
             name = "nomad.weirdnatto.in";
             value = genericHttpRProxy {
-              addr = "https://10.55.0.3:4646";
+              addr = "http://10.55.0.2:4646";
               conf = ''
                 proxy_buffering off;
                 proxy_read_timeout 310s;
