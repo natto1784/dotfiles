@@ -4,7 +4,7 @@
     git
     htop
     vim
-    wireguard
+    wireguard-tools
     vault
     tree-sitter
     rnix-lsp
@@ -31,12 +31,11 @@
       };
     };
   };
-
   nix = {
     package = pkgs.nixUnstable;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
-    trustedUsers = [ "root" ];
+    settings.trusted-users = [ "root" ];
   };
 }

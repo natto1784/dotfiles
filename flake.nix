@@ -1,4 +1,4 @@
-{ 
+{
   inputs = {
     stable.url = github:nixos/nixpkgs/nixos-21.11;
     old.url = github:nixos/nixpkgs/nixos-21.05;
@@ -17,125 +17,127 @@
     rust.url = github:oxalica/rust-overlay;
   };
 
-  outputs = inputs@{self, nixpkgs, stable, master, old, ... }:
-  inputs.utils.lib.eachDefaultSystem (system: 
-  let
-    mkPkgs = channel: system: import channel {
-      inherit system;
-      config.allowUnfree = true;
-    };
-    channels = final: prev: {
-      stable   = mkPkgs stable  prev.system;
-      unstable = mkPkgs nixpkgs prev.system;
-      master   = mkPkgs master  prev.system;
-      old      = mkPkgs old     prev.system;
-    };
-    overlays = [
-      (import ./overlays/overridesandshit.nix)
-      (import ./overlays/packages.nix)
-    ];
-  in
-  {
-    legacyPackages = import nixpkgs {
-      inherit system;
-      overlays = overlays ++ [ 
-        inputs.nur.overlay 
-        inputs.nvim.overlay
-        inputs.rust.overlay
-        inputs.emacs.overlay
-        channels
-        ( _: _: {
-          nbfc-linux=inputs.nbfc.defaultPackage.${system};
-          games = inputs.nix-gaming.packages.${system};
-        })
-      ];
-      config.allowUnfree = true;
-      config.allowBroken = true;
-    };
-  }) //
-  ( 
-  let 
-    personalModules = [
-      ./modules/nvidia-offload.nix
-      ./modules/sound.nix
-      ./modules/xorg.nix
-      ./modules/emacs
-    ];
-    commonModules = [
-      ./modules/nvim
-      ./modules/vault-agent.nix
-    ];
-    serverModules = [
-      ./modules/min-pkgs.nix
-      ./modules/min-stuff.nix
-    ];
-    builder = [ ./modules/builder.nix ];
-  in
-  {
-    hm-configs = {
-      natto = inputs.home-manager.lib.homeManagerConfiguration {
-        system = "x86_64-linux";
-        configuration = { lib, ... }: {
-          imports = [ 
-            ./home/natto.nix 
+  outputs = inputs@{ self, nixpkgs, stable, master, old, ... }:
+    inputs.utils.lib.eachDefaultSystem
+      (system:
+        let
+          mkPkgs = channel: system: import channel {
+            inherit system;
+            config.allowUnfree = true;
+          };
+          channels = final: prev: {
+            stable = mkPkgs stable prev.system;
+            unstable = mkPkgs nixpkgs prev.system;
+            master = mkPkgs master prev.system;
+            old = mkPkgs old prev.system;
+          };
+          overlays = [
+            (import ./overlays/overridesandshit.nix)
+            (import ./overlays/packages.nix)
           ];
-          nixpkgs = {
-            overlays = self.legacyPackages.x86_64-linux.overlays;
+        in
+        {
+          legacyPackages = import nixpkgs {
+            inherit system;
+            overlays = overlays ++ [
+              inputs.nur.overlay
+              inputs.nvim.overlay
+              inputs.rust.overlay
+              inputs.emacs.overlay
+              channels
+              (_: _: {
+                nbfc-linux = inputs.nbfc.defaultPackage.${system};
+                games = inputs.nix-gaming.packages.${system};
+              })
+            ];
             config.allowUnfree = true;
             config.allowBroken = true;
-            config.permittedInsecurePackages = [
-              "electron-9.4.4"
-            ];
+          };
+        }) //
+    (
+      let
+        personalModules = [
+          ./modules/nvidia-offload.nix
+          ./modules/sound.nix
+          ./modules/xorg.nix
+          ./modules/emacs
+        ];
+        commonModules = [
+          ./modules/nvim
+          ./modules/vault-agent.nix
+        ];
+        serverModules = [
+          ./modules/min-pkgs.nix
+          ./modules/min-stuff.nix
+        ];
+        builders = [ ./modules/x86builder.nix ];
+      in
+      {
+        hm-configs = {
+          natto = inputs.home-manager.lib.homeManagerConfiguration {
+            system = "x86_64-linux";
+            configuration = { lib, ... }: {
+              imports = [
+                ./home/natto.nix
+              ];
+              nixpkgs = {
+                overlays = self.legacyPackages.x86_64-linux.overlays;
+                config.allowUnfree = true;
+                config.allowBroken = true;
+                config.permittedInsecurePackages = [
+                  "electron-9.4.4"
+                ];
+              };
+            };
+            homeDirectory = "/home/natto";
+            username = "natto";
           };
         };
-        homeDirectory = "/home/natto";
-        username = "natto";
-      };
-    };
 
-    nixosConfigurations = {
-      #Home laptop
-      Satori = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/satori
-          inputs.agenix.nixosModules.age
-          {
-            nixpkgs.pkgs = self.legacyPackages.x86_64-linux; 
-          }
-        ]
-        ++ personalModules
-        ++ commonModules;
-      };
+        nixosConfigurations = {
+          #Home laptop
+          Satori = nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [
+              ./hosts/satori
+              inputs.agenix.nixosModules.age
+              {
+                nixpkgs.pkgs = self.legacyPackages.x86_64-linux;
+              }
+            ]
+            ++ personalModules
+            ++ commonModules;
+          };
 
-      #Home server (RPi4)
-      Marisa = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
-        modules = [
-          ./hosts/marisa
-          #inputs.mailserver.nixosModules.mailserver
-          {
-            nixpkgs.pkgs = self.legacyPackages.aarch64-linux; 
-          }
-        ]
-        ++ commonModules
-        ++ serverModules;
-      };
+          #Home server (RPi4)
+          Marisa = nixpkgs.lib.nixosSystem {
+            system = "aarch64-linux";
+            modules = [
+              ./hosts/marisa
+              #inputs.mailserver.nixosModules.mailserver
+              {
+                nixpkgs.pkgs = self.legacyPackages.aarch64-linux;
+              }
+            ]
+            ++ commonModules
+            ++ serverModules;
+          };
 
-      #Oracle Cloud VM
-      Remilia = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/remilia
-          inputs.mailserver.nixosModules.mailserver
-          {
-            nixpkgs.pkgs = self.legacyPackages.x86_64-linux; 
-          }
-        ]
-        ++ commonModules
-        ++ serverModules
-        ++ builder;
-      };
-    };
-  });
+          #Oracle Cloud VM
+          Remilia = nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [
+              ./hosts/remilia
+              inputs.mailserver.nixosModules.mailserver
+              {
+                nixpkgs.pkgs = self.legacyPackages.x86_64-linux;
+              }
+            ]
+            ++ commonModules
+            ++ serverModules
+            ++ builders;
+          };
+        };
+      }
+    );
 }

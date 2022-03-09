@@ -16,86 +16,62 @@
       package = (pkgs.nginx.overrideAttrs (oa: {
         configureFlags = oa.configureFlags ++ [ "--with-mail" "--with-mail_ssl_module" ];
       }));
-      virtualHosts = {
-        "weirdnatto.in" = {
-          addSSL = true;
-          enableACME = true;
-          locations."/".proxyPass = "http://10.55.0.2:80";
-          serverAliases = [ "www.weirdnatto.in" ];
-        };
-        "git.weirdnatto.in" = {
-          addSSL = true;
-          enableACME = true;
-          locations."/" = {
-            proxyPass = "http://10.55.0.2:5000";
-            extraConfig = ''
-              client_max_body_size 64M;
-              proxy_set_header Host $host;
-            '';
+      virtualHosts =
+        let
+          genericHttpRProxy = { addr, ssl ? true, conf ? "" }: {
+            addSSL = true;
+            enableACME = ssl;
+            locations."/" = {
+              proxyPass = toString addr;
+              extraConfig = ''
+                proxy_set_header Host $host;
+              '' + conf;
+            };
+          };
+        in
+        builtins.listToAttrs [
+          {
+            name = "vault.weirdnatto.in";
+            value = genericHttpRProxy { addr = "https://10.55.0.2:8800"; };
+          }
+          {
+            name = "consul.weirdnatto.in";
+            value = genericHttpRProxy { addr = "https://10.55.0.2:8500"; };
+          }
+          {
+            name = "ci.weirdnatto.in";
+            value = genericHttpRProxy { addr = "https://10.55.0.2:6666"; };
+          }
+          {
+            name = "radio.weirdnatto.in";
+            value = genericHttpRProxy { addr = "https://10.55.0.3:8000"; };
+          }
+          {
+            name = "git.weirdnatto.in";
+            value = genericHttpRProxy {
+              addr = "https://10.55.0.3:5000";
+              conf = "client_max_body_size 64M;";
+            };
+          }
+          {
+            name = "nomad.weirdnatto.in";
+            value = genericHttpRProxy {
+              addr = "https://10.55.0.3:4646";
+              conf = ''
+                proxy_buffering off;
+                proxy_read_timeout 310s;
+              '';
+            };
+          }
+        ] //
+        {
+          "weirdnatto.in" = {
+            addSSL = true;
+            enableACME = true;
+            locations."/".proxyPass = "http://10.55.0.2:80";
+            serverAliases = [ "www.weirdnatto.in" ];
           };
         };
-        "vault.weirdnatto.in" = {
-          addSSL = true;
-          enableACME = true;
-          locations."/" = {
-            proxyPass = "https://10.55.0.2:8800";
-            extraConfig = ''
-              proxy_set_header Host $host;
-            '';
-          };
-        };
-        "consul.weirdnatto.in" = {
-          addSSL = true;
-          enableACME = true;
-          locations."/" = {
-            proxyPass = "http://10.55.0.2:8500";
-            extraConfig = ''
-              proxy_set_header Host $host;
-            '';
-          };
-        };
-        "nomad.weirdnatto.in" = {
-          addSSL = true;
-          enableACME = true;
-          locations."/" = {
-            proxyPass = "http://10.55.0.2:4646";
-            extraConfig = ''
-              proxy_set_header Host $host;
-              proxy_buffering off;
-              proxy_read_timeout 310s;
-            '';
-          };
-        };
-        "radio.weirdnatto.in" = {
-          addSSL = true;
-          enableACME = true;
-          locations."/" = {
-            proxyPass = "http://10.55.0.3:8000";
-            extraConfig = ''
-              proxy_set_header Host $host;
-            '';
-          };
-        };
-        "ci.weirdnatto.in" = {
-          addSSL = true;
-          enableACME = true;
-          locations."/" = {
-            proxyPass = "http://10.55.0.2:6666";
-            extraConfig = ''
-              proxy_set_header Host $host;
-            '';
-          };
-        };
-      };
-      /*streamConfig = ''
-        upstream gitea {
-        server 10.55.0.2:222;
-        }
-        server {
-        listen 22001;
-        proxy_pass gitea;
-        }
-        '';*/
     };
     vault-agent = {
       enable = true;
@@ -154,3 +130,4 @@
   };
   security.pki.certificateFiles = [ ../../cert.pem ];
 }
+
