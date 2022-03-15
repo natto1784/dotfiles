@@ -10,15 +10,14 @@
         use-package
         tsc
       ];
-
       #https://github.com/NixOS/nixpkgs/issues/108089
       override = epkgs: epkgs // {
         tsc = epkgs.melpaPackages.tsc.overrideAttrs (oa:
           let
-            version = "0.16.1";
+            version = "0.18.0";
             tsc-dyn = fetchurl {
               url = "https://github.com/emacs-tree-sitter/elisp-tree-sitter/releases/download/${version}/tsc-dyn.so";
-              sha256 = "sha256-l2mVxnnO43rzLWbOAnX5UZ0a7uk0EPE2x0Jl9rd2D1A=";
+              sha256 = "sha256-97KDzdYNJN4ceJeuQxZtQ/7iU0CYXEp6gcSM9rNwlyE=";
             };
           in
           {
@@ -29,13 +28,13 @@
           });
         tree-sitter-langs = epkgs.melpaPackages.tree-sitter-langs.overrideAttrs (oa:
           let
-            version = "0.10.14";
+            version = "0.11.3";
             tree-sitter-grammars = super.stdenv.mkDerivation rec {
               inherit version;
               name = "tree-sitter-grammars";
               src = fetchzip {
                 url = "https://github.com/emacs-tree-sitter/tree-sitter-langs/releases/download/${version}/tree-sitter-grammars-linux-${version}.tar.gz";
-                sha256 = "sha256-J8VplZWhyWN8ur74Ep0CTl4nPtESzfs2Gh6MxfY5Zqc=";
+                sha256 = "sha256-85Yy6NuEVnibehmalz2qr0pCENYwmxsyyIf0TUYnDY8=";
                 stripRoot = false;
               };
               installPhase = ''
@@ -50,7 +49,7 @@
               owner = "emacs-tree-sitter";
               repo = "tree-sitter-langs";
               rev = version;
-              sha256 = "sha256-uKfkhcm1k2Ov4fSr7ALVnpQoX/l9ssEWMn761pa7Y/c=";
+              sha256 = "sha256-Br+ON7a8FWoU75ySPSP2DkiyHjj80TP5XvcMMJrU9+k=";
             };
             postPatch = ''
               substituteInPlace ./tree-sitter-langs-build.el \

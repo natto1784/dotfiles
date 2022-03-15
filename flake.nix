@@ -7,11 +7,10 @@
     home-manager.url = github:nix-community/home-manager;
     home-manager-stable.url = github:nix-community/home-manager/release-21.11;
     nur.url = github:nix-community/NUR;
-    agenix.url = github:ryantm/agenix;
     utils.url = github:numtide/flake-utils;
     nvim.url = github:nix-community/neovim-nightly-overlay;
     mailserver.url = gitlab:simple-nixos-mailserver/nixos-mailserver;
-    nbfc.url = github:natto1784/nbfc-linux/yawr;
+    nbfc.url = github:nbfc-linux/nbfc-linux;
     emacs.url = github:nix-community/emacs-overlay;
     nix-gaming.url = github:fufexan/nix-gaming;
     rust.url = github:oxalica/rust-overlay;
@@ -46,7 +45,7 @@
               inputs.emacs.overlay
               channels
               (_: _: {
-                nbfc-linux = inputs.nbfc.defaultPackage.${system};
+                nbfc-linux = inputs.nbfc.packages.${system}.nbfc-client-c;
                 games = inputs.nix-gaming.packages.${system};
               })
             ];
@@ -70,18 +69,21 @@
           ./modules/min-pkgs.nix
           ./modules/min-stuff.nix
         ];
+        homeModules = [
+          ./home/modules/secret.nix
+        ];
         builders = [ ./modules/x86builder.nix ];
       in
       {
         hm-configs = {
-          natto = inputs.home-manager.lib.homeManagerConfiguration {
+          natto = inputs.home-manager.lib.homeManagerConfiguration rec {
             system = "x86_64-linux";
             configuration = { lib, ... }: {
               imports = [
-                ./home/natto.nix
-              ];
+                ./home/natto
+              ] ++ homeModules;
               nixpkgs = {
-                overlays = self.legacyPackages.x86_64-linux.overlays;
+                overlays = self.legacyPackages.${system}.overlays;
                 config.allowUnfree = true;
                 config.allowBroken = true;
                 config.permittedInsecurePackages = [
@@ -96,13 +98,12 @@
 
         nixosConfigurations = {
           #Home laptop
-          Satori = nixpkgs.lib.nixosSystem {
+          Satori = nixpkgs.lib.nixosSystem rec {
             system = "x86_64-linux";
             modules = [
               ./hosts/satori
-              inputs.agenix.nixosModules.age
               {
-                nixpkgs.pkgs = self.legacyPackages.x86_64-linux;
+                nixpkgs.pkgs = self.legacyPackages.${system};
               }
             ]
             ++ personalModules
@@ -110,13 +111,13 @@
           };
 
           #Home server (RPi4)
-          Marisa = nixpkgs.lib.nixosSystem {
+          Marisa = nixpkgs.lib.nixosSystem rec {
             system = "aarch64-linux";
             modules = [
               ./hosts/marisa
               #inputs.mailserver.nixosModules.mailserver
               {
-                nixpkgs.pkgs = self.legacyPackages.aarch64-linux;
+                nixpkgs.pkgs = self.legacyPackages.${system};
               }
             ]
             ++ commonModules
@@ -124,13 +125,13 @@
           };
 
           #Oracle Cloud VM
-          Remilia = nixpkgs.lib.nixosSystem {
+          Remilia = nixpkgs.lib.nixosSystem rec {
             system = "x86_64-linux";
             modules = [
               ./hosts/remilia
               inputs.mailserver.nixosModules.mailserver
               {
-                nixpkgs.pkgs = self.legacyPackages.x86_64-linux;
+                nixpkgs.pkgs = self.legacyPackages.${system};
               }
             ]
             ++ commonModules

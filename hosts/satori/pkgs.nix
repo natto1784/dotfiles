@@ -39,6 +39,7 @@
         unset VK_ICD_FILENAMES
         export VK_ICD_FILENAMES=${config.hardware.nvidia.package}/share/vulkan/icd.d/nvidia_icd.json:${config.hardware.nvidia.package.lib32}/share/vulkan/icd.d/nvidia_icd32.json'';
     })
+    igrep
   ];
 
   programs = {
@@ -51,9 +52,6 @@
     };
     zsh = {
       enable = true;
-      shellAliases = {
-        "ec" = "emacsclient";
-      };
       promptInit = ''
         RPROMPT='%B%F{cyan}%n%f@%F{red}%m%b'
         function preexec() {
