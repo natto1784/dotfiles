@@ -1,7 +1,17 @@
-{ emacsWithPackagesFromUsePackage, stdenv, fetchzip, fetchurl, fetchFromGitHub, emacsGcc, ... }:
+{ emacsWithPackagesFromUsePackage
+, stdenv
+, fetchzip
+, fetchurl
+, fetchFromGitHub
+, emacsGcc
+, config ? null
+, ...
+}:
+
+assert (config != null);
 
 emacsWithPackagesFromUsePackage {
-  config = ./init.el;
+  config = config;
   package = emacsGcc;
   alwaysEnsure = true;
   extraEmacsPackages = epkgs: with epkgs; [

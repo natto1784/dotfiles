@@ -6,7 +6,7 @@ in
   services = {
     baremacs = {
       enable = true;
-      package = pkgs.mymacs;
+      package = pkgs.mymacs ./config/emacs/init.el;
       defaultEditor = {
         enable = true;
         editor = "emacsclient";
