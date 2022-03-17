@@ -1,1 +1,1 @@
-../../../modules/emacs/init.el
+../../../../overlays/emacs/init.el

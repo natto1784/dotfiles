@@ -55,6 +55,12 @@
       fcitx.engines = with pkgs.fcitx-engines; [ m17n mozc ];
     };
   };
-  virtualisation.docker.enable = true;
+  virtualisation = {
+    docker.enable = true;
+    podman = {
+      enable = true;
+      enableNvidia = true;
+    };
+  };
   gtk.iconCache.enable = true;
 }

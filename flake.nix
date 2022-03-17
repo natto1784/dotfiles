@@ -59,7 +59,6 @@
           ./modules/nvidia-offload.nix
           ./modules/sound.nix
           ./modules/xorg.nix
-          ./modules/emacs
         ];
         commonModules = [
           ./modules/nvim
@@ -71,6 +70,7 @@
         ];
         homeModules = [
           ./home/modules/secret.nix
+          ./home/modules/baremacs.nix
         ];
         builders = [ ./modules/x86builder.nix ];
       in
