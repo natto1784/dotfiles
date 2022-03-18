@@ -17,12 +17,12 @@ diff --color -u a/config.def.h b/config.def.h
  	/*     fg         bg       */
 -	[SchemeNorm] = { "#bbbbbb", "#222222" },
 -	[SchemeSel] = { "#eeeeee", "#005577" },
-+	[SchemeNorm] = { "#bbbbbb", "#1d2021" },
-+	[SchemeSel] = { "#1d2021", "#ebdbb2" },
-+	[SchemeSelHighlight] = { "#000080", "#ebdbb2" },
-+	[SchemeNormHighlight] = { "#ffc978", "#1d2021" },
++	[SchemeNorm] = { "#839496", "#002b36" },
++	[SchemeSel] = { "#002b36", "#839496" },
++	[SchemeSelHighlight] = { "#d33682", "#839496" },
++	[SchemeNormHighlight] = { "#2aa198", "#002b36" },
  	[SchemeOut] = { "#000000", "#00ffff" },
-+	[SchemeOutHighlight] = { "#ffc978", "#00ffff" },
++	[SchemeOutHighlight] = { "#fdf6e3", "#cb4b16" },
  };
  /* -l option; if nonzero, dmenu uses vertical list with given number of lines */
  static unsigned int lines      = 0;

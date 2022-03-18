@@ -33,6 +33,7 @@ c-white-2   "#ecebec")
 (set-face-attribute 'default nil :font "Monoid" :height 120)
 #+end_src
 
+
 ** Some mode settings based on personal preferences
 #+begin_src emacs-lisp
 (global-hl-line-mode 1)
@@ -44,6 +45,7 @@ c-white-2   "#ecebec")
 (global-display-line-numbers-mode 1)
 #+end_src
 
+
 ** Setting some variables
 #+begin_src emacs-lisp
 (setq initial-major-mode 'emacs-lisp-mode
@@ -54,6 +56,7 @@ c-white-2   "#ecebec")
       confirm-kill-processes nil
       inhibit-startup-screen t)
 #+end_src
+
 
 ** Emacs startup hook
 #+begin_src emacs-lisp
@@ -106,6 +109,7 @@ Remap ivy keys to Colemak-DH
   (ivy-mode 1))
 #+end_src
 
+
 ** Evil
 *** Configure evil mode
 #+begin_src emacs-lisp
@@ -135,6 +139,7 @@ To get colemak-dh bindings in evil mode
   (global-evil-colemak-basics-mode 1))
 #+end_src
 
+
 ** Treemacs
 *** Configure treemacs
 #+begin_src emacs-lisp
@@ -144,6 +149,7 @@ To get colemak-dh bindings in evil mode
   (treemacs-display-current-project-exclusively)
   (treemacs-git-mode 'deferred))
 #+end_src
+
 
 ** Configure treemacs-evil
 Configure treemacs-evil to get colemak-dh bindings
@@ -160,6 +166,7 @@ Configure treemacs-evil to get colemak-dh bindings
   (evil-define-key 'treemacs treemacs-mode-map (kbd "i") #'treemacs-RET-action)
  )
 #+end_src
+
 
 ** LSP
 *** Configure lsp-mode
@@ -191,6 +198,7 @@ Configure treemacs-evil to get colemak-dh bindings
   (lsp-ui-doc-enable 1))
 #+end_src
 
+
 ** Company
 *** Configure company
 For autocomplete
@@ -210,6 +218,7 @@ For autocomplete
 (use-package company-quickhelp
   :hook (company-mode . company-quickhelp-mode))
 #+end_src
+
 
 ** Treesitter
 #+begin_src emacs-lisp
@@ -237,10 +246,12 @@ For autocomplete
   "\\.nomad\\'")
 #+end_src
 
+
 ** Magit
 #+begin_src emacs-lisp
 (use-package magit)
 #+end_src
+
 
 * VTerm
 *** Configure vterm
@@ -315,6 +326,7 @@ For autocomplete
 (use-package general)
 #+end_src
 
+
 * Mode specific hooks
 #+begin_src emacs-lisp
 (add-hook 'c-mode-hook 'lsp)
@@ -378,6 +390,7 @@ For autocomplete
 	   ))))
 #+end_comment
 
+
 * Pop-up terminal
 Stolen from [[https://www.reddit.com/r/emacs/comments/ft84xy/run_shell_command_in_new_vterm/][this]] reddit post
 #+begin_src emacs-lisp
@@ -422,6 +435,7 @@ This returns the command to run in the terminal
            ("ts" (concat "tsc" full " && node " file ".js && rm " file ".js" ))
            ("rs" (concat "rustc" full " -o " file " && " file " && rm " file)))))
 #+end_src
+
 
 * Keybinds
 ** General

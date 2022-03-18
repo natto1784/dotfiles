@@ -1,6 +1,6 @@
-diff --color -u a/config.def.h b/config.def.h
---- a/config.def.h	2021-05-28 03:15:40.807354500 +0530
-+++ b/config.def.h	2021-05-21 05:21:13.476454500 +0530
+diff --color -u b/config.def.h a/config.def.h
+--- b/config.def.h	2022-03-18 10:26:17.487413585 +0530
++++ a/config.def.h	2022-03-18 11:11:09.497847262 +0530
 @@ -3,9 +3,10 @@
  /*
   * appearance
@@ -19,11 +19,11 @@ diff --color -u a/config.def.h b/config.def.h
   * 5: value of shell in config.h
   */
 -static char *shell = "/bin/sh";
-+static char *shell = "/usr/bin/env fish";
++static char *shell = "/usr/bin/env zsh";
  char *utmp = NULL;
  /* scroll program: to enable use a string like "scroll" */
  char *scroll = NULL;
-@@ -95,42 +96,37 @@
+@@ -95,33 +96,44 @@
  
  /* Terminal colors (16 first used in escape sequence) */
  static const char *colorname[] = {
@@ -52,47 +52,65 @@ diff --color -u a/config.def.h b/config.def.h
 -	/* more colors can be added after 255 to use with DefaultXX */
 -	"#cccccc",
 -	"#555555",
--};
--
-
-+    [0] = "#1d1f21",
-+    [1] = "#912226", /* red     */
-+    [2] = "#778900", /* green   */
-+    [3] = "#ae7b00", /* yellow  */
-+    [4] = "#1d2594", /* blue    */
-+    [5] = "#682a9b", /* magenta */
-+    [6] = "#2b6651", /* cyan    */
-+    [7] = "#929593", /* white   */
-+
-+    [8]  = "#969896", /* black   */
-+    [9]  = "#cc6666", /* red     */
-+    [10] = "#b5bd68", /* green   */
-+    [11] = "#f0c674", /* yellow  */
-+    [12] = "#81a2be", /* blue    */
-+    [13] = "#b294bb", /* magenta */
-+    [14] = "#8abeb7", /* cyan    */
-+    [15] = "#ecebec", /* white   */
-+
-+    /* bg and fg */
-+    [256] = "#1d1f21",
-+    [257] = "#c5c8c6",
+-	"gray90", /* default foreground colour */
+-	"black", /* default background colour */
++  	/* solarized dark */
++	"#073642",  /*  0: black    */
++	"#dc322f",  /*  1: red      */
++	"#859900",  /*  2: green    */
++	"#b58900",  /*  3: yellow   */
++	"#268bd2",  /*  4: blue     */
++	"#d33682",  /*  5: magenta  */
++	"#2aa198",  /*  6: cyan     */
++	"#eee8d5",  /*  7: white    */
++	"#002b36",  /*  8: brblack  */
++	"#cb4b16",  /*  9: brred    */
++	"#586e75",  /* 10: brgreen  */
++	"#657b83",  /* 11: bryellow */
++	"#839496",  /* 12: brblue   */
++	"#6c71c4",  /* 13: brmagenta*/
++	"#93a1a1",  /* 14: brcyan   */
++	"#fdf6e3",  /* 15: brwhite  */
 +};
- /*
++
++/* Terminal colors for alternate (light) palette */
++static const char *altcolorname[] = {
++	/* solarized light */
++	"#eee8d5",  /*  0: black    */
++	"#dc322f",  /*  1: red      */
++	"#859900",  /*  2: green    */
++	"#b58900",  /*  3: yellow   */
++	"#268bd2",  /*  4: blue     */
++	"#d33682",  /*  5: magenta  */
++	"#2aa198",  /*  6: cyan     */
++	"#073642",  /*  7: white    */
++	"#fdf6e3",  /*  8: brblack  */
++	"#cb4b16",  /*  9: brred    */
++	"#93a1a1",  /* 10: brgreen  */
++	"#839496",  /* 11: bryellow */
++	"#657b83",  /* 12: brblue   */
++	"#6c71c4",  /* 13: brmagenta*/
++	"#586e75",  /* 14: brcyan   */
++	"#002b36",  /* 15: brwhite  */
+ };
+ 
+ 
+@@ -129,10 +141,10 @@
   * Default colors (colorname index)
   * foreground, background, cursor, reverse cursor
   */
--unsigned int defaultfg = 7;
--unsigned int defaultbg = 0;
--static unsigned int defaultcs = 256;
+-unsigned int defaultfg = 258;
+-unsigned int defaultbg = 259;
+-unsigned int defaultcs = 256;
 -static unsigned int defaultrcs = 257;
-+unsigned int defaultfg = 257;
-+unsigned int defaultbg = 256;
-+static unsigned int defaultcs = 257;
-+static unsigned int defaultrcs = 256;
++unsigned int defaultfg = 12;
++unsigned int defaultbg = 8;
++unsigned int defaultcs = 14;
++static unsigned int defaultrcs = 15;
  
  /*
   * Default shape of cursor
-@@ -154,7 +150,6 @@
+@@ -156,7 +168,6 @@
  static unsigned int mouseshape = XC_xterm;
  static unsigned int mousefg = 7;
  static unsigned int mousebg = 0;
@@ -100,529 +118,39 @@ diff --color -u a/config.def.h b/config.def.h
  /*
   * Color used to display font attributes when fontconfig selected a font which
   * doesn't match the ones requested.
-@@ -173,32 +168,36 @@
-  * Beware that overloading Button1 will disable the selection.
+@@ -176,6 +187,8 @@
   */
  static MouseShortcut mshortcuts[] = {
--	/* mask                 button   function        argument       release */
--	{ XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
--	{ ShiftMask,            Button4, ttysend,        {.s = "\033[5;2~"} },
--	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
--	{ ShiftMask,            Button5, ttysend,        {.s = "\033[6;2~"} },
--	{ XK_ANY_MOD,           Button5, ttysend,        {.s = "\005"} },
-+    /* mask                 button   function        argument       release */
-+    {XK_ANY_MOD, Button4, kscrollup, {.i = 1}},
-+    {XK_ANY_MOD, Button5, kscrolldown, {.i = 1}},
-+    {XK_ANY_MOD, Button2, selpaste, {.i = 0}, 1},
-+    {ShiftMask, Button4, ttysend, {.s = "\033[5;2~"}},
-+    {XK_ANY_MOD, Button4, ttysend, {.s = "\031"}},
-+    {ShiftMask, Button5, ttysend, {.s = "\033[6;2~"}},
-+    {XK_ANY_MOD, Button5, ttysend, {.s = "\005"}},
- };
- 
- /* Internal keyboard shortcuts. */
- #define MODKEY Mod1Mask
--#define TERMMOD (ControlMask|ShiftMask)
-+#define TERMMOD (ControlMask | ShiftMask)
- 
- static Shortcut shortcuts[] = {
--	/* mask                 keysym          function        argument */
--	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
--	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
--	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
--	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
+ 	/* mask                 button   function        argument       release */
++  { XK_ANY_MOD,            Button4, kscrollup,      {.i = 1}},
++  { XK_ANY_MOD,            Button5, kscrolldown,    {.i = 1}},
+ 	{ XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
+ 	{ ShiftMask,            Button4, ttysend,        {.s = "\033[5;2~"} },
+ 	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
+@@ -193,14 +206,17 @@
+ 	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
+ 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
+ 	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
 -	{ TERMMOD,              XK_Prior,       zoom,           {.f = +1} },
 -	{ TERMMOD,              XK_Next,        zoom,           {.f = -1} },
 -	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
--	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
--	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
--	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
--	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
--	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
-+    /* mask                 keysym          function        argument */
-+    {XK_ANY_MOD, XK_Break, sendbreak, {.i = 0}},
-+    {ControlMask, XK_Print, toggleprinter, {.i = 0}},
-+    {ShiftMask, XK_Print, printscreen, {.i = 0}},
-+    {XK_ANY_MOD, XK_Print, printsel, {.i = 0}},
-+    {ShiftMask, XK_Prior, zoom, {.f = +1}},
-+    {ShiftMask, XK_Next, zoom, {.f = -1}},
-+    {TERMMOD, XK_Home, zoomreset, {.f = 0}},
-+    {TERMMOD, XK_C, clipcopy, {.i = 0}},
-+    {TERMMOD, XK_V, clippaste, {.i = 0}},
-+    {TERMMOD, XK_Y, selpaste, {.i = 0}},
-+    {ShiftMask, XK_Insert, selpaste, {.i = 0}},
-+    {TERMMOD, XK_Num_Lock, numlock, {.i = 0}},
-+    {XK_ANY_MOD, XK_Page_Up, kscrollup, {.i = -1}},
-+    {XK_ANY_MOD, XK_Page_Down, kscrolldown, {.i = -1}},
++	{ ShiftMask,            XK_Prior,       zoom,           {.f = +1} },
++	{ ShiftMask,            XK_Next,        zoom,           {.f = -1} },
++	{ ShiftMask,            XK_Home,        zoomreset,      {.f =  0} },
+ 	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
+ 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
+ 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
+ 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
+ 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
++	{ XK_ANY_MOD,           XK_Page_Up,     kscrollup,      {.i = -1} },
++	{ XK_ANY_MOD,           XK_Page_Down,   kscrolldown,    {.i = -1} },
++  { XK_ANY_MOD,           XK_F6,          swapcolors,     {.i =  0} },
  };
  
  /*
-@@ -226,229 +225,229 @@
-  * If you want keys other than the X11 function keys (0xFD00 - 0xFFFF)
-  * to be mapped below, add them to this array.
-  */
--static KeySym mappedkeys[] = { -1 };
-+static KeySym mappedkeys[] = {-1};
- 
- /*
-  * State bits to ignore when matching key or button events.  By default,
-  * numlock (Mod2Mask) and keyboard layout (XK_SWITCH_MOD) are ignored.
-  */
--static uint ignoremod = Mod2Mask|XK_SWITCH_MOD;
-+static uint ignoremod = Mod2Mask | XK_SWITCH_MOD;
- 
- /*
-  * This is the huge key array which defines all compatibility to the Linux
-  * world. Please decide about changes wisely.
-  */
- static Key key[] = {
--	/* keysym           mask            string      appkey appcursor */
--	{ XK_KP_Home,       ShiftMask,      "\033[2J",       0,   -1},
--	{ XK_KP_Home,       ShiftMask,      "\033[1;2H",     0,   +1},
--	{ XK_KP_Home,       XK_ANY_MOD,     "\033[H",        0,   -1},
--	{ XK_KP_Home,       XK_ANY_MOD,     "\033[1~",       0,   +1},
--	{ XK_KP_Up,         XK_ANY_MOD,     "\033Ox",       +1,    0},
--	{ XK_KP_Up,         XK_ANY_MOD,     "\033[A",        0,   -1},
--	{ XK_KP_Up,         XK_ANY_MOD,     "\033OA",        0,   +1},
--	{ XK_KP_Down,       XK_ANY_MOD,     "\033Or",       +1,    0},
--	{ XK_KP_Down,       XK_ANY_MOD,     "\033[B",        0,   -1},
--	{ XK_KP_Down,       XK_ANY_MOD,     "\033OB",        0,   +1},
--	{ XK_KP_Left,       XK_ANY_MOD,     "\033Ot",       +1,    0},
--	{ XK_KP_Left,       XK_ANY_MOD,     "\033[D",        0,   -1},
--	{ XK_KP_Left,       XK_ANY_MOD,     "\033OD",        0,   +1},
--	{ XK_KP_Right,      XK_ANY_MOD,     "\033Ov",       +1,    0},
--	{ XK_KP_Right,      XK_ANY_MOD,     "\033[C",        0,   -1},
--	{ XK_KP_Right,      XK_ANY_MOD,     "\033OC",        0,   +1},
--	{ XK_KP_Prior,      ShiftMask,      "\033[5;2~",     0,    0},
--	{ XK_KP_Prior,      XK_ANY_MOD,     "\033[5~",       0,    0},
--	{ XK_KP_Begin,      XK_ANY_MOD,     "\033[E",        0,    0},
--	{ XK_KP_End,        ControlMask,    "\033[J",       -1,    0},
--	{ XK_KP_End,        ControlMask,    "\033[1;5F",    +1,    0},
--	{ XK_KP_End,        ShiftMask,      "\033[K",       -1,    0},
--	{ XK_KP_End,        ShiftMask,      "\033[1;2F",    +1,    0},
--	{ XK_KP_End,        XK_ANY_MOD,     "\033[4~",       0,    0},
--	{ XK_KP_Next,       ShiftMask,      "\033[6;2~",     0,    0},
--	{ XK_KP_Next,       XK_ANY_MOD,     "\033[6~",       0,    0},
--	{ XK_KP_Insert,     ShiftMask,      "\033[2;2~",    +1,    0},
--	{ XK_KP_Insert,     ShiftMask,      "\033[4l",      -1,    0},
--	{ XK_KP_Insert,     ControlMask,    "\033[L",       -1,    0},
--	{ XK_KP_Insert,     ControlMask,    "\033[2;5~",    +1,    0},
--	{ XK_KP_Insert,     XK_ANY_MOD,     "\033[4h",      -1,    0},
--	{ XK_KP_Insert,     XK_ANY_MOD,     "\033[2~",      +1,    0},
--	{ XK_KP_Delete,     ControlMask,    "\033[M",       -1,    0},
--	{ XK_KP_Delete,     ControlMask,    "\033[3;5~",    +1,    0},
--	{ XK_KP_Delete,     ShiftMask,      "\033[2K",      -1,    0},
--	{ XK_KP_Delete,     ShiftMask,      "\033[3;2~",    +1,    0},
--	{ XK_KP_Delete,     XK_ANY_MOD,     "\033[P",       -1,    0},
--	{ XK_KP_Delete,     XK_ANY_MOD,     "\033[3~",      +1,    0},
--	{ XK_KP_Multiply,   XK_ANY_MOD,     "\033Oj",       +2,    0},
--	{ XK_KP_Add,        XK_ANY_MOD,     "\033Ok",       +2,    0},
--	{ XK_KP_Enter,      XK_ANY_MOD,     "\033OM",       +2,    0},
--	{ XK_KP_Enter,      XK_ANY_MOD,     "\r",           -1,    0},
--	{ XK_KP_Subtract,   XK_ANY_MOD,     "\033Om",       +2,    0},
--	{ XK_KP_Decimal,    XK_ANY_MOD,     "\033On",       +2,    0},
--	{ XK_KP_Divide,     XK_ANY_MOD,     "\033Oo",       +2,    0},
--	{ XK_KP_0,          XK_ANY_MOD,     "\033Op",       +2,    0},
--	{ XK_KP_1,          XK_ANY_MOD,     "\033Oq",       +2,    0},
--	{ XK_KP_2,          XK_ANY_MOD,     "\033Or",       +2,    0},
--	{ XK_KP_3,          XK_ANY_MOD,     "\033Os",       +2,    0},
--	{ XK_KP_4,          XK_ANY_MOD,     "\033Ot",       +2,    0},
--	{ XK_KP_5,          XK_ANY_MOD,     "\033Ou",       +2,    0},
--	{ XK_KP_6,          XK_ANY_MOD,     "\033Ov",       +2,    0},
--	{ XK_KP_7,          XK_ANY_MOD,     "\033Ow",       +2,    0},
--	{ XK_KP_8,          XK_ANY_MOD,     "\033Ox",       +2,    0},
--	{ XK_KP_9,          XK_ANY_MOD,     "\033Oy",       +2,    0},
--	{ XK_Up,            ShiftMask,      "\033[1;2A",     0,    0},
--	{ XK_Up,            Mod1Mask,       "\033[1;3A",     0,    0},
--	{ XK_Up,         ShiftMask|Mod1Mask,"\033[1;4A",     0,    0},
--	{ XK_Up,            ControlMask,    "\033[1;5A",     0,    0},
--	{ XK_Up,      ShiftMask|ControlMask,"\033[1;6A",     0,    0},
--	{ XK_Up,       ControlMask|Mod1Mask,"\033[1;7A",     0,    0},
--	{ XK_Up,ShiftMask|ControlMask|Mod1Mask,"\033[1;8A",  0,    0},
--	{ XK_Up,            XK_ANY_MOD,     "\033[A",        0,   -1},
--	{ XK_Up,            XK_ANY_MOD,     "\033OA",        0,   +1},
--	{ XK_Down,          ShiftMask,      "\033[1;2B",     0,    0},
--	{ XK_Down,          Mod1Mask,       "\033[1;3B",     0,    0},
--	{ XK_Down,       ShiftMask|Mod1Mask,"\033[1;4B",     0,    0},
--	{ XK_Down,          ControlMask,    "\033[1;5B",     0,    0},
--	{ XK_Down,    ShiftMask|ControlMask,"\033[1;6B",     0,    0},
--	{ XK_Down,     ControlMask|Mod1Mask,"\033[1;7B",     0,    0},
--	{ XK_Down,ShiftMask|ControlMask|Mod1Mask,"\033[1;8B",0,    0},
--	{ XK_Down,          XK_ANY_MOD,     "\033[B",        0,   -1},
--	{ XK_Down,          XK_ANY_MOD,     "\033OB",        0,   +1},
--	{ XK_Left,          ShiftMask,      "\033[1;2D",     0,    0},
--	{ XK_Left,          Mod1Mask,       "\033[1;3D",     0,    0},
--	{ XK_Left,       ShiftMask|Mod1Mask,"\033[1;4D",     0,    0},
--	{ XK_Left,          ControlMask,    "\033[1;5D",     0,    0},
--	{ XK_Left,    ShiftMask|ControlMask,"\033[1;6D",     0,    0},
--	{ XK_Left,     ControlMask|Mod1Mask,"\033[1;7D",     0,    0},
--	{ XK_Left,ShiftMask|ControlMask|Mod1Mask,"\033[1;8D",0,    0},
--	{ XK_Left,          XK_ANY_MOD,     "\033[D",        0,   -1},
--	{ XK_Left,          XK_ANY_MOD,     "\033OD",        0,   +1},
--	{ XK_Right,         ShiftMask,      "\033[1;2C",     0,    0},
--	{ XK_Right,         Mod1Mask,       "\033[1;3C",     0,    0},
--	{ XK_Right,      ShiftMask|Mod1Mask,"\033[1;4C",     0,    0},
--	{ XK_Right,         ControlMask,    "\033[1;5C",     0,    0},
--	{ XK_Right,   ShiftMask|ControlMask,"\033[1;6C",     0,    0},
--	{ XK_Right,    ControlMask|Mod1Mask,"\033[1;7C",     0,    0},
--	{ XK_Right,ShiftMask|ControlMask|Mod1Mask,"\033[1;8C",0,   0},
--	{ XK_Right,         XK_ANY_MOD,     "\033[C",        0,   -1},
--	{ XK_Right,         XK_ANY_MOD,     "\033OC",        0,   +1},
--	{ XK_ISO_Left_Tab,  ShiftMask,      "\033[Z",        0,    0},
--	{ XK_Return,        Mod1Mask,       "\033\r",        0,    0},
--	{ XK_Return,        XK_ANY_MOD,     "\r",            0,    0},
--	{ XK_Insert,        ShiftMask,      "\033[4l",      -1,    0},
--	{ XK_Insert,        ShiftMask,      "\033[2;2~",    +1,    0},
--	{ XK_Insert,        ControlMask,    "\033[L",       -1,    0},
--	{ XK_Insert,        ControlMask,    "\033[2;5~",    +1,    0},
--	{ XK_Insert,        XK_ANY_MOD,     "\033[4h",      -1,    0},
--	{ XK_Insert,        XK_ANY_MOD,     "\033[2~",      +1,    0},
--	{ XK_Delete,        ControlMask,    "\033[M",       -1,    0},
--	{ XK_Delete,        ControlMask,    "\033[3;5~",    +1,    0},
--	{ XK_Delete,        ShiftMask,      "\033[2K",      -1,    0},
--	{ XK_Delete,        ShiftMask,      "\033[3;2~",    +1,    0},
--	{ XK_Delete,        XK_ANY_MOD,     "\033[P",       -1,    0},
--	{ XK_Delete,        XK_ANY_MOD,     "\033[3~",      +1,    0},
--	{ XK_BackSpace,     XK_NO_MOD,      "\177",          0,    0},
--	{ XK_BackSpace,     Mod1Mask,       "\033\177",      0,    0},
--	{ XK_Home,          ShiftMask,      "\033[2J",       0,   -1},
--	{ XK_Home,          ShiftMask,      "\033[1;2H",     0,   +1},
--	{ XK_Home,          XK_ANY_MOD,     "\033[H",        0,   -1},
--	{ XK_Home,          XK_ANY_MOD,     "\033[1~",       0,   +1},
--	{ XK_End,           ControlMask,    "\033[J",       -1,    0},
--	{ XK_End,           ControlMask,    "\033[1;5F",    +1,    0},
--	{ XK_End,           ShiftMask,      "\033[K",       -1,    0},
--	{ XK_End,           ShiftMask,      "\033[1;2F",    +1,    0},
--	{ XK_End,           XK_ANY_MOD,     "\033[4~",       0,    0},
--	{ XK_Prior,         ControlMask,    "\033[5;5~",     0,    0},
--	{ XK_Prior,         ShiftMask,      "\033[5;2~",     0,    0},
--	{ XK_Prior,         XK_ANY_MOD,     "\033[5~",       0,    0},
--	{ XK_Next,          ControlMask,    "\033[6;5~",     0,    0},
--	{ XK_Next,          ShiftMask,      "\033[6;2~",     0,    0},
--	{ XK_Next,          XK_ANY_MOD,     "\033[6~",       0,    0},
--	{ XK_F1,            XK_NO_MOD,      "\033OP" ,       0,    0},
--	{ XK_F1, /* F13 */  ShiftMask,      "\033[1;2P",     0,    0},
--	{ XK_F1, /* F25 */  ControlMask,    "\033[1;5P",     0,    0},
--	{ XK_F1, /* F37 */  Mod4Mask,       "\033[1;6P",     0,    0},
--	{ XK_F1, /* F49 */  Mod1Mask,       "\033[1;3P",     0,    0},
--	{ XK_F1, /* F61 */  Mod3Mask,       "\033[1;4P",     0,    0},
--	{ XK_F2,            XK_NO_MOD,      "\033OQ" ,       0,    0},
--	{ XK_F2, /* F14 */  ShiftMask,      "\033[1;2Q",     0,    0},
--	{ XK_F2, /* F26 */  ControlMask,    "\033[1;5Q",     0,    0},
--	{ XK_F2, /* F38 */  Mod4Mask,       "\033[1;6Q",     0,    0},
--	{ XK_F2, /* F50 */  Mod1Mask,       "\033[1;3Q",     0,    0},
--	{ XK_F2, /* F62 */  Mod3Mask,       "\033[1;4Q",     0,    0},
--	{ XK_F3,            XK_NO_MOD,      "\033OR" ,       0,    0},
--	{ XK_F3, /* F15 */  ShiftMask,      "\033[1;2R",     0,    0},
--	{ XK_F3, /* F27 */  ControlMask,    "\033[1;5R",     0,    0},
--	{ XK_F3, /* F39 */  Mod4Mask,       "\033[1;6R",     0,    0},
--	{ XK_F3, /* F51 */  Mod1Mask,       "\033[1;3R",     0,    0},
--	{ XK_F3, /* F63 */  Mod3Mask,       "\033[1;4R",     0,    0},
--	{ XK_F4,            XK_NO_MOD,      "\033OS" ,       0,    0},
--	{ XK_F4, /* F16 */  ShiftMask,      "\033[1;2S",     0,    0},
--	{ XK_F4, /* F28 */  ControlMask,    "\033[1;5S",     0,    0},
--	{ XK_F4, /* F40 */  Mod4Mask,       "\033[1;6S",     0,    0},
--	{ XK_F4, /* F52 */  Mod1Mask,       "\033[1;3S",     0,    0},
--	{ XK_F5,            XK_NO_MOD,      "\033[15~",      0,    0},
--	{ XK_F5, /* F17 */  ShiftMask,      "\033[15;2~",    0,    0},
--	{ XK_F5, /* F29 */  ControlMask,    "\033[15;5~",    0,    0},
--	{ XK_F5, /* F41 */  Mod4Mask,       "\033[15;6~",    0,    0},
--	{ XK_F5, /* F53 */  Mod1Mask,       "\033[15;3~",    0,    0},
--	{ XK_F6,            XK_NO_MOD,      "\033[17~",      0,    0},
--	{ XK_F6, /* F18 */  ShiftMask,      "\033[17;2~",    0,    0},
--	{ XK_F6, /* F30 */  ControlMask,    "\033[17;5~",    0,    0},
--	{ XK_F6, /* F42 */  Mod4Mask,       "\033[17;6~",    0,    0},
--	{ XK_F6, /* F54 */  Mod1Mask,       "\033[17;3~",    0,    0},
--	{ XK_F7,            XK_NO_MOD,      "\033[18~",      0,    0},
--	{ XK_F7, /* F19 */  ShiftMask,      "\033[18;2~",    0,    0},
--	{ XK_F7, /* F31 */  ControlMask,    "\033[18;5~",    0,    0},
--	{ XK_F7, /* F43 */  Mod4Mask,       "\033[18;6~",    0,    0},
--	{ XK_F7, /* F55 */  Mod1Mask,       "\033[18;3~",    0,    0},
--	{ XK_F8,            XK_NO_MOD,      "\033[19~",      0,    0},
--	{ XK_F8, /* F20 */  ShiftMask,      "\033[19;2~",    0,    0},
--	{ XK_F8, /* F32 */  ControlMask,    "\033[19;5~",    0,    0},
--	{ XK_F8, /* F44 */  Mod4Mask,       "\033[19;6~",    0,    0},
--	{ XK_F8, /* F56 */  Mod1Mask,       "\033[19;3~",    0,    0},
--	{ XK_F9,            XK_NO_MOD,      "\033[20~",      0,    0},
--	{ XK_F9, /* F21 */  ShiftMask,      "\033[20;2~",    0,    0},
--	{ XK_F9, /* F33 */  ControlMask,    "\033[20;5~",    0,    0},
--	{ XK_F9, /* F45 */  Mod4Mask,       "\033[20;6~",    0,    0},
--	{ XK_F9, /* F57 */  Mod1Mask,       "\033[20;3~",    0,    0},
--	{ XK_F10,           XK_NO_MOD,      "\033[21~",      0,    0},
--	{ XK_F10, /* F22 */ ShiftMask,      "\033[21;2~",    0,    0},
--	{ XK_F10, /* F34 */ ControlMask,    "\033[21;5~",    0,    0},
--	{ XK_F10, /* F46 */ Mod4Mask,       "\033[21;6~",    0,    0},
--	{ XK_F10, /* F58 */ Mod1Mask,       "\033[21;3~",    0,    0},
--	{ XK_F11,           XK_NO_MOD,      "\033[23~",      0,    0},
--	{ XK_F11, /* F23 */ ShiftMask,      "\033[23;2~",    0,    0},
--	{ XK_F11, /* F35 */ ControlMask,    "\033[23;5~",    0,    0},
--	{ XK_F11, /* F47 */ Mod4Mask,       "\033[23;6~",    0,    0},
--	{ XK_F11, /* F59 */ Mod1Mask,       "\033[23;3~",    0,    0},
--	{ XK_F12,           XK_NO_MOD,      "\033[24~",      0,    0},
--	{ XK_F12, /* F24 */ ShiftMask,      "\033[24;2~",    0,    0},
--	{ XK_F12, /* F36 */ ControlMask,    "\033[24;5~",    0,    0},
--	{ XK_F12, /* F48 */ Mod4Mask,       "\033[24;6~",    0,    0},
--	{ XK_F12, /* F60 */ Mod1Mask,       "\033[24;3~",    0,    0},
--	{ XK_F13,           XK_NO_MOD,      "\033[1;2P",     0,    0},
--	{ XK_F14,           XK_NO_MOD,      "\033[1;2Q",     0,    0},
--	{ XK_F15,           XK_NO_MOD,      "\033[1;2R",     0,    0},
--	{ XK_F16,           XK_NO_MOD,      "\033[1;2S",     0,    0},
--	{ XK_F17,           XK_NO_MOD,      "\033[15;2~",    0,    0},
--	{ XK_F18,           XK_NO_MOD,      "\033[17;2~",    0,    0},
--	{ XK_F19,           XK_NO_MOD,      "\033[18;2~",    0,    0},
--	{ XK_F20,           XK_NO_MOD,      "\033[19;2~",    0,    0},
--	{ XK_F21,           XK_NO_MOD,      "\033[20;2~",    0,    0},
--	{ XK_F22,           XK_NO_MOD,      "\033[21;2~",    0,    0},
--	{ XK_F23,           XK_NO_MOD,      "\033[23;2~",    0,    0},
--	{ XK_F24,           XK_NO_MOD,      "\033[24;2~",    0,    0},
--	{ XK_F25,           XK_NO_MOD,      "\033[1;5P",     0,    0},
--	{ XK_F26,           XK_NO_MOD,      "\033[1;5Q",     0,    0},
--	{ XK_F27,           XK_NO_MOD,      "\033[1;5R",     0,    0},
--	{ XK_F28,           XK_NO_MOD,      "\033[1;5S",     0,    0},
--	{ XK_F29,           XK_NO_MOD,      "\033[15;5~",    0,    0},
--	{ XK_F30,           XK_NO_MOD,      "\033[17;5~",    0,    0},
--	{ XK_F31,           XK_NO_MOD,      "\033[18;5~",    0,    0},
--	{ XK_F32,           XK_NO_MOD,      "\033[19;5~",    0,    0},
--	{ XK_F33,           XK_NO_MOD,      "\033[20;5~",    0,    0},
--	{ XK_F34,           XK_NO_MOD,      "\033[21;5~",    0,    0},
--	{ XK_F35,           XK_NO_MOD,      "\033[23;5~",    0,    0},
-+    /* keysym           mask            string      appkey appcursor */
-+    {XK_KP_Home, ShiftMask, "\033[2J", 0, -1},
-+    {XK_KP_Home, ShiftMask, "\033[1;2H", 0, +1},
-+    {XK_KP_Home, XK_ANY_MOD, "\033[H", 0, -1},
-+    {XK_KP_Home, XK_ANY_MOD, "\033[1~", 0, +1},
-+    {XK_KP_Up, XK_ANY_MOD, "\033Ox", +1, 0},
-+    {XK_KP_Up, XK_ANY_MOD, "\033[A", 0, -1},
-+    {XK_KP_Up, XK_ANY_MOD, "\033OA", 0, +1},
-+    {XK_KP_Down, XK_ANY_MOD, "\033Or", +1, 0},
-+    {XK_KP_Down, XK_ANY_MOD, "\033[B", 0, -1},
-+    {XK_KP_Down, XK_ANY_MOD, "\033OB", 0, +1},
-+    {XK_KP_Left, XK_ANY_MOD, "\033Ot", +1, 0},
-+    {XK_KP_Left, XK_ANY_MOD, "\033[D", 0, -1},
-+    {XK_KP_Left, XK_ANY_MOD, "\033OD", 0, +1},
-+    {XK_KP_Right, XK_ANY_MOD, "\033Ov", +1, 0},
-+    {XK_KP_Right, XK_ANY_MOD, "\033[C", 0, -1},
-+    {XK_KP_Right, XK_ANY_MOD, "\033OC", 0, +1},
-+    {XK_KP_Prior, ShiftMask, "\033[5;2~", 0, 0},
-+    {XK_KP_Prior, XK_ANY_MOD, "\033[5~", 0, 0},
-+    {XK_KP_Begin, XK_ANY_MOD, "\033[E", 0, 0},
-+    {XK_KP_End, ControlMask, "\033[J", -1, 0},
-+    {XK_KP_End, ControlMask, "\033[1;5F", +1, 0},
-+    {XK_KP_End, ShiftMask, "\033[K", -1, 0},
-+    {XK_KP_End, ShiftMask, "\033[1;2F", +1, 0},
-+    {XK_KP_End, XK_ANY_MOD, "\033[4~", 0, 0},
-+    {XK_KP_Next, ShiftMask, "\033[6;2~", 0, 0},
-+    {XK_KP_Next, XK_ANY_MOD, "\033[6~", 0, 0},
-+    {XK_KP_Insert, ShiftMask, "\033[2;2~", +1, 0},
-+    {XK_KP_Insert, ShiftMask, "\033[4l", -1, 0},
-+    {XK_KP_Insert, ControlMask, "\033[L", -1, 0},
-+    {XK_KP_Insert, ControlMask, "\033[2;5~", +1, 0},
-+    {XK_KP_Insert, XK_ANY_MOD, "\033[4h", -1, 0},
-+    {XK_KP_Insert, XK_ANY_MOD, "\033[2~", +1, 0},
-+    {XK_KP_Delete, ControlMask, "\033[M", -1, 0},
-+    {XK_KP_Delete, ControlMask, "\033[3;5~", +1, 0},
-+    {XK_KP_Delete, ShiftMask, "\033[2K", -1, 0},
-+    {XK_KP_Delete, ShiftMask, "\033[3;2~", +1, 0},
-+    {XK_KP_Delete, XK_ANY_MOD, "\033[P", -1, 0},
-+    {XK_KP_Delete, XK_ANY_MOD, "\033[3~", +1, 0},
-+    {XK_KP_Multiply, XK_ANY_MOD, "\033Oj", +2, 0},
-+    {XK_KP_Add, XK_ANY_MOD, "\033Ok", +2, 0},
-+    {XK_KP_Enter, XK_ANY_MOD, "\033OM", +2, 0},
-+    {XK_KP_Enter, XK_ANY_MOD, "\r", -1, 0},
-+    {XK_KP_Subtract, XK_ANY_MOD, "\033Om", +2, 0},
-+    {XK_KP_Decimal, XK_ANY_MOD, "\033On", +2, 0},
-+    {XK_KP_Divide, XK_ANY_MOD, "\033Oo", +2, 0},
-+    {XK_KP_0, XK_ANY_MOD, "\033Op", +2, 0},
-+    {XK_KP_1, XK_ANY_MOD, "\033Oq", +2, 0},
-+    {XK_KP_2, XK_ANY_MOD, "\033Or", +2, 0},
-+    {XK_KP_3, XK_ANY_MOD, "\033Os", +2, 0},
-+    {XK_KP_4, XK_ANY_MOD, "\033Ot", +2, 0},
-+    {XK_KP_5, XK_ANY_MOD, "\033Ou", +2, 0},
-+    {XK_KP_6, XK_ANY_MOD, "\033Ov", +2, 0},
-+    {XK_KP_7, XK_ANY_MOD, "\033Ow", +2, 0},
-+    {XK_KP_8, XK_ANY_MOD, "\033Ox", +2, 0},
-+    {XK_KP_9, XK_ANY_MOD, "\033Oy", +2, 0},
-+    {XK_Up, ShiftMask, "\033[1;2A", 0, 0},
-+    {XK_Up, Mod1Mask, "\033[1;3A", 0, 0},
-+    {XK_Up, ShiftMask | Mod1Mask, "\033[1;4A", 0, 0},
-+    {XK_Up, ControlMask, "\033[1;5A", 0, 0},
-+    {XK_Up, ShiftMask | ControlMask, "\033[1;6A", 0, 0},
-+    {XK_Up, ControlMask | Mod1Mask, "\033[1;7A", 0, 0},
-+    {XK_Up, ShiftMask | ControlMask | Mod1Mask, "\033[1;8A", 0, 0},
-+    {XK_Up, XK_ANY_MOD, "\033[A", 0, -1},
-+    {XK_Up, XK_ANY_MOD, "\033OA", 0, +1},
-+    {XK_Down, ShiftMask, "\033[1;2B", 0, 0},
-+    {XK_Down, Mod1Mask, "\033[1;3B", 0, 0},
-+    {XK_Down, ShiftMask | Mod1Mask, "\033[1;4B", 0, 0},
-+    {XK_Down, ControlMask, "\033[1;5B", 0, 0},
-+    {XK_Down, ShiftMask | ControlMask, "\033[1;6B", 0, 0},
-+    {XK_Down, ControlMask | Mod1Mask, "\033[1;7B", 0, 0},
-+    {XK_Down, ShiftMask | ControlMask | Mod1Mask, "\033[1;8B", 0, 0},
-+    {XK_Down, XK_ANY_MOD, "\033[B", 0, -1},
-+    {XK_Down, XK_ANY_MOD, "\033OB", 0, +1},
-+    {XK_Left, ShiftMask, "\033[1;2D", 0, 0},
-+    {XK_Left, Mod1Mask, "\033[1;3D", 0, 0},
-+    {XK_Left, ShiftMask | Mod1Mask, "\033[1;4D", 0, 0},
-+    {XK_Left, ControlMask, "\033[1;5D", 0, 0},
-+    {XK_Left, ShiftMask | ControlMask, "\033[1;6D", 0, 0},
-+    {XK_Left, ControlMask | Mod1Mask, "\033[1;7D", 0, 0},
-+    {XK_Left, ShiftMask | ControlMask | Mod1Mask, "\033[1;8D", 0, 0},
-+    {XK_Left, XK_ANY_MOD, "\033[D", 0, -1},
-+    {XK_Left, XK_ANY_MOD, "\033OD", 0, +1},
-+    {XK_Right, ShiftMask, "\033[1;2C", 0, 0},
-+    {XK_Right, Mod1Mask, "\033[1;3C", 0, 0},
-+    {XK_Right, ShiftMask | Mod1Mask, "\033[1;4C", 0, 0},
-+    {XK_Right, ControlMask, "\033[1;5C", 0, 0},
-+    {XK_Right, ShiftMask | ControlMask, "\033[1;6C", 0, 0},
-+    {XK_Right, ControlMask | Mod1Mask, "\033[1;7C", 0, 0},
-+    {XK_Right, ShiftMask | ControlMask | Mod1Mask, "\033[1;8C", 0, 0},
-+    {XK_Right, XK_ANY_MOD, "\033[C", 0, -1},
-+    {XK_Right, XK_ANY_MOD, "\033OC", 0, +1},
-+    {XK_ISO_Left_Tab, ShiftMask, "\033[Z", 0, 0},
-+    {XK_Return, Mod1Mask, "\033\r", 0, 0},
-+    {XK_Return, XK_ANY_MOD, "\r", 0, 0},
-+    {XK_Insert, ShiftMask, "\033[4l", -1, 0},
-+    {XK_Insert, ShiftMask, "\033[2;2~", +1, 0},
-+    {XK_Insert, ControlMask, "\033[L", -1, 0},
-+    {XK_Insert, ControlMask, "\033[2;5~", +1, 0},
-+    {XK_Insert, XK_ANY_MOD, "\033[4h", -1, 0},
-+    {XK_Insert, XK_ANY_MOD, "\033[2~", +1, 0},
-+    {XK_Delete, ControlMask, "\033[M", -1, 0},
-+    {XK_Delete, ControlMask, "\033[3;5~", +1, 0},
-+    {XK_Delete, ShiftMask, "\033[2K", -1, 0},
-+    {XK_Delete, ShiftMask, "\033[3;2~", +1, 0},
-+    {XK_Delete, XK_ANY_MOD, "\033[P", -1, 0},
-+    {XK_Delete, XK_ANY_MOD, "\033[3~", +1, 0},
-+    {XK_BackSpace, XK_NO_MOD, "\177", 0, 0},
-+    {XK_BackSpace, Mod1Mask, "\033\177", 0, 0},
-+    {XK_Home, ShiftMask, "\033[2J", 0, -1},
-+    {XK_Home, ShiftMask, "\033[1;2H", 0, +1},
-+    {XK_Home, XK_ANY_MOD, "\033[H", 0, -1},
-+    {XK_Home, XK_ANY_MOD, "\033[1~", 0, +1},
-+    {XK_End, ControlMask, "\033[J", -1, 0},
-+    {XK_End, ControlMask, "\033[1;5F", +1, 0},
-+    {XK_End, ShiftMask, "\033[K", -1, 0},
-+    {XK_End, ShiftMask, "\033[1;2F", +1, 0},
-+    {XK_End, XK_ANY_MOD, "\033[4~", 0, 0},
-+    {XK_Prior, ControlMask, "\033[5;5~", 0, 0},
-+    {XK_Prior, ShiftMask, "\033[5;2~", 0, 0},
-+    {XK_Prior, XK_ANY_MOD, "\033[5~", 0, 0},
-+    {XK_Next, ControlMask, "\033[6;5~", 0, 0},
-+    {XK_Next, ShiftMask, "\033[6;2~", 0, 0},
-+    {XK_Next, XK_ANY_MOD, "\033[6~", 0, 0},
-+    {XK_F1, XK_NO_MOD, "\033OP", 0, 0},
-+    {XK_F1, /* F13 */ ShiftMask, "\033[1;2P", 0, 0},
-+    {XK_F1, /* F25 */ ControlMask, "\033[1;5P", 0, 0},
-+    {XK_F1, /* F37 */ Mod4Mask, "\033[1;6P", 0, 0},
-+    {XK_F1, /* F49 */ Mod1Mask, "\033[1;3P", 0, 0},
-+    {XK_F1, /* F61 */ Mod3Mask, "\033[1;4P", 0, 0},
-+    {XK_F2, XK_NO_MOD, "\033OQ", 0, 0},
-+    {XK_F2, /* F14 */ ShiftMask, "\033[1;2Q", 0, 0},
-+    {XK_F2, /* F26 */ ControlMask, "\033[1;5Q", 0, 0},
-+    {XK_F2, /* F38 */ Mod4Mask, "\033[1;6Q", 0, 0},
-+    {XK_F2, /* F50 */ Mod1Mask, "\033[1;3Q", 0, 0},
-+    {XK_F2, /* F62 */ Mod3Mask, "\033[1;4Q", 0, 0},
-+    {XK_F3, XK_NO_MOD, "\033OR", 0, 0},
-+    {XK_F3, /* F15 */ ShiftMask, "\033[1;2R", 0, 0},
-+    {XK_F3, /* F27 */ ControlMask, "\033[1;5R", 0, 0},
-+    {XK_F3, /* F39 */ Mod4Mask, "\033[1;6R", 0, 0},
-+    {XK_F3, /* F51 */ Mod1Mask, "\033[1;3R", 0, 0},
-+    {XK_F3, /* F63 */ Mod3Mask, "\033[1;4R", 0, 0},
-+    {XK_F4, XK_NO_MOD, "\033OS", 0, 0},
-+    {XK_F4, /* F16 */ ShiftMask, "\033[1;2S", 0, 0},
-+    {XK_F4, /* F28 */ ControlMask, "\033[1;5S", 0, 0},
-+    {XK_F4, /* F40 */ Mod4Mask, "\033[1;6S", 0, 0},
-+    {XK_F4, /* F52 */ Mod1Mask, "\033[1;3S", 0, 0},
-+    {XK_F5, XK_NO_MOD, "\033[15~", 0, 0},
-+    {XK_F5, /* F17 */ ShiftMask, "\033[15;2~", 0, 0},
-+    {XK_F5, /* F29 */ ControlMask, "\033[15;5~", 0, 0},
-+    {XK_F5, /* F41 */ Mod4Mask, "\033[15;6~", 0, 0},
-+    {XK_F5, /* F53 */ Mod1Mask, "\033[15;3~", 0, 0},
-+    {XK_F6, XK_NO_MOD, "\033[17~", 0, 0},
-+    {XK_F6, /* F18 */ ShiftMask, "\033[17;2~", 0, 0},
-+    {XK_F6, /* F30 */ ControlMask, "\033[17;5~", 0, 0},
-+    {XK_F6, /* F42 */ Mod4Mask, "\033[17;6~", 0, 0},
-+    {XK_F6, /* F54 */ Mod1Mask, "\033[17;3~", 0, 0},
-+    {XK_F7, XK_NO_MOD, "\033[18~", 0, 0},
-+    {XK_F7, /* F19 */ ShiftMask, "\033[18;2~", 0, 0},
-+    {XK_F7, /* F31 */ ControlMask, "\033[18;5~", 0, 0},
-+    {XK_F7, /* F43 */ Mod4Mask, "\033[18;6~", 0, 0},
-+    {XK_F7, /* F55 */ Mod1Mask, "\033[18;3~", 0, 0},
-+    {XK_F8, XK_NO_MOD, "\033[19~", 0, 0},
-+    {XK_F8, /* F20 */ ShiftMask, "\033[19;2~", 0, 0},
-+    {XK_F8, /* F32 */ ControlMask, "\033[19;5~", 0, 0},
-+    {XK_F8, /* F44 */ Mod4Mask, "\033[19;6~", 0, 0},
-+    {XK_F8, /* F56 */ Mod1Mask, "\033[19;3~", 0, 0},
-+    {XK_F9, XK_NO_MOD, "\033[20~", 0, 0},
-+    {XK_F9, /* F21 */ ShiftMask, "\033[20;2~", 0, 0},
-+    {XK_F9, /* F33 */ ControlMask, "\033[20;5~", 0, 0},
-+    {XK_F9, /* F45 */ Mod4Mask, "\033[20;6~", 0, 0},
-+    {XK_F9, /* F57 */ Mod1Mask, "\033[20;3~", 0, 0},
-+    {XK_F10, XK_NO_MOD, "\033[21~", 0, 0},
-+    {XK_F10, /* F22 */ ShiftMask, "\033[21;2~", 0, 0},
-+    {XK_F10, /* F34 */ ControlMask, "\033[21;5~", 0, 0},
-+    {XK_F10, /* F46 */ Mod4Mask, "\033[21;6~", 0, 0},
-+    {XK_F10, /* F58 */ Mod1Mask, "\033[21;3~", 0, 0},
-+    {XK_F11, XK_NO_MOD, "\033[23~", 0, 0},
-+    {XK_F11, /* F23 */ ShiftMask, "\033[23;2~", 0, 0},
-+    {XK_F11, /* F35 */ ControlMask, "\033[23;5~", 0, 0},
-+    {XK_F11, /* F47 */ Mod4Mask, "\033[23;6~", 0, 0},
-+    {XK_F11, /* F59 */ Mod1Mask, "\033[23;3~", 0, 0},
-+    {XK_F12, XK_NO_MOD, "\033[24~", 0, 0},
-+    {XK_F12, /* F24 */ ShiftMask, "\033[24;2~", 0, 0},
-+    {XK_F12, /* F36 */ ControlMask, "\033[24;5~", 0, 0},
-+    {XK_F12, /* F48 */ Mod4Mask, "\033[24;6~", 0, 0},
-+    {XK_F12, /* F60 */ Mod1Mask, "\033[24;3~", 0, 0},
-+    {XK_F13, XK_NO_MOD, "\033[1;2P", 0, 0},
-+    {XK_F14, XK_NO_MOD, "\033[1;2Q", 0, 0},
-+    {XK_F15, XK_NO_MOD, "\033[1;2R", 0, 0},
-+    {XK_F16, XK_NO_MOD, "\033[1;2S", 0, 0},
-+    {XK_F17, XK_NO_MOD, "\033[15;2~", 0, 0},
-+    {XK_F18, XK_NO_MOD, "\033[17;2~", 0, 0},
-+    {XK_F19, XK_NO_MOD, "\033[18;2~", 0, 0},
-+    {XK_F20, XK_NO_MOD, "\033[19;2~", 0, 0},
-+    {XK_F21, XK_NO_MOD, "\033[20;2~", 0, 0},
-+    {XK_F22, XK_NO_MOD, "\033[21;2~", 0, 0},
-+    {XK_F23, XK_NO_MOD, "\033[23;2~", 0, 0},
-+    {XK_F24, XK_NO_MOD, "\033[24;2~", 0, 0},
-+    {XK_F25, XK_NO_MOD, "\033[1;5P", 0, 0},
-+    {XK_F26, XK_NO_MOD, "\033[1;5Q", 0, 0},
-+    {XK_F27, XK_NO_MOD, "\033[1;5R", 0, 0},
-+    {XK_F28, XK_NO_MOD, "\033[1;5S", 0, 0},
-+    {XK_F29, XK_NO_MOD, "\033[15;5~", 0, 0},
-+    {XK_F30, XK_NO_MOD, "\033[17;5~", 0, 0},
-+    {XK_F31, XK_NO_MOD, "\033[18;5~", 0, 0},
-+    {XK_F32, XK_NO_MOD, "\033[19;5~", 0, 0},
-+    {XK_F33, XK_NO_MOD, "\033[20;5~", 0, 0},
-+    {XK_F34, XK_NO_MOD, "\033[21;5~", 0, 0},
-+    {XK_F35, XK_NO_MOD, "\033[23;5~", 0, 0},
- };
- 
- /*
-@@ -459,14 +458,13 @@
-  * If no match is found, regular selection is used.
-  */
- static uint selmasks[] = {
--	[SEL_RECTANGULAR] = Mod1Mask,
-+    [SEL_RECTANGULAR] = Mod1Mask,
- };
- 
- /*
-  * Printable characters in ASCII, used to estimate the advance width
-  * of single wide characters.
-  */
--static char ascii_printable[] =
--	" !\"#$%&'()*+,-./0123456789:;<=>?"
--	"@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
--	"`abcdefghijklmnopqrstuvwxyz{|}~";
-+static char ascii_printable[] = " !\"#$%&'()*+,-./0123456789:;<=>?"
-+                                "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
-+                                "`abcdefghijklmnopqrstuvwxyz{|}~";
-Only in b: config.def.h.orig
-Only in b: config.def.h.rej
-diff --color -u a/st.c b/st.c
---- a/st.c	2020-06-19 14:59:45.000000000 +0530
-+++ b/st.c	2021-05-21 05:07:22.806708800 +0530
+diff --color -u b/st.c a/st.c
+--- b/st.c	2022-03-18 10:26:17.488413654 +0530
++++ a/st.c	2022-03-18 10:59:06.308482438 +0530
 @@ -35,6 +35,7 @@
  #define ESC_ARG_SIZ   16
  #define STR_BUF_SIZ   ESC_BUF_SIZ
@@ -659,10 +187,10 @@ diff --color -u a/st.c b/st.c
 -static void tscrolldown(int, int);
 +static void tscrollup(int, int, int);
 +static void tscrolldown(int, int, int);
- static void tsetattr(int *, int);
- static void tsetchar(Rune, Glyph *, int, int);
+ static void tsetattr(const int *, int);
+ static void tsetchar(Rune, const Glyph *, int, int);
  static void tsetdirt(int, int);
-@@ -414,10 +421,10 @@
+@@ -416,10 +423,10 @@
  {
  	int i = term.col;
  
@@ -675,7 +203,7 @@ diff --color -u a/st.c b/st.c
  		--i;
  
  	return i;
-@@ -526,7 +533,7 @@
+@@ -528,7 +535,7 @@
  		 * Snap around if the word wraps around at the end or
  		 * beginning of a line.
  		 */
@@ -684,7 +212,7 @@ diff --color -u a/st.c b/st.c
  		prevdelim = ISDELIM(prevgp->u);
  		for (;;) {
  			newx = *x + direction;
-@@ -541,14 +548,14 @@
+@@ -543,14 +550,14 @@
  					yt = *y, xt = *x;
  				else
  					yt = newy, xt = newx;
@@ -701,7 +229,7 @@ diff --color -u a/st.c b/st.c
  			delim = ISDELIM(gp->u);
  			if (!(gp->mode & ATTR_WDUMMY) && (delim != prevdelim
  					|| (delim && gp->u != prevgp->u)))
-@@ -569,14 +576,14 @@
+@@ -571,14 +578,14 @@
  		*x = (direction < 0) ? 0 : term.col - 1;
  		if (direction < 0) {
  			for (; *y > 0; *y += direction) {
@@ -718,7 +246,7 @@ diff --color -u a/st.c b/st.c
  						& ATTR_WRAP)) {
  					break;
  				}
-@@ -607,13 +614,13 @@
+@@ -609,13 +616,13 @@
  		}
  
  		if (sel.type == SEL_RECTANGULAR) {
@@ -735,7 +263,7 @@ diff --color -u a/st.c b/st.c
  		while (last >= gp && last->u == ' ')
  			--last;
  
-@@ -848,6 +855,9 @@
+@@ -851,6 +858,9 @@
  ttywrite(const char *s, size_t n, int may_echo)
  {
  	const char *next;
@@ -745,7 +273,7 @@ diff --color -u a/st.c b/st.c
  
  	if (may_echo && IS_SET(MODE_ECHO))
  		twrite(s, n, 1);
-@@ -1059,13 +1069,53 @@
+@@ -1062,13 +1072,53 @@
  }
  
  void
@@ -800,7 +328,7 @@ diff --color -u a/st.c b/st.c
  	tsetdirt(orig, term.bot-n);
  	tclearregion(0, term.bot-n+1, term.col-1, term.bot);
  
-@@ -1075,17 +1125,28 @@
+@@ -1078,17 +1128,28 @@
  		term.line[i-n] = temp;
  	}
  
@@ -831,7 +359,7 @@ diff --color -u a/st.c b/st.c
  	tclearregion(0, orig, term.col-1, orig+n-1);
  	tsetdirt(orig+n, term.bot);
  
-@@ -1095,7 +1156,8 @@
+@@ -1098,7 +1159,8 @@
  		term.line[i+n] = temp;
  	}
  
@@ -841,7 +369,7 @@ diff --color -u a/st.c b/st.c
  }
  
  void
-@@ -1124,7 +1186,7 @@
+@@ -1127,7 +1189,7 @@
  	int y = term.c.y;
  
  	if (y == term.bot) {
@@ -850,7 +378,7 @@ diff --color -u a/st.c b/st.c
  	} else {
  		y++;
  	}
-@@ -1289,14 +1351,14 @@
+@@ -1292,14 +1354,14 @@
  tinsertblankline(int n)
  {
  	if (BETWEEN(term.c.y, term.top, term.bot))
@@ -867,7 +395,7 @@ diff --color -u a/st.c b/st.c
  }
  
  int32_t
-@@ -1733,11 +1795,11 @@
+@@ -1736,11 +1798,11 @@
  		break;
  	case 'S': /* SU -- Scroll <n> line up */
  		DEFAULT(csiescseq.arg[0], 1);
@@ -881,23 +409,7 @@ diff --color -u a/st.c b/st.c
  		break;
  	case 'L': /* IL -- Insert <n> blank lines */
  		DEFAULT(csiescseq.arg[0], 1);
-@@ -1853,7 +1915,15 @@
- 	case ']': /* OSC -- Operating System Command */
- 		switch (par) {
- 		case 0:
-+			if (narg > 1) {
-+				xsettitle(strescseq.args[1]);
-+				xseticontitle(strescseq.args[1]);
-+			}
-+			return;
- 		case 1:
-+			if (narg > 1)
-+				xseticontitle(strescseq.args[1]);
-+			return;
- 		case 2:
- 			if (narg > 1)
- 				xsettitle(strescseq.args[1]);
-@@ -2241,7 +2311,7 @@
+@@ -2330,7 +2392,7 @@
  		return 0;
  	case 'D': /* IND -- Linefeed */
  		if (term.c.y == term.bot) {
@@ -906,7 +418,7 @@ diff --color -u a/st.c b/st.c
  		} else {
  			tmoveto(term.c.x, term.c.y+1);
  		}
-@@ -2254,7 +2324,7 @@
+@@ -2343,7 +2405,7 @@
  		break;
  	case 'M': /* RI -- Reverse index */
  		if (term.c.y == term.top) {
@@ -915,7 +427,7 @@ diff --color -u a/st.c b/st.c
  		} else {
  			tmoveto(term.c.x, term.c.y-1);
  		}
-@@ -2464,7 +2534,7 @@
+@@ -2557,7 +2619,7 @@
  void
  tresize(int col, int row)
  {
@@ -924,7 +436,7 @@ diff --color -u a/st.c b/st.c
  	int minrow = MIN(row, term.row);
  	int mincol = MIN(col, term.col);
  	int *bp;
-@@ -2501,6 +2571,14 @@
+@@ -2594,6 +2656,14 @@
  	term.dirty = xrealloc(term.dirty, row * sizeof(*term.dirty));
  	term.tabs = xrealloc(term.tabs, col * sizeof(*term.tabs));
  
@@ -939,7 +451,7 @@ diff --color -u a/st.c b/st.c
  	/* resize each row to new width, zero-pad if needed */
  	for (i = 0; i < minrow; i++) {
  		term.line[i] = xrealloc(term.line[i], col * sizeof(Glyph));
-@@ -2559,7 +2637,7 @@
+@@ -2652,7 +2722,7 @@
  			continue;
  
  		term.dirty[y] = 0;
@@ -948,7 +460,7 @@ diff --color -u a/st.c b/st.c
  	}
  }
  
-@@ -2580,8 +2658,9 @@
+@@ -2673,8 +2743,9 @@
  		cx--;
  
  	drawregion(0, 0, term.col, term.row);
@@ -960,9 +472,9 @@ diff --color -u a/st.c b/st.c
  	term.ocx = cx;
  	term.ocy = term.c.y;
  	xfinishdraw();
-diff --color -u a/st.h b/st.h
---- a/st.h	2020-06-19 14:59:45.000000000 +0530
-+++ b/st.h	2021-05-21 05:07:22.806891600 +0530
+diff --color -u b/st.h a/st.h
+--- b/st.h	2022-03-18 10:26:17.488413654 +0530
++++ a/st.h	2022-03-18 11:04:56.429522959 +0530
 @@ -81,6 +81,8 @@
  void redraw(void);
  void draw(void);
@@ -972,38 +484,58 @@ diff --color -u a/st.h b/st.h
  void printscreen(const Arg *);
  void printsel(const Arg *);
  void sendbreak(const Arg *);
-diff --color -u a/win.h b/win.h
---- a/win.h	2020-06-19 14:59:45.000000000 +0530
-+++ b/win.h	2021-05-21 05:07:22.805511800 +0530
-@@ -30,6 +30,7 @@
- void xfinishdraw(void);
- void xloadcols(void);
- int xsetcolorname(int, const char *);
-+void xseticontitle(char *);
- void xsettitle(char *);
- int xsetcursor(int);
- void xsetmode(int, unsigned int);
-diff --color -u a/x.c b/x.c
---- a/x.c	2020-06-19 14:59:45.000000000 +0530
-+++ b/x.c	2021-06-05 02:08:06.403477337 +0530
-@@ -93,7 +93,7 @@
- 	Window win;
- 	Drawable buf;
- 	GlyphFontSpec *specbuf; /* font spec buffer used for rendering */
--	Atom xembed, wmdeletewin, netwmname, netwmpid;
-+	Atom xembed, wmdeletewin, netwmname, netwmiconname, netwmpid;
- 	struct {
- 		XIM xim;
- 		XIC xic;
-@@ -157,6 +157,7 @@
+@@ -122,6 +124,7 @@
+ extern int allowaltscreen;
+ extern int allowwindowops;
+ extern char *termname;
++extern int usealtcolors;
+ extern unsigned int tabspaces;
+ extern unsigned int defaultfg;
+ extern unsigned int defaultbg;
+diff --color -u b/x.c a/x.c
+--- b/x.c	2022-03-18 10:26:17.489413722 +0530
++++ a/x.c	2022-03-18 11:04:56.429522959 +0530
+@@ -55,6 +55,7 @@
+ static void clippaste(const Arg *);
+ static void numlock(const Arg *);
+ static void selpaste(const Arg *);
++static void swapcolors(const Arg *);
+ static void zoom(const Arg *);
+ static void zoomabs(const Arg *);
+ static void zoomreset(const Arg *);
+@@ -157,6 +158,7 @@
  static int xloadcolor(int, const char *, Color *);
  static int xloadfont(Font *, FcPattern *);
- static void xloadfonts(char *, double);
+ static void xloadfonts(const char *, double);
 +static void xloadsparefont();
  static void xunloadfont(Font *);
  static void xunloadfonts(void);
  static void xsetenv(void);
-@@ -306,6 +307,7 @@
+@@ -254,6 +256,8 @@
+ 
+ static int oldbutton = 3; /* button event on startup: 3 = release */
+ 
++int usealtcolors = 0; /* 1 to use alternate palette */
++
+ void
+ clipcopy(const Arg *dummy)
+ {
+@@ -293,6 +297,14 @@
+ }
+ 
+ void
++swapcolors(const Arg *dummy)
++{
++ usealtcolors = !usealtcolors;
++ xloadcols();
++ redraw();
++}
++
++void
+ zoom(const Arg *arg)
+ {
+ 	Arg larg;
+@@ -306,6 +318,7 @@
  {
  	xunloadfonts();
  	xloadfonts(usedfont, arg->f);
@@ -1011,113 +543,143 @@ diff --color -u a/x.c b/x.c
  	cresize(0, 0);
  	redraw();
  	xhints();
-@@ -1020,6 +1022,67 @@
+@@ -750,6 +763,11 @@
+ 	return x == 0 ? 0 : 0x3737 + 0x2828 * x;
  }
  
- void
++const char* getcolorname(int i)
++{
++    return (usealtcolors) ?  altcolorname[i] : colorname[i];
++}
++
+ int
+ xloadcolor(int i, const char *name, Color *ncolor)
+ {
+@@ -768,7 +786,7 @@
+ 			return XftColorAllocValue(xw.dpy, xw.vis,
+ 			                          xw.cmap, &color, ncolor);
+ 		} else
+-			name = colorname[i];
++			name = getcolorname(i);
+ 	}
+ 
+ 	return XftColorAllocName(xw.dpy, xw.vis, xw.cmap, name, ncolor);
+@@ -791,8 +809,8 @@
+ 
+ 	for (i = 0; i < dc.collen; i++)
+ 		if (!xloadcolor(i, NULL, &dc.col[i])) {
+-			if (colorname[i])
+-				die("could not allocate color '%s'\n", colorname[i]);
++			if (getcolorname(i))
++				die("could not allocate color '%s'\n", getcolorname(i));
+ 			else
+ 				die("could not allocate color %d\n", i);
+ 		}
+@@ -1034,6 +1052,67 @@
+ 	FcPatternDestroy(pattern);
+ }
+ 
++ void
 +xloadsparefont()
 +{
-+	FcPattern *fontpattern, *match;
-+	FcResult result;
++FcPattern *fontpattern, *match;
++FcResult result;
 +
-+	/* add font2 to font cache as first 4 entries */
-+	if ( font2[0] == '-' )
-+		fontpattern = XftXlfdParse(font2, False, False);
-+	else
-+		fontpattern = FcNameParse((FcChar8 *)font2);
-+	if ( fontpattern ) {
-+		/* Allocate memory for the new cache entries. */
-+		frccap += 4;
-+		frc = xrealloc(frc, frccap * sizeof(Fontcache));
-+		/* add Normal */
-+		match = FcFontMatch(NULL, fontpattern, &result);
-+		if ( match ) 
-+			frc[frclen].font = XftFontOpenPattern(xw.dpy, match);
-+			if ( frc[frclen].font ) {
-+				frc[frclen].flags = FRC_NORMAL;
-+				frclen++;
-+			} else
-+				FcPatternDestroy(match);
-+		/* add Italic */
-+		FcPatternDel(fontpattern, FC_SLANT);
-+		FcPatternAddInteger(fontpattern, FC_SLANT, FC_SLANT_ITALIC);
-+		match = FcFontMatch(NULL, fontpattern, &result);
-+		if ( match )
-+			frc[frclen].font = XftFontOpenPattern(xw.dpy, match);
-+			if ( frc[frclen].font ) {
-+				frc[frclen].flags = FRC_ITALIC;
-+				frclen++;
-+			} else
-+				FcPatternDestroy(match);
-+		/* add Italic Bold */
-+		FcPatternDel(fontpattern, FC_WEIGHT);
-+		FcPatternAddInteger(fontpattern, FC_WEIGHT, FC_WEIGHT_BOLD);
-+		match = FcFontMatch(NULL, fontpattern, &result);
-+		if ( match )
-+			frc[frclen].font = XftFontOpenPattern(xw.dpy, match);
-+			if ( frc[frclen].font ) {
-+				frc[frclen].flags = FRC_ITALICBOLD;
-+				frclen++;
-+			} else 
-+				FcPatternDestroy(match);
-+		/* add Bold */
-+		FcPatternDel(fontpattern, FC_SLANT);
-+		FcPatternAddInteger(fontpattern, FC_SLANT, FC_SLANT_ROMAN);
-+		match = FcFontMatch(NULL, fontpattern, &result);
-+		if ( match )
-+			frc[frclen].font = XftFontOpenPattern(xw.dpy, match);
-+			if ( frc[frclen].font ) {
-+				frc[frclen].flags = FRC_BOLD;
-+				frclen++;
-+			} else 
-+				FcPatternDestroy(match);
-+		FcPatternDestroy(fontpattern);
++/* add font2 to font cache as first 4 entries */
++if ( font2[0] == '-' )
++  fontpattern = XftXlfdParse(font2, False, False);
++else
++  fontpattern = FcNameParse((FcChar8 *)font2);
++if ( fontpattern ) {
++  /* Allocate memory for the new cache entries. */
++  frccap += 4;
++  frc = xrealloc(frc, frccap * sizeof(Fontcache));
++  /* add Normal */
++  match = FcFontMatch(NULL, fontpattern, &result);
++  if ( match ) 
++    frc[frclen].font = XftFontOpenPattern(xw.dpy, match);
++    if ( frc[frclen].font ) {
++      frc[frclen].flags = FRC_NORMAL;
++      frclen++;
++    } else
++      FcPatternDestroy(match);
++  /* add Italic */
++  FcPatternDel(fontpattern, FC_SLANT);
++  FcPatternAddInteger(fontpattern, FC_SLANT, FC_SLANT_ITALIC);
++  match = FcFontMatch(NULL, fontpattern, &result);
++  if ( match )
++    frc[frclen].font = XftFontOpenPattern(xw.dpy, match);
++    if ( frc[frclen].font ) {
++      frc[frclen].flags = FRC_ITALIC;
++      frclen++;
++    } else
++      FcPatternDestroy(match);
++  /* add Italic Bold */
++  FcPatternDel(fontpattern, FC_WEIGHT);
++  FcPatternAddInteger(fontpattern, FC_WEIGHT, FC_WEIGHT_BOLD);
++  match = FcFontMatch(NULL, fontpattern, &result);
++  if ( match )
++    frc[frclen].font = XftFontOpenPattern(xw.dpy, match);
++    if ( frc[frclen].font ) {
++      frc[frclen].flags = FRC_ITALICBOLD;
++      frclen++;
++    } else 
++      FcPatternDestroy(match);
++  /* add Bold */
++  FcPatternDel(fontpattern, FC_SLANT);
++  FcPatternAddInteger(fontpattern, FC_SLANT, FC_SLANT_ROMAN);
++  match = FcFontMatch(NULL, fontpattern, &result);
++  if ( match )
++    frc[frclen].font = XftFontOpenPattern(xw.dpy, match);
++    if ( frc[frclen].font ) {
++      frc[frclen].flags = FRC_BOLD;
++      frclen++;
++    } else 
++      FcPatternDestroy(match);
++  FcPatternDestroy(fontpattern);
 +	}
 +}
 +
-+void
+ void
  xunloadfont(Font *f)
  {
- 	XftFontClose(xw.dpy, f->match);
-@@ -1116,6 +1179,9 @@
+@@ -1131,6 +1210,10 @@
  	usedfont = (opt_font == NULL)? font : opt_font;
  	xloadfonts(usedfont, 0);
  
 +	/* spare font (font2) */
 +	xloadsparefont();
 +
++
  	/* colors */
  	xw.cmap = XDefaultColormap(xw.dpy, xw.scr);
  	xloadcols();
-@@ -1186,6 +1252,7 @@
- 	xw.xembed = XInternAtom(xw.dpy, "_XEMBED", False);
- 	xw.wmdeletewin = XInternAtom(xw.dpy, "WM_DELETE_WINDOW", False);
- 	xw.netwmname = XInternAtom(xw.dpy, "_NET_WM_NAME", False);
-+	xw.netwmiconname = XInternAtom(xw.dpy, "_NET_WM_ICON_NAME", False);
- 	XSetWMProtocols(xw.dpy, xw.win, &xw.wmdeletewin, 1);
+@@ -1184,13 +1267,13 @@
+ 	cursor = XCreateFontCursor(xw.dpy, mouseshape);
+ 	XDefineCursor(xw.dpy, xw.win, cursor);
  
- 	xw.netwmpid = XInternAtom(xw.dpy, "_NET_WM_PID", False);
-@@ -1580,6 +1647,19 @@
- }
+-	if (XParseColor(xw.dpy, xw.cmap, colorname[mousefg], &xmousefg) == 0) {
++	if (XParseColor(xw.dpy, xw.cmap, getcolorname(mousefg), &xmousefg) == 0) {
+ 		xmousefg.red   = 0xffff;
+ 		xmousefg.green = 0xffff;
+ 		xmousefg.blue  = 0xffff;
+ 	}
  
- void
-+xseticontitle(char *p)
-+{
-+	XTextProperty prop;
-+	DEFAULT(p, opt_title);
-+
-+	Xutf8TextListToTextProperty(xw.dpy, &p, 1, XUTF8StringStyle,
-+			&prop);
-+	XSetWMIconName(xw.dpy, xw.win, &prop);
-+	XSetTextProperty(xw.dpy, xw.win, &prop, xw.netwmiconname);
-+	XFree(prop.value);
-+}
-+
-+void
- xsettitle(char *p)
- {
- 	XTextProperty prop;
-@@ -1595,6 +1675,8 @@
+-	if (XParseColor(xw.dpy, xw.cmap, colorname[mousebg], &xmousebg) == 0) {
++	if (XParseColor(xw.dpy, xw.cmap, getcolorname(mousebg), &xmousebg) == 0) {
+ 		xmousebg.red   = 0x0000;
+ 		xmousebg.green = 0x0000;
+ 		xmousebg.blue  = 0x0000;
+@@ -1398,7 +1481,7 @@
+ 
+ 	/* Change basic system colors [0-7] to bright system colors [8-15] */
+ 	if ((base.mode & ATTR_BOLD_FAINT) == ATTR_BOLD && BETWEEN(base.fg, 0, 7))
+-		fg = &dc.col[base.fg + 8];
++		fg = &dc.col[base.fg];
+ 
+ 	if (IS_SET(MODE_REVERSE)) {
+ 		if (fg == &dc.col[defaultfg]) {
+@@ -1626,6 +1709,8 @@
  int
  xstartdraw(void)
  {
@@ -1126,4 +688,3 @@ diff --color -u a/x.c b/x.c
  	return IS_SET(MODE_VISIBLE);
  }
  
-Only in b: x.c.orig
