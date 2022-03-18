@@ -105,7 +105,7 @@ in
         window_type = "dock";
         sticky = true;
         icon_size = 23;
-        background = "#1d2021";
+        background = "#002b36";
         icon_gravity = "E";
         grow_gravity = "E";
         kludges = "force_icons_size";

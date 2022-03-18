@@ -137,8 +137,6 @@ bind('n', "<M-o>", ":NvimTreeToggle<CR>", {noremap=true, silent=true})
 bind('n', "<Space>r", ":NvimTreeRefresh<CR>", {noremap=true, silent=true})
 bind('n', "<Space>f", ":NvimTreeFindFile<CR>", {noremap=true, silent=true})
 
-vim.o.background="dark"
-comm("colorscheme base16-tomorrow-night")
 
 --floaterm
 vim.g.floaterm_keymap_toggle = '<F1>'
@@ -321,21 +319,26 @@ local function mode()
     return mode_map[m]
 end
 
-hi("Light", "guibg=#c5c8c6 guifg=#1d1f21")
-hi("Dark", "guibg=#1d1f21 guifg=#c5c8c6")
-hi("Gray", "guifg=#1d1f21 guibg=#b294bb")
+--theming
+local dark = true
+comm("colorscheme base16-solarized-dark")
+
+hi("Light", "guibg=#eee8d5 guifg=#002b36")
+hi("Misc", "guibg=#dc322f guifg=#fdf6e3")
+hi("Dark", "guibg=#002b36 guifg=#839496")
 
 local function git()
     local branch = io.popen([[git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n']]):read("*a")
     return string.len(branch) > 0 and ' '.. branch or ''
 end
 
+
 local statusline = {
     '%#Light# ',
     mode():upper() .. ' ',
-    '%#Dark#',
+    '%#Misc#',
     string.len(git()) > 0 and ' ' .. git() .. ' ' or '',
-    '%#Gray# ',
+    '%#Dark# ',
     '%f ',
     '%#Light#',
     '%=',
@@ -351,6 +354,17 @@ local statusline = {
 vim.o.statusline = table.concat(statusline)
 
 
+function _G.ToggleTheme()
+  if dark then
+    comm("colorscheme base16-solarized-light")
+  else
+    comm("colorscheme base16-solarized-dark")
+  end
+  dark = not dark
+  hi("Light", "guibg=#eee8d5 guifg=#002b36")
+  hi("Dark", "guibg=#002b36 guifg=#839496")
+  hi("Misc", "guibg=#dc322f guifg=#fdf6e3")
+  vim.o.statusline = table.concat(statusline)
+end
+bind('n', "<F7>", ":call v:lua.ToggleTheme()<CR>", {silent=true})
 vim.g.tex_flavor = "latex"
-comm("set syntax=off")
-

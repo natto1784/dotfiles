@@ -20,12 +20,12 @@ import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
 --colors
-bgColor = "#1d1f21"
-fgColor = "#c5c8c6"
-activeWinColor = "#f0c674"
-inactiveWinColor = "#b294bb"
-urgentWinColor = "#cc6666"
-miscColor = "#8abeb7"
+bgColor = "#002b36"
+fgColor = "#eee8d5"
+inactiveWinColor = "#2aa198"
+activeWinColor = "#d33682"
+urgentWinColor = "#dc322f"
+miscColor = inactiveWinColor
 
 myBorderWidth = 2
 myTerminal = "/usr/bin/env st"

@@ -2,16 +2,16 @@ import Xmobar
 
 bg, fg, grey, red, green, yellow, blue, magenta, cyan, white, sep :: String
 sep = "<fc=" ++ cyan ++ ">║</fc>"
-bg = "#1d1f21"
-fg = "#c5c8c6"
-grey = "#969896"
-red = "#cc6666"
-green = "#b5bd68"
-yellow = "#f0c674"
-blue = "#81a2be"
-magenta = "#b294bb"
-cyan = "#8abeb7"
-white = "#ecebec"
+bg = "#002b36"
+fg = "#839496"
+grey = "#073642"
+red = "#dc322f"
+green = "#859900"
+yellow = "#b58900"
+blue = "#268bd2"
+magenta = "#d33682"
+cyan = "#2aa198"
+white = "#eee8d5"
 
 config :: Config
 config =

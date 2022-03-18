@@ -1,25 +1,25 @@
-{config, pkgs, ...}:
+{ config, pkgs, ... }:
 
 {
   programs.neovim = {
     enable = true;
     package = pkgs.neovim-nightly;
- #   package = pkgs.neovim-nightly.overrideAttrs (_:{
- #     nativeBuildInputs = with pkgs; [ unzip cmake pkgconfig gettext tree-sitter ];
- #   });
+    #   package = pkgs.neovim-nightly.overrideAttrs (_:{
+    #     nativeBuildInputs = with pkgs; [ unzip cmake pkgconfig gettext tree-sitter ];
+    #   });
     defaultEditor = true;
     configure = {
-    customRC = ''
-    lua << EOF
-    ${builtins.readFile ./init.lua}
-    EOF
-    '';
+      customRC = ''
+        lua << EOF
+        ${builtins.readFile ./init.lua}
+        EOF
+      '';
       packages.myVimPackage = with pkgs.unstable.vimPlugins; {
         start = [
           nvim-colorizer-lua
           bracey-vim
-          auto-pairs 
-          vim-floaterm 
+          auto-pairs
+          vim-floaterm
           vim-closetag
           nerdcommenter
           nvim-cmp
@@ -30,7 +30,7 @@
           cmp-path
           cmp-calc
           cmp-emoji
- #         cmp-look
+          #         cmp-look
           cmp-buffer
           nvim-lspconfig
           barbar-nvim
@@ -40,7 +40,6 @@
           nvim-treesitter
           vim-latex-live-preview
           lspkind-nvim
-        # (gruvbox.overrideAttrs (oa: { patches = [ ./gruvbox.patch ]; }))
           base16-vim
         ];
       };
