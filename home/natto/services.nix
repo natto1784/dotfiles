@@ -6,14 +6,17 @@ in
   services = {
     baremacs = {
       enable = true;
-      package = pkgs.mymacs ./config/emacs/init.el;
+      package = pkgs.mymacs ./config/emacs/config.org;
       defaultEditor = {
         enable = true;
         editor = "emacsclient";
       };
       copyConfigFiles = {
         enable = true;
-        files = { "init.el" = ./config/emacs/init.el; };
+        files = {
+          "config.org" = ./config/emacs/config.org;
+          "init.el" = ./config/emacs/init.el;
+        };
       };
     };
     picom = {

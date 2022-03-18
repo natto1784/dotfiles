@@ -4,16 +4,17 @@
 , fetchurl
 , fetchFromGitHub
 , emacsGcc
-, config ? null
+, conf ? null
 , ...
 }:
 
-assert (config != null);
+assert (conf != null);
 
 emacsWithPackagesFromUsePackage {
-  config = config;
+  config = conf;
   package = emacsGcc;
   alwaysEnsure = true;
+  alwaysTangle = true;
   extraEmacsPackages = epkgs: with epkgs; [
     use-package
     tsc

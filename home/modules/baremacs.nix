@@ -135,6 +135,8 @@ in
               }/bin/'' + editor + head (optional (editor == "emacsclient") '' "''${@:---create-frame}"''));
         };
 
+        packages = [ cfg.package ];
+
         file = mkIf cfg.copyConfigFiles.enable
           (mapAttrs'
             (n: v:
