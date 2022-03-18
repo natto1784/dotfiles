@@ -1,0 +1,60 @@
+#+TITLE: Personal Dotfiles
+#+AUTHOR: Amneesh Singh
+#+OPTIONS: toc:nil num:nil
+
+#+begin_src sh
+├───hm-configs: unknown
+├───legacyPackages
+warning: │   ├───aarch64-darwin: omitted (use '--legacy' to show)
+warning: │   ├───aarch64-linux: omitted (use '--legacy' to show)
+warning: │   ├───i686-linux: omitted (use '--legacy' to show)
+warning: │   ├───x86_64-darwin: omitted (use '--legacy' to show)
+warning: │   └───x86_64-linux: omitted (use '--legacy' to show)
+└───nixosConfigurations
+    ├───Marisa: NixOS configuration
+    ├───Remilia: NixOS configuration
+    └───Satori: NixOS configuration
+#+end_src
+
+* TODOs
++ TODO Add user specific traditional dotfiles.
++ DONE Try home-manager
++ DONE Try nix flakes
+
+* How install workey
+Either do
+#+begin_src sh
+git clone https://github.com/natto1784/dotfiles
+cd dotfiles
+nixos-rebuild switch --flake .#Satori 
+#+end_src
+or 
+#+begin_src sh
+nixos-rebuild switch --flake github:natto1784/dotfiles#Satori
+#+end_src
+Replace ~Satori~ with whatever system you want or replace with whatever hostname you want in the config
+
+* How home-manager workey
+Either clone repo and do ~./hm-switch~ inside it (login as the user you want to change config as!!!)
+or
+#+begin_src sh
+nix build github:natto1784/dotfiles#hm-configs.{USER}.activationPackage -o hm-result
+./hm-result/activate
+#+end_src
+You can unlink ~hm-result~ after that
+replace ~{USER}~ with ~natto~ or whatever is availabe (or change it in the config)
+
+* How packages workey
+To build or run any of the packages in this flake do\
+#+begin_src sh
+nix <"run"/"build"> github:natto1784/dotfiles#pkgs.<your_arch>.<package_name>
+#+end_src
+
+-----
+
+* I took help from these people and their dotfiles
++ [[https://github.com/fufexan][fufexan]]
++ [[https://github.com/NobbZ][NobbZ]]
++ [[https://github.com/dramforever][dramforever]]
+
+I'm grateful to all of them

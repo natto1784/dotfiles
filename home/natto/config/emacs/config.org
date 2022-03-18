@@ -307,6 +307,11 @@ For autocomplete
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+end_src
 
+*** Add helper packages for exporting
+#+begin_src emacs-lisp
+  (use-package htmlize)
+#+end_src
+
 ** Misc packages
 #+begin_src emacs-lisp 
 (use-package elcord
