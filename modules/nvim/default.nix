@@ -7,7 +7,7 @@
     #   package = pkgs.neovim-nightly.overrideAttrs (_:{
     #     nativeBuildInputs = with pkgs; [ unzip cmake pkgconfig gettext tree-sitter ];
     #   });
-    defaultEditor = true;
+    defaultEditor = false;
     configure = {
       customRC = ''
         lua << EOF

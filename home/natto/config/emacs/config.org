@@ -5,34 +5,34 @@
 * Color Variables
 idk random variables to match my color theme
 #+begin_src emacs-lisp
-; -*- lexical-binding: t; -*-
+  ; -*- lexical-binding: t; -*-
 (setq
-c-bg        "#1d1f21"
-c-fg        "#c5c8c6"
-c-red       "#912226"
-c-green     "#778900"
-c-yellow    "#ae7b00"
-c-blue      "#1d2594"
-c-magenta   "#682a9b"
-c-cyan      "#2b6651"
-c-white     "#929593"
-c-black     "#969896"
-c-red-2     "#cc6666"
-c-green-2   "#b5bd68"
-c-yellow-2  "#f0c674"
-c-blue-2    "#81a2be"
-c-magenta-2 "#b294bb"
-c-cyan-2    "#8abeb7"
-c-white-2   "#ecebec")
+c-bg        "#073642"
+c-fg        "#eee8d5"
+c-red       "#dc322f"
+c-green     "#859900"
+c-yellow    "#b58900"
+c-blue      "#268bd2"
+c-magenta   "#d33682"
+c-cyan      "#2aa198"
+c-white     "#eee8d5"
+c-black     "#002b36"
+c-red-2     "#cb4b16"
+c-green-2   "#586e75"
+c-yellow-2  "#657b83"
+c-blue-2    "#839496"
+c-magenta-2 "#6c71c4"
+c-cyan-2    "#93a1a1"
+c-white-2   "#fdf6e3")
 #+end_src
 
 
 * Settings
 ** Setting the default face
 #+begin_src emacs-lisp
-(set-face-attribute 'default nil :font "Monoid" :height 120)
-#+end_src
+(setq default-frame-alist '((font . "Monoid-12")))
 
+#+end_src
 
 ** Some mode settings based on personal preferences
 #+begin_src emacs-lisp
@@ -41,22 +41,21 @@ c-white-2   "#ecebec")
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (fringe-mode 0)
-(cua-mode 1)
+;(cua-mode 1)
 (global-display-line-numbers-mode 1)
 #+end_src
-
 
 ** Setting some variables
 #+begin_src emacs-lisp
 (setq initial-major-mode 'emacs-lisp-mode
-      frame-resize-pixelwise t
-      auto-window-vscroll nil
-      scroll-step 1
-      display-line-numbers-type 'relative
-      confirm-kill-processes nil
-      inhibit-startup-screen t)
+    frame-resize-pixelwise t
+    auto-window-vscroll nil
+    scroll-step 1
+    display-line-numbers-type 'relative
+    confirm-kill-processes nil
+    inhibit-startup-screen t)
+(setq dark-theme t)
 #+end_src
-
 
 ** Emacs startup hook
 #+begin_src emacs-lisp
@@ -66,7 +65,6 @@ c-white-2   "#ecebec")
 
 
 * Packages
-
 ** Add Melpa to package archives 
 #+begin_src emacs-lisp
 (require 'package)
@@ -74,7 +72,6 @@ c-white-2   "#ecebec")
 (package-initialize)
 (require 'use-package)
 #+end_src
-
 
 ** Visual packages
 *** Add solaire mode
@@ -91,24 +88,42 @@ c-white-2   "#ecebec")
   (setq doom-themes-enable-bold t   
         doom-themes-enable-italic t
         doom-themes-treemacs-theme "doom-colors")
-  (load-theme 'doom-tomorrow-night t)
+  (load-theme 'doom-solarized-dark t)
   (doom-themes-visual-bell-config)
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
 #+end_src
 
-
-** Configure ivy
-Remap ivy keys to Colemak-DH
+** Configure Selectrum
+Enable selectrum and remap keys to Colemak-DH
 #+begin_src emacs-lisp
-(use-package ivy
+(use-package selectrum
   :config
-  (define-key ivy-minibuffer-map (kbd "C-n") 'ivy-next-line)
-  (define-key ivy-minibuffer-map (kbd "C-e") 'ivy-previous-line)
-  (define-key ivy-minibuffer-map (kbd "C-i") 'ivy-done)
-  (ivy-mode 1))
+  (define-key selectrum-minibuffer-map (kbd "C-n")  #'selectrum-next-candidate)
+  (define-key selectrum-minibuffer-map (kbd "C-e")  #'selectrum-previous-candidate)
+  (define-key selectrum-minibuffer-map (kbd "C-i")  #'selectrum-select-current-candidate)
+  (selectrum-mode +1))
 #+end_src
 
+Add selectrum-prescient
+#+begin_src emacs-lisp
+(use-package selectrum-prescient
+  :config
+  (selectrum-prescient-mode +1)
+  (prescient-persist-mode +1))
+#+end_src
+
+
+Add orderless for selectrum
+#+begin_src emacs-lisp
+(use-package orderless
+  :after selectrum
+  :config
+  (setq completion-styles '(orderless))
+  (savehist-mode)
+  (setq orderless-skip-highlighting (lambda () selectrum-is-active))
+  (setq selectrum-highlight-candidates-function #'orderless-highlight-matches))
+#+end_src
 
 ** Evil
 *** Configure evil mode
@@ -117,8 +132,8 @@ Remap ivy keys to Colemak-DH
   :config
   (evil-set-initial-state 'vterm-mode 'insert)
   (evil-set-undo-system 'undo-tree)
-  (setq evil-shift-width 2)
-  (evil-mode 1))
+  (evil-mode 1)
+  (setq-default evil-shift-width 2))
 #+end_src
 
 *** Configure undo tree
@@ -139,7 +154,6 @@ To get colemak-dh bindings in evil mode
   (global-evil-colemak-basics-mode 1))
 #+end_src
 
-
 ** Treemacs
 *** Configure treemacs
 #+begin_src emacs-lisp
@@ -150,23 +164,22 @@ To get colemak-dh bindings in evil mode
   (treemacs-git-mode 'deferred))
 #+end_src
 
-
 ** Configure treemacs-evil
 Configure treemacs-evil to get colemak-dh bindings
 #+begin_src emacs-lisp
-(use-package treemacs-evil :config
-  (define-key evil-treemacs-state-map (kbd "n")   #'treemacs-next-line)
-  (define-key evil-treemacs-state-map (kbd "e")   #'treemacs-previous-line)
-  (define-key evil-treemacs-state-map (kbd "M-n") #'treemacs-next-neighbour)
-  (define-key evil-treemacs-state-map (kbd "M-e") #'treemacs-previous-neighbour)
-  (define-key evil-treemacs-state-map (kbd "M-N") #'treemacs-next-line-other-window)
-  (define-key evil-treemacs-state-map (kbd "M-E") #'treemacs-previous-line-other-window)
-;  (define-key evil-treemacs-state-map (kbd "M")   #'treemacs-collapse-parent-node)
-  (evil-define-key 'treemacs treemacs-mode-map (kbd "m") #'treemacs-COLLAPSE-action)
-  (evil-define-key 'treemacs treemacs-mode-map (kbd "i") #'treemacs-RET-action)
- )
+  (use-package treemacs-evil :config
+    (define-key evil-treemacs-state-map (kbd "n")   #'treemacs-next-line)
+    (define-key evil-treemacs-state-map (kbd "e")   #'treemacs-previous-line)
+    (define-key evil-treemacs-state-map (kbd "M-n") #'treemacs-next-neighbour)
+    (define-key evil-treemacs-state-map (kbd "M-e") #'treemacs-previous-neighbour)
+    (define-key evil-treemacs-state-map (kbd "M-N") #'treemacs-next-line-other-window)
+    (define-key evil-treemacs-state-map (kbd "M-E") #'treemacs-previous-line-other-window)
+  ;  (define-key evil-treemacs-state-map (kbd "M")   #'treemacs-collapse-parent-node)
+    (evil-define-key 'treemacs treemacs-mode-map (kbd "m") #'treemacs-COLLAPSE-action)
+    (evil-define-key 'treemacs treemacs-mode-map (kbd "i") #'treemacs-RET-action)
+    (evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle)
+   )
 #+end_src
-
 
 ** LSP
 *** Configure lsp-mode
@@ -198,7 +211,6 @@ Configure treemacs-evil to get colemak-dh bindings
   (lsp-ui-doc-enable 1))
 #+end_src
 
-
 ** Company
 *** Configure company
 For autocomplete
@@ -219,7 +231,6 @@ For autocomplete
   :hook (company-mode . company-quickhelp-mode))
 #+end_src
 
-
 ** Treesitter
 #+begin_src emacs-lisp
 (use-package tree-sitter-langs)
@@ -231,7 +242,6 @@ For autocomplete
   (add-to-list 'tree-sitter-major-mode-language-alist '(fundamental-mode . bash))
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 #+end_src
-
 
 ** Lang support
 #+begin_src emacs-lisp
@@ -246,7 +256,6 @@ For autocomplete
   "\\.nomad\\'")
 #+end_src
 
-
 ** Magit
 #+begin_src emacs-lisp
 (use-package magit)
@@ -254,7 +263,7 @@ For autocomplete
 
 
 * VTerm
-*** Configure vterm
+** Configure vterm
 #+begin_src emacs-lisp
 (use-package vterm
   :config
@@ -267,11 +276,8 @@ For autocomplete
 	      '((lambda(bufname _) (with-current-buffer bufname (equal major-mode 'vterm-mode)))
 		(display-buffer-reuse-window display-buffer-at-bottom)
 		(reusable-frames . visible)
-		(window-height . 0.4)))
-  (define-key vterm-mode-map (kbd "<f2>")   'vterm-toggle-forward)
-  (define-key vterm-mode-map (kbd "<f3>")   'vterm-toggle-backward))
+		(window-height . 0.4))))
 #+end_src
-
 
 ** Centaur Tabs
 #+begin_src emacs-lisp
@@ -279,16 +285,14 @@ For autocomplete
   :config
   (setq centaur-tabs-style "box"
 ;        centaur-tabs-set-bar 'left
-        centaur-tabs-height 18
-        centaur-tabs-set-modified-marker t
-        centaur-tabs-set-icons t)
+	centaur-tabs-height 18
+	centaur-tabs-set-modified-marker t
+	centaur-tabs-set-icons t)
   (centaur-tabs-group-buffer-groups)
-  (centaur-tabs-mode 1)
+  (add-hook 'server-after-make-frame-hook 'centaur-tabs-mode)
   (centaur-tabs-headline-match)
   (set-face-attribute 'tab-line nil :inherit 'centaur-tabs-unselected))
 #+end_src
-
-
 
 ** Org
 *** Add org-mode
@@ -333,31 +337,33 @@ For autocomplete
 (add-hook 'c++-mode-hook 'lsp)
 #+end_src
 
-#+begin_comment
-(defface bufname
+
+* Custom mode line
+#+begin_src emacs-lisp
+(defface mode-line-buf-name
   `((t :foreground ,c-fg
        :background ,c-bg
        :weight bold
      ))
   "Custom face for buffer name"
   :group 'mode-line-faces )
-(defface majmode
+(defface mode-line-maj-mode
   `((t :foreground ,c-fg
        :background ,c-bg
      ))
   "Custom face for major mode"
   :group 'mode-line-faces )
 
-(defface gitmode
+(defface mode-line-vc
   `((t :foreground ,c-fg
        :background ,c-red-2
        :weight bold
      ))
   "Custom face for VC"
   :group 'mode-line-faces )
-(defface infomode
+(defface mode-line-info
   `((t :foreground ,c-bg
-       :background ,c-green
+       :background ,c-cyan
        :weight bold
      ))
   "For showing line and column number"
@@ -365,10 +371,10 @@ For autocomplete
 
 
 (setq-default mode-line-format
-              '((:propertize " %b " face bufname)
-                (vc-mode (:propertize (" " vc-mode " " ) face gitmode))
-                (:propertize (" " mode-name " ") face majmode)
-                (:propertize ("[[ %l | %c || %p . %+%@ ]]") face infomode)
+              '((:propertize " %b " face mode-line-buf-name)
+                (vc-mode (:propertize (" " vc-mode " " ) face mode-line-vc))
+                (:propertize (" " mode-name " ") face mode-line-maj-mode)
+                (:propertize ("[[ %l | %c || %p . %+%@ ]]") face mode-line-info)
                 ("%-")))
 
 (setq exclude-ln '(term-mode-hook eshell-mode-hook shell-mode-hook))
@@ -388,7 +394,7 @@ For autocomplete
 	   (set-face-background 'bufname (car color))
 	   (set-face-foreground 'bufname (cdr color))
 	   ))))
-#+end_comment
+#+end_src
 
 
 * Pop-up terminal
@@ -456,26 +462,47 @@ This returns the command to run in the terminal
   "C-e" 'windmove-up
   "M-,"  'previous-buffer
   "M-."  'next-buffer
+  "C-q"  'delete-window
   "M-C-S-q"  'kill-buffer-and-window
   "M-w"  'centaur-tabs--kill-this-buffer-dont-ask
-  "M-S-w"  'kill-window
-  "M-S-," 'centaur-tabs-backward
-  "M-S-." 'centaur-tabs-forward)
+  "M-S-w"  'kill-window)
 #+end_src
 
 Pop-up terminal specific keybinds
 #+begin_src emacs-lisp
-(general-define-key
-  :states '(override insert normal visual treemacs motion)
-  "M-f" 'lsp-format-buffer
-  "<f4>"  (lambda () (interactive) (vterm t))
-  "C-<f1>" 'vterm-toggle-cd
-  "<f1>" 'vterm-toggle
-  "<f5>" (lambda () (interactive) (run-in-vterm (candrun))))
+
+(with-eval-after-load 'vterm-toggle
+  (general-define-key
+    :states '(override insert normal visual treemacs motion)
+    "M-f" 'lsp-format-buffer
+    "<f4>"  (lambda () (interactive) (vterm t))
+    "C-<f1>" 'vterm-toggle-cd
+    "<f1>" 'vterm-toggle
+    "<f5>" (lambda () (interactive) (run-in-vterm (candrun))))
+
+    (define-key vterm-mode-map (kbd "<f2>")   'vterm-toggle-forward)
+    (define-key vterm-mode-map (kbd "<f3>")   'vterm-toggle-backward)
+
+  (general-define-key
+    :states '(normal insert)
+    :keymaps 'VTerm
+    "C-S-v" 'vterm-yank
+    )
+)
+#+end_src
+
+Toggle Appearance
+#+begin_src emacs-lisp
+(defun toggle-theme-shade ()
+    (if (symbol-value dark-theme)
+	(progn (disable-theme 'doom-solarized-dark)
+	(load-theme 'doom-solarized-light t))
+	(progn (disable-theme 'doom-solarized-light)
+	(load-theme 'doom-solarized-dark t)))
+    (setq-local dark-theme (not dark-theme)))
 
 (general-define-key
-  :states '(normal insert)
-  :keymaps 'VTerm
-  "C-S-v" 'vterm-yank
-  ))
+    :states '(normal insert emacs)
+    "<f7>" (lambda () (interactive) (toggle-theme-shade)))
+)
 #+end_src
