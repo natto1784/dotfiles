@@ -26,12 +26,10 @@ c-cyan-2    "#93a1a1"
 c-white-2   "#fdf6e3")
 #+end_src
 
-
 * Settings
 ** Setting the default face
 #+begin_src emacs-lisp
 (setq default-frame-alist '((font . "Monoid-12")))
-
 #+end_src
 
 ** Some mode settings based on personal preferences
@@ -43,18 +41,22 @@ c-white-2   "#fdf6e3")
 (fringe-mode 0)
 ;(cua-mode 1)
 (global-display-line-numbers-mode 1)
+(xterm-mouse-mode 1)
 #+end_src
 
 ** Setting some variables
+SCHEDULED: <2022-03-19 Sat>
 #+begin_src emacs-lisp
-(setq initial-major-mode 'emacs-lisp-mode
-    frame-resize-pixelwise t
-    auto-window-vscroll nil
-    scroll-step 1
-    display-line-numbers-type 'relative
-    confirm-kill-processes nil
-    inhibit-startup-screen t)
-(setq dark-theme t)
+  (setq initial-major-mode 'emacs-lisp-mode
+      frame-resize-pixelwise t
+      auto-window-vscroll nil
+      scroll-step 1
+      display-line-numbers-type 'relative
+      confirm-kill-processes nil
+      dark-theme t
+      inhibit-startup-screen t)
+  (setq-default tab-width 2
+                indent-tabs-mode nil)
 #+end_src
 
 ** Emacs startup hook
@@ -62,7 +64,6 @@ c-white-2   "#fdf6e3")
 (add-hook 'emacs-startup-hook
           (lambda () (delete-other-windows)) t)
 #+end_src
-
 
 * Packages
 ** Add Melpa to package archives 
@@ -129,11 +130,12 @@ Add orderless for selectrum
 *** Configure evil mode
 #+begin_src emacs-lisp
 (use-package evil
+  :init
+  (setq-default evil-shift-width 2)
   :config
   (evil-set-initial-state 'vterm-mode 'insert)
   (evil-set-undo-system 'undo-tree)
-  (evil-mode 1)
-  (setq-default evil-shift-width 2))
+  (evil-mode 1))
 #+end_src
 
 *** Configure undo tree
@@ -155,16 +157,22 @@ To get colemak-dh bindings in evil mode
 #+end_src
 
 ** Treemacs
+*** Dependencies
+#+begin_src emacs-lisp
+(use-package cfrs)
+#+end_src
+
 *** Configure treemacs
 #+begin_src emacs-lisp
 (use-package treemacs
+  :atfer cfrs
   :config
   (treemacs-filewatch-mode 1)
   (treemacs-display-current-project-exclusively)
-  (treemacs-git-mode 'deferred))
+  (treemacs-git-mode 'simple))
 #+end_src
 
-** Configure treemacs-evil
+*** Configure treemacs-evil
 Configure treemacs-evil to get colemak-dh bindings
 #+begin_src emacs-lisp
   (use-package treemacs-evil :config
@@ -175,9 +183,8 @@ Configure treemacs-evil to get colemak-dh bindings
     (define-key evil-treemacs-state-map (kbd "M-N") #'treemacs-next-line-other-window)
     (define-key evil-treemacs-state-map (kbd "M-E") #'treemacs-previous-line-other-window)
   ;  (define-key evil-treemacs-state-map (kbd "M")   #'treemacs-collapse-parent-node)
-    (evil-define-key 'treemacs treemacs-mode-map (kbd "m") #'treemacs-COLLAPSE-action)
-    (evil-define-key 'treemacs treemacs-mode-map (kbd "i") #'treemacs-RET-action)
-    (evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle)
+    (define-key evil-treemacs-state-map (kbd "m") #'treemacs-COLLAPSE-action)
+    (define-key evil-treemacs-state-map (kbd "i") #'treemacs-RET-action)
    )
 #+end_src
 
@@ -211,6 +218,14 @@ Configure treemacs-evil to get colemak-dh bindings
   (lsp-ui-doc-enable 1))
 #+end_src
 
+*** Configure flycheck
+#+begin_src emacs-lisp
+(use-package flycheck)
+#+end_src
+*** Configure dap-mode
+#+begin_src emacs-lisp
+(use-package dap-mode)
+#+end_src
 ** Company
 *** Configure company
 For autocomplete
@@ -251,7 +266,7 @@ For autocomplete
   :mode "\\.nix\\'")
 
 (use-package hcl-mode
-  :mode 
+  :mod 
   "\\.hcl\\'"
   "\\.nomad\\'")
 #+end_src
@@ -260,7 +275,6 @@ For autocomplete
 #+begin_src emacs-lisp
 (use-package magit)
 #+end_src
-
 
 * VTerm
 ** Configure vterm
@@ -294,24 +308,6 @@ For autocomplete
   (set-face-attribute 'tab-line nil :inherit 'centaur-tabs-unselected))
 #+end_src
 
-** Org
-*** Add org-mode
-#+begin_src emacs-lisp
-(use-package org)
-#+end_src
-
-*** Add org-bullets
-#+begin_src emacs-lisp
- (use-package org-bullets
-    :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-#+end_src
-
-*** Add helper packages for exporting
-#+begin_src emacs-lisp
-  (use-package htmlize)
-#+end_src
-
 ** Misc packages
 #+begin_src emacs-lisp 
 (use-package elcord
@@ -330,18 +326,39 @@ For autocomplete
   :config
   (rainbow-mode 1))
 
-(use-package all-the-icons)
+(use-package treemacs-all-the-icons)
 
 (use-package general)
 #+end_src
 
+* Org
+** Add org-mode
+#+begin_src emacs-lisp
+(use-package org
+  :after evil
+  :config
+  (define-key org-mode-map (kbd "RET") 'org-return-and-maybe-indent)
+  (setq evil-want-C-i-jump nil)
+  (evil-define-key 'normal org-mode-map (kbd "TAB") 'org-cycle))
+#+end_src
+
+** Add org-bullets
+#+begin_src emacs-lisp
+ (use-package org-bullets
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+end_src
+
+** Add helper packages for exporting
+#+begin_src emacs-lisp
+  (use-package htmlize)
+#+end_src
 
 * Mode specific hooks
 #+begin_src emacs-lisp
 (add-hook 'c-mode-hook 'lsp)
 (add-hook 'c++-mode-hook 'lsp)
 #+end_src
-
 
 * Custom mode line
 #+begin_src emacs-lisp
@@ -396,11 +413,10 @@ For autocomplete
                             ((evil-normal-state-p) (cons c-fg      c-bg))
                             ((buffer-modified-p)   (cons c-blue    c-fg))
                             (t default-color))))
-	   (set-face-background 'bufname (car color))
-	   (set-face-foreground 'bufname (cdr color))
+	   (set-face-background 'mode-line-buf-name (car color))
+	   (set-face-foreground 'mode-line-buf-name (cdr color))
 	   ))))
 #+end_src
-
 
 * Pop-up terminal
 Stolen from [[https://www.reddit.com/r/emacs/comments/ft84xy/run_shell_command_in_new_vterm/][this]] reddit post
@@ -446,7 +462,6 @@ This returns the command to run in the terminal
            ("ts" (concat "tsc" full " && node " file ".js && rm " file ".js" ))
            ("rs" (concat "rustc" full " -o " file " && " file " && rm " file)))))
 #+end_src
-
 
 * Keybinds
 ** General

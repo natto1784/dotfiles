@@ -87,6 +87,12 @@ in
                 name "pulse audio"
         }
         audio_output {
+                type "fifo"
+                name "Visualizer feed"
+                path "/tmp/g.fifo"
+                format "44100:16:2"
+        }
+        audio_output {
                 encoder     "vorbis"
                 type        "httpd"
                 quality     "9"

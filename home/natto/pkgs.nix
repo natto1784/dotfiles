@@ -72,5 +72,6 @@
     mailcap
     element-desktop
     syncplay
+    betterdiscordctl
   ];
 }

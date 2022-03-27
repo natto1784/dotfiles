@@ -7,7 +7,6 @@
     bc
     gnumake
     pciutils
-    git
     ntfs3g
     python3
     htop
@@ -33,6 +32,8 @@
     rnix-lsp
     python3Packages.python-lsp-server
     haskell-language-server
+    vulkan-tools
+    vulkan-headers
     (steam.override {
       extraLibraries = pkgs: [ pkgs.pipewire ];
       extraProfile = ''
@@ -48,6 +49,13 @@
         enableSSHSupport = true;
         enable = true;
         pinentryFlavor = "curses";
+      };
+    };
+    git = {
+      enable = true;
+      package = pkgs.master.git.override {
+        sendEmailSupport = true;
+        withManual = false;
       };
     };
     zsh = {
@@ -67,7 +75,7 @@
             elapsed=$(echo "scale=1; $elapsed/1000" | ${pkgs.bc}/bin/bc -l)
             unit="s"
           fi
-          if (($(echo "$elapsed > 60" | bc -l ))); then
+          if (( $(echo "$elapsed > 60" | ${pkgs.bc}/bin/bc -l) )) then
             elapsed=$(echo "scale=2; $elapsed/60" | ${pkgs.bc}/bin/bc -l)
             unit="m"
           fi

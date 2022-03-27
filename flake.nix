@@ -56,7 +56,7 @@
     (
       let
         personalModules = [
-          ./modules/nvidia-offload.nix
+          ./modules/graphics.nix
           ./modules/sound.nix
           ./modules/xorg.nix
         ];

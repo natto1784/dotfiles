@@ -13,9 +13,13 @@
     sessionVariables = {
       QT_X11_NO_MITSHM = "1";
       QT_QPA_PLATFORMTHEME = "gtk3";
+      HM_CONF_DIR = "/etc/nixos";
     };
     localBinInPath = true;
-
+    shellAliases = rec {
+      ec = "emacsclient";
+      ecc = ec + " -c";
+    };
   };
   security = {
     sudo.enable = false;

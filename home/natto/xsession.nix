@@ -1,15 +1,11 @@
 { pkgs, config, ... }:
 {
+  gtk.cursorTheme = {
+    package = pkgs.numix-cursor-theme;
+    name = "Numix";
+  };
   xsession = {
-    pointerCursor = {
-      package = pkgs.numix-cursor-theme;
-      name = "Numix";
-    };
     windowManager = {
-      bspwm = {
-        enable = false;
-        extraConfig = builtins.readFile ./config/bspwm/bspwmrc;
-      };
       xmonad = {
         enable = true;
         enableContribAndExtras = true;

@@ -6,6 +6,7 @@
     {
       sessionVariables = {
         LV2_PATH = lib.makeSearchPath "lib/lv2" (with pkgs; [ calf ]);
+        TERM = "st-24bits";
       };
       file = {
         dunstrc = {

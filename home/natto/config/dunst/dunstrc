@@ -17,7 +17,7 @@
     padding = 5
     text_icon_padding = 4
     frame_width = 3
-    frame_color = "#ebdbb2"
+    frame_color = "#268bd2"
     separator_color = frame
     sort = yes
     idle_threshold = 120
@@ -50,17 +50,17 @@
     ignore_dbusclose = false
 
 [urgency_low]
-    background = "#222222"
-    foreground = "#888888"
+    background = "#6c71c4"
+    foreground = "#eee8d5"
     timeout = 10
 
 [urgency_normal]
-    background = "#285577"
-    foreground = "#ffffff"
+    background = "#cb4b16"
+    foreground = "#eee8d5"
     timeout = 10
 
 [urgency_critical]
-    background = "#900000"
-    foreground = "#ffffff"
-    frame_color = "#ff0000"
+    background = "#dc322f"
+    foreground = "#eee8d5"
+    frame_color = "#d33682"
     timeout = 10
