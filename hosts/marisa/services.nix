@@ -2,7 +2,12 @@
 {
 
   # Add secrets to nomad, consul and vault
-  systemd.enableUnifiedCgroupHierarchy = false;
+  virtualisation.docker = {
+    enable = true;
+    daemon.settings = {
+      #     default-cgroupns-mode = "host";
+    };
+  };
   systemd.tmpfiles.rules = lib.singleton "d /run/vault - vault vault 1h";
   systemd.services.vault.preStart =
     let
@@ -84,6 +89,7 @@
               allow_privileged = true;
               volumes.enabled = true;
               pull_activity_timeout = "30m";
+              #             allow_caps = [ "audit_write" "chown" "dac_override" "fowner" "fsetid" "kill" "mknod" "net_bind_service" "setfcap" "setgid" "setpcap" "setuid" "sys_chroot" "sys_admin" "sys_time" ];
             };
           };
           plugin."raw_exec" = {
@@ -92,7 +98,6 @@
             };
           };
           client = {
-
             meta = {
               "connect.sidecar_image" = "envoyproxy/envoy:v1.20.1";
             };

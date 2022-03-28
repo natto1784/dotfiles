@@ -21,7 +21,10 @@
       histSize = 12000;
       enableCompletion = true;
       syntaxHighlighting.enable = true;
-      autosuggestions. enable = true;
+      autosuggestions = {
+        enable = true;
+        highlightStyle = "fg=yellow,bold";
+      };
       ohMyZsh.enable = true;
     };
     gnupg = {
