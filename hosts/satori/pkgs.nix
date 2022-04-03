@@ -34,6 +34,7 @@
     haskell-language-server
     vulkan-tools
     vulkan-headers
+    msr-tools
     (steam.override {
       extraLibraries = pkgs: [ pkgs.pipewire ];
       extraProfile = ''
@@ -83,7 +84,7 @@
         fi
         }
       '';
-      histSize = 12000;
+      histSize = 30000;
       enableCompletion = true;
       enableBashCompletion = true;
       syntaxHighlighting.enable = true;

@@ -3,12 +3,9 @@
 #+OPTIONS: toc:nil num:nil
 
 #+begin_src sh
-├───hm-configs: unknown
+├───homeConfigurations: unknown
 ├───legacyPackages
-warning: │   ├───aarch64-darwin: omitted (use '--legacy' to show)
 warning: │   ├───aarch64-linux: omitted (use '--legacy' to show)
-warning: │   ├───i686-linux: omitted (use '--legacy' to show)
-warning: │   ├───x86_64-darwin: omitted (use '--legacy' to show)
 warning: │   └───x86_64-linux: omitted (use '--legacy' to show)
 └───nixosConfigurations
     ├───Marisa: NixOS configuration
@@ -24,7 +21,6 @@ warning: │   └───x86_64-linux: omitted (use '--legacy' to show)
 * How install workey
 Either do
 #+begin_src sh
-git clone https://github.com/natto1784/dotfiles
 cd dotfiles
 nixos-rebuild switch --flake .#Satori 
 #+end_src
@@ -35,17 +31,13 @@ nixos-rebuild switch --flake github:natto1784/dotfiles#Satori
 Replace ~Satori~ with whatever system you want or replace with whatever hostname you want in the config
 
 * How home-manager workey
-Either clone repo and do ~./hm-switch~ inside it (login as the user you want to change config as!!!)
-or
+Just do
 #+begin_src sh
-nix build github:natto1784/dotfiles#hm-configs.{USER}.activationPackage -o hm-result
-./hm-result/activate
+nix run nixpkgs#home-manager switch -- --flake github:natto1784/dotfiles
 #+end_src
-You can unlink ~hm-result~ after that
-replace ~{USER}~ with ~natto~ or whatever is availabe (or change it in the config)
 
 * How packages workey
-To build or run any of the packages in this flake do\
+To build or run any of the packages in this flake do
 #+begin_src sh
 nix <"run"/"build"> github:natto1784/dotfiles#pkgs.<your_arch>.<package_name>
 #+end_src

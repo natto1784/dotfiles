@@ -15,6 +15,11 @@
           path = "${home}/.zshrc";
           mode = "660";
         };
+        gitconfig = {
+          file = ./.gitconfig.age;
+          path = "${home}/.gitconfig";
+          mode = "660";
+        };
       };
     };
 }

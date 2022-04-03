@@ -16,8 +16,10 @@
     rust.url = github:oxalica/rust-overlay;
   };
 
-  outputs = inputs@{ self, nixpkgs, stable, master, old, ... }:
-    inputs.utils.lib.eachDefaultSystem
+  outputs = inputs@{ self, utils, nixpkgs, stable, master, old, ... }:
+    with utils.lib; eachSystem
+      (with system;
+      [ x86_64-linux aarch64-linux ])
       (system:
         let
           mkPkgs = channel: system: import channel {
@@ -75,13 +77,14 @@
         builders = [ ./modules/x86builder.nix ];
       in
       {
-        hm-configs = {
+        homeConfigurations = {
           natto = inputs.home-manager.lib.homeManagerConfiguration rec {
             system = "x86_64-linux";
             configuration = { lib, ... }: {
               imports = [
                 ./home/natto
               ] ++ homeModules;
+              home.packages = [ inputs.home-manager.defaultPackage.${system} ];
               nixpkgs = {
                 overlays = self.legacyPackages.${system}.overlays;
                 config.allowUnfree = true;
