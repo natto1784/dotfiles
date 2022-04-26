@@ -22,7 +22,7 @@
     };
   };
   security = {
-    sudo.enable = false;
+    sudo.enable = true;
     doas = {
       enable = true;
       extraRules = [

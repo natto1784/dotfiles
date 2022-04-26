@@ -22,13 +22,12 @@ warning: │   └───x86_64-linux: omitted (use '--legacy' to show)
 Either do
 #+begin_src sh
 cd dotfiles
-nixos-rebuild switch --flake .#Satori 
+nixos-rebuild switch --flake .
 #+end_src
 or 
 #+begin_src sh
 nixos-rebuild switch --flake "git+https://git.weirdnatto.in/natto1784/dotfiles?ref=nixos"
 #+end_src
-Replace ~Satori~ with whatever system you want or replace with whatever hostname you want in the config
 
 * How home-manager workey
 Just do

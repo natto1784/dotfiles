@@ -55,7 +55,23 @@
     (master.tauon.override { withDiscordRPC = true; })
     nbfc-linux
     pulseaudio
-    (texlive.combine { inherit (texlive) scheme-small babel lm graphics-def url mhchem wrapfig capt-of; })
+    (texlive.combine {
+      inherit (texlive)
+        scheme-small
+        babel
+        lm
+        graphics-def
+        url
+        mhchem
+        wrapfig
+        capt-of
+        minted
+        fvextra
+        xstring
+        catchfile
+        framed
+        upquote;
+    })
     #    carla
     #      electrum
     anki-bin
@@ -73,5 +89,9 @@
     element-desktop
     syncplay
     betterdiscordctl
+    python3Packages.pygments
+    calibre
+    easyeffects
+    noisetorch
   ];
 }

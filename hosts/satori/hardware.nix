@@ -14,7 +14,7 @@
 
   fileSystems."/boot/efi" =
     {
-      device = "/dev/disk/by-uuid/ACBA-9B3F";
+      device = "/dev/disk/by-uuid/2424-5639";
       fsType = "vfat";
     };
   fileSystems."/mnt/Games" =

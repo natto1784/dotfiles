@@ -45,7 +45,6 @@ c-white-2   "#fdf6e3")
 #+end_src
 
 ** Setting some variables
-SCHEDULED: <2022-03-19 Sat>
 #+begin_src emacs-lisp
   (setq initial-major-mode 'emacs-lisp-mode
       frame-resize-pixelwise t
@@ -96,7 +95,7 @@ SCHEDULED: <2022-03-19 Sat>
 #+end_src
 
 ** Configure Selectrum
-Enable selectrum and remap keys to Colemak-DH
+Enable selectrum
 #+begin_src emacs-lisp
 (use-package selectrum
   :config
@@ -120,7 +119,8 @@ Add orderless for selectrum
 (use-package orderless
   :after selectrum
   :config
-  (setq completion-styles '(orderless))
+  (setq completion-styles '(orderless basic))
+  (add-to-list 'orderless-matching-styles 'orderless-flex)
   (savehist-mode)
   (setq orderless-skip-highlighting (lambda () selectrum-is-active))
   (setq selectrum-highlight-candidates-function #'orderless-highlight-matches))
@@ -129,14 +129,33 @@ Add orderless for selectrum
 ** Evil
 *** Configure evil mode
 #+begin_src emacs-lisp
+(defun my/evil-shift-right ()
+  (interactive)
+  (evil-shift-right evil-visual-beginning evil-visual-end)
+  (evil-normal-state)
+  (evil-visual-restore))
+
+(defun my/evil-shift-left ()
+  (interactive)
+  (evil-shift-left evil-visual-beginning evil-visual-end)
+  (evil-normal-state)
+  (evil-visual-restore))
+
 (use-package evil
   :init
   (setq-default evil-shift-width 2)
   :config
+  (setq org-src-fontify-natively t
+        org-src-strip-leading-and-trailing-blank-lines t
+        org-src-preserve-indentation t
+        org-src-tab-acts-natively t)
   (evil-set-initial-state 'vterm-mode 'insert)
   (evil-set-undo-system 'undo-tree)
+  (evil-define-key 'visual global-map (kbd ">") 'my/evil-shift-right)
+  (evil-define-key 'visual global-map (kbd "<") 'my/evil-shift-left)
   (evil-mode 1))
 #+end_src
+
 
 *** Configure undo tree
 To undo and redo easily like vi
@@ -154,6 +173,11 @@ To get colemak-dh bindings in evil mode
   (setq evil-colemak-basics-layout-mod 'mod-dh)
   :config
   (global-evil-colemak-basics-mode 1))
+#+end_src
+
+*** Miscellaneous evil related packages
+#+begin_src emacs-lisp
+(use-package evil-terminal-cursor-changer)
 #+end_src
 
 ** Treemacs
@@ -176,15 +200,17 @@ To get colemak-dh bindings in evil mode
 Configure treemacs-evil to get colemak-dh bindings
 #+begin_src emacs-lisp
   (use-package treemacs-evil :config
+    (define-key evil-treemacs-state-map (kbd "j")   nil)
+    (define-key evil-treemacs-state-map (kbd "k")   nil)
     (define-key evil-treemacs-state-map (kbd "n")   #'treemacs-next-line)
     (define-key evil-treemacs-state-map (kbd "e")   #'treemacs-previous-line)
     (define-key evil-treemacs-state-map (kbd "M-n") #'treemacs-next-neighbour)
     (define-key evil-treemacs-state-map (kbd "M-e") #'treemacs-previous-neighbour)
     (define-key evil-treemacs-state-map (kbd "M-N") #'treemacs-next-line-other-window)
     (define-key evil-treemacs-state-map (kbd "M-E") #'treemacs-previous-line-other-window)
-  ;  (define-key evil-treemacs-state-map (kbd "M")   #'treemacs-collapse-parent-node)
-    (define-key evil-treemacs-state-map (kbd "m") #'treemacs-COLLAPSE-action)
-    (define-key evil-treemacs-state-map (kbd "i") #'treemacs-RET-action)
+    (define-key evil-treemacs-state-map (kbd "M")   #'treemacs-collapse-parent-node)
+    (evil-define-key 'treemacs treemacs-mode-map (kbd "m") #'treemacs-COLLAPSE-action)
+    (evil-define-key 'treemacs treemacs-mode-map (kbd "i") #'treemacs-RET-action)
    )
 #+end_src
 
@@ -218,14 +244,21 @@ Configure treemacs-evil to get colemak-dh bindings
   (lsp-ui-doc-enable 1))
 #+end_src
 
+*** Language specific LSP packages
+#+begin_src emacs-lisp
+(use-package lsp-haskell)
+#+end_src
+
 *** Configure flycheck
 #+begin_src emacs-lisp
 (use-package flycheck)
 #+end_src
+
 *** Configure dap-mode
 #+begin_src emacs-lisp
 (use-package dap-mode)
 #+end_src
+
 ** Company
 *** Configure company
 For autocomplete
@@ -234,6 +267,9 @@ For autocomplete
   :defer 0
   :after lsp-mode
   :config
+  (add-to-list 'company-backends 'company-dabbrev)
+  (setq company-backends (cons 'company-files (remove 'company-files company-backends)))
+  (company-mode 1)
   (define-key company-active-map (kbd "C-n") 'company-select-next)
   (define-key company-active-map (kbd "C-e") 'company-select-previous)
   (define-key company-search-map (kbd "C-n") 'company-select-next)
@@ -260,6 +296,8 @@ For autocomplete
 
 ** Lang support
 #+begin_src emacs-lisp
+(use-package haskell-mode)
+
 (use-package rustic)
 
 (use-package nix-mode
@@ -349,15 +387,35 @@ For autocomplete
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+end_src
 
-** Add helper packages for exporting
+** Babel and exports
 #+begin_src emacs-lisp
-  (use-package htmlize)
+(use-package htmlize)
+(add-to-list 'org-latex-packages-alist '("" "minted"))
+(setq org-latex-listings 'minted) 
+
+(setq org-latex-pdf-process
+      '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+
+(setq org-src-fontify-natively t)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((awk . t)
+   (python . t)
+   (C . t)
+   (shell . t)
+   (sql . t)
+   (latex . t)))
 #+end_src
 
 * Mode specific hooks
 #+begin_src emacs-lisp
 (add-hook 'c-mode-hook 'lsp)
 (add-hook 'c++-mode-hook 'lsp)
+(add-hook 'haskell-mode-hook #'lsp)
+(add-hook 'haskell-literate-mode-hook #'lsp)
 #+end_src
 
 * Custom mode line
@@ -396,8 +454,7 @@ For autocomplete
               '((:propertize " %b " face mode-line-buf-name)
                 (vc-mode (:propertize (" " vc-mode " " ) face mode-line-vc))
                 (:propertize (" " mode-name " ") face mode-line-maj-mode)
-                (:propertize ("[[ %l | %c || %p . %+%@ ]]") face mode-line-info)
-                ("%-")))
+                (:propertize (" [[ %l | %c || %p . %+%@ ]] ") face mode-line-info)))
 
 (setq exclude-ln '(term-mode-hook eshell-mode-hook shell-mode-hook))
 (while exclude-ln
@@ -450,14 +507,12 @@ This returns the command to run in the terminal
   (let ((full buffer-file-name)
         (file (file-name-sans-extension buffer-file-name)))
     (pcase (file-name-extension full)
-           ("c" (concat "gcc " full " -o " file " && " file " && rm " file))
+           ("c" (concat "gcc " full "-lm -pthread -o " file " && " file " && rm " file))
            ("java" (concat "java" full))
            ("py" (concat "python" full))
            ("cpp" (concat "g++ " full " -o " file " && " file " && rm " file))
            ("hs" (concat "ghc -dynamic" full " && " file " && rm " file " " file ".o"))
            ("sh" (concat "sh" full))
-           ("bash" (concat "bash" full))
-           ("zsh" (concat "zsh" full))
            ("js" (concat "node" full))
            ("ts" (concat "tsc" full " && node " file ".js && rm " file ".js" ))
            ("rs" (concat "rustc" full " -o " file " && " file " && rm " file)))))
@@ -480,8 +535,8 @@ This returns the command to run in the terminal
   "C-i" 'windmove-right
   "C-n" 'windmove-down
   "C-e" 'windmove-up
-  "M-,"  'previous-buffer
-  "M-."  'next-buffer
+  "M-,"  'centaur-tabs-backward
+  "M-."  'centaur-tabs-forward
   "C-q"  'delete-window
   "M-C-S-q"  'kill-buffer-and-window
   "M-w"  'centaur-tabs--kill-this-buffer-dont-ask
@@ -500,8 +555,8 @@ Pop-up terminal specific keybinds
     "<f1>" 'vterm-toggle
     "<f5>" (lambda () (interactive) (run-in-vterm (candrun))))
 
-    (define-key vterm-mode-map (kbd "<f2>")   'vterm-toggle-forward)
-    (define-key vterm-mode-map (kbd "<f3>")   'vterm-toggle-backward)
+    (define-key vterm-mode-map (kbd "<f2>") 'vterm-toggle-forward)
+    (define-key vterm-mode-map (kbd "<f3>") 'vterm-toggle-backward)
 
   (general-define-key
     :states '(normal insert)
@@ -514,15 +569,18 @@ Pop-up terminal specific keybinds
 Toggle Appearance
 #+begin_src emacs-lisp
 (defun toggle-theme-shade ()
-    (if (symbol-value dark-theme)
-	(progn (disable-theme 'doom-solarized-dark)
-	(load-theme 'doom-solarized-light t))
-	(progn (disable-theme 'doom-solarized-light)
-	(load-theme 'doom-solarized-dark t)))
-    (setq-local dark-theme (not dark-theme)))
+  (if (symbol-value dark-theme)
+	    (progn (disable-theme 'doom-solarized-dark)
+	           (load-theme 'doom-solarized-light t))
+	  (progn (disable-theme 'doom-solarized-light)
+	         (load-theme 'doom-solarized-dark t)))
+  (setq-local dark-theme (not dark-theme))
+  (centaur-tabs-display-update)
+  (centaur-tabs-headline-match)
+  )
 
 (general-define-key
-    :states '(normal insert emacs)
-    "<f7>" (lambda () (interactive) (toggle-theme-shade)))
+ :states '(normal)
+ "<f7>" (lambda () (interactive) (toggle-theme-shade)))
 )
 #+end_src

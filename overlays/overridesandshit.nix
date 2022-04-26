@@ -29,15 +29,15 @@ final: prev: {
     clockSupport = true;
   };
 
-  picom = prev.picom.overrideAttrs (oldAttrs: rec{
+  /*picom = prev.picom.overrideAttrs (oldAttrs: rec{
     src = prev.fetchFromGitHub {
-      owner = "jonaburg";
-      repo = "picom";
-      rev = "a8445684fe18946604848efb73ace9457b29bf80";
-      sha256 = "sha256-R+YUGBrLst6CpUgG9VCwaZ+LiBSDWTp0TLt1Ou4xmpQ=";
-      fetchSubmodules = true;
+    owner = "jonaburg";
+    repo = "picom";
+    rev = "a8445684fe18946604848efb73ace9457b29bf80";
+    sha256 = "sha256-R+YUGBrLst6CpUgG9VCwaZ+LiBSDWTp0TLt1Ou4xmpQ=";
+    fetchSubmodules = true;
     };
-  });
+    });*/
 
   proxychains = prev.proxychains.overrideAttrs (_: {
     postInstall = ":";

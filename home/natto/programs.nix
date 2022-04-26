@@ -10,10 +10,10 @@
         #       userContent = builtins.readFile ./config/firefox/userContent.css;
       };
     };
-    /* chromium = {
+    chromium = {
       enable = true;
       package = pkgs.ungoogled-chromium;
-      }; */
+    };
     zathura = {
       enable = true;
       extraConfig = builtins.readFile ./config/zathura/zathurarc;
@@ -38,7 +38,7 @@
       enable = true;
       mpdMusicDir = ~/Music;
       settings = {
-        albumart = "yes";
+  #      albumart = "yes";
         locked_screen_width_part = 25;
         autocenter_mode = "yes";
         follow_now_playing_lyrics = "yes";

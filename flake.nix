@@ -84,7 +84,9 @@
               imports = [
                 ./home/natto
               ] ++ homeModules;
-              home.packages = [ inputs.home-manager.defaultPackage.${system} ];
+              home.packages = [
+                inputs.home-manager.defaultPackage.${system}
+              ];
               nixpkgs = {
                 overlays = self.legacyPackages.${system}.overlays;
                 config.allowUnfree = true;

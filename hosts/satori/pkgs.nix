@@ -17,6 +17,7 @@
     kbd
     cachix
     gcc
+    glibc.static
     stable.openjdk
     virtmanager
     tree-sitter

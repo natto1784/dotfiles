@@ -13,7 +13,7 @@
       ACTION=="add|change", KERNEL=="sda", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="bfq"
     '';
   };
-  systemd.services.tor.wantedBy = lib.mkForce [];
+  systemd.services.tor.wantedBy = lib.mkForce [ ];
   systemd.enableUnifiedCgroupHierarchy = false;
   security.pki.certificateFiles = [ ../../cert.pem ];
   virtualisation.libvirtd = {
