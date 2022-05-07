@@ -1,9 +1,9 @@
 { config, pkgs, ... }:
 {
   boot = {
-    kernelParams = [ "console=ttyS0,115200n8" "console=tty0" ];
-    #    kernelPackages = pkgs.linuxPackages_rpi4; //this sucks
-    initrd.availableKernelModules = [ "xhci_pci" "usb_storage" "usbhid" "uas" "pcie-brcmstb" ];
+    kernelParams = [ "console=ttyS0,115200n8" "console=ttyAMA0,115200" "console=tty0" "boot.shell_on_fail" ];
+    kernelPackages = pkgs.linuxPackages_5_10; 
+    initrd.availableKernelModules = [ "xhci_pci" "usb_storage" "usbhid" "uas" "pcie-brcmstb" "vc4" ];
     loader = {
       grub.enable = false;
       generic-extlinux-compatible.enable = true;
