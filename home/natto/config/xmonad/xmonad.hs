@@ -38,7 +38,7 @@ myManageHook = composeAll
     , className =? "Anki"    --> doFloat
     ]
 
-tabConfig = defaultTheme {
+tabConfig = def {
     activeTextColor = bgColor,
     activeColor = fgColor,
     inactiveTextColor = fgColor,
@@ -55,7 +55,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn $ XMonad.terminal conf)
 
   , ((modMask, xK_d),
-     spawn "/usr/bin/env dmenu_run -l 20")
+     spawn "dmenu_run -l 20")
 
   , ((shiftMask, xK_Print),
      spawn "flameshot gui")

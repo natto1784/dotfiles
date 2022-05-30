@@ -5,13 +5,13 @@
     w3m
     tmux
     bc
+    ghc
     gnumake
     pciutils
     ntfs3g
     python3
     htop
     nodejs
-    ghc
     wget
     ripgrep
     kbd
@@ -24,15 +24,8 @@
     docker-compose
     nodePackages.typescript
     rust-bin.nightly.latest.default
-    #language servers
-    rust-analyzer
-    ccls
     clang-tools
-    nodePackages.typescript-language-server
-    nodePackages.vscode-langservers-extracted
     rnix-lsp
-    python3Packages.python-lsp-server
-    haskell-language-server
     vulkan-tools
     vulkan-headers
     msr-tools

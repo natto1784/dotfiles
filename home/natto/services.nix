@@ -97,7 +97,7 @@ in
                 type        "httpd"
                 quality     "9"
                 name        "Vorbis Stream"
-                port        "8000"
+                port        "8001"
                 max_clients "4"
         }
         filesystem_charset "UTF-8"

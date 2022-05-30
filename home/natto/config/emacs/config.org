@@ -7,23 +7,27 @@ idk random variables to match my color theme
 #+begin_src emacs-lisp
   ; -*- lexical-binding: t; -*-
 (setq
-c-bg        "#073642"
-c-fg        "#eee8d5"
-c-red       "#dc322f"
-c-green     "#859900"
-c-yellow    "#b58900"
-c-blue      "#268bd2"
-c-magenta   "#d33682"
-c-cyan      "#2aa198"
-c-white     "#eee8d5"
-c-black     "#002b36"
-c-red-2     "#cb4b16"
-c-green-2   "#586e75"
-c-yellow-2  "#657b83"
-c-blue-2    "#839496"
-c-magenta-2 "#6c71c4"
-c-cyan-2    "#93a1a1"
-c-white-2   "#fdf6e3")
+ c-bg        "#073642"
+ c-fg        "#eee8d5"
+ c-red       "#dc322f"
+ c-green     "#859900"
+ c-yellow    "#b58900"
+ c-blue      "#268bd2"
+ c-magenta   "#d33682"
+ c-cyan      "#2aa198"
+ c-white     "#eee8d5"
+ c-black     "#002b36"
+ c-red-2     "#cb4b16"
+ c-green-2   "#586e75"
+ c-yellow-2  "#657b83"
+ c-blue-2    "#839496"
+ c-magenta-2 "#6c71c4"
+ c-cyan-2    "#93a1a1"
+ c-white-2   "#fdf6e3")
+#+end_src
+
+
+#+begin_src python
 #+end_src
 
 * Settings
@@ -46,7 +50,7 @@ c-white-2   "#fdf6e3")
 
 ** Setting some variables
 #+begin_src emacs-lisp
-  (setq initial-major-mode 'emacs-lisp-mode
+(setq initial-major-mode 'emacs-lisp-mode
       frame-resize-pixelwise t
       auto-window-vscroll nil
       scroll-step 1
@@ -54,8 +58,8 @@ c-white-2   "#fdf6e3")
       confirm-kill-processes nil
       dark-theme t
       inhibit-startup-screen t)
-  (setq-default tab-width 2
-                indent-tabs-mode nil)
+(setq-default tab-width 2
+              indent-tabs-mode nil)
 #+end_src
 
 ** Emacs startup hook
@@ -120,7 +124,6 @@ Add orderless for selectrum
   :after selectrum
   :config
   (setq completion-styles '(orderless basic))
-  (add-to-list 'orderless-matching-styles 'orderless-flex)
   (savehist-mode)
   (setq orderless-skip-highlighting (lambda () selectrum-is-active))
   (setq selectrum-highlight-candidates-function #'orderless-highlight-matches))
@@ -247,6 +250,7 @@ Configure treemacs-evil to get colemak-dh bindings
 *** Language specific LSP packages
 #+begin_src emacs-lisp
 (use-package lsp-haskell)
+(use-package lsp-grammarly)
 #+end_src
 
 *** Configure flycheck
@@ -273,7 +277,8 @@ For autocomplete
   (define-key company-active-map (kbd "C-n") 'company-select-next)
   (define-key company-active-map (kbd "C-e") 'company-select-previous)
   (define-key company-search-map (kbd "C-n") 'company-select-next)
-  (define-key company-search-map (kbd "C-e") 'company-select-previous))
+  (define-key company-search-map (kbd "C-e") 'company-select-previous)
+  (company-mode))
 #+end_src
 
 *** Configure company-quickhelp
@@ -302,6 +307,12 @@ For autocomplete
 
 (use-package nix-mode
   :mode "\\.nix\\'")
+(add-to-list 'lsp-language-id-configuration '(nix-mode . "nix"))
+(lsp-register-client
+ (make-lsp-client :new-connection (lsp-stdio-connection '("rnix-lsp"))
+                  :major-modes '(nix-mode)
+                  :server-id 'nix))
+
 
 (use-package hcl-mode
   :mod 
@@ -342,8 +353,8 @@ For autocomplete
 	centaur-tabs-set-icons t)
   (centaur-tabs-group-buffer-groups)
   (add-hook 'server-after-make-frame-hook 'centaur-tabs-mode)
-  (centaur-tabs-headline-match)
-  (set-face-attribute 'tab-line nil :inherit 'centaur-tabs-unselected))
+  (set-face-attribute 'tab-line nil :inherit 'centaur-tabs-unselected)
+  (centaur-tabs-headline-match))
 #+end_src
 
 ** Misc packages
@@ -416,6 +427,13 @@ For autocomplete
 (add-hook 'c++-mode-hook 'lsp)
 (add-hook 'haskell-mode-hook #'lsp)
 (add-hook 'haskell-literate-mode-hook #'lsp)
+#+end_src
+
+* Random eye candy stuff
+#+begin_src emacs-lisp
+(use-package pretty-mode
+  :config
+  (global-pretty-mode t))
 #+end_src
 
 * Custom mode line
@@ -507,7 +525,7 @@ This returns the command to run in the terminal
   (let ((full buffer-file-name)
         (file (file-name-sans-extension buffer-file-name)))
     (pcase (file-name-extension full)
-           ("c" (concat "gcc " full "-lm -pthread -o " file " && " file " && rm " file))
+           ("c" (concat "gcc " full " -lm -pthread -o " file " && " file " && rm " file))
            ("java" (concat "java" full))
            ("py" (concat "python" full))
            ("cpp" (concat "g++ " full " -o " file " && " file " && rm " file))

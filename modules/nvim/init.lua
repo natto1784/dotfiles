@@ -207,7 +207,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', "<M-f>", "<cmd>lua vim.lsp.buf.formatting()<CR>", {silent=true, noremap=true})
 end
 
-local servers = { "ccls", "rust_analyzer", "tsserver", "hls", "pylsp", "texlab", "rnix", "terraform_lsp", "html", "cssls", "jsonls", "svelte", "gopls" }
+local servers = { "clangd", "rust_analyzer", "tsserver", "hls", "pylsp", "texlab", "rnix", "terraform_lsp", "html", "cssls", "jsonls", "svelte", "gopls" }
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {

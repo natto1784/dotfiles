@@ -10,7 +10,6 @@
       substituters = [
         "https://nix-gaming.cachix.org"
         "https://nix-community.cachix.org"
-        "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
       ];
       trusted-public-keys = [
         "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="

@@ -16,7 +16,9 @@ white = "#eee8d5"
 config :: Config
 config =
   defaultConfig
-    { font = "xft:Fira Mono:style=Regular:antialias=true:pixelsize,Font Awesome 5 Brands:pixelsize=16,Font Awesome 5 Free:pixelsize=16:style=Solid,Lohit Devanagari:style=Regular:pixelsize=16,Lohit Gurmukhi:style=Regular:pixelsize=16,Noto Sans CJK JP:style=Regular:pixelsize=16,Noto Sans CJK KR:style=Regular:pixelsize=16,Noto Sans CJK SC:style=Regular:pixelsize=16",
+    {
+      --font = "xft:Fira Mono:style=Regular:antialias=true:pixelsize,Font Awesome 5 Brands:pixelsize=16,Font Awesome 5 Free:pixelsize=16:style=Solid,Lohit Devanagari:style=Regular:pixelsize=16,Lohit Gurmukhi:style=Regular:pixelsize=16,Noto Sans CJK JP:style=Regular:pixelsize=16,Noto Sans CJK KR:style=Regular:pixelsize=16,Noto Sans CJK SC:style=Regular:pixelsize=16",
+      font = "xft:Fira Mono:style=Regular:antialias=true:pixelsize,Font Awesome 5 Brands:pixelsize=16,Font Awesome 5 Free:pixelsize=16:style=Solid,Lohit Devanagari:style=Regular:pixelsize=16,Lohit Gurmukhi:style=Regular:pixelsize=16,HanaMinA:style=Regular:pixelsize=16,HanaMinB:style=Regular:pixelsize=16",
       additionalFonts =
         [ "xft:Font Awesome 5 Free:pixelsize=15:style=Solid",
           "xft:Font Awesome 5 Brands:pixelsize=15"

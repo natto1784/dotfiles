@@ -6,7 +6,7 @@
     wireless.enable = true;
     wireless.interfaces = [ "wlp0s20f3" ];
     firewall = {
-      allowedTCPPorts = [ 22 18172 6600 8000 ];
+      allowedTCPPorts = [ 22 18172 6600 8001 ];
       allowedUDPPorts = [ 22 17840 18172 ];
     };
     interfaces = {

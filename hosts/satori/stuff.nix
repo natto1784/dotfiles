@@ -43,7 +43,8 @@
     font-awesome
     monoid
     office-code-pro
-    noto-fonts-cjk
+    hanazono
+ #   noto-fonts-cjk
   ];
   users.users.natto = {
     isNormalUser = true;

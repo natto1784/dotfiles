@@ -84,6 +84,7 @@
     (qjackctl.override { jackSession = true; })
     stable.lmms
     #     stable.blender
+    thunderbird
     neomutt
     mailcap
     element-desktop
