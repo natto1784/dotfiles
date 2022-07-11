@@ -8,7 +8,7 @@ in
       enable = true;
       package = pkgs.mymacs ./config/emacs/config.org;
       defaultEditor = {
-        enable = true;
+        enable = false;
         editor = "emacsclient";
       };
       copyConfigFiles = {

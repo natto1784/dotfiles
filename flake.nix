@@ -1,7 +1,8 @@
 {
   inputs = {
-    stable.url = github:nixos/nixpkgs/nixos-21.11;
-    old.url = github:nixos/nixpkgs/nixos-21.05;
+    stable.url = github:nixos/nixpkgs/nixos-22.05;
+    stable-small.url = github:nixos/nixpkgs/nixos-22.05-small;
+    old.url = github:nixos/nixpkgs/nixos-21.11;
     nixpkgs.url = github:nixos/nixpkgs/nixpkgs-unstable;
     master.url = github:nixos/nixpkgs/master;
     home-manager.url = github:nix-community/home-manager;
@@ -16,7 +17,7 @@
     rust.url = github:oxalica/rust-overlay;
   };
 
-  outputs = inputs@{ self, utils, nixpkgs, stable, master, old, ... }:
+  outputs = inputs@{ self, utils, nixpkgs, stable, master, old, stable-small, ... }:
     with utils.lib; eachSystem
       (with system;
       [ x86_64-linux aarch64-linux ])
@@ -28,6 +29,7 @@
           };
           channels = final: prev: {
             stable = mkPkgs stable prev.system;
+            stable-small = mkPkgs stable-small prev.system;
             unstable = mkPkgs nixpkgs prev.system;
             master = mkPkgs master prev.system;
             old = mkPkgs old prev.system;
@@ -78,26 +80,21 @@
       in
       {
         homeConfigurations = {
-          natto = inputs.home-manager.lib.homeManagerConfiguration rec {
-            system = "x86_64-linux";
-            configuration = { lib, ... }: {
-              imports = [
-                ./home/natto
-              ] ++ homeModules;
-              home.packages = [
-                inputs.home-manager.defaultPackage.${system}
-              ];
-              nixpkgs = {
-                overlays = self.legacyPackages.${system}.overlays;
-                config.allowUnfree = true;
-                config.allowBroken = true;
-                config.permittedInsecurePackages = [
-                  "electron-9.4.4"
-                ];
-              };
-            };
-            homeDirectory = "/home/natto";
-            username = "natto";
+          natto = inputs.home-manager.lib.homeManagerConfiguration {
+            modules = [
+              ./home/natto
+              {
+                home = {
+                  homeDirectory = "/home/natto";
+                  username = "natto";
+                  packages = [
+                    inputs.home-manager.defaultPackage.x86_64-linux
+                  ];
+                  stateVersion = "22.05";
+                };
+              }
+            ] ++ homeModules;
+            pkgs = self.legacyPackages.x86_64-linux;
           };
         };
 

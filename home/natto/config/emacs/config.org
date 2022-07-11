@@ -192,7 +192,7 @@ To get colemak-dh bindings in evil mode
 *** Configure treemacs
 #+begin_src emacs-lisp
 (use-package treemacs
-  :atfer cfrs
+  :after cfrs
   :config
   (treemacs-filewatch-mode 1)
   (treemacs-display-current-project-exclusively)
@@ -289,40 +289,40 @@ For autocomplete
 
 ** Treesitter
 #+begin_src emacs-lisp
-(use-package tree-sitter-langs)
-(use-package tree-sitter
-  :after tree-sitter-langs
-  :config
-  (global-tree-sitter-mode)
-  :init 
-  (add-to-list 'tree-sitter-major-mode-language-alist '(fundamental-mode . bash))
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+;(use-package tree-sitter-langs)
+;(use-package tree-sitter
+; :after tree-sitter-langs
+;  :config
+;  (global-tree-sitter-mode)
+; :init 
+;  (add-to-list 'tree-sitter-major-mode-language-alist '(fundamental-mode . bash))
+;  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 #+end_src
 
 ** Lang support
 #+begin_src emacs-lisp
-(use-package haskell-mode)
+;(use-package haskell-mode)
 
-(use-package rustic)
+;(use-package rustic)
 
-(use-package nix-mode
-  :mode "\\.nix\\'")
-(add-to-list 'lsp-language-id-configuration '(nix-mode . "nix"))
-(lsp-register-client
- (make-lsp-client :new-connection (lsp-stdio-connection '("rnix-lsp"))
-                  :major-modes '(nix-mode)
-                  :server-id 'nix))
+;(use-package nix-mode
+;  :mode "\\.nix\\'")
+;(add-to-list 'lsp-language-id-configuration '(nix-mode . "nix"))
+;(lsp-register-client
+; (make-lsp-client :new-connection (lsp-stdio-connection '("rnix-lsp"))
+;                  :major-modes '(nix-mode)
+;                  :server-id 'nix))
 
 
-(use-package hcl-mode
-  :mod 
-  "\\.hcl\\'"
-  "\\.nomad\\'")
+;(use-package hcl-mode
+;  :mod 
+;  "\\.hcl\\'"
+;  "\\.nomad\\'")
 #+end_src
 
 ** Magit
 #+begin_src emacs-lisp
-(use-package magit)
+; (use-package magit)
 #+end_src
 
 * VTerm
@@ -330,6 +330,8 @@ For autocomplete
 #+begin_src emacs-lisp
 (use-package vterm
   :config
+  (evil-define-key 'normal vterm-mode-map (kbd "p") 'vterm-yank)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-y") 'vterm-yank)
   (setq vterm-timer-delay 0.005))
 
 (use-package vterm-toggle 

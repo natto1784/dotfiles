@@ -9,10 +9,17 @@
     mpdas
     pavucontrol
     unstable.anup
-    xfce.thunar
+    (xfce.thunar.override {
+      thunarPlugins = with xfce; [
+        thunar-media-tags-plugin
+        thunar-volman
+        thunar-archive-plugin
+      ];
+    })
     xfce.xfconf
     xfce.tumbler
     master.discord
+    master.discord-canary
     mpd_discord_richpresence
     sox
     qbittorrent
