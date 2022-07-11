@@ -10,7 +10,13 @@
       allowedUDPPorts = [ 22 17840 18172 ];
     };
     interfaces = {
-      enp7s0.useDHCP = true;
+      enp7s0 = {
+        useDHCP = true;
+        ipv4.addresses = [{
+          prefixLength = 24;
+          address = "192.168.0.109";
+        }];
+      };
       wlp0s20f3 = {
         useDHCP = true;
         ipv4.addresses = [{

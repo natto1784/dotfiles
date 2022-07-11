@@ -37,7 +37,7 @@
           presence-nvim
           nvim-web-devicons
           nvim-tree-lua
-          nvim-treesitter
+          (nvim-treesitter.withPlugins (plugins: pkgs.unstable.tree-sitter.allGrammars))
           vim-latex-live-preview
           lspkind-nvim
           base16-vim
