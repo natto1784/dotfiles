@@ -3,7 +3,7 @@
   programs = {
     firefox = {
       enable = true;
-      package = pkgs.master.firefox-bin;
+      package = pkgs.master.firefox;
       profiles.natto = {
         name = "natto";
         #       userChrome = builtins.readFile ./config/firefox/userChrome.css;

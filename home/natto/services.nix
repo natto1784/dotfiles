@@ -19,7 +19,7 @@ in
         };
       };
     };
-    picom = {
+    /*picom = {
       experimentalBackends = true;
       enable = true;
       shadow = true;
@@ -57,7 +57,7 @@ in
           detect-rounded-corners = true;
           detect-client-opacity = true;
         '';
-    };
+    };*/
     sxhkd = {
       enable = false;
       extraConfig = builtins.readFile ./config/sxhkd/sxhkdrc;

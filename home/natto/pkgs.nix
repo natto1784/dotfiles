@@ -77,20 +77,13 @@
         xstring
         catchfile
         framed
-        upquote;
+        upquote
+        tcolorbox;
     })
-    #    carla
-    #      electrum
     anki-bin
     spotify
-    deluge
     teams
-    #      libreoffice
-    google-drive-ocamlfuse
-    customscripts
     (qjackctl.override { jackSession = true; })
-    stable.lmms
-    #     stable.blender
     thunderbird
     neomutt
     mailcap
@@ -99,7 +92,11 @@
     betterdiscordctl
     python3Packages.pygments
     calibre
-    easyeffects
     noisetorch
+    customscripts
+    tlauncher
+    lutris
+    gnome.zenity
+    protontricks
   ];
 }
