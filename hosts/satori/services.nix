@@ -13,6 +13,7 @@
     udev.extraRules = ''
       ACTION=="add|change", KERNEL=="sda", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="bfq"
     '';
+    zfs.autoScrub.enable = true;
   };
   systemd.services.tor.wantedBy = lib.mkForce [ ];
   systemd.enableUnifiedCgroupHierarchy = false;

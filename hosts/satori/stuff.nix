@@ -22,6 +22,7 @@
     };
   };
   security = {
+    polkit.enable = true;
     sudo.enable = true;
     doas = {
       enable = true;
@@ -44,6 +45,7 @@
     monoid
     office-code-pro
     hanazono
+    eb-garamond
  #   noto-fonts-cjk
   ];
   users.users.natto = {

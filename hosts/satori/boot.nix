@@ -1,22 +1,24 @@
-{lib, config, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
 {
   boot = {
+    zfs.forceImportAll = false;
+    supportedFilesystems = [ "zfs" ];
     kernelPackages = pkgs.unstable.linuxPackages_latest;
-    initrd={
-      availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" "vfio-pci"];
- /*     preDeviceCommands = ''
+    initrd = {
+      availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" "vfio-pci" ];
+      /*     preDeviceCommands = ''
         DEVS="0000:01:00.0 0000:01:00.1 0000:01:00.2 0000:01:00.3"
         for DEV in $DEVS; do
-          echo "vfio-pci" > /sys/bus/pci/devices/$DEV/driver_override
+        echo "vfio-pci" > /sys/bus/pci/devices/$DEV/driver_override
         done
         modprobe -i vfio-pci
         '';*/
-      kernelModules = [];
+      kernelModules = [ ];
     };
-    kernelParams = [ "intel_pstate=active" "intel_iommu=on" ]; 
+    kernelParams = [ "intel_pstate=active" "intel_iommu=on" ];
     kernelModules = [ "kvm-intel" "snd-seq" "snd-rawmidi" "joydev" ];
-    extraModulePackages = with config.boot.kernelPackages; [ nvidia_x11 v4l2loopback];
+    extraModulePackages = with config.boot.kernelPackages; [ nvidia_x11 v4l2loopback ];
     loader = {
       efi = {
         canTouchEfiVariables = true;
@@ -24,8 +26,8 @@
       };
       grub = {
         enable = true;
- #       useOSProber = true;
-        efiSupport =  true;
+        #       useOSProber = true;
+        efiSupport = true;
         device = "nodev";
         splashImage = ./cirno.png;
         splashMode = "stretch";

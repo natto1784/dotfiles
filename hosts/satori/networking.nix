@@ -3,12 +3,18 @@
 {
   networking = {
     hostName = "Satori";
+    hostId = "beca3df0";
     wireless.enable = true;
     wireless.interfaces = [ "wlp0s20f3" ];
     firewall = {
       allowedTCPPorts = [ 22 18172 6600 8001 ];
       allowedUDPPorts = [ 22 17840 18172 ];
     };
+
+    defaultGateway = {
+      address = "192.168.0.1";
+    };
+
     interfaces = {
       enp7s0 = {
         useDHCP = true;
