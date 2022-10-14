@@ -28,8 +28,6 @@
         startx = {
           enable = true; 
         }; 
- #       lightdm.enable = true;
- #      sessionCommands = "${pkgs.xorg.xkbcomp}/bin/xkbcomp ${compiledLayout} $DISPLAY";
       };
       extraLayouts = {
         us-colemak = {

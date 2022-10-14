@@ -17,6 +17,6 @@ emacsWithPackagesFromUsePackage {
   alwaysTangle = true;
   extraEmacsPackages = epkgs: with epkgs; [
     use-package
- #   (epkgs.tree-sitter-langs.withPlugins (_: epkgs.tree-sitter-langs.plugins))
+    (epkgs.tree-sitter-langs.withPlugins (_: epkgs.tree-sitter-langs.plugins))
   ];
 }

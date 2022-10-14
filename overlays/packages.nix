@@ -1,6 +1,10 @@
-final: prev: {
-  mpd_discord_richpresence = prev.callPackage ./mpd-rpc { };
-  customscripts = prev.callPackage ./customscripts { };
-  gruvbox-icons = prev.callPackage ./gruvbox-icons { };
-  mymacs = c: prev.callPackage ./emacs { conf = c; };
+final: prev:
+let
+  call = prev.callPackage; in
+{
+  mpd_discord_richpresence = call ./mpd-rpc { };
+  customscripts = call ./customscripts { };
+  gruvbox-icons = call ./gruvbox-icons { };
+  mymacs = c: call ./emacs { conf = c; };
+  tlauncher = call ./tlauncher {  };
 }
