@@ -26,6 +26,7 @@
           mkPkgs = channel: system: import channel {
             inherit system;
             config.allowUnfree = true;
+            config.allowBroken = true;
           };
           channels = final: prev: {
             stable = mkPkgs stable prev.system;
@@ -45,7 +46,7 @@
             overlays = overlays ++ [
               inputs.nur.overlay
               inputs.nvim.overlay
-              inputs.rust.overlay
+              inputs.rust.overlays.default
               inputs.emacs.overlay
               channels
               (_: _: {

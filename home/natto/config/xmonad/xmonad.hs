@@ -56,7 +56,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   , ((modMask, xK_d),
      spawn "dmenu_run -l 20")
-
+  
   , ((shiftMask, xK_Print),
      spawn "flameshot gui")
 
@@ -69,32 +69,40 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_p),
      spawn "mpc toggle")
 
-  , ((modMask, xK_h),
+  , ((0, xF86XK_AudioPlay),
+     spawn "mpc toggle")
+
+  , ((modMask, xF86XK_AudioNext),
      spawn "mpc next")
 
-  , ((modMask, xK_k),
+  , ((modMask, xF86XK_AudioPrev),
      spawn "mpc prev")
 
-  , ((modMask .|. shiftMask, xK_a),
+  , ((0, xF86XK_AudioPrev),
      spawn "mpc seek -00:00:05")
 
-  , ((modMask .|. shiftMask, xK_s),
+  , ((0, xF86XK_AudioNext),
      spawn "mpc seek +00:00:05")
 
-  , ((modMask .|. shiftMask, xK_period),
-     spawn "pamixer --allow-boost -i 5")
+  , ((0, xF86XK_AudioRaiseVolume),
+     spawn "pamixer --allow-boost -ui 5")
 
-  , ((modMask .|. shiftMask, xK_comma),
-     spawn "pamixer --allow-boost -d 5")
+  , ((0, xF86XK_AudioLowerVolume),
+     spawn "pamixer --allow-boost -ud 5")
+
+  , ((0, xF86XK_AudioMute),
+     spawn "pamixer -t")
 
   , ((modMask .|. shiftMask, xK_q), kill)
 
   , ((mod1Mask, xK_Tab), 
      cycleRecentWindows [xK_Alt_L] xK_Tab xK_q)
 
-  , ((modMask .|. mod1Mask, xK_0), spawn "light -A 5")
+  , ((0, xF86XK_MonBrightnessUp),
+     spawn "light -A 5")
 
-  , ((modMask .|. mod1Mask, xK_9), spawn "light -U 5")
+  , ((0, xF86XK_MonBrightnessDown),
+     spawn "light -U 5")
 
   , ((modMask .|. shiftMask, xK_F1),
      spawn "setxkbmap us-colemak")
@@ -200,39 +208,8 @@ toggleFullscreen =
         windows $ if isFullFloat then W.sink w else W.float w fullRect
 --}}}
 
---{{{
---couldnt get fullScreenEventHook to work normally so using this for now
---source code: https://github.com/xmonad/xmonad-contrib/blob/v0.16/XMonad/Hooks/EwmhDesktops.hs
-
-fullscreenFix :: XConfig a -> XConfig a
-fullscreenFix c = c {
-                      startupHook = startupHook c +++ setSupportedWithFullscreen
-                    }
-                  where x +++ y = mappend x y
-
-setSupportedWithFullscreen :: X ()
-setSupportedWithFullscreen = withDisplay $ \dpy -> do
-    r <- asks theRoot
-    a <- getAtom "_NET_SUPPORTED"
-    c <- getAtom "ATOM"
-    supp <- mapM getAtom ["_NET_WM_STATE_HIDDEN"
-                         ,"_NET_WM_STATE_FULLSCREEN"
-                         ,"_NET_NUMBER_OF_DESKTOPS"
-                         ,"_NET_CLIENT_LIST"
-                         ,"_NET_CLIENT_LIST_STACKING"
-                         ,"_NET_CURRENT_DESKTOP"
-                         ,"_NET_DESKTOP_NAMES"
-                         ,"_NET_ACTIVE_WINDOW"
-                         ,"_NET_WM_DESKTOP"
-                         ,"_NET_WM_STRUT"
-                         ]
-    io $ changeProperty32 dpy r a c propModeReplace (fmap fromIntegral supp)
-
-    setWMName "xmonad"
---}}}
-
 main = do xmproc <- spawnPipe ("xmobar " ++ myXmobarrc)
-          xmonad $ docks $ fullscreenFix $ ewmh def
+          xmonad $ docks $ ewmh def
               { borderWidth        = myBorderWidth
               , manageHook         = manageDocks <+> myManageHook 
               , handleEventHook    = handleEventHook def <+> fullscreenEventHook

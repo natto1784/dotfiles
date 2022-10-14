@@ -33,7 +33,7 @@ config =
         [ Run $ MultiCpu ["-t", "<fn=1>\xf2db</fn> <total>%", "-L", "20", "-H", "80", "-h", magenta, "-l", green, "-n", yellow] 10,
           Run $ Memory ["-t", "<fn=1>\xf538</fn> <usedratio>%", "-H", "10240", "-L", "6144", "-h", magenta, "-l", green, "-n", yellow] 20,
           Run $ BatteryP ["BAT1", "BAT0", "BAT2"] ["-t", "<acstatus>", "-L", "10", "-H", "80", "-l", magenta, "-h", green, "-n", yellow, "--", "-O", "Charging", "-o", "<left>%", "-a", "notify-send -u critical 'Battery running out!'", "-A", "5", "--lows", "<fn=1>\xf243</fn> ", "--mediums", "<fn=1>\xf242</fn> ", "--highs", "<fn=1>\xf240</fn> "] 300,
-          Run $ Network "wlp0s20f3" ["-t", "<fn=1>\xf1eb</fn> <fc=" ++ magenta ++ "><rx>/<tx></fc>"] 10,
+          Run $ DynNetwork ["-t", "<fn=1>\xf1eb</fn> <fc=" ++ magenta ++ "><rx>/<tx></fc>"] 10,
           Run $ Date "<fn=1>\xf073</fn> %-d/%-m/%-y/%w" "date" 10000,
           Run $ Date "%H:%M:%S" "time" 10,
           Run $ MPD ["-t", "<statei><title><fn=" ++ magenta ++ "> \xf001</fn>", "--", "-P", ">> ", "-Z", "|| ", "-S", "Stopped", "-h", "127.0.0.1", "-p", "6600"] 10,
@@ -43,7 +43,7 @@ config =
         ],
       sepChar = "*",
       alignSep = "--",
-      template = "<action=`dmenu_run` button=1><icon=/home/natto/.xmonad/lib/nixos.xpm/></action> *UnsafeStdinReader* " ++ sep ++ " <fn=1></fn>*mpd* -- *multicpu* " ++ sep ++ " *memory* " ++ sep ++ " *wlp0s20f3* " ++ sep ++ " *battery* " ++ sep ++ " <fn=1>\xf028</fn> <fc=" ++ green ++ ">*pamixer*%</fc> " ++ sep ++ " *date* - *time* " ++ sep ++ "*tray*"
+      template = "<action=`dmenu_run` button=1><icon=/home/natto/.xmonad/lib/nixos.xpm/></action> *UnsafeStdinReader* " ++ sep ++ " <fn=1></fn>*mpd* -- *multicpu* " ++ sep ++ " *memory* " ++ sep ++ " *dynnetwork* " ++ sep ++ " *battery* " ++ sep ++ " <fn=1>\xf028</fn> <fc=" ++ green ++ ">*pamixer*%</fc> " ++ sep ++ " *date* - *time* " ++ sep ++ "*tray*"
     }
 
 main :: IO ()
