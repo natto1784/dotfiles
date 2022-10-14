@@ -26,14 +26,11 @@ idk random variables to match my color theme
  c-white-2   "#fdf6e3")
 #+end_src
 
-
-#+begin_src python
-#+end_src
-
 * Settings
 ** Setting the default face
 #+begin_src emacs-lisp
-(setq default-frame-alist '((font . "Monoid-12")))
+(set-frame-font "Monoid 12" nil t)
+(add-to-list 'default-frame-alist '(font . "Monoid-12"))
 #+end_src
 
 ** Some mode settings based on personal preferences
@@ -43,7 +40,8 @@ idk random variables to match my color theme
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (fringe-mode 0)
-;(cua-mode 1)
+;; (cua-mode 1)
+(electric-indent-mode 0)
 (global-display-line-numbers-mode 1)
 (xterm-mouse-mode 1)
 #+end_src
@@ -103,9 +101,6 @@ Enable selectrum
 #+begin_src emacs-lisp
 (use-package selectrum
   :config
-  (define-key selectrum-minibuffer-map (kbd "C-n")  #'selectrum-next-candidate)
-  (define-key selectrum-minibuffer-map (kbd "C-e")  #'selectrum-previous-candidate)
-  (define-key selectrum-minibuffer-map (kbd "C-i")  #'selectrum-select-current-candidate)
   (selectrum-mode +1))
 #+end_src
 
@@ -148,10 +143,6 @@ Add orderless for selectrum
   :init
   (setq-default evil-shift-width 2)
   :config
-  (setq org-src-fontify-natively t
-        org-src-strip-leading-and-trailing-blank-lines t
-        org-src-preserve-indentation t
-        org-src-tab-acts-natively t)
   (evil-set-initial-state 'vterm-mode 'insert)
   (evil-set-undo-system 'undo-tree)
   (evil-define-key 'visual global-map (kbd ">") 'my/evil-shift-right)
@@ -168,16 +159,6 @@ To undo and redo easily like vi
   (global-undo-tree-mode 1))
 #+end_src
   
-*** Configure evil-colemak-basics
-To get colemak-dh bindings in evil mode
-#+begin_src emacs-lisp
-(use-package evil-colemak-basics
-  :init
-  (setq evil-colemak-basics-layout-mod 'mod-dh)
-  :config
-  (global-evil-colemak-basics-mode 1))
-#+end_src
-
 *** Miscellaneous evil related packages
 #+begin_src emacs-lisp
 (use-package evil-terminal-cursor-changer)
@@ -199,22 +180,8 @@ To get colemak-dh bindings in evil mode
   (treemacs-git-mode 'simple))
 #+end_src
 
-*** Configure treemacs-evil
-Configure treemacs-evil to get colemak-dh bindings
 #+begin_src emacs-lisp
-  (use-package treemacs-evil :config
-    (define-key evil-treemacs-state-map (kbd "j")   nil)
-    (define-key evil-treemacs-state-map (kbd "k")   nil)
-    (define-key evil-treemacs-state-map (kbd "n")   #'treemacs-next-line)
-    (define-key evil-treemacs-state-map (kbd "e")   #'treemacs-previous-line)
-    (define-key evil-treemacs-state-map (kbd "M-n") #'treemacs-next-neighbour)
-    (define-key evil-treemacs-state-map (kbd "M-e") #'treemacs-previous-neighbour)
-    (define-key evil-treemacs-state-map (kbd "M-N") #'treemacs-next-line-other-window)
-    (define-key evil-treemacs-state-map (kbd "M-E") #'treemacs-previous-line-other-window)
-    (define-key evil-treemacs-state-map (kbd "M")   #'treemacs-collapse-parent-node)
-    (evil-define-key 'treemacs treemacs-mode-map (kbd "m") #'treemacs-COLLAPSE-action)
-    (evil-define-key 'treemacs treemacs-mode-map (kbd "i") #'treemacs-RET-action)
-   )
+  (use-package treemacs-evil)
 #+end_src
 
 ** LSP
@@ -273,12 +240,7 @@ For autocomplete
   :config
   (add-to-list 'company-backends 'company-dabbrev)
   (setq company-backends (cons 'company-files (remove 'company-files company-backends)))
-  (company-mode 1)
-  (define-key company-active-map (kbd "C-n") 'company-select-next)
-  (define-key company-active-map (kbd "C-e") 'company-select-previous)
-  (define-key company-search-map (kbd "C-n") 'company-select-next)
-  (define-key company-search-map (kbd "C-e") 'company-select-previous)
-  (company-mode))
+  (company-mode 1))
 #+end_src
 
 *** Configure company-quickhelp
@@ -289,35 +251,35 @@ For autocomplete
 
 ** Treesitter
 #+begin_src emacs-lisp
-;(use-package tree-sitter-langs)
-;(use-package tree-sitter
-; :after tree-sitter-langs
-;  :config
-;  (global-tree-sitter-mode)
-; :init 
-;  (add-to-list 'tree-sitter-major-mode-language-alist '(fundamental-mode . bash))
-;  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+(use-package tree-sitter-langs)
+(use-package tree-sitter
+ :after tree-sitter-langs
+  :config
+  (global-tree-sitter-mode)
+ :init 
+  (add-to-list 'tree-sitter-major-mode-language-alist '(fundamental-mode . bash))
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 #+end_src
 
 ** Lang support
 #+begin_src emacs-lisp
-;(use-package haskell-mode)
+(use-package haskell-mode)
 
-;(use-package rustic)
+(use-package rustic)
 
-;(use-package nix-mode
-;  :mode "\\.nix\\'")
-;(add-to-list 'lsp-language-id-configuration '(nix-mode . "nix"))
-;(lsp-register-client
-; (make-lsp-client :new-connection (lsp-stdio-connection '("rnix-lsp"))
-;                  :major-modes '(nix-mode)
-;                  :server-id 'nix))
+(use-package nix-mode
+  :mode "\\.nix\\'")
+(add-to-list 'lsp-language-id-configuration '(nix-mode . "nix"))
+(lsp-register-client
+ (make-lsp-client :new-connection (lsp-stdio-connection '("rnix-lsp"))
+                  :major-modes '(nix-mode)
+                  :server-id 'nix))
 
 
-;(use-package hcl-mode
-;  :mod 
-;  "\\.hcl\\'"
-;  "\\.nomad\\'")
+(use-package hcl-mode
+  :mode
+  "\\.hcl\\'"
+  "\\.nomad\\'")
 #+end_src
 
 ** Magit
@@ -347,16 +309,16 @@ For autocomplete
 ** Centaur Tabs
 #+begin_src emacs-lisp
 (use-package centaur-tabs
+  :demand
   :config
-  (setq centaur-tabs-style "box"
-;        centaur-tabs-set-bar 'left
+  (setq centaur-tabs-style "rounded"
 	centaur-tabs-height 18
 	centaur-tabs-set-modified-marker t
 	centaur-tabs-set-icons t)
-  (centaur-tabs-group-buffer-groups)
-  (add-hook 'server-after-make-frame-hook 'centaur-tabs-mode)
-  (set-face-attribute 'tab-line nil :inherit 'centaur-tabs-unselected)
-  (centaur-tabs-headline-match))
+  (centaur-tabs-group-by-projectile-project)
+  (centaur-tabs-headline-match)
+  (centaur-tabs-mode nil)
+  (set-face-attribute 'tab-line nil :inherit 'centaur-tabs-unselected))
 #+end_src
 
 ** Misc packages
@@ -371,11 +333,7 @@ For autocomplete
 
 (use-package flex-autopair
   :config
-  (flex-autopair-mode 1))
-
-(use-package rainbow-mode
-  :config
-  (rainbow-mode 1))
+  (flex-autopair-mode 0))
 
 (use-package treemacs-all-the-icons)
 
@@ -388,8 +346,13 @@ For autocomplete
 (use-package org
   :after evil
   :config
+  (setq evil-want-C-i-jump nil
+        org-adapt-indentation t
+        org-src-fontify-natively t
+        org-src-strip-leading-and-trailing-blank-lines t
+        org-src-preserve-indentation t
+        org-src-tab-acts-natively t)
   (define-key org-mode-map (kbd "RET") 'org-return-and-maybe-indent)
-  (setq evil-want-C-i-jump nil)
   (evil-define-key 'normal org-mode-map (kbd "TAB") 'org-cycle))
 #+end_src
 
@@ -540,10 +503,44 @@ This returns the command to run in the terminal
 
 * Keybinds
 ** General
+*** Colemak translations
+#+begin_src emacs-lisp
+(setq states-with-hjkl-keybindings 
+  '(normal visual motion treemacs))
+
+(setq evil-states
+  '(visual normal))
+
+(general-translate-key states-with-hjkl-keybindings 'global
+    "m" "h"
+    "n" "j"
+    "e" "k"
+    "i" "l"
+    "u" "i"
+    "l" "u"
+    "k" "n"
+    "f" "e"
+    "t" "f"
+    "j" "t"
+)
+#+end_src
+
+*** Misc binds
 #+begin_src emacs-lisp
 (with-eval-after-load 'general
+
 (general-define-key
-  :states '(normal emacs visual motion treemacs Eshell override)
+  :states evil-states
+  "M-c" 'comment-line
+  "C-c M-c" 'comment-box)
+
+(general-define-key
+  :states '(normal insert)
+  "C-S-v" 'yank)
+
+
+(general-define-key
+  :states states-with-hjkl-keybindings
   "M-o" 'treemacs
   "M-v" 'split-window-vertically
   "M-h" 'split-window-horizontally
@@ -551,10 +548,6 @@ This returns the command to run in the terminal
   "M-C-i" 'enlarge-window-horizontally
   "M-C-e" 'shrink-window
   "M-C-n" 'enlarge-window
-  "C-m" 'windmove-left
-  "C-i" 'windmove-right
-  "C-n" 'windmove-down
-  "C-e" 'windmove-up
   "M-,"  'centaur-tabs-backward
   "M-."  'centaur-tabs-forward
   "C-q"  'delete-window
@@ -563,26 +556,18 @@ This returns the command to run in the terminal
   "M-S-w"  'kill-window)
 #+end_src
 
-Pop-up terminal specific keybinds
+*** Pop-up terminal specific keybinds
 #+begin_src emacs-lisp
-
 (with-eval-after-load 'vterm-toggle
   (general-define-key
-    :states '(override insert normal visual treemacs motion)
-    "M-f" 'lsp-format-buffer
+    :states states-with-hjkl-keybindings
     "<f4>"  (lambda () (interactive) (vterm t))
     "C-<f1>" 'vterm-toggle-cd
     "<f1>" 'vterm-toggle
     "<f5>" (lambda () (interactive) (run-in-vterm (candrun))))
 
-    (define-key vterm-mode-map (kbd "<f2>") 'vterm-toggle-forward)
+    (define-key vterm-mode-map (kbd "<F2>") 'vterm-toggle-forward)
     (define-key vterm-mode-map (kbd "<f3>") 'vterm-toggle-backward)
-
-  (general-define-key
-    :states '(normal insert)
-    :keymaps 'VTerm
-    "C-S-v" 'vterm-yank
-    )
 )
 #+end_src
 
