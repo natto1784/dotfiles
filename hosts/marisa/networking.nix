@@ -1,21 +1,29 @@
 { config, pkgs, ... }:
 {
   networking = {
-    hostName = "Marisa";
+    hostName = "marisa";
     firewall = {
-      allowedTCPPorts = [ 22 80 6060 5000 8800 6666 4444 4646 8500 222 5454 8080 ];
+      allowedTCPPorts = [ 22 80 6060 5001 8800 6666 4444 4646 8500 202 5454 8080 ];
       allowedUDPPorts = [ 17840 ];
     };
+
     wireless = {
       enable = false;
       iwd.enable = true;
     };
     interfaces = {
+      eth0 = {
+        useDHCP = false;
+        ipv4.addresses = [{
+          prefixLength = 24;
+          address = "192.168.1.159";
+        }];
+      };
       wlan0 = {
         useDHCP = false;
         ipv4.addresses = [{
           prefixLength = 24;
-          address = "192.168.0.159";
+          address = "192.168.1.159";
         }];
       };
     };
@@ -33,7 +41,7 @@
         }
       ];
     };
-    defaultGateway = "192.168.0.1";
+    defaultGateway = "192.168.1.1";
     nameservers = [ "1.1.1.1" "8.8.8.8" ];
   };
 }

@@ -68,6 +68,7 @@
         commonModules = [
           ./modules/nvim
           ./modules/vault-agent.nix
+          ./modules/cachix.nix
         ];
         serverModules = [
           ./modules/min-pkgs.nix
@@ -101,7 +102,7 @@
 
         nixosConfigurations = {
           #Home laptop
-          Satori = nixpkgs.lib.nixosSystem rec {
+          satori = nixpkgs.lib.nixosSystem rec {
             system = "x86_64-linux";
             modules = [
               ./hosts/satori
@@ -114,7 +115,7 @@
           };
 
           #Home server (RPi4)
-          Marisa = nixpkgs.lib.nixosSystem rec {
+          marisa = nixpkgs.lib.nixosSystem rec {
             system = "aarch64-linux";
             modules = [
               ./hosts/marisa
@@ -128,7 +129,7 @@
           };
 
           #Oracle Cloud VM
-          Remilia = nixpkgs.lib.nixosSystem rec {
+          remilia = nixpkgs.lib.nixosSystem rec {
             system = "x86_64-linux";
             modules = [
               ./hosts/remilia

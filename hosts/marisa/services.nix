@@ -50,16 +50,13 @@
           };
         };
         server = true;
-        connect = {
-          enabled = true;
-        };
         ports = {
           grpc = 8502;
         };
+        connect = {
+          enabled = true;
+        };
         encrypt = "+++consul_encryption+++";
-        ca_file = "/var/consul-certs/consul-agent-ca.pem";
-        cert_file = "/var/consul-certs/dc1-server-consul-0.pem";
-        key_file = "/var/consul-certs/dc1-server-consul-0-key.pem";
       });
     in
     lib.mkForce ''
@@ -83,6 +80,7 @@
           server = {
             enabled = true;
             encrypt = "+++nomad_encryption+++";
+            bootstrap_expect = 1;
           };
           plugin."docker" = {
             config = {
@@ -98,9 +96,7 @@
             };
           };
           client = {
-            meta = {
-              "connect.sidecar_image" = "envoyproxy/envoy:v1.20.1";
-            };
+            meta."connect.sidecar_image" = "envoyproxy/envoy:v1.21.5";
             options = {
               "docker.privileged.enabled" = true;
               "docker.volumes.enabled" = true;
@@ -111,6 +107,7 @@
           vault = {
             enabled = true;
             token = "+++nomad_vault+++";
+            task_token_ttl = "1h";
             address = "https://10.55.0.2:8800";
             ca_file = "/var/rootcert/cert.pem";
             cert_file = "/var/certs/cert.pem";
@@ -123,9 +120,6 @@
             token = "+++nomad_consul+++";
             ssl = false;
             allow_unauthenticated = false;
-            ca_file = "/var/consul-certs/consul-agent-ca.pem";
-            cert_file = "/var/consul-certs/dc1-server-consul-0.pem";
-            key_file = "/var/consul-certs/dc1-server-consul-0-key.pem";
             auto_advertise = true;
             server_auto_join = true;
             client_auto_join = true;
@@ -148,7 +142,6 @@
       permitRootLogin = "yes";
     };
     nomad = {
-      package = pkgs.master.nomad;
       enable = true;
       enableDocker = true;
       dropPrivileges = false;
@@ -171,49 +164,13 @@
       package = pkgs.master.consul;
       extraConfigFiles = lib.singleton "/run/consul/consul.json";
     };
-    vault-agent = {
+    create_ap = {
       enable = true;
       settings = {
-        vault = {
-          address = "https://10.55.0.2:8800";
-          client_cert = "/var/certs/cert.pem";
-          client_key = "/var/certs/key.pem";
-        };
-        auto_auth = {
-          method = [
-            {
-              "cert" = {
-                name = "Marisa";
-              };
-            }
-          ];
-        };
-        template = [
-          {
-            source = pkgs.writeText "wg.tpl" ''
-              {{ with secret "kv/systems/Marisa/wg" }}{{ .Data.data.private }}{{ end }}
-            '';
-            destination = "/var/secrets/wg.key";
-          }
-          {
-            source = pkgs.writeText "nomad_vault.tpl" ''
-              {{ with secret "kv/nomad" }}{{ .Data.data.vaultToken }}{{ end }}
-            '';
-            destination = "/var/secrets/nomad_vault.token";
-          }
-          {
-            source = pkgs.writeText "nomad_vault.tpl" ''
-              {{ with secret "kv/nomad" }}{{ .Data.data.consulToken }}{{ end }}
-            '';
-            destination = "/var/secrets/nomad_consul.token";
-          }
-          {
-            source = pkgs.writeText "nomad_encryption.tpl" ''
-              {{ with secret "kv/nomad" }}{{ .Data.data.encryptionKey }}{{ end }}
-            '';
-            destination = "/var/secrets/nomad_encryption.key";
-          }
-        ];
+        INTERNET_IFACE = "eth0";
+        PASSPHRASE = "agnishwar";
+        SSID = "Marisa";
+        WIFI_IFACE = "wlan0";
       };
     };
   };
