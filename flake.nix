@@ -68,7 +68,6 @@
         commonModules = [
           ./modules/nvim
           ./modules/vault-agent.nix
-          ./modules/cachix.nix
         ];
         serverModules = [
           ./modules/min-pkgs.nix
