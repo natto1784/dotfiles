@@ -3,8 +3,18 @@
   networking = {
     hostName = "marisa";
     firewall = {
-      allowedTCPPorts = [ 22 80 6060 5001 8800 6666 4444 4646 8500 202 5454 8080 ];
+      allowedTCPPorts = [
+        22 # ssh
+        80 # http
+        6060 4444 5454 8080 #????
+        5001 #gitea
+        8800 4646 8500 #vault nomad consul
+        8888 #simpler-filehost1
+        6666 #concourse
+        202 #gitea-ssh
+      ];
       allowedUDPPorts = [ 17840 ];
+      trustedInterfaces = [ "docker0" ];
     };
 
     wireless = {
