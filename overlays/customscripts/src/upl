@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+for x in "$@"; do
+  curl -F "file=@\"$x\"" -F "key=$FILEHOST_KEY" $FILEHOST_URL
+  echo " "
+done

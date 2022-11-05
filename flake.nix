@@ -61,9 +61,7 @@
     (
       let
         personalModules = [
-          ./modules/graphics.nix
           ./modules/sound.nix
-          ./modules/xorg.nix
         ];
         commonModules = [
           ./modules/nvim
