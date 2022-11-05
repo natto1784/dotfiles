@@ -98,7 +98,8 @@ in
                 quality     "9"
                 name        "Vorbis Stream"
                 port        "8001"
-                max_clients "4"
+                max_clients "0"
+                always_on   "yes"
         }
         filesystem_charset "UTF-8"
       '';

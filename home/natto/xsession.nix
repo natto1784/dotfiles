@@ -4,6 +4,7 @@
     package = pkgs.numix-cursor-theme;
     name = "Numix";
   };
+
   xsession = {
     windowManager = {
       xmonad = {

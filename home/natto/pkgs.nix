@@ -8,7 +8,6 @@
     pamixer
     mpdas
     pavucontrol
-    unstable.anup
     (xfce.thunar.override {
       thunarPlugins = with xfce; [
         thunar-media-tags-plugin
@@ -18,12 +17,12 @@
     })
     xfce.xfconf
     xfce.tumbler
-    master.discord
-    master.discord-canary
+    (master.discord.override {
+      nss = nss_latest;
+    })
     mpd_discord_richpresence
     sox
     qbittorrent
-    #tor-browser-bundle-bin
     mpc_cli
     hexchat
     luajit
@@ -57,8 +56,8 @@
     }))
     pmidi
     #   dosbox
+    rust-analyzer
     authy
-    unstable.premid
     (master.tauon.override { withDiscordRPC = true; })
     nbfc-linux
     pulseaudio
@@ -84,11 +83,8 @@
     spotify
     teams
     (qjackctl.override { jackSession = true; })
-    thunderbird
     neomutt
     mailcap
-    element-desktop
-    syncplay
     betterdiscordctl
     python3Packages.pygments
     calibre
@@ -97,6 +93,6 @@
     tlauncher
     lutris
     gnome.zenity
-    protontricks
+    imagemagick
   ];
 }
