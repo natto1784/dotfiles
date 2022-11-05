@@ -1,6 +1,5 @@
-#!/usr/bin/env nix-shell
-#! nix-shell -i bash -p curl
+#!/usr/bin/env sh
 for x in "$@"; do
-  curl -F "file=@\"$x\"" --header "key: $FILEHOST_KEY" https://f.weirdnatto.in
+  curl -F "file=@\"$x\"" -F "key=$FILEHOST_KEY" https://f.weirdnatto.in
   echo " "
 done
