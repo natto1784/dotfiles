@@ -2,8 +2,8 @@
 
 {
   boot = {
-    zfs.forceImportAll = false;
     supportedFilesystems = [ "zfs" ];
+
     kernelPackages = pkgs.unstable.linuxPackages_latest;
     initrd = {
       availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" "vfio-pci" ];
@@ -18,7 +18,7 @@
     };
     kernelParams = [ "intel_pstate=active" "intel_iommu=on" ];
     kernelModules = [ "kvm-intel" "snd-seq" "snd-rawmidi" "joydev" ];
-    extraModulePackages = with config.boot.kernelPackages; [ nvidia_x11 v4l2loopback ];
+    extraModulePackages = with config.boot.kernelPackages; [ nvidia_x11_vulkan_beta v4l2loopback ];
     loader = {
       efi = {
         canTouchEfiVariables = true;
@@ -35,5 +35,6 @@
       };
     };
     binfmt.emulatedSystems = [ "aarch64-linux" ];
+    zfs.extraPools = [ "stuff" ];
   };
 }

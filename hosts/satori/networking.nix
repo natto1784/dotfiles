@@ -2,32 +2,24 @@
 
 {
   networking = {
-    hostName = "Satori";
+    hostName = "satori";
     hostId = "beca3df0";
     wireless.enable = true;
     wireless.interfaces = [ "wlp0s20f3" ];
     firewall = {
       allowedTCPPorts = [ 22 18172 6600 8001 ];
       allowedUDPPorts = [ 22 17840 18172 ];
+      trustedInterfaces = [ "docker0" ];
     };
 
-    defaultGateway = {
-      address = "192.168.0.1";
-    };
+    defaultGateway = "192.168.1.1";
 
     interfaces = {
       enp7s0 = {
         useDHCP = true;
         ipv4.addresses = [{
           prefixLength = 24;
-          address = "192.168.0.109";
-        }];
-      };
-      wlp0s20f3 = {
-        useDHCP = true;
-        ipv4.addresses = [{
-          prefixLength = 24;
-          address = "192.168.0.109";
+          address = "192.168.1.109";
         }];
       };
     };

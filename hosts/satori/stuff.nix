@@ -19,6 +19,7 @@
     shellAliases = rec {
       ec = "emacsclient";
       ecc = ec + " -c";
+      ecnw = ec + " -nw";
     };
   };
   security = {
