@@ -6,7 +6,7 @@
 idk random variables to match my color theme
 #+begin_src emacs-lisp
   ; -*- lexical-binding: t; -*-
-(setq
+( setq
  c-bg        "#073642"
  c-fg        "#eee8d5"
  c-red       "#dc322f"
@@ -41,7 +41,6 @@ idk random variables to match my color theme
 (menu-bar-mode 0)
 (fringe-mode 0)
 ;; (cua-mode 1)
-(electric-indent-mode 0)
 (global-display-line-numbers-mode 1)
 (xterm-mouse-mode 1)
 #+end_src
@@ -91,7 +90,6 @@ idk random variables to match my color theme
         doom-themes-enable-italic t
         doom-themes-treemacs-theme "doom-colors")
   (load-theme 'doom-solarized-dark t)
-  (doom-themes-visual-bell-config)
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
 #+end_src
@@ -112,16 +110,15 @@ Add selectrum-prescient
   (prescient-persist-mode +1))
 #+end_src
 
-
-Add orderless for selectrum
 #+begin_src emacs-lisp
+
 (use-package orderless
   :after selectrum
   :config
   (setq completion-styles '(orderless basic))
   (savehist-mode)
-  (setq orderless-skip-highlighting (lambda () selectrum-is-active))
-  (setq selectrum-highlight-candidates-function #'orderless-highlight-matches))
+  (setq orderless-skip-highlighting (lambda () selectrum-is-active)
+        selectrum-highlight-candidates-function #'orderless-highlight-matches))
 #+end_src
 
 ** Evil
@@ -165,23 +162,16 @@ To undo and redo easily like vi
 #+end_src
 
 ** Treemacs
-*** Dependencies
-#+begin_src emacs-lisp
-(use-package cfrs)
-#+end_src
-
 *** Configure treemacs
 #+begin_src emacs-lisp
-(use-package treemacs
-  :after cfrs
-  :config
-  (treemacs-filewatch-mode 1)
-  (treemacs-display-current-project-exclusively)
-  (treemacs-git-mode 'simple))
+(use-package treemacs)
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package treemacs-evil)
+(use-package treemacs-evil)
+(use-package treemacs-magit)
+(use-package treemacs-projectile)
+(use-package treemacs-all-the-icons)
 #+end_src
 
 ** LSP
@@ -189,18 +179,11 @@ To undo and redo easily like vi
 #+begin_src emacs-lisp
 (use-package lsp-mode
   :defer 0
-  :init
-  (setq )
-  :config
-  (lsp-mode 1))
-#+end_src
-
-*** Configure lsp-treemacs
-#+begin_src emacs-lisp
-(use-package lsp-treemacs
-  :defer 0
-  :config
-  (lsp-treemacs-sync-mode 1))
+  :commands lsp
+  :custom
+  (lsp-rust-analyzer-server-display-inlay-hints t)
+  (lsp-rust-analyzer-display-chaining-hints t)
+  (lsp-rust-analyzer-display-closure-return-type-hints t))
 #+end_src
 
 *** Configure lsp-ui
@@ -210,7 +193,7 @@ To undo and redo easily like vi
   :init
   (setq lsp-ui-doc-show-with-cursor t)
   :config
-  (lsp-ui-peek-enable 1)
+(lsp-ui-peek-enable 1)
   (lsp-ui-doc-enable 1))
 #+end_src
 
@@ -275,16 +258,17 @@ For autocomplete
                   :major-modes '(nix-mode)
                   :server-id 'nix))
 
-
 (use-package hcl-mode
   :mode
   "\\.hcl\\'"
   "\\.nomad\\'")
+
+(use-package go-mode)
 #+end_src
 
 ** Magit
 #+begin_src emacs-lisp
-; (use-package magit)
+(use-package magit)
 #+end_src
 
 * VTerm
@@ -296,14 +280,20 @@ For autocomplete
   (evil-define-key 'insert vterm-mode-map (kbd "C-y") 'vterm-yank)
   (setq vterm-timer-delay 0.005))
 
-(use-package vterm-toggle 
+
+(use-package vterm-toggle
   :config
   (setq vterm-toggle-fullscreen-p nil)
   (add-to-list 'display-buffer-alist
-	      '((lambda(bufname _) (with-current-buffer bufname (equal major-mode 'vterm-mode)))
-		(display-buffer-reuse-window display-buffer-at-bottom)
-		(reusable-frames . visible)
-		(window-height . 0.4))))
+               '((lambda (buffer-or-name _)
+                      (let ((buffer (get-buffer buffer-or-name)))
+                        (with-current-buffer buffer
+                          (or (equal major-mode 'vterm-mode)
+                              (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+               (display-buffer-reuse-window display-buffer-in-side-window)
+               (side . bottom)
+               (reusable-frames . visible)
+               (window-height . 0.4))))
 #+end_src
 
 ** Centaur Tabs
@@ -326,18 +316,15 @@ For autocomplete
 (use-package elcord
   :defer 0)
 
-(use-package projectile)
+(use-package projectile
+  :config
+  (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
+  (projectile-mode +1))
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-(use-package flex-autopair
-  :config
-  (flex-autopair-mode 0))
-
-(use-package treemacs-all-the-icons)
-
-(use-package general)
+(use-package flex-autopair)
 #+end_src
 
 * Org
@@ -375,6 +362,7 @@ For autocomplete
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
 (setq org-src-fontify-natively t)
+(setq org-confirm-babel-evaluate nil)
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -501,19 +489,29 @@ This returns the command to run in the terminal
            ("rs" (concat "rustc" full " -o " file " && " file " && rm " file)))))
 #+end_src
 
+* Custom Functions
+#+begin_src emacs-lisp
+(defun detach-process ()
+  "Run processes but detached from the parent"
+  (interactive)
+  (let ((command (read-string "Enter command:")))
+    (call-process-shell-command (concat command " &") nil 0)))
+#+end_src
+
 * Keybinds
 ** General
 *** Colemak translations
 #+begin_src emacs-lisp
-(setq states-with-hjkl-keybindings 
-  '(normal visual motion treemacs))
+(use-package general)
 
 (setq evil-states
-  '(visual normal))
+  '(visual normal motion))
 
-(general-translate-key states-with-hjkl-keybindings 'global
+(with-eval-after-load 'general
+(general-translate-key evil-states 'global
     "m" "h"
     "n" "j"
+    "N" "J"
     "e" "k"
     "i" "l"
     "u" "i"
@@ -522,13 +520,12 @@ This returns the command to run in the terminal
     "f" "e"
     "t" "f"
     "j" "t"
+    "K" "N"
 )
 #+end_src
 
 *** Misc binds
 #+begin_src emacs-lisp
-(with-eval-after-load 'general
-
 (general-define-key
   :states evil-states
   "M-c" 'comment-line
@@ -536,14 +533,18 @@ This returns the command to run in the terminal
 
 (general-define-key
   :states '(normal insert)
+  "M-C-f" 'lsp-format-buffer
   "C-S-v" 'yank)
 
-
 (general-define-key
-  :states states-with-hjkl-keybindings
+  :keymaps '(global vterm-mode-map)
   "M-o" 'treemacs
   "M-v" 'split-window-vertically
   "M-h" 'split-window-horizontally
+  "M-m" 'windmove-left
+  "M-n" 'windmove-down
+  "M-e" 'windmove-up
+  "M-i" 'windmove-right
   "M-C-m" 'shrink-window-horizontally
   "M-C-i" 'enlarge-window-horizontally
   "M-C-e" 'shrink-window
@@ -560,7 +561,7 @@ This returns the command to run in the terminal
 #+begin_src emacs-lisp
 (with-eval-after-load 'vterm-toggle
   (general-define-key
-    :states states-with-hjkl-keybindings
+    :keymaps '(global vterm-mode-map)
     "<f4>"  (lambda () (interactive) (vterm t))
     "C-<f1>" 'vterm-toggle-cd
     "<f1>" 'vterm-toggle
@@ -571,7 +572,7 @@ This returns the command to run in the terminal
 )
 #+end_src
 
-Toggle Appearance
+*** Toggle Appearance
 #+begin_src emacs-lisp
 (defun toggle-theme-shade ()
   (if (symbol-value dark-theme)
