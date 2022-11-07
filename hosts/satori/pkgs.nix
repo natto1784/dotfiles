@@ -44,6 +44,7 @@
     git = {
       enable = true;
       package = pkgs.master.git.override {
+        doInstallCheck = false;
         sendEmailSupport = true;
         withManual = false;
       };

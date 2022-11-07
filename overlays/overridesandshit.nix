@@ -24,27 +24,7 @@ final: prev: {
     patches = [ ./patches/st.patch ];
   });
 
-  ncmpcpp = prev.ncmpcpp.override {
-    visualizerSupport = true;
-    clockSupport = true;
-  };
-
-  /*picom = prev.picom.overrideAttrs (oldAttrs: rec{
-    src = prev.fetchFromGitHub {
-    owner = "jonaburg";
-    repo = "picom";
-    rev = "a8445684fe18946604848efb73ace9457b29bf80";
-    sha256 = "sha256-R+YUGBrLst6CpUgG9VCwaZ+LiBSDWTp0TLt1Ou4xmpQ=";
-    fetchSubmodules = true;
-    };
-    });*/
-
   proxychains = prev.proxychains.overrideAttrs (_: {
     postInstall = ":";
   });
-
-  /* tor-browser-bundle-bin = prev.tor-browser-bundle-bin.overrideAttrs (_ : { 
-    src = builtins.fetchurl { url = "https://www.torproject.org/dist/torbrowser/10.5.2/tor-browser-linux64-10.5.2_en-US.tar.xz"; sha256="16zk7d0sxm2j00vb002mjj38wxcxxlahnfdb9lmkmkfms9p9xfkb";};
-    });*/
-
 }
