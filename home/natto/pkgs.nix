@@ -1,35 +1,26 @@
 { config, pkgs, ... }:
 {
   home.packages = with pkgs; [
+
+    # A/V, codec and media stuff
     ffmpeg-full
     sox
-    rage
-    curl
     pamixer
     mpdas
-    pavucontrol
-    (xfce.thunar.override {
-      thunarPlugins = with xfce; [
-        thunar-media-tags-plugin
-        thunar-volman
-        thunar-archive-plugin
-      ];
-    })
-    xfce.xfconf
-    xfce.tumbler
-    (master.discord.override {
-      nss = nss_latest;
-    })
-    mpd_discord_richpresence
-    sox
-    qbittorrent
-    mpc_cli
-    hexchat
-    luajit
     mpv
-    jmtpfs
-    dunst
-    flameshot
+    mpc_cli
+    pulseaudio
+    pavucontrol
+    spotify
+    noisetorch
+    imagemagick
+    (qjackctl.override { jackSession = true; })
+
+    # Utils
+    rage
+    curl
+    dmenu
+    st
     yt-dlp
     xclip
     xorg.xkbcomp
@@ -39,28 +30,51 @@
     glxinfo
     sxiv
     vim
-    feh
-    dmenu
-    st
+    jmtpfs
     neofetch
-    xmobar
     xdotool
+    nbfc-linux
+    customscripts
+
+    # GUI utils
+    (xfce.thunar.override {
+      thunarPlugins = with xfce; [
+        thunar-media-tags-plugin
+        thunar-volman
+        thunar-archive-plugin
+      ];
+    })
+    xfce.xfconf
+    xfce.tumbler
+    flameshot
+    (master.discord.override {
+      nss = nss_latest;
+    })
+    qbittorrent
+    hexchat
+    luajit
+    dunst
+    feh
+    xmobar
     arc-theme
     arc-icon-theme
-    tor-browser-bundle-bin
+    authy
+    calibre
+    gnome.zenity
+    stalonetray
+
+    # Wine and games and stuff
     wineWowPackages.stable
     master.winetricks
     games.wine-discord-ipc-bridge
     (games.osu-stable.overrideAttrs (_: {
       tricks = [ "gdiplus" "dotnet48" "meiryo" ];
     }))
-    pmidi
-    #   dosbox
+    tlauncher
+    lutris
+
+    # Dev shit
     rust-analyzer
-    authy
-    (master.tauon.override { withDiscordRPC = true; })
-    nbfc-linux
-    pulseaudio
     (texlive.combine {
       inherit (texlive)
         scheme-small
@@ -79,20 +93,17 @@
         upquote
         tcolorbox;
     })
-    anki-bin
-    spotify
+    python3Packages.pygments
+
+    # Misc
     teams
-    (qjackctl.override { jackSession = true; })
+    anki-bin
+    tor-browser-bundle-bin
     neomutt
     mailcap
-    betterdiscordctl
-    python3Packages.pygments
-    calibre
-    noisetorch
-    customscripts
-    tlauncher
-    lutris
-    gnome.zenity
-    imagemagick
+    (ncmpcpp.override {
+      visualizerSupport = true;
+      clockSupport = true;
+    })
   ];
 }

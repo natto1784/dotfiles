@@ -13,6 +13,18 @@
           source = ./config/dunst/dunstrc;
           target = "${home}/.config/dunst/dunstrc";
         };
+        stalonetray = {
+          source = ./config/stalonetrayrc;
+          target = "${home}/.stalonetrayrc";
+        };
+        ncmpcpp = {
+          source = ./config/ncmpcpp/config;
+          target = "${home}/.config/ncmpcpp/config";
+        };
+        mpv = {
+          source = ./config/mpv/mpv.conf;
+          target = "${home}/.config/mpv/mpv.conf";
+        };
       };
     };
 }
