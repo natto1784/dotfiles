@@ -35,6 +35,5 @@
       };
     };
     binfmt.emulatedSystems = [ "aarch64-linux" ];
-    zfs.extraPools = [ "stuff" ];
   };
 }
