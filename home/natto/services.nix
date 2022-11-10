@@ -50,4 +50,20 @@ in
       };
     };
   };
+
+  systemd.user.services.mpdas = {
+    Unit = {
+      After = [ "mpd.service" ];
+      Description = "Music Player Daemon AutoScrobbler";
+    };
+
+    Install.WantedBy = [ "default.target" ];
+
+    Service = {
+      Type = "simple";
+      Restart = "on-failure";
+      RestartSec = "15s";
+      ExecStart = "${pkgs.mpdas}/bin/mpdas -c ${config.age.secrets.mpdasrc.path}";
+    };
+  };
 }

@@ -41,6 +41,9 @@ in
       };
     };
   };
+  services = {
+    imapnotify.enable = true;
+  };
   programs = {
     mbsync.enable = true;
     neomutt = rec {
