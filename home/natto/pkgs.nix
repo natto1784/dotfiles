@@ -72,6 +72,7 @@
     }))
     tlauncher
     lutris
+    citra
 
     # Dev shit
     rust-analyzer
@@ -99,7 +100,6 @@
     teams
     anki-bin
     tor-browser-bundle-bin
-    neomutt
     mailcap
     (ncmpcpp.override {
       visualizerSupport = true;

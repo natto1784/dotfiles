@@ -1,0 +1,36 @@
+set editor="nvim"
+#set index_format="%4C %Z %{%b %d %R} %-15.15L (%?l?%4l&%4c?) %s"
+set sidebar_visible
+#set sidebar_format="%B%?F? [%F]?%* %?N?%N/?%S"
+set mail_check_stats
+bind attach,index,pager \CU next-page
+bind attach,index,pager \CD previous-page
+bind attach,index,pager n next-entry
+bind attach,index,pager e previous-entry
+bind attach,index,pager 9 group-reply
+bind pager g top
+bind pager G bottom
+bind pager n next-line
+bind pager e previous-line
+bind pager i view-attachments
+bind attach,index g first-entry
+bind attach,index G last-entry
+bind index,pager \CE sidebar-prev                 
+bind index,pager \CN sidebar-next                 
+bind index,pager \CI sidebar-open                 
+bind index,pager \CB sidebar-toggle-visible       
+set sleep_time = 0		
+set markers = no		
+set mark_old = no		
+set mime_forward = yes		
+set wait_key = no		
+set fast_reply			
+set fcc_attach			
+set forward_format = "Fwd: %s"	
+set forward_quote		
+set reverse_name		
+set include			
+set mail_check=60 
+auto_view text/html		
+alternative_order text/enriched text/plain text/html text
+macro index,pager U "<shell-escape>mbsync -a<enter>" "run mbsync to sync all emails"

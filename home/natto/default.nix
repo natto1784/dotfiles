@@ -3,6 +3,7 @@ let
 in
 {
   imports = [
+    ./email.nix
     ./secrets
     ./programs.nix
     ./xsession.nix

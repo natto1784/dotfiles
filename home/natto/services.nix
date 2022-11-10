@@ -37,6 +37,17 @@ in
       };
       extraConfig = builtins.readFile ./config/mpd/mpd.conf;
     };
-    mpd-discord-rpc.enable = true;
+    mpd-discord-rpc = {
+      enable = true;
+      settings = {
+        id = 1039532008424099850; # dont really care
+        format = {
+          large_image = "koishi";
+          small_image = "";
+          large_text = "real";
+          small_text = "the";
+        };
+      };
+    };
   };
 }

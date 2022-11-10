@@ -7,7 +7,6 @@ feh --bg-scale ~/Downloads/gruvbox.jpg &
 killall "polybar"
 polybar main &
 killall node
-node /mnt/Stuff/code/muhbot
 
 
 

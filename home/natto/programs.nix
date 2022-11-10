@@ -24,5 +24,6 @@
       };
     };
     go.enable = true;
+    password-store.enable = true;
   };
 }
