@@ -2,13 +2,12 @@
 {
   networking = {
     useDHCP = false;
-    hostName = "Remilia";
+    hostName = "remilia";
     firewall =
       {
         interfaces = {
           ens3 = {
             allowedTCPPorts = [
-              22
               80
               81
               443
@@ -19,10 +18,10 @@
               25
               22001
               22002
-              6600
               9898 
               8999
-            ];
+              99
+            ] ++ (map (x: x.sourcePort) config.networking.nat.forwardPorts);
             allowedUDPPorts = [ 17840 ];
           };
         };
@@ -47,8 +46,12 @@
       internalInterfaces = [ "wg0" ];
       forwardPorts = [
         {
-          destination = "10.55.0.2:222";
+          destination = "10.55.0.2:2002";
           sourcePort = 22;
+        }
+        {
+          destination = "10.55.0.2:22";
+          sourcePort = 23;
         }
         {
           destination = "10.55.0.3:6600";
