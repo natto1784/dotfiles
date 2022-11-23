@@ -20,7 +20,7 @@ in
       package32 = pkgs.master.pkgsi686Linux.mesa.drivers;
     };
     nvidia = {
-      package = config.boot.kernelPackages.nvidia_x11_vulkan_beta;
+      package = config.boot.kernelPackages.nvidia_x11;
       prime = {
         #      sync.enable = true;
         offload = { enable = true; };

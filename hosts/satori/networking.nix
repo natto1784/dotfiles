@@ -4,6 +4,7 @@
   networking = {
     hostName = "satori";
     hostId = "beca3df0";
+    defaultGateway = "192.168.1.1";
     wireless.enable = true;
     wireless.interfaces = [ "wlp0s20f3" ];
     firewall = {

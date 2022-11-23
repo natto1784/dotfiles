@@ -18,7 +18,7 @@
     };
     kernelParams = [ "intel_pstate=active" "intel_iommu=on" ];
     kernelModules = [ "kvm-intel" "snd-seq" "snd-rawmidi" "joydev" ];
-    extraModulePackages = with config.boot.kernelPackages; [ nvidia_x11_vulkan_beta v4l2loopback ];
+    extraModulePackages = with config.boot.kernelPackages; [ nvidia_x11 v4l2loopback ];
     loader = {
       efi = {
         canTouchEfiVariables = true;

@@ -31,6 +31,7 @@
     msr-tools
     steam
     igrep
+    jq
   ];
 
   programs = {
