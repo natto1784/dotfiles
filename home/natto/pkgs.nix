@@ -5,8 +5,7 @@
     # A/V, codec and media stuff
     ffmpeg-full
     sox
-    pamixer
-    mpdas
+    pamixer mpdas
     mpv
     mpc_cli
     pulseaudio
@@ -62,17 +61,25 @@
     calibre
     gnome.zenity
     stalonetray
+    obs-studio
 
     # Wine and games and stuff
     wineWowPackages.stable
     master.winetricks
-    games.wine-discord-ipc-bridge
-    (games.osu-stable.overrideAttrs (_: {
-      tricks = [ "gdiplus" "dotnet48" "meiryo" ];
-    }))
     tlauncher
     lutris
     citra
+    (yuzu.overrideAttrs (_: rec {
+      version = "1245";
+      src = fetchFromGitHub {
+        owner = "yuzu-emu";
+        repo = "yuzu-mainline";
+        rev = "mainline-0-${version}";
+        sha256 = "sha256-lWXlY1KQC067MvCRUFhmr0c7KDrHDuwJOhIWMKw1f+A=";
+        fetchSubmodules = true;
+      };
+    }))
+    ryujinx
 
     # Dev shit
     rust-analyzer
@@ -95,6 +102,8 @@
         tcolorbox;
     })
     python3Packages.pygments
+    inform7
+    gnome-inform7
 
     # Misc
     teams

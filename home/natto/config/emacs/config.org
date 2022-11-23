@@ -159,6 +159,8 @@ To undo and redo easily like vi
 *** Miscellaneous evil related packages
 #+begin_src emacs-lisp
 (use-package evil-terminal-cursor-changer)
+(use-package evil-anzu
+  :after evil)
 #+end_src
 
 ** Treemacs
@@ -246,6 +248,8 @@ For autocomplete
 
 ** Lang support
 #+begin_src emacs-lisp
+(use-package inform7)
+
 (use-package haskell-mode)
 
 (use-package rustic)
@@ -502,30 +506,21 @@ This returns the command to run in the terminal
 ** General
 *** Colemak translations
 #+begin_src emacs-lisp
+(use-package evil-colemak-basics
+  :init
+  (setq evil-colemak-basics-layout-mod 'mod-dh)
+  :config
+  (global-evil-colemak-basics-mode))
+#+end_src
+
+*** Misc binds
+#+begin_src emacs-lisp
 (use-package general)
 
 (setq evil-states
   '(visual normal motion))
 
 (with-eval-after-load 'general
-(general-translate-key evil-states 'global
-    "m" "h"
-    "n" "j"
-    "N" "J"
-    "e" "k"
-    "i" "l"
-    "u" "i"
-    "l" "u"
-    "k" "n"
-    "f" "e"
-    "t" "f"
-    "j" "t"
-    "K" "N"
-)
-#+end_src
-
-*** Misc binds
-#+begin_src emacs-lisp
 (general-define-key
   :states evil-states
   "M-c" 'comment-line

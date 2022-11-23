@@ -51,19 +51,28 @@ in
     };
   };
 
-  systemd.user.services.mpdas = {
-    Unit = {
-      After = [ "mpd.service" ];
-      Description = "Music Player Daemon AutoScrobbler";
+  systemd.user.services = {
+    mpd-discord-rpc = {
+      Service = {
+        Restart = "on-failure";
+        RestartSec = "15s";
+      };
     };
 
-    Install.WantedBy = [ "default.target" ];
+    mpdas = {
+      Unit = {
+        After = [ "mpd.service" ];
+        Description = "Music Player Daemon AutoScrobbler";
+      };
 
-    Service = {
-      Type = "simple";
-      Restart = "on-failure";
-      RestartSec = "15s";
-      ExecStart = "${pkgs.mpdas}/bin/mpdas -c ${config.age.secrets.mpdasrc.path}";
+      Install.WantedBy = [ "default.target" ];
+
+      Service = {
+        Type = "simple";
+        Restart = "on-failure";
+        RestartSec = "15s";
+        ExecStart = "${pkgs.mpdas}/bin/mpdas -c ${config.age.secrets.mpdasrc.path}";
+      };
     };
   };
 }
