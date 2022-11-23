@@ -9,10 +9,9 @@
         support32Bit = true;
       };
       pulse.enable = true;
- #     jack.enable = true;
+      #     jack.enable = true;
       socketActivation = true;
 
-      #  https://nixos.wiki/wiki/PipeWire#Low-latency_setup
       config.pipewire = {
         context.objects = [
           {

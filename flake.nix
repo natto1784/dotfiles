@@ -48,10 +48,10 @@
               inputs.nvim.overlay
               inputs.rust.overlays.default
               inputs.emacs.overlay
+              inputs.nix-gaming.overlays.default
               channels
               (_: _: {
                 nbfc-linux = inputs.nbfc.packages.${system}.nbfc-client-c;
-                games = inputs.nix-gaming.packages.${system};
               })
             ];
             config.allowUnfree = true;
