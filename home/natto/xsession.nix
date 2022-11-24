@@ -1,11 +1,29 @@
 { pkgs, config, ... }:
 {
-  gtk.cursorTheme = {
-    package = pkgs.numix-cursor-theme;
-    name = "Numix";
+  home.pointerCursor = {
+    package = pkgs.simp1e-cursors;
+    name = "Simp1e-Solarized-Light";
+    x11 = {
+      enable = true;
+      defaultCursor = "crosshair";
+    };
+    gtk.enable = true;
+  };
+
+  gtk = {
+    enable = true;
+    theme = {
+      package = pkgs.numix-solarized-gtk-theme;
+      name = "NumixSolarizedDarkMagenta";
+    };
+    iconTheme = {
+      package = pkgs.zafiro-icons;
+      name = "Zafiro-icons-Dark";
+    };
   };
 
   xsession = {
+    enable = true;
     windowManager = {
       xmonad = {
         enable = true;

@@ -37,6 +37,7 @@ in
       };
       extraConfig = builtins.readFile ./config/mpd/mpd.conf;
     };
+
     mpd-discord-rpc = {
       enable = true;
       settings = {
@@ -47,6 +48,37 @@ in
           large_text = "real";
           small_text = "the";
         };
+      };
+    };
+
+    dunst = {
+      enable = true;
+      settings = {
+        global = {
+          font = "Monospace 10";
+          frame_color = "#93a1a1";
+          separator_color = "#93a1a1";
+          shrink = true;
+          icon_theme = config.gtk.iconTheme.name;
+        };
+
+        urgency_low = {
+          background = "#586e75";
+          foreground = "#eee8d5";
+          timeout = 5;
+        };
+
+        urgency_normal = {
+          background = "#073642";
+          foreground = "#eee8d5";
+          timeout = 5;
+        };
+
+        urgency_critical = {
+          background = "#dc322f";
+          foreground = "#eee8d5";
+          timeout = 0;
+        };     
       };
     };
   };
