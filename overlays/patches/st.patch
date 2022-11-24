@@ -1,6 +1,6 @@
-diff --color -u b/config.def.h a/config.def.h
---- b/config.def.h	2022-03-18 10:26:17.487413585 +0530
-+++ a/config.def.h	2022-03-18 11:11:09.497847262 +0530
+diff --color -ru st-0.9/config.def.h st-0.9-a/config.def.h
+--- st-0.9/config.def.h	2022-10-04 23:11:26.000000000 +0530
++++ st-0.9-a/config.def.h	2022-11-25 02:12:19.384259019 +0530
 @@ -3,9 +3,10 @@
  /*
   * appearance
@@ -148,9 +148,9 @@ diff --color -u b/config.def.h a/config.def.h
  };
  
  /*
-diff --color -u b/st.c a/st.c
---- b/st.c	2022-03-18 10:26:17.488413654 +0530
-+++ a/st.c	2022-03-18 10:59:06.308482438 +0530
+diff --color -ru st-0.9/st.c st-0.9-a/st.c
+--- st-0.9/st.c	2022-10-04 23:11:26.000000000 +0530
++++ st-0.9-a/st.c	2022-11-25 02:12:19.384259019 +0530
 @@ -35,6 +35,7 @@
  #define ESC_ARG_SIZ   16
  #define STR_BUF_SIZ   ESC_BUF_SIZ
@@ -179,7 +179,7 @@ diff --color -u b/st.c a/st.c
  	int *dirty;   /* dirtyness of lines */
  	TCursor c;    /* cursor */
  	int ocx;      /* old cursor col */
-@@ -184,8 +191,8 @@
+@@ -185,8 +192,8 @@
  static void tputtab(int);
  static void tputc(Rune);
  static void treset(void);
@@ -190,7 +190,7 @@ diff --color -u b/st.c a/st.c
  static void tsetattr(const int *, int);
  static void tsetchar(Rune, const Glyph *, int, int);
  static void tsetdirt(int, int);
-@@ -416,10 +423,10 @@
+@@ -409,10 +416,10 @@
  {
  	int i = term.col;
  
@@ -203,7 +203,7 @@ diff --color -u b/st.c a/st.c
  		--i;
  
  	return i;
-@@ -528,7 +535,7 @@
+@@ -521,7 +528,7 @@
  		 * Snap around if the word wraps around at the end or
  		 * beginning of a line.
  		 */
@@ -212,7 +212,7 @@ diff --color -u b/st.c a/st.c
  		prevdelim = ISDELIM(prevgp->u);
  		for (;;) {
  			newx = *x + direction;
-@@ -543,14 +550,14 @@
+@@ -536,14 +543,14 @@
  					yt = *y, xt = *x;
  				else
  					yt = newy, xt = newx;
@@ -229,7 +229,7 @@ diff --color -u b/st.c a/st.c
  			delim = ISDELIM(gp->u);
  			if (!(gp->mode & ATTR_WDUMMY) && (delim != prevdelim
  					|| (delim && gp->u != prevgp->u)))
-@@ -571,14 +578,14 @@
+@@ -564,14 +571,14 @@
  		*x = (direction < 0) ? 0 : term.col - 1;
  		if (direction < 0) {
  			for (; *y > 0; *y += direction) {
@@ -246,7 +246,7 @@ diff --color -u b/st.c a/st.c
  						& ATTR_WRAP)) {
  					break;
  				}
-@@ -609,13 +616,13 @@
+@@ -602,13 +609,13 @@
  		}
  
  		if (sel.type == SEL_RECTANGULAR) {
@@ -263,7 +263,7 @@ diff --color -u b/st.c a/st.c
  		while (last >= gp && last->u == ' ')
  			--last;
  
-@@ -851,6 +858,9 @@
+@@ -844,6 +851,9 @@
  ttywrite(const char *s, size_t n, int may_echo)
  {
  	const char *next;
@@ -273,7 +273,7 @@ diff --color -u b/st.c a/st.c
  
  	if (may_echo && IS_SET(MODE_ECHO))
  		twrite(s, n, 1);
-@@ -1062,13 +1072,53 @@
+@@ -1055,13 +1065,53 @@
  }
  
  void
@@ -328,7 +328,7 @@ diff --color -u b/st.c a/st.c
  	tsetdirt(orig, term.bot-n);
  	tclearregion(0, term.bot-n+1, term.col-1, term.bot);
  
-@@ -1078,17 +1128,28 @@
+@@ -1071,17 +1121,28 @@
  		term.line[i-n] = temp;
  	}
  
@@ -359,7 +359,7 @@ diff --color -u b/st.c a/st.c
  	tclearregion(0, orig, term.col-1, orig+n-1);
  	tsetdirt(orig+n, term.bot);
  
-@@ -1098,7 +1159,8 @@
+@@ -1091,7 +1152,8 @@
  		term.line[i+n] = temp;
  	}
  
@@ -369,7 +369,7 @@ diff --color -u b/st.c a/st.c
  }
  
  void
-@@ -1127,7 +1189,7 @@
+@@ -1120,7 +1182,7 @@
  	int y = term.c.y;
  
  	if (y == term.bot) {
@@ -378,7 +378,7 @@ diff --color -u b/st.c a/st.c
  	} else {
  		y++;
  	}
-@@ -1292,14 +1354,14 @@
+@@ -1285,14 +1347,14 @@
  tinsertblankline(int n)
  {
  	if (BETWEEN(term.c.y, term.top, term.bot))
@@ -395,7 +395,7 @@ diff --color -u b/st.c a/st.c
  }
  
  int32_t
-@@ -1736,11 +1798,11 @@
+@@ -1729,11 +1791,11 @@
  		break;
  	case 'S': /* SU -- Scroll <n> line up */
  		DEFAULT(csiescseq.arg[0], 1);
@@ -409,7 +409,7 @@ diff --color -u b/st.c a/st.c
  		break;
  	case 'L': /* IL -- Insert <n> blank lines */
  		DEFAULT(csiescseq.arg[0], 1);
-@@ -2330,7 +2392,7 @@
+@@ -2296,7 +2358,7 @@
  		return 0;
  	case 'D': /* IND -- Linefeed */
  		if (term.c.y == term.bot) {
@@ -418,7 +418,7 @@ diff --color -u b/st.c a/st.c
  		} else {
  			tmoveto(term.c.x, term.c.y+1);
  		}
-@@ -2343,7 +2405,7 @@
+@@ -2309,7 +2371,7 @@
  		break;
  	case 'M': /* RI -- Reverse index */
  		if (term.c.y == term.top) {
@@ -427,7 +427,7 @@ diff --color -u b/st.c a/st.c
  		} else {
  			tmoveto(term.c.x, term.c.y-1);
  		}
-@@ -2557,7 +2619,7 @@
+@@ -2523,7 +2585,7 @@
  void
  tresize(int col, int row)
  {
@@ -436,7 +436,7 @@ diff --color -u b/st.c a/st.c
  	int minrow = MIN(row, term.row);
  	int mincol = MIN(col, term.col);
  	int *bp;
-@@ -2594,6 +2656,14 @@
+@@ -2560,6 +2622,14 @@
  	term.dirty = xrealloc(term.dirty, row * sizeof(*term.dirty));
  	term.tabs = xrealloc(term.tabs, col * sizeof(*term.tabs));
  
@@ -451,7 +451,7 @@ diff --color -u b/st.c a/st.c
  	/* resize each row to new width, zero-pad if needed */
  	for (i = 0; i < minrow; i++) {
  		term.line[i] = xrealloc(term.line[i], col * sizeof(Glyph));
-@@ -2652,7 +2722,7 @@
+@@ -2618,7 +2688,7 @@
  			continue;
  
  		term.dirty[y] = 0;
@@ -460,7 +460,7 @@ diff --color -u b/st.c a/st.c
  	}
  }
  
-@@ -2673,8 +2743,9 @@
+@@ -2639,8 +2709,9 @@
  		cx--;
  
  	drawregion(0, 0, term.col, term.row);
@@ -472,9 +472,9 @@ diff --color -u b/st.c a/st.c
  	term.ocx = cx;
  	term.ocy = term.c.y;
  	xfinishdraw();
-diff --color -u b/st.h a/st.h
---- b/st.h	2022-03-18 10:26:17.488413654 +0530
-+++ a/st.h	2022-03-18 11:04:56.429522959 +0530
+diff --color -ru st-0.9/st.h st-0.9-a/st.h
+--- st-0.9/st.h	2022-10-04 23:11:26.000000000 +0530
++++ st-0.9-a/st.h	2022-11-25 02:12:19.385259029 +0530
 @@ -81,6 +81,8 @@
  void redraw(void);
  void draw(void);
@@ -484,7 +484,7 @@ diff --color -u b/st.h a/st.h
  void printscreen(const Arg *);
  void printsel(const Arg *);
  void sendbreak(const Arg *);
-@@ -122,6 +124,7 @@
+@@ -120,6 +122,7 @@
  extern int allowaltscreen;
  extern int allowwindowops;
  extern char *termname;
@@ -492,9 +492,9 @@ diff --color -u b/st.h a/st.h
  extern unsigned int tabspaces;
  extern unsigned int defaultfg;
  extern unsigned int defaultbg;
-diff --color -u b/x.c a/x.c
---- b/x.c	2022-03-18 10:26:17.489413722 +0530
-+++ a/x.c	2022-03-18 11:04:56.429522959 +0530
+diff --color -ru st-0.9/x.c st-0.9-a/x.c
+--- st-0.9/x.c	2022-10-04 23:11:26.000000000 +0530
++++ st-0.9-a/x.c	2022-11-25 02:12:19.385259029 +0530
 @@ -55,6 +55,7 @@
  static void clippaste(const Arg *);
  static void numlock(const Arg *);
@@ -513,7 +513,7 @@ diff --color -u b/x.c a/x.c
  static void xsetenv(void);
 @@ -254,6 +256,8 @@
  
- static int oldbutton = 3; /* button event on startup: 3 = release */
+ static uint buttons; /* bit field of pressed buttons */
  
 +int usealtcolors = 0; /* 1 to use alternate palette */
 +
@@ -543,7 +543,7 @@ diff --color -u b/x.c a/x.c
  	cresize(0, 0);
  	redraw();
  	xhints();
-@@ -750,6 +763,11 @@
+@@ -766,6 +779,11 @@
  	return x == 0 ? 0 : 0x3737 + 0x2828 * x;
  }
  
@@ -555,7 +555,7 @@ diff --color -u b/x.c a/x.c
  int
  xloadcolor(int i, const char *name, Color *ncolor)
  {
-@@ -768,7 +786,7 @@
+@@ -784,7 +802,7 @@
  			return XftColorAllocValue(xw.dpy, xw.vis,
  			                          xw.cmap, &color, ncolor);
  		} else
@@ -564,7 +564,7 @@ diff --color -u b/x.c a/x.c
  	}
  
  	return XftColorAllocName(xw.dpy, xw.vis, xw.cmap, name, ncolor);
-@@ -791,8 +809,8 @@
+@@ -807,8 +825,8 @@
  
  	for (i = 0; i < dc.collen; i++)
  		if (!xloadcolor(i, NULL, &dc.col[i])) {
@@ -575,7 +575,7 @@ diff --color -u b/x.c a/x.c
  			else
  				die("could not allocate color %d\n", i);
  		}
-@@ -1034,6 +1052,67 @@
+@@ -1050,6 +1068,67 @@
  	FcPatternDestroy(pattern);
  }
  
@@ -643,7 +643,7 @@ diff --color -u b/x.c a/x.c
  void
  xunloadfont(Font *f)
  {
-@@ -1131,6 +1210,10 @@
+@@ -1147,6 +1226,10 @@
  	usedfont = (opt_font == NULL)? font : opt_font;
  	xloadfonts(usedfont, 0);
  
@@ -654,7 +654,7 @@ diff --color -u b/x.c a/x.c
  	/* colors */
  	xw.cmap = XDefaultColormap(xw.dpy, xw.scr);
  	xloadcols();
-@@ -1184,13 +1267,13 @@
+@@ -1200,13 +1283,13 @@
  	cursor = XCreateFontCursor(xw.dpy, mouseshape);
  	XDefineCursor(xw.dpy, xw.win, cursor);
  
@@ -670,7 +670,7 @@ diff --color -u b/x.c a/x.c
  		xmousebg.red   = 0x0000;
  		xmousebg.green = 0x0000;
  		xmousebg.blue  = 0x0000;
-@@ -1398,7 +1481,7 @@
+@@ -1414,7 +1497,7 @@
  
  	/* Change basic system colors [0-7] to bright system colors [8-15] */
  	if ((base.mode & ATTR_BOLD_FAINT) == ATTR_BOLD && BETWEEN(base.fg, 0, 7))
@@ -679,7 +679,7 @@ diff --color -u b/x.c a/x.c
  
  	if (IS_SET(MODE_REVERSE)) {
  		if (fg == &dc.col[defaultfg]) {
-@@ -1626,6 +1709,8 @@
+@@ -1642,6 +1725,8 @@
  int
  xstartdraw(void)
  {

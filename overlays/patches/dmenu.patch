@@ -1,6 +1,6 @@
-diff --color -u a/config.def.h b/config.def.h
---- a/config.def.h	2020-09-02 22:07:07.000000000 +0530
-+++ b/config.def.h	2021-05-21 00:20:28.562140000 +0530
+diff --color -ru dmenu-5.2/config.def.h dmenu-5.2-a/config.def.h
+--- dmenu-5.2/config.def.h	2022-10-04 23:06:58.000000000 +0530
++++ dmenu-5.2-a/config.def.h	2022-11-25 02:20:05.393693557 +0530
 @@ -2,16 +2,21 @@
  /* Default settings; can be overriden by command line. */
  
@@ -32,10 +32,10 @@ diff --color -u a/config.def.h b/config.def.h
  static const char worddelimiters[] = " ";
 +/* Size of the window border */
 +static const unsigned int border_width = 4;
-Only in b: config.def.h.orig
-diff --color -u a/dmenu.1 b/dmenu.1
---- a/dmenu.1	2020-09-02 22:07:07.000000000 +0530
-+++ b/dmenu.1	2020-12-29 02:11:41.804718200 +0530
+Only in dmenu-5.2-a: config.h
+diff --color -ru dmenu-5.2/dmenu.1 dmenu-5.2-a/dmenu.1
+--- dmenu-5.2/dmenu.1	2022-10-04 23:06:58.000000000 +0530
++++ dmenu-5.2-a/dmenu.1	2022-11-25 02:20:05.393693557 +0530
 @@ -40,6 +40,9 @@
  .B \-b
  dmenu appears at the bottom of the screen.
@@ -46,9 +46,9 @@ diff --color -u a/dmenu.1 b/dmenu.1
  .B \-f
  dmenu grabs the keyboard before reading stdin if not reading from a tty. This
  is faster, but will lock up X until stdin reaches end\-of\-file.
-diff --color -u a/dmenu.c b/dmenu.c
---- a/dmenu.c	2020-09-02 22:07:07.000000000 +0530
-+++ b/dmenu.c	2020-12-29 02:24:03.168766600 +0530
+diff --color -ru dmenu-5.2/dmenu.c dmenu-5.2-a/dmenu.c
+--- dmenu-5.2/dmenu.c	2022-10-04 23:06:58.000000000 +0530
++++ dmenu-5.2-a/dmenu.c	2022-11-25 02:22:42.610351072 +0530
 @@ -26,8 +26,7 @@
  #define TEXTW(X)              (drw_fontset_getwidth(drw, (X)) + lrpad)
  
@@ -59,7 +59,7 @@ diff --color -u a/dmenu.c b/dmenu.c
  struct item {
  	char *text;
  	struct item *left, *right;
-@@ -89,6 +88,15 @@
+@@ -96,6 +95,15 @@
  			break;
  }
  
@@ -75,7 +75,7 @@ diff --color -u a/dmenu.c b/dmenu.c
  static void
  cleanup(void)
  {
-@@ -113,6 +121,43 @@
+@@ -130,6 +138,43 @@
  	return NULL;
  }
  
@@ -119,7 +119,7 @@ diff --color -u a/dmenu.c b/dmenu.c
  static int
  drawitem(struct item *item, int x, int y, int w)
  {
-@@ -123,7 +168,9 @@
+@@ -140,7 +185,9 @@
  	else
  		drw_setscheme(drw, scheme[SchemeNorm]);
  
@@ -130,7 +130,7 @@ diff --color -u a/dmenu.c b/dmenu.c
  }
  
  static void
-@@ -501,6 +548,119 @@
+@@ -529,6 +576,119 @@
  }
  
  static void
@@ -250,7 +250,7 @@ diff --color -u a/dmenu.c b/dmenu.c
  paste(void)
  {
  	char *p, *q;
-@@ -561,6 +721,9 @@
+@@ -582,6 +742,9 @@
  				break;
  			cleanup();
  			exit(1);
@@ -260,7 +260,7 @@ diff --color -u a/dmenu.c b/dmenu.c
  		case Expose:
  			if (ev.xexpose.count == 0)
  				drw_map(drw, win, 0, 0, mw, mh);
-@@ -611,6 +774,7 @@
+@@ -632,6 +795,7 @@
  	bh = drw->fonts->h + 2;
  	lines = MAX(lines, 0);
  	mh = (lines + 1) * bh;
@@ -268,8 +268,8 @@ diff --color -u a/dmenu.c b/dmenu.c
  #ifdef XINERAMA
  	i = 0;
  	if (parentwin == root && (info = XineramaQueryScreens(dpy, &n))) {
-@@ -637,9 +801,16 @@
- 				if (INTERSECT(x, y, 1, 1, info[i]))
+@@ -658,9 +822,16 @@
+ 				if (INTERSECT(x, y, 1, 1, info[i]) != 0)
  					break;
  
 -		x = info[i].x_org;
@@ -288,7 +288,7 @@ diff --color -u a/dmenu.c b/dmenu.c
  		XFree(info);
  	} else
  #endif
-@@ -647,21 +818,30 @@
+@@ -668,21 +839,29 @@
  		if (!XGetWindowAttributes(dpy, parentwin, &wa))
  			die("could not get embedding window attributes: 0x%lx",
  			    parentwin);
@@ -307,16 +307,16 @@ diff --color -u a/dmenu.c b/dmenu.c
 +		}
  	}
 -	promptw = (prompt && *prompt) ? TEXTW(prompt) - lrpad / 4 : 0;
- 	inputw = MIN(inputw, mw/3);
+ 	inputw = mw / 3; /* input width: ~33% of monitor width */
  	match();
  
  	/* create menu window */
  	swa.override_redirect = True;
  	swa.background_pixel = scheme[SchemeNorm][ColBg].pixel;
+-	swa.event_mask = ExposureMask | KeyPressMask | VisibilityChangeMask;
+-	win = XCreateWindow(dpy, parentwin, x, y, mw, mh, 0,
 +	swa.event_mask = ExposureMask | KeyPressMask | VisibilityChangeMask |
 +	                 ButtonPressMask;
- 	swa.event_mask = ExposureMask | KeyPressMask | VisibilityChangeMask;
--	win = XCreateWindow(dpy, parentwin, x, y, mw, mh, 0,
 +	win = XCreateWindow(dpy, parentwin, x, y, mw, mh, border_width,
  	                    CopyFromParent, CopyFromParent, CopyFromParent,
  	                    CWOverrideRedirect | CWBackPixel | CWEventMask, &swa);
@@ -324,7 +324,7 @@ diff --color -u a/dmenu.c b/dmenu.c
  	XSetClassHint(dpy, win, &ch);
  
  
-@@ -709,6 +889,8 @@
+@@ -729,6 +908,8 @@
  			topbar = 0;
  		else if (!strcmp(argv[i], "-f"))   /* grabs keyboard before reading stdin */
  			fast = 1;
@@ -333,6 +333,3 @@ diff --color -u a/dmenu.c b/dmenu.c
  		else if (!strcmp(argv[i], "-i")) { /* case-insensitive item matching */
  			fstrncmp = strncasecmp;
  			fstrstr = cistrstr;
-Only in b: dmenu.c.orig
-Only in a: dmenu_path
-Only in a: dmenu_run

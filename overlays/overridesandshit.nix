@@ -1,9 +1,10 @@
 final: prev: {
 
   dmenu = prev.dmenu.overrideAttrs (oldAttrs: rec {
+    version = "5.2";
     src = builtins.fetchTarball {
-      url = "https://dl.suckless.org/tools/dmenu-5.1.tar.gz";
-      sha256 = "1zwl0qlc4mmr973km03lmnfxjibdh2inwzb0vr6pvrfhrm0glvrk";
+      url = "https://dl.suckless.org/tools/dmenu-${version}.tar.gz";
+      sha256 = "1rxxc3qdb5qvwg284f0hximg9953fnvlymxwmi1zlqkqbs8qbizk";
     };
     patches = [ ./patches/dmenu.patch ];
   });
@@ -17,9 +18,10 @@ final: prev: {
   });
 
   st = prev.st.overrideAttrs (oldAttrs: rec {
+    version = "0.9";
     src = builtins.fetchTarball {
-      url = "https://dl.suckless.org/st/st-0.8.5.tar.gz";
-      sha256 = "0iy7sj40m5x7wr4qkicijckk3cb0h9815mzacfjb3xrlrvpx6hm5";
+      url = "https://dl.suckless.org/st/st-${version}.tar.gz";
+      sha256 = "1bdhh5lnhiz7q4ihig1f5q0ay5glsqxhpxpnsfqxwffqqwmy1vlh";
     };
     patches = [ ./patches/st.patch ];
   });
