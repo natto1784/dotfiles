@@ -14,6 +14,7 @@
       ACTION=="add|change", KERNEL=="sda", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="bfq"
     '';
     zfs.autoScrub.enable = true;
+    gvfs.enable = true;
     logind.extraConfig = "RuntimeDirectorySize=30%";
   };
   systemd.services.tor.wantedBy = lib.mkForce [ ];

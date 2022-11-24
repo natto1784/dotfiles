@@ -19,14 +19,14 @@
       fsType = "vfat";
     };
 
-  fileSystems."/mnt/ntfs" =
+  fileSystems."/media/ntfs" =
     {
       device = "/dev/disk/by-uuid/A4CC66B6CC668282";
       fsType = "ntfs";
       options = [ "uid=natto" "gid=users" "umask=0022" "rw" ];
     };
 
-  fileSystems."/mnt/real" =
+  fileSystems."/media/real" =
     {
       device = "/dev/disk/by-uuid/6372bc0c-0917-469d-a845-2ce65513e306";
       fsType = "ext4";
