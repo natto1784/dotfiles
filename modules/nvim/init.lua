@@ -121,17 +121,37 @@ bind('n', "<F6>", ":call v:lua.Repl()<CR>", {silent=true})
 
 --nvim-tree.lua
 
-vim.g.nvim_tree_auto_ignore_ft = { "startify" }
-vim.g.nvim_tree_git_hl = 1
-vim.g.nvim_tree_highlight_opened_files = 1
-vim.g.nvim_tree_width_allow_resize = 1
 require'nvim-tree'.setup {
-  nvim_tree_auto_close = 1,
-  nvim_tree_follow = 1,
-  nvim_tree_lsp_diagnostics = 1
-}
-vim.g.nvim_tree_window_picker_exclude = {
-    ['buftype'] = { 'terminal' }
+  diagnostics = {
+    enable = true,
+  },
+  update_focused_file = {
+    enable = true,
+    update_root = true,
+  },
+  ignore_ft_on_setup = { "startify" },  
+  renderer = {
+    highlight_opened_files = "all",
+    highlight_git = true
+  },
+  git = {
+    enable = true,
+    ignore = true,
+    show_on_dirs = true,
+  },
+  actions = {
+	  open_file = {
+	    quit_on_open = true,
+	    resize_window = true,
+	    window_picker = {
+	      enable = true,
+	      exclude = {
+		filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
+		buftype = { "nofile", "terminal", "help" },
+	      },
+	    },
+	  },
+  },
 }
 bind('n', "<M-o>", ":NvimTreeToggle<CR>", {noremap=true, silent=true})
 bind('n', "<Space>r", ":NvimTreeRefresh<CR>", {noremap=true, silent=true})
@@ -194,17 +214,16 @@ vim.g.livepreview_previewer = "zathura"
 
 require'colorizer'.setup()
 
---lsp and cmp stuff i got from various places
 local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', {silent=true, noremap=true})
-  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', {silent=true, noremap=true})
-  buf_set_keymap('n', '<M-k>', '<Cmd>lua vim.lsp.buf.hover()<CR>', {silent=true, noremap=true})
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', {silent=true, noremap=true})
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', {silent=true, noremap=true})
-  buf_set_keymap('n', "<M-f>", "<cmd>lua vim.lsp.buf.formatting()<CR>", {silent=true, noremap=true})
+  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', '<M-k>', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', "<M-f>", function() vim.lsp.buf.format { async = true } end, bufopts)
 end
 
 local servers = { "clangd", "rust_analyzer", "tsserver", "hls", "pylsp", "texlab", "rnix", "terraform_lsp", "html", "cssls", "jsonls", "svelte", "gopls" }
