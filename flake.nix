@@ -1,8 +1,8 @@
 {
   inputs = {
-    stable.url = github:nixos/nixpkgs/nixos-22.05;
+    stable.url = github:nixos/nixpkgs/nixos-22.11;
     stable-small.url = github:nixos/nixpkgs/nixos-22.05-small;
-    old.url = github:nixos/nixpkgs/nixos-21.11;
+    old.url = github:nixos/nixpkgs/nixos-22.05;
     nixpkgs.url = github:nixos/nixpkgs/nixpkgs-unstable;
     master.url = github:nixos/nixpkgs/master;
     home-manager.url = github:nix-community/home-manager;
@@ -36,7 +36,6 @@
             old = mkPkgs old prev.system;
           };
           overlays = [
-            (import ./overlays/overridesandshit.nix)
             (import ./overlays/packages.nix)
           ];
         in
