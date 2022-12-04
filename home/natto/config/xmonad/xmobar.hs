@@ -37,13 +37,13 @@ config =
           Run $ Date "<fn=1>\xf073</fn> %-d/%-m/%-y/%w" "date" 10000,
           Run $ Date "%H:%M:%S" "time" 10,
           Run $ MPD ["-t", "<statei><title><fn=" ++ magenta ++ "> \xf001</fn>", "--", "-P", ">> ", "-Z", "|| ", "-S", "Stopped", "-h", "127.0.0.1", "-p", "6600"] 10,
-          Run $ Com "/home/natto/.xmonad/lib/padding-icon.sh" ["stalonetray"] "tray" 10,
+          Run $ Com "~/.xmonad/lib/padding-icon.sh" ["stalonetray"] "tray" 10,
           Run $ Com "pamixer" ["--get-volume"] "" 100,
           Run UnsafeStdinReader
         ],
       sepChar = "*",
       alignSep = "--",
-      template = "<action=`dmenu_run` button=1><icon=/home/natto/.xmonad/lib/nixos.xpm/></action> *UnsafeStdinReader* " ++ sep ++ " <fn=1></fn>*mpd* -- *multicpu* " ++ sep ++ " *memory* " ++ sep ++ " *dynnetwork* " ++ sep ++ " *battery* " ++ sep ++ " <fn=1>\xf028</fn> <fc=" ++ green ++ ">*pamixer*%</fc> " ++ sep ++ " *date* - *time* " ++ sep ++ "*tray*"
+      template = "<action=`dmenu_run` button=1><icon=~/.xmonad/lib/nixos.xpm/></action> *UnsafeStdinReader* " ++ sep ++ " <fn=1></fn>*mpd* -- *multicpu* " ++ sep ++ " *memory* " ++ sep ++ " *dynnetwork* " ++ sep ++ " *battery* " ++ sep ++ " <fn=1>\xf028</fn> <fc=" ++ green ++ ">*pamixer*%</fc> " ++ sep ++ " *date* - *time* " ++ sep ++ "*tray*"
     }
 
 main :: IO ()

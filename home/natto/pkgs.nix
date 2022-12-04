@@ -18,8 +18,11 @@
     # Utils
     rage
     curl
-    dmenu
-    st
+    (dmenu.override { patches = [ ./patches/dmenu.patch ]; })
+    (st.override { 
+      patches = [ ./patches/st.patch ]; 
+      extraLibs = [ harfbuzz ];
+    })
     yt-dlp
     xclip
     xorg.xkbcomp
@@ -67,18 +70,8 @@
     wineWowPackages.stable
     master.winetricks
     tlauncher
-    lutris
     citra
-    (yuzu.overrideAttrs (_: rec {
-      version = "1245";
-      src = fetchFromGitHub {
-        owner = "yuzu-emu";
-        repo = "yuzu-mainline";
-        rev = "mainline-0-${version}";
-        sha256 = "sha256-lWXlY1KQC067MvCRUFhmr0c7KDrHDuwJOhIWMKw1f+A=";
-        fetchSubmodules = true;
-      };
-    }))
+    yuzu
     ryujinx
 
     # Dev shit
@@ -103,7 +96,6 @@
     })
     python3Packages.pygments
     inform7
-    gnome-inform7
 
     # Misc
     teams
@@ -114,5 +106,6 @@
       visualizerSupport = true;
       clockSupport = true;
     })
+    libsForQt5.qtstyleplugins
   ];
 }

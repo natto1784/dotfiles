@@ -1,6 +1,4 @@
 { config, pkgs, lib, ... }:
-let
-in
 {
   imports = [
     ./email.nix

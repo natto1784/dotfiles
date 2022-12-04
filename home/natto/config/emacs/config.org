@@ -486,7 +486,7 @@ This returns the command to run in the terminal
            ("java" (concat "java" full))
            ("py" (concat "python" full))
            ("cpp" (concat "g++ " full " -o " file " && " file " && rm " file))
-           ("hs" (concat "ghc -dynamic " full " && " file " && rm " file " " file ".o"))
+           ("hs" (concat "runhaskell " full))
            ("sh" (concat "sh" full))
            ("js" (concat "node" full))
            ("ts" (concat "tsc" full " && node " file ".js && rm " file ".js" ))

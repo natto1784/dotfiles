@@ -56,6 +56,12 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   , ((modMask, xK_d),
      spawn "dmenu_run -l 20")
+
+  , ((shiftMask .|. mod1Mask, xK_v),
+     spawn "clipmenu")
+
+  , ((modMask, xK_s),
+     spawn "dmenu_websearch")
   
   , ((shiftMask, xK_Print),
      spawn "flameshot gui")
