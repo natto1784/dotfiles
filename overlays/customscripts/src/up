@@ -1,5 +1,5 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 for x in "$@"; do
-  curl -F "file=@\"$x\"" -F "key=$FILEHOST_KEY" https://f.weirdnatto.in
-  echo " "
+  curl -F "file=@\"$x\"" -F "key=$FILEHOST_KEY" $FILEHOST_URL
+  printf "\n"
 done

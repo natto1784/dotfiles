@@ -6,5 +6,6 @@ let
   customscripts = call ./customscripts { };
   gruvbox-icons = call ./gruvbox-icons { };
   mymacs = c: call ./emacs { conf = c; };
-  tlauncher = call ./tlauncher {  };
+  tlauncher = call ./tlauncher { };
+  simp1e-cursors = call ./simp1e { };
 }
