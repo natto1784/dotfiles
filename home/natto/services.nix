@@ -6,7 +6,9 @@ in
   services = {
     baremacs = {
       enable = true;
-      package = pkgs.mymacs ./config/emacs/config.org;
+      package = pkgs.mymacs.override {
+        config = ./config/emacs/config.org;
+      };
       defaultEditor = {
         enable = false;
         editor = "emacsclient";

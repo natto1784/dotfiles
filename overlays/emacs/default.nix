@@ -4,15 +4,15 @@
 , fetchurl
 , fetchFromGitHub
 , emacsNativeComp
-, conf ? null
+, config ? null
+, package ? emacsNativeComp
 , ...
 }:
 
-assert (conf != null);
+assert (config != null);
 
 emacsWithPackagesFromUsePackage {
-  config = conf;
-  package = emacsNativeComp;
+  inherit config package;
   alwaysEnsure = true;
   alwaysTangle = true;
   extraEmacsPackages = epkgs: with epkgs; [

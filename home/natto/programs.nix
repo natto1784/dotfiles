@@ -23,5 +23,6 @@
     };
     go.enable = true;
     password-store.enable = true;
+    direnv.enable = true;
   };
 }

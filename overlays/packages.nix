@@ -5,7 +5,7 @@ let
   mpd_discord_richpresence = call ./mpd-rpc { };
   customscripts = call ./customscripts { };
   gruvbox-icons = call ./gruvbox-icons { };
-  mymacs = c: call ./emacs { conf = c; };
+  mymacs = call ./emacs { };
   tlauncher = call ./tlauncher { };
   simp1e-cursors = call ./simp1e { };
 }

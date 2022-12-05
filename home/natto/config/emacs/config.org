@@ -246,6 +246,13 @@ For autocomplete
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 #+end_src
 
+** Direnv
+#+begin_src emacs-lisp
+(use-package direnv
+ :config
+ (direnv-mode))
+#+end_src
+
 ** Lang support
 #+begin_src emacs-lisp
 (use-package inform7)
