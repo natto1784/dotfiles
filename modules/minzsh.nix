@@ -1,19 +1,5 @@
-{ lib, config, pkgs, ... }:
+{ config }:
 {
-  environment.systemPackages = with pkgs; [
-    git
-    htop
-    vim
-    wireguard-tools
-    vault
-    tree-sitter
-    rnix-lsp
-    nmap
-    gcc
-    fly
-    postgresql #for the client cli
-  ];
-
   programs = {
     zsh = {
       enable = true;
@@ -33,12 +19,5 @@
         pinentryFlavor = "curses";
       };
     };
-  };
-  nix = {
-    package = pkgs.nixUnstable;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-    settings.trusted-users = [ "root" ];
   };
 }

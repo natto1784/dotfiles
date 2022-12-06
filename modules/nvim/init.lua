@@ -88,7 +88,7 @@ function _G.CompileRun()
         ['c']         = 'gcc ' .. file .. ' -o ' .. noext ..  ' -Wno-unused-result ' .. ' && ' .. noext .. ' && rm ' .. noext,
         ['rust']      = 'rustc ' .. file .. ' -o ' .. noext .. ' && ' .. noext .. ' && rm ' .. noext,
         ['cpp']       = 'g++ -std=c++17 ' .. file .. ' -o ' .. noext .. ' -Wno-unused-result ' .. ' && ' .. noext .. ' && rm ' .. noext,
-        ['haskell']   = 'ghc -dynamic ' .. file .. ' && ' .. noext .. ' && rm ' .. noext .. ' ' .. noext .. '.o ' .. noext .. '.hi',
+        ['haskell']   = 'runhaskell ' .. file,
         ['sh']        = 'sh ' .. file,
         ['javascript']= 'node ' .. file,
         ['typescript']= 'tsc ' .. file .. ' && node ' .. noext .. '.js && rm ' .. noext .. '.js'

@@ -7,6 +7,7 @@
     ./boot.nix
     ./services.nix
     ./mailserver.nix
+    ./stuff.nix
   ];
 
   system.stateVersion = "21.11";

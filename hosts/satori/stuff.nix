@@ -38,6 +38,7 @@
   };
   fonts.fonts = with pkgs; [
     fira-mono
+    fira-code
     lohit-fonts.devanagari
     lohit-fonts.gurmukhi
     nerdfonts

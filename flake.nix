@@ -47,10 +47,10 @@
               inputs.nvim.overlay
               inputs.rust.overlays.default
               inputs.emacs.overlay
-              inputs.nix-gaming.overlays.default
               channels
               (_: _: {
                 nbfc-linux = inputs.nbfc.packages.${system}.nbfc-client-c;
+                gaming = inputs.nix-gaming.packages.${system};
               })
             ];
             config.allowUnfree = true;
@@ -67,8 +67,8 @@
           ./modules/vault-agent.nix
         ];
         serverModules = [
-          ./modules/min-pkgs.nix
-          ./modules/min-stuff.nix
+          ./modules/minpkgs.nix
+          ./modules/minzsh.nix
         ];
         homeModules = [
           ./home/modules/secret.nix
