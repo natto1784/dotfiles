@@ -5,7 +5,8 @@
     # A/V, codec and media stuff
     ffmpeg-full
     sox
-    pamixer mpdas
+    pamixer
+    mpdas
     mpv
     mpc_cli
     pulseaudio
@@ -19,8 +20,8 @@
     rage
     curl
     (dmenu.override { patches = [ ./patches/dmenu.patch ]; })
-    (st.override { 
-      patches = [ ./patches/st.patch ]; 
+    (st.override {
+      patches = [ ./patches/st.patch ];
       extraLibs = [ harfbuzz ];
     })
     yt-dlp
@@ -73,6 +74,7 @@
     citra
     yuzu
     ryujinx
+    gaming.osu-stable
 
     # Dev shit
     rust-analyzer
@@ -98,7 +100,6 @@
     inform7
 
     # Misc
-    teams
     anki-bin
     tor-browser-bundle-bin
     mailcap

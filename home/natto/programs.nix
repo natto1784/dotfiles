@@ -3,7 +3,6 @@
   programs = {
     firefox = {
       enable = true;
-      package = pkgs.master.firefox;
       profiles.natto = {
         name = "natto";
       };

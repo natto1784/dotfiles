@@ -29,8 +29,8 @@ idk random variables to match my color theme
 * Settings
 ** Setting the default face
 #+begin_src emacs-lisp
-(set-frame-font "Monoid 12" nil t)
-(add-to-list 'default-frame-alist '(font . "Monoid-12"))
+(set-frame-font "Fira Code 12" nil t)
+(add-to-list 'default-frame-alist '(font . "Fira Code-12"))
 #+end_src
 
 ** Some mode settings based on personal preferences
@@ -394,10 +394,22 @@ For autocomplete
 #+end_src
 
 * Random eye candy stuff
+** Ligature
 #+begin_src emacs-lisp
-(use-package pretty-mode
+(use-package ligature
   :config
-  (global-pretty-mode t))
+  (ligature-set-ligatures 't '("www"))
+  (ligature-set-ligatures 'prog-mode '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\" "{-" "::"
+                                      ":::" ":=" "!!" "!=" "!==" "-}" "----" "-->" "->" "->>"
+                                      "-<" "-<<" "-~" "#{" "#[" "##" "###" "####" "#(" "#?" "#_"
+                                      "#_(" ".-" ".=" ".." "..<" "..." "?=" "??" ";;" "/*" "/**"
+                                      "/=" "/==" "/>" "//" "///" "&&" "||" "||=" "|=" "|>" "^=" "$>"
+                                      "++" "+++" "+>" "=:=" "==" "===" "==>" "=>" "=>>" "<="
+                                      "=<<" "=/=" ">-" ">=" ">=>" ">>" ">>-" ">>=" ">>>" "<*"
+                                      "<*>" "<|" "<|>" "<$" "<$>" "<!--" "<-" "<--" "<->" "<+"
+                                      "<+>" "<=" "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<"
+                                      "<~" "<~~" "</" "</>" "~@" "~-" "~>" "~~" "~~>" "%%"))
+  (global-ligature-mode t))
 #+end_src
 
 * Custom mode line
