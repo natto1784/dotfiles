@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, inputs, pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -18,11 +18,10 @@
     cachix
     gcc
     glibc.static
-    stable.openjdk
+    openjdk
     virtmanager
     tree-sitter
     docker-compose
-    nodePackages.typescript
     rust-bin.nightly.latest.default
     clang-tools
     rnix-lsp
@@ -44,7 +43,7 @@
     };
     git = {
       enable = true;
-      package = pkgs.master.git.override {
+      package = pkgs.git.override {
         doInstallCheck = false;
         sendEmailSupport = true;
         withManual = false;

@@ -1,5 +1,11 @@
 { config, pkgs, lib, ... }:
 {
+  home = {
+    homeDirectory = "/home/natto";
+    username = "natto";
+    stateVersion = "22.11";
+  };
+
   imports = [
     ./email.nix
     ./secrets

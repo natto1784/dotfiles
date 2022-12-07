@@ -16,8 +16,8 @@ in
     opengl = {
       driSupport32Bit = true;
       enable = true;
-      package = pkgs.master.mesa.drivers;
-      package32 = pkgs.master.pkgsi686Linux.mesa.drivers;
+      package = pkgs.mesa.drivers;
+      package32 = pkgs.pkgsi686Linux.mesa.drivers;
     };
     nvidia = {
       package = config.boot.kernelPackages.nvidia_x11;

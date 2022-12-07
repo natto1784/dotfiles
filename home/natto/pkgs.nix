@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, flake, inputs, pkgs, ... }:
 {
   home.packages = with pkgs; [
 
@@ -36,8 +36,8 @@
     jmtpfs
     neofetch
     xdotool
-    nbfc-linux
-    customscripts
+    (inputs.nbfc.packages.${pkgs.system}.nbfc-client-c)
+    (flake.packages.${pkgs.system}.customscripts)
 
     # GUI utils
     (xfce.thunar.override {
@@ -50,7 +50,7 @@
     xfce.xfconf
     xfce.tumbler
     flameshot
-    (master.discord.override {
+    (discord.override {
       nss = nss_latest;
     })
     qbittorrent
@@ -69,12 +69,12 @@
 
     # Wine and games and stuff
     wineWowPackages.stable
-    master.winetricks
-    tlauncher
+    winetricks
     citra
     yuzu
     ryujinx
-    gaming.osu-stable
+    (inputs.nix-gaming.packages.${pkgs.system}.osu-stable)
+    (flake.packages.${pkgs.system}.tlauncher)
 
     # Dev shit
     rust-analyzer

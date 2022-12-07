@@ -1,9 +1,10 @@
-{ config, pkgs, ... }:
+{inputs, config, pkgs, ... }:
 
 {
   programs.neovim = {
     enable = true;
     package = pkgs.neovim-nightly;
+    # package = inputs.nvim-overlay.packages.${pkgs.system}.default;
     #   package = pkgs.neovim-nightly.overrideAttrs (_:{
     #     nativeBuildInputs = with pkgs; [ unzip cmake pkgconfig gettext tree-sitter ];
     #   });
@@ -14,7 +15,7 @@
         ${builtins.readFile ./init.lua}
         EOF
       '';
-      packages.myVimPackage = with pkgs.unstable.vimPlugins; {
+      packages.myVimPackage = with pkgs.vimPlugins; {
         start = [
           nvim-colorizer-lua
           bracey-vim
@@ -37,7 +38,7 @@
           presence-nvim
           nvim-web-devicons
           nvim-tree-lua
-          (nvim-treesitter.withPlugins (plugins: pkgs.unstable.tree-sitter.allGrammars))
+          (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars))
           vim-latex-live-preview
           lspkind-nvim
           base16-vim

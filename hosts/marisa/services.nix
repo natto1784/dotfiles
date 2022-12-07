@@ -34,7 +34,7 @@
 
     consul = {
       enable = true;
-      package = pkgs.master.consul;
+      package = pkgs.consul;
       extraConfigFiles = lib.singleton "/run/consul/consul.json";
     };
   };

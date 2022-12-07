@@ -1,26 +1,35 @@
-{ config, pkgs, ... }:
-let
-  home = config.home.homeDirectory;
-in
+{ config, pkgs, inputs, ... }:
 {
-  services = {
-    baremacs = {
-      enable = true;
-      package = pkgs.mymacs.override {
-        config = ./config/emacs/config.org;
-      };
-      defaultEditor = {
-        enable = false;
-        editor = "emacsclient";
-      };
-      copyConfigFiles = {
-        enable = true;
-        files = {
-          "config.org" = ./config/emacs/config.org;
-          "init.el" = ./config/emacs/init.el;
-        };
-      };
+  home.file = with config; {
+    "config.org" = {
+      source = ./config/emacs/config.org;
+      target = "${home.homeDirectory}/.emacs.d/config.org";
     };
+    "init.el" = {
+      source = ./config/emacs/init.el;
+      target = "${home.homeDirectory}/.emacs.d/init.el";
+    };
+  };
+
+  services = {
+    emacs =
+      let
+        mymacs = config: # with inputs.emacs-overlay.packages.${pkgs.system}; already resolved with overlay
+          with pkgs; emacsWithPackagesFromUsePackage {
+            inherit config;
+            package = emacsGit;
+            alwaysEnsure = true;
+            alwaysTangle = true;
+            extraEmacsPackages = epkgs: with epkgs; [
+              use-package
+              (epkgs.tree-sitter-langs.withPlugins (_: epkgs.tree-sitter-langs.plugins))
+            ];
+          };
+      in
+      {
+        enable = true;
+        package = mymacs ./config/emacs/config.org;
+      };
 
     sxhkd = {
       enable = false;
@@ -80,7 +89,7 @@ in
           background = "#dc322f";
           foreground = "#eee8d5";
           timeout = 0;
-        };     
+        };
       };
     };
 

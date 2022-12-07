@@ -1,7 +1,7 @@
-{ pkgs, config, ... }:
+{ pkgs, config, flake, ... }:
 {
   home.pointerCursor = {
-    package = pkgs.simp1e-cursors;
+    package = flake.packages.${pkgs.system}.simp1e-cursors;
     name = "Simp1e-Solarized-Light";
     x11 = {
       enable = true;

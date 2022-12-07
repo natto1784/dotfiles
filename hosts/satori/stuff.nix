@@ -45,9 +45,8 @@
     font-awesome
     monoid
     office-code-pro
-    hanazono
     eb-garamond
- #   noto-fonts-cjk
+    noto-fonts-cjk
   ];
   users.users.natto = {
     isNormalUser = true;

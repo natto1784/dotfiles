@@ -1,144 +1,43 @@
 {
+  description = "dotfiles";
+
   inputs = {
-    stable.url = github:nixos/nixpkgs/nixos-22.11;
-    stable-small.url = github:nixos/nixpkgs/nixos-22.05-small;
-    old.url = github:nixos/nixpkgs/nixos-22.05;
     nixpkgs.url = github:nixos/nixpkgs/nixpkgs-unstable;
-    master.url = github:nixos/nixpkgs/master;
     home-manager.url = github:nix-community/home-manager;
-    home-manager-stable.url = github:nix-community/home-manager/release-21.11;
-    nur.url = github:nix-community/NUR;
-    utils.url = github:numtide/flake-utils;
-    nvim.url = github:nix-community/neovim-nightly-overlay;
+    flake-parts.url = github:hercules-ci/flake-parts;
+    nvim-overlay.url = github:nix-community/neovim-nightly-overlay;
     mailserver.url = gitlab:simple-nixos-mailserver/nixos-mailserver;
-    nbfc.url = github:nbfc-linux/nbfc-linux;
-    emacs.url = github:nix-community/emacs-overlay;
+    emacs-overlay.url = github:nix-community/emacs-overlay;
+    rust-overlay.url = github:oxalica/rust-overlay;
     nix-gaming.url = github:fufexan/nix-gaming;
-    rust.url = github:oxalica/rust-overlay;
+    nbfc.url = github:nbfc-linux/nbfc-linux;
   };
 
-  outputs = inputs@{ self, utils, nixpkgs, stable, master, old, stable-small, ... }:
-    with utils.lib; eachSystem
-      (with system;
-      [ x86_64-linux aarch64-linux ])
-      (system:
-        let
-          mkPkgs = channel: system: import channel {
-            inherit system;
-            config.allowUnfree = true;
-            config.allowBroken = true;
-          };
-          channels = final: prev: {
-            stable = mkPkgs stable prev.system;
-            stable-small = mkPkgs stable-small prev.system;
-            unstable = mkPkgs nixpkgs prev.system;
-            master = mkPkgs master prev.system;
-            old = mkPkgs old prev.system;
-          };
+  outputs = inputs@{ self, nixpkgs, ... }:
+    inputs.flake-parts.lib.mkFlake { inherit self; } {
+      systems = [ "x86_64-linux" "aarch64-linux" ];
+      imports = [
+        ./hosts
+        ./home
+        ./pkgs
+      ];
+
+      perSystem = { pkgs, system, ... }: rec {
+        legacyPackages = import inputs.nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
           overlays = [
-            (import ./overlays/packages.nix)
+            inputs.nvim-overlay.overlay
+            inputs.emacs-overlay.overlay
+            inputs.rust-overlay.overlays.default
           ];
-        in
-        {
-          legacyPackages = import nixpkgs {
-            inherit system;
-            overlays = overlays ++ [
-              inputs.nur.overlay
-              inputs.nvim.overlay
-              inputs.rust.overlays.default
-              inputs.emacs.overlay
-              channels
-              (_: _: {
-                nbfc-linux = inputs.nbfc.packages.${system}.nbfc-client-c;
-                gaming = inputs.nix-gaming.packages.${system};
-              })
-            ];
-            config.allowUnfree = true;
-            config.allowBroken = true;
-          };
-        }) //
-    (
-      let
-        personalModules = [
-          ./modules/sound.nix
-        ];
-        commonModules = [
-          ./modules/nvim
-          ./modules/vault-agent.nix
-        ];
-        serverModules = [
-          ./modules/minpkgs.nix
-          ./modules/minzsh.nix
-        ];
-        homeModules = [
-          ./home/modules/secret.nix
-          ./home/modules/baremacs.nix
-        ];
-        builders = [ ./modules/x86builder.nix ];
-      in
-      {
-        homeConfigurations = {
-          natto = inputs.home-manager.lib.homeManagerConfiguration {
-            modules = [
-              ./home/natto
-              {
-                home = {
-                  homeDirectory = "/home/natto";
-                  username = "natto";
-                  packages = [
-                    inputs.home-manager.defaultPackage.x86_64-linux
-                  ];
-                  stateVersion = "22.05";
-                };
-              }
-            ] ++ homeModules;
-            pkgs = self.legacyPackages.x86_64-linux;
-          };
         };
 
-        nixosConfigurations = {
-          #Home laptop
-          satori = nixpkgs.lib.nixosSystem rec {
-            system = "x86_64-linux";
-            modules = [
-              ./hosts/satori
-              {
-                nixpkgs.pkgs = self.legacyPackages.${system};
-              }
-            ]
-            ++ personalModules
-            ++ commonModules;
-          };
+        formatter = pkgs.nixpkgs-fmt;
 
-          #Home server (RPi4)
-          marisa = nixpkgs.lib.nixosSystem rec {
-            system = "aarch64-linux";
-            modules = [
-              ./hosts/marisa
-              #inputs.mailserver.nixosModules.mailserver
-              {
-                nixpkgs.pkgs = self.legacyPackages.${system};
-              }
-            ]
-            ++ commonModules
-            ++ serverModules;
-          };
-
-          #Oracle Cloud VM
-          remilia = nixpkgs.lib.nixosSystem rec {
-            system = "x86_64-linux";
-            modules = [
-              ./hosts/remilia
-              inputs.mailserver.nixosModules.mailserver
-              {
-                nixpkgs.pkgs = self.legacyPackages.${system};
-              }
-            ]
-            ++ commonModules
-            ++ serverModules
-            ++ builders;
-          };
+        devShells.default = pkgs.mkShell {
+          packages = [ formatter ];
         };
-      }
-    );
+      };
+    };
 }
