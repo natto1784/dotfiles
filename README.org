@@ -2,32 +2,7 @@
 #+AUTHOR: Amneesh Singh
 #+OPTIONS: toc:nil num:nil
 
-#+begin_src sh
-├───homeConfigurations: unknown
-├───legacyPackages
-warning: │   ├───aarch64-linux: omitted (use '--legacy' to show)
-warning: │   └───x86_64-linux: omitted (use '--legacy' to show)
-└───nixosConfigurations
-    ├───Marisa: NixOS configuration
-    ├───Remilia: NixOS configuration
-    └───Satori: NixOS configuration
-#+end_src
-
-* TODOs
-+ TODO Add user specific traditional dotfiles.
-+ DONE Try home-manager
-+ DONE Try nix flakes
-
-* How install workey
-Either do
-#+begin_src sh
-cd dotfiles
-nixos-rebuild switch --flake .
-#+end_src
-or 
-#+begin_src sh
-nixos-rebuild switch --flake "git+https://git.weirdnatto.in/natto1784/dotfiles?ref=nixos"
-#+end_src
+NixOS configurations for several hosts, now with [[https://flake.parts][flake-parts]].
 
 * How home-manager workey
 Just do
@@ -38,7 +13,7 @@ nix run nixpkgs#home-manager switch -- --flake "git+https://git.weirdnatto.in/na
 * How packages workey
 To build or run any of the packages in this flake do
 #+begin_src sh
-nix <"run"/"build"> "git+https://git.weirdnatto.in/natto1784/dotfiles?ref=nixos"#pkgs.<your_arch>.<package_name>
+nix <"run"/"build"> "git+https://git.weirdnatto.in/natto1784/dotfiles?ref=nixos"#<package_name>
 #+end_src
 
 -----
