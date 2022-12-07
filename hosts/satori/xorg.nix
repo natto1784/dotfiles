@@ -1,4 +1,3 @@
-
 { config, lib, ... }:
 
 #let
@@ -11,23 +10,23 @@
   services = {
     xserver = {
       enable = true;
-      libinput= {
+      libinput = {
         enable = true;
         mouse = {
           accelSpeed = "0";
- #         accelProfile = "flat";
+          #         accelProfile = "flat";
         };
         touchpad = {
           middleEmulation = false;
           clickMethod = "buttonareas";
           tapping = true;
-          naturalScrolling =true;
+          naturalScrolling = true;
         };
       };
       displayManager = {
         startx = {
-          enable = true; 
-        }; 
+          enable = true;
+        };
       };
       extraLayouts = {
         us-colemak = {

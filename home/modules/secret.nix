@@ -37,12 +37,12 @@ let
         '';
       };
       path = mkOption {
-          type = types.str;
-          default = "${home_}/.secrets/${config.name}";
-          description = ''
-            Path where the decrypted secret is installed.
-          '';
-        };
+        type = types.str;
+        default = "${home_}/.secrets/${config.name}";
+        description = ''
+          Path where the decrypted secret is installed.
+        '';
+      };
       mode = mkOption {
         type = types.str;
         default = "0400";
@@ -59,12 +59,13 @@ let
       };
     };
   });
-in {
-  
+in
+{
+
   options.age = {
     secrets = mkOption {
       type = types.attrsOf secretType;
-      default = {};
+      default = { };
       description = ''
         Attrset of secrets.
       '';
@@ -72,15 +73,15 @@ in {
 
     sshKeyPaths = mkOption {
       type = types.listOf types.path;
-      default = [  ];
+      default = [ ];
       description = ''
         Path to SSH keys to be used as identities in age decryption.
       '';
     };
   };
-  config = mkIf (cfg.secrets != {}) {
+  config = mkIf (cfg.secrets != { }) {
     assertions = [{
-      assertion = cfg.sshKeyPaths != [];
+      assertion = cfg.sshKeyPaths != [ ];
       message = "age.sshKeyPaths must be set.";
     }];
     home.activation = {

@@ -5,12 +5,14 @@
 
 {
   fileSystems."/" =
-    { device = "/dev/disk/by-label/NIXOS_SD";
+    {
+      device = "/dev/disk/by-label/NIXOS_SD";
       fsType = "ext4";
     };
 
   fileSystems."/nix/store" =
-    { device = "/nix/store";
+    {
+      device = "/nix/store";
       fsType = "none";
       options = [ "bind" ];
     };

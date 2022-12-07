@@ -12,7 +12,7 @@ stdenvNoCC.mkDerivation rec {
     fetchSubmodules = true;
   };
 
-  nativeBuildInputs = [ 
+  nativeBuildInputs = [
     (python3.withPackages (ps: with ps; [ pillow ]))
     librsvg
     xcursorgen

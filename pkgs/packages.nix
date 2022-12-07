@@ -1,6 +1,7 @@
 final: prev:
 let
-  call = prev.callPackage; in
+  call = prev.callPackage;
+in
 {
   customscripts = call ./customscripts { };
   tlauncher = call ./tlauncher { };

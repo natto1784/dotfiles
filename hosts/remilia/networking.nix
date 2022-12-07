@@ -18,7 +18,7 @@
               25
               22001
               22002
-              9898 
+              9898
               8999
               99
             ] ++ (map (x: x.sourcePort) config.networking.nat.forwardPorts);

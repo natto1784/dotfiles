@@ -3,7 +3,7 @@
 with lib;
 let
   cfg = config.services.vault-agent;
-  json = pkgs.formats.json {};
+  json = pkgs.formats.json { };
 in
 {
   options = {
@@ -17,10 +17,10 @@ in
           The package used for the vault agent
         '';
       };
-      
+
       settings = mkOption {
         type = json.type;
-        default = {};
+        default = { };
         description = ''
           Settings for the agent
         '';

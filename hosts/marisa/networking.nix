@@ -6,9 +6,14 @@
       allowedTCPPorts = [
         22 # ssh
         80 # http
-        6060 4444 5454 8080 #????
+        6060
+        4444
+        5454
+        8080 #????
         5001 #gitea
-        8800 4646 8500 #vault nomad consul
+        8800
+        4646
+        8500 #vault nomad consul
         8888 #simpler-filehost1
         6666 #concourse
         202 #gitea-ssh
