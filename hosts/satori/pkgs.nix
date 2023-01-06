@@ -2,7 +2,6 @@
 
 {
   environment.systemPackages = with pkgs; [
-    w3m
     tmux
     bc
     ghc
@@ -17,7 +16,6 @@
     kbd
     cachix
     gcc
-    glibc.static
     openjdk
     virtmanager
     tree-sitter
@@ -28,7 +26,6 @@
     vulkan-tools
     vulkan-headers
     msr-tools
-    steam
     igrep
     jq
   ];
@@ -59,10 +56,7 @@
         enable = true;
         highlightStyle = "fg=yellow,bold";
       };
-      ohMyZsh = {
-        plugins = [ "git" ];
-        enable = true;
-      };
+      ohMyZsh.enable = true;
     };
     dconf.enable = true;
     adb.enable = true;

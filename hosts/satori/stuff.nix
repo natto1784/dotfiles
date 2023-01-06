@@ -47,6 +47,9 @@
     office-code-pro
     eb-garamond
     noto-fonts-cjk
+    hanazono
+    takao
+    liberation_ttf
   ];
   users.users.natto = {
     isNormalUser = true;
@@ -63,7 +66,6 @@
     };
   };
   virtualisation = {
-    docker.enable = true;
     podman = {
       enable = true;
       enableNvidia = true;

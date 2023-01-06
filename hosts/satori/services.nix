@@ -3,7 +3,7 @@
 {
   services = {
     tor.enable = true;
-    logmein-hamachi.enable = false;
+    logmein-hamachi.enable = true;
     openssh = {
       enable = true;
       permitRootLogin = "yes";
