@@ -15,5 +15,6 @@
     ./services.nix
     ./pkgs.nix
     ./stuff.nix
+    ./emacs.nix
   ];
 }

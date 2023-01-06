@@ -29,8 +29,8 @@ idk random variables to match my color theme
 * Settings
 ** Setting the default face
 #+begin_src emacs-lisp
-(set-frame-font "Fira Code 12" nil t)
-(add-to-list 'default-frame-alist '(font . "Fira Code-12"))
+(set-frame-font "Fira Code 13" nil t)
+(add-to-list 'default-frame-alist '(font . "Fira Code-13"))
 #+end_src
 
 ** Some mode settings based on personal preferences
@@ -195,7 +195,7 @@ To undo and redo easily like vi
   :init
   (setq lsp-ui-doc-show-with-cursor t)
   :config
-(lsp-ui-peek-enable 1)
+  (lsp-ui-peek-enable 1)
   (lsp-ui-doc-enable 1))
 #+end_src
 
@@ -259,6 +259,8 @@ For autocomplete
 
 (use-package haskell-mode)
 
+(use-package lsp-latex)
+
 (use-package rustic)
 
 (use-package nix-mode
@@ -290,7 +292,6 @@ For autocomplete
   (evil-define-key 'normal vterm-mode-map (kbd "p") 'vterm-yank)
   (evil-define-key 'insert vterm-mode-map (kbd "C-y") 'vterm-yank)
   (setq vterm-timer-delay 0.005))
-
 
 (use-package vterm-toggle
   :config
@@ -502,12 +503,12 @@ This returns the command to run in the terminal
         (file (file-name-sans-extension buffer-file-name)))
     (pcase (file-name-extension full)
            ("c" (concat "gcc " full " -lm -pthread -o " file " && " file " && rm " file))
-           ("java" (concat "java" full))
-           ("py" (concat "python" full))
+           ("java" (concat "java " full))
+           ("py" (concat "python " full))
            ("cpp" (concat "g++ " full " -o " file " && " file " && rm " file))
            ("hs" (concat "runhaskell " full))
-           ("sh" (concat "sh" full))
-           ("js" (concat "node" full))
+           ("sh" (concat "sh " full))
+           ("js" (concat "node " full))
            ("ts" (concat "tsc" full " && node " file ".js && rm " file ".js" ))
            ("rs" (concat "rustc" full " -o " file " && " file " && rm " file)))))
 #+end_src

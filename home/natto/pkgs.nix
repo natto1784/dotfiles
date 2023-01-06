@@ -38,6 +38,8 @@
     xdotool
     (inputs.nbfc.packages.${pkgs.system}.nbfc-client-c)
     (flake.packages.${pkgs.system}.customscripts)
+    translate-shell
+    w3m
 
     # GUI utils
     (xfce.thunar.override {
@@ -68,13 +70,14 @@
     obs-studio
 
     # Wine and games and stuff
+    steam
     wineWowPackages.stable
     winetricks
     citra
     yuzu
-    ryujinx
-    (inputs.nix-gaming.packages.${pkgs.system}.osu-stable)
+    #   (inputs.nix-gaming.packages.${pkgs.system}.osu-stable)
     (flake.packages.${pkgs.system}.tlauncher)
+    mangohud
 
     # Dev shit
     rust-analyzer
@@ -94,6 +97,9 @@
         catchfile
         framed
         upquote
+        pdfsync
+        tocloft
+        enumitem
         tcolorbox;
     })
     python3Packages.pygments

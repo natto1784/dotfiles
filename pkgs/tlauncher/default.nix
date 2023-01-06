@@ -25,6 +25,9 @@ let
       ${openjdk8}/bin/java -jar "${jar}" "$@"
     '';
     targetPkgs = pkgs: with pkgs; [
+      openal
+      pulseaudio
+      libpulseaudio
       zip
       zlib
       alsa-lib

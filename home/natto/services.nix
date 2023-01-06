@@ -1,41 +1,6 @@
 { config, pkgs, inputs, ... }:
 {
-  home.file = with config; {
-    "config.org" = {
-      source = ./config/emacs/config.org;
-      target = "${home.homeDirectory}/.emacs.d/config.org";
-    };
-    "init.el" = {
-      source = ./config/emacs/init.el;
-      target = "${home.homeDirectory}/.emacs.d/init.el";
-    };
-  };
-
   services = {
-    emacs =
-      let
-        mymacs = config: # with inputs.emacs-overlay.packages.${pkgs.system}; already resolved with overlay
-          with pkgs; emacsWithPackagesFromUsePackage {
-            inherit config;
-            package = emacsGit;
-            alwaysEnsure = true;
-            alwaysTangle = true;
-            extraEmacsPackages = epkgs: with epkgs; [
-              use-package
-              (epkgs.tree-sitter-langs.withPlugins (_: epkgs.tree-sitter-langs.plugins))
-            ];
-          };
-      in
-      {
-        enable = true;
-        package = mymacs ./config/emacs/config.org;
-      };
-
-    sxhkd = {
-      enable = false;
-      extraConfig = builtins.readFile ./config/sxhkd/sxhkdrc;
-    };
-
     mpd = {
       enable = true;
       musicDirectory = "${config.home.homeDirectory}/Music";
