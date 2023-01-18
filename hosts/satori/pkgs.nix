@@ -4,28 +4,20 @@
   environment.systemPackages = with pkgs; [
     tmux
     bc
-    ghc
     gnumake
     pciutils
+    usbutils
     ntfs3g
     python3
     htop
-    nodejs
     wget
     ripgrep
     kbd
-    cachix
     gcc
-    openjdk
     virtmanager
-    tree-sitter
-    docker-compose
-    rust-bin.nightly.latest.default
-    clang-tools
     rnix-lsp
     vulkan-tools
     vulkan-headers
-    msr-tools
     igrep
     jq
   ];

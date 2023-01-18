@@ -40,6 +40,8 @@
     (flake.packages.${pkgs.system}.customscripts)
     translate-shell
     w3m
+    powertop
+    cachix
 
     # GUI utils
     (xfce.thunar.override {
@@ -79,7 +81,7 @@
     (flake.packages.${pkgs.system}.tlauncher)
     mangohud
 
-    # Dev shit
+    # Programming and dev stuff
     rust-analyzer
     (texlive.combine {
       inherit (texlive)
@@ -104,6 +106,11 @@
     })
     python3Packages.pygments
     inform7
+    ghc
+    nodejs
+    rust-bin.nightly.latest.default
+    clang-tools
+    openjdk
 
     # Misc
     anki-bin
