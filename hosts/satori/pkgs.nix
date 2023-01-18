@@ -72,14 +72,9 @@
           host = "127.0.0.1";
           port = 2217;
         };
-        remilia4 = {
-          enable = true;
-          type = "socks4";
-          host = "127.0.0.1";
-          port = 2217;
-        };
       };
     };
     slock.enable = true;
+    gamemode.enable  = true;
   };
 }

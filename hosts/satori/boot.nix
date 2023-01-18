@@ -3,7 +3,7 @@
 {
   boot = {
     supportedFilesystems = [ "zfs" ];
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_5_15;
     initrd = {
       availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" "vfio-pci" ];
       /*     preDeviceCommands = ''

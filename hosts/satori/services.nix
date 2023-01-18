@@ -15,10 +15,20 @@
     '';
     zfs.autoScrub.enable = true;
     gvfs.enable = true;
+    tlp = {
+      enable = true;
+      settings = {
+        CPU_SCALING_GOVERNOR_ON_AC = "performance";
+        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+      };
+    };
     logind.extraConfig = "RuntimeDirectorySize=30%";
   };
-  systemd.services.tor.wantedBy = lib.mkForce [ ];
-  systemd.enableUnifiedCgroupHierarchy = false;
+  systemd.services = {
+    tor.wantedBy = lib.mkForce [ ];
+    logmein-hamachi.wantedBy = lib.mkForce [ ];
+  };
+
   security.pki.certificateFiles = [ ../../cert.pem ];
   virtualisation.libvirtd = {
     enable = true;
