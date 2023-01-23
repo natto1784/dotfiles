@@ -32,13 +32,15 @@
     hyprland.url = github:hyprwm/Hyprland;
   };
 
-  outputs = inputs@{ self, nixpkgs, ... }:
+  outputs = inputs@{ self, ... }:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [ "x86_64-linux" "aarch64-linux" ];
+
       imports = [
         ./hosts
         ./home
         ./pkgs
+        ./lib
       ];
 
       perSystem = { pkgs, system, ... }: rec {

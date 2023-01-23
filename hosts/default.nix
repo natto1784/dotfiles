@@ -1,7 +1,6 @@
 { self, inputs, ... }:
 let
   inherit (inputs) nixpkgs;
-  specialArgs = { inherit inputs; };
 
   commonModules = [ ./modules/nvim ];
   personalModules = [ ./modules/sound.nix ];
@@ -18,7 +17,6 @@ in
     #Home laptop
     satori = nixpkgs.lib.nixosSystem rec {
       system = "x86_64-linux";
-      inherit specialArgs;
       modules = [
         ./satori
         { nixpkgs.pkgs = self.legacyPackages.${system}; }
@@ -30,7 +28,6 @@ in
     #Home server (RPi4)
     marisa = nixpkgs.lib.nixosSystem rec {
       system = "aarch64-linux";
-      inherit specialArgs;
       modules = [
         ./marisa
         { nixpkgs.pkgs = self.legacyPackages.${system}; }
@@ -42,7 +39,6 @@ in
     #Oracle Cloud VM
     remilia = nixpkgs.lib.nixosSystem rec {
       system = "x86_64-linux";
-      inherit specialArgs;
       modules = [
         ./remilia
         inputs.mailserver.nixosModules.mailserver

@@ -24,6 +24,8 @@
     go.enable = true;
     password-store.enable = true;
     direnv.enable = true;
-    foot.enable = false;
+    foot = {
+      enable = false;
+    };
   };
 }
