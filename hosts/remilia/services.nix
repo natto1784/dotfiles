@@ -1,4 +1,7 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, network, ... }:
+let
+  domain = network.addresses.domain.natto;
+in
 {
   services = {
     openssh = {
@@ -20,7 +23,7 @@
       appendHttpConfig = ''
         map $uri $expires {
           default off;
-          ~\.(jpg|jpeg|png|gif|ico|css|js|pdf)$ 30d;
+          ~\.(jpg|jpeg|png|gif|ico|css|js)$ 30d;
         }
       '';
       virtualHosts =
@@ -37,33 +40,34 @@
             };
           };
         in
-        {
-          "weirdnatto.in" = {
+        with network.addresses.wireguard.ips; {
+          "${domain}" = {
             addSSL = true;
             enableACME = true;
             locations."/" = {
               root = "/var/lib/site";
               index = "index.html";
             };
-            serverAliases = [ "www.weirdnatto.in" ];
+            serverAliases = [ "www.${domain}" ];
           };
-          "vault.weirdnatto.in" = genericHttpRProxy { addr = "https://10.55.0.2:8800"; };
-          "consul.weirdnatto.in" = genericHttpRProxy { addr = "http://10.55.0.2:8500"; };
-          "f.weirdnatto.in" = genericHttpRProxy { addr = "http://10.55.0.2:8888"; };
-          "radio.weirdnatto.in" = genericHttpRProxy { addr = "http://10.55.0.3:8001"; };
-          "git.weirdnatto.in" = genericHttpRProxy {
-            addr = "http://10.55.0.2:5001";
+          "znc.weirdnatto.in" = genericHttpRProxy { addr = "https://${marisa}:9898"; };
+          "vault.${domain}" = genericHttpRProxy { addr = "https://${marisa}:8800"; };
+          "consul.${domain}" = genericHttpRProxy { addr = "http://${marisa}:8500"; };
+          "f.${domain}" = genericHttpRProxy { addr = "http://${marisa}:8888"; };
+          "radio.${domain}" = genericHttpRProxy { addr = "http://${satori}:8001"; };
+          "git.${domain}" = genericHttpRProxy {
+            addr = "http://${marisa}:5001";
             conf = "client_max_body_size 64M;";
           };
-          "nomad.weirdnatto.in" = genericHttpRProxy {
-            addr = "http://10.55.0.2:4646";
+          "nomad.${domain}" = genericHttpRProxy {
+            addr = "http://${marisa}:4646";
             conf = ''
               proxy_buffering off;
               proxy_read_timeout 310s;
             '';
           };
-          "alo.weirdnatto.in" = genericHttpRProxy {
-            addr = "http://10.55.0.2:4004";
+          "alo.${domain}" = genericHttpRProxy {
+            addr = "http://${marisa}:4004";
             conf = ''
               proxy_set_header X-Real-IP $remote_addr;
               proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -82,9 +86,9 @@
   security.acme = {
     acceptTerms = true;
     certs = {
-      "weirdnatto.in".extraDomainNames = lib.singleton "www.weirdnatto.in";
+      "${domain}".extraDomainNames = lib.singleton "www.${domain}";
     } //
-    lib.mapAttrs (n: _: { email = "natto@weirdnatto.in"; })
+    lib.mapAttrs (n: _: { email = "natto@${domain}"; })
       (lib.filterAttrs (_: v: v.enableACME) config.services.nginx.virtualHosts);
   };
   security.pki.certificateFiles = [ ../../cert.pem ];

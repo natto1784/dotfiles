@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, network, ... }:
 
 {
   networking = {
@@ -18,16 +18,16 @@
       };
     };
 
-    wireguard.interfaces.wg0 = {
-      ips = [ "10.55.0.3/32" ];
+    wireguard.interfaces.wg0 = with network.addresses.wireguard.ips; {
+      ips = [ satori ];
       listenPort = 17840;
       privateKeyFile = "/var/secrets/wg.key";
       peers = [
         {
           #Oracle VM1
           publicKey = "z0Y2VNEWcyVQVSqRHiwmiJ5/0MgSPM+HZfEcwIccSxM=";
-          allowedIPs = [ "10.55.0.0/24" ];
-          endpoint = "weirdnatto.in:17840";
+          allowedIPs = [ remilia ];
+          endpoint = "${network.addresses.domain.natto}:17840";
           persistentKeepalive = 25;
         }
       ];

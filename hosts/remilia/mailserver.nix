@@ -1,21 +1,23 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, network, ... }:
 {
-  mailserver = with lib; rec {
-    enable = true;
-    fqdn = "mail.weirdnatto.in";
-    sendingFqdn = fqdn;
-    domains = singleton "weirdnatto.in";
-    certificateDomains = singleton "mail.weirdnatto.in";
-    certificateScheme = 3;
-    loginAccounts = {
-      "natto@weirdnatto.in" = {
-        hashedPasswordFile = "/var/secrets/natto@weirdnatto.in.key";
+  mailserver =
+    let domain = network.addresses.domain.natto; in
+    rec {
+      enable = true;
+      fqdn = "mail.${domain}";
+      sendingFqdn = fqdn;
+      domains = [ domain ];
+      certificateDomains = [ "mail.${domain}" ];
+      certificateScheme = 3;
+      loginAccounts = {
+        "natto@${domain}" = {
+          hashedPasswordFile = "/var/secrets/natto@${domain}.key";
+        };
+        "masti@${domain}" = {
+          hashedPasswordFile = "/var/secrets/masti@${domain}.key";
+        };
       };
-      "masti@weirdnatto.in" = {
-        hashedPasswordFile = "/var/secrets/masti@weirdnatto.in.key";
-      };
+      enablePop3 = false;
+      enablePop3Ssl = false;
     };
-    enablePop3 = false;
-    enablePop3Ssl = false;
-  };
 }

@@ -7,6 +7,7 @@
           inherit inputs self;
           flake = self;
           colors = import ./colors.nix;
+          network = import ./network.nix;
         };
       };
     }

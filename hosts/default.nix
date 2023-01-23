@@ -1,8 +1,11 @@
-{ self, inputs, ... }:
+{ self, inputs, globalArgs, ... }:
 let
   inherit (inputs) nixpkgs;
 
-  commonModules = [ ./modules/nvim ];
+  commonModules = [
+    ./modules/nvim
+    globalArgs
+  ];
   personalModules = [ ./modules/sound.nix ];
   serverModules = [ ./modules/server.nix ];
   builders = [ ./modules/x86builder.nix ];
