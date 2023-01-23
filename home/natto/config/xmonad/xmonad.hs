@@ -28,7 +28,7 @@ urgentWinColor = "#dc322f"
 miscColor = inactiveWinColor
 
 myBorderWidth = 2
-myTerminal = "/usr/bin/env st"
+myTerminal = "st"
 myFocusFollowsMouse = True
 myNormalBorderColor = bgColor
 myModMask = mod4Mask
@@ -56,9 +56,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   , ((modMask, xK_d),
      spawn "dmenu_run -l 20")
-
-  , ((shiftMask .|. mod1Mask, xK_v),
-     spawn "clipmenu")
 
   , ((modMask, xK_s),
      spawn "dmenu_websearch")
@@ -111,7 +108,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn "light -U 5")
 
   , ((modMask .|. shiftMask, xK_F1),
-     spawn "setxkbmap us-colemak")
+     spawn "setxkbmap us colemak_dh")
 
   , ((modMask .|. shiftMask, xK_F2),
      spawn "setxkbmap us basic")
@@ -121,6 +118,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   , ((modMask .|. shiftMask, xK_F4),
      spawn "setxkbmap in guru")
+
+  , ((modMask .|. shiftMask, xK_F5),
+     spawn "setxkbmap colemak dhz")
 
   , ((modMask, xK_space),
      sendMessage NextLayout)

@@ -3,7 +3,7 @@ let
   mymacs = config: # with inputs.emacs-overlay.packages.${pkgs.system}; already resolved with overlay
     with pkgs; emacsWithPackagesFromUsePackage {
       inherit config;
-      package = emacsNativeComp;
+      package = emacsGit;
       alwaysEnsure = true;
       alwaysTangle = true;
       extraEmacsPackages = epkgs: with epkgs; [

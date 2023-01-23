@@ -263,6 +263,8 @@ For autocomplete
 
 (use-package rustic)
 
+(use-package wgsl-mode)
+
 (use-package nix-mode
   :mode "\\.nix\\'")
 (add-to-list 'lsp-language-id-configuration '(nix-mode . "nix"))

@@ -5,6 +5,7 @@
       modules = [
         ./natto
         ./modules/secret.nix
+        inputs.hyprland.homeManagerModules.default
       ];
       pkgs = self.legacyPackages.x86_64-linux;
       extraSpecialArgs = {

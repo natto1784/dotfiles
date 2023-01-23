@@ -4,7 +4,6 @@
 
     # A/V, codec and media stuff
     ffmpeg-full
-    sox
     pamixer
     mpdas
     mpv
@@ -12,9 +11,7 @@
     pulseaudio
     pavucontrol
     spotify
-    noisetorch
     imagemagick
-    (qjackctl.override { jackSession = true; })
 
     # Utils
     rage
@@ -30,7 +27,6 @@
     xorg.xmodmap
     p7zip
     unrar
-    glxinfo
     sxiv
     vim
     jmtpfs
@@ -39,9 +35,9 @@
     (inputs.nbfc.packages.${pkgs.system}.nbfc-client-c)
     (flake.packages.${pkgs.system}.customscripts)
     translate-shell
-    w3m
     powertop
     cachix
+    undervolt
 
     # GUI utils
     (xfce.thunar.override {
@@ -66,17 +62,13 @@
     arc-theme
     arc-icon-theme
     authy
-    calibre
     gnome.zenity
     stalonetray
-    obs-studio
 
     # Wine and games and stuff
     steam
     wineWowPackages.stable
     winetricks
-    citra
-    yuzu
     #   (inputs.nix-gaming.packages.${pkgs.system}.osu-stable)
     (flake.packages.${pkgs.system}.tlauncher)
     mangohud
