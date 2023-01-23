@@ -4,13 +4,8 @@ let
 
   commonModules = [ ./modules/nvim ];
   personalModules = [ ./modules/sound.nix ];
-  serverModules = [
-    ./modules/minpkgs.nix
-    ./modules/minzsh.nix
-  ];
-  builders = [
-    ./modules/x86builder.nix
-  ];
+  serverModules = [ ./modules/server.nix ];
+  builders = [ ./modules/x86builder.nix ];
 in
 {
   flake.nixosConfigurations = {

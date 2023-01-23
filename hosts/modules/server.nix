@@ -1,5 +1,16 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
+  environment.systemPackages = with pkgs; [
+    git
+    htop
+    vim
+    wireguard-tools
+    rnix-lsp
+    nmap
+    gcc
+    postgresql #for the client cli
+  ];
+
   programs = {
     zsh = {
       enable = true;
