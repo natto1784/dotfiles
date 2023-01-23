@@ -5,6 +5,15 @@
       sway = {
         enable = true;
       };
+      hyprland = {
+        enable = false;
+        xwayland = {
+          enable = true;
+          hidpi = true;
+        };
+        nvidiaPatches = true;
+      };
     };
   };
+
 }

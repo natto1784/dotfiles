@@ -3,18 +3,19 @@
 
   inputs = {
     nixpkgs.url = github:nixos/nixpkgs/nixpkgs-unstable;
+    flake-parts.url = github:hercules-ci/flake-parts;
     home-manager = {
       url = github:nix-community/home-manager;
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    flake-parts.url = github:hercules-ci/flake-parts;
-    nvim-overlay.url = github:nix-community/neovim-nightly-overlay;
     mailserver = {
       url = gitlab:simple-nixos-mailserver/nixos-mailserver;
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    emacs-overlay.url = github:nix-community/emacs-overlay;
-    rust-overlay.url = github:oxalica/rust-overlay;
+    rust-overlay = {
+      url = github:oxalica/rust-overlay;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-gaming = {
       url = github:fufexan/nix-gaming;
       inputs.nixpkgs.follows = "nixpkgs";
@@ -23,6 +24,12 @@
       url = github:nbfc-linux/nbfc-linux;
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    emacs-overlay.url = github:nix-community/emacs-overlay;
+    nvim-overlay = {
+      url = github:nix-community/neovim-nightly-overlay;
+      inputs.nixpkgs.url = github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836;
+    };
+    hyprland.url = github:hyprwm/Hyprland;
   };
 
   outputs = inputs@{ self, nixpkgs, ... }:
