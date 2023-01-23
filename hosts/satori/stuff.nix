@@ -2,25 +2,8 @@
 {
   time.timeZone = "Asia/Kolkata";
 
-  environment = {
-    etc."current-system-packages".text =
-      let
-        packages = builtins.map (p: "${p.name}") config.environment.systemPackages;
-        sortedUnique = builtins.sort builtins.lessThan (lib.unique packages);
-        formatted = builtins.concatStringsSep "\n" sortedUnique;
-      in
-      formatted;
-    sessionVariables = {
-      QT_X11_NO_MITSHM = "1";
-      HM_CONF_DIR = "/etc/nixos";
-    };
-    localBinInPath = true;
-    shellAliases = rec {
-      ec = "emacsclient";
-      ecc = ec + " -c";
-      ecnw = ec + " -nw";
-    };
-  };
+  environment.localBinInPath = true;
+
   security = {
     polkit.enable = true;
     sudo.enable = true;
@@ -31,11 +14,12 @@
           users = [ "natto" ];
           keepEnv = true;
           persist = true;
-          setEnv = [ "SSH_AUTH_SOCK" "PATH" "SHELL" "HOME" ];
+          setEnv = [ "SSH_AUTH_SOCK" "PATH" "SHELL" ];
         }
       ];
     };
   };
+
   fonts.fonts = with pkgs; [
     fira-mono
     fira-code
@@ -51,25 +35,20 @@
     takao
     liberation_ttf
   ];
+
   users.users.natto = {
     isNormalUser = true;
     shell = pkgs.zsh;
     home = "/home/natto";
-    extraGroups = [ "wheel" "adbusers" "video" "libvirtd" "docker" ];
+    extraGroups = [ "wheel" "adbusers" "video" "libvirtd" "docker" "networkmanager" ];
   };
-  i18n = {
-    inputMethod = {
-      #   enabled = "fcitx5";
-      #  fcitx5.addons = with pkgs; [ fcitx5-m17n fcitx5-mozc ];
-      enabled = "fcitx";
-      fcitx.engines = with pkgs.fcitx-engines; [ m17n mozc ];
-    };
-  };
+
   virtualisation = {
     podman = {
       enable = true;
       enableNvidia = true;
     };
   };
+
   gtk.iconCache.enable = true;
 }

@@ -1,0 +1,19 @@
+default partial alphanumeric_keys modifier_keys
+xkb_symbols "dhz" {
+    name[Group1] = "English (Colemak-DHz)";
+    include "us(colemak_dh)"
+    key <AB01> { [            z,            Z,              ae,               AE ] };
+    key <AB02> { [            x,            X, dead_circumflex,       asciitilde ] };
+    key <AB03> { [            c,            C,        ccedilla,         Ccedilla ] };
+    key <AB04> { [            d,            D,  dead_diaeresis,       asciitilde ] };
+    key <AB05> { [            v,            V,              oe,               OE ] };
+    include "level3(ralt_switch)"
+};
+    
+partial alphanumeric_keys
+xkb_symbols "cta-dhz" {
+    include "colemak(dhz)"
+    name[Group1] = "English (cta-DHz)";
+    key <CAPS> { [    BackSpace,    BackSpace,       BackSpace,        BackSpace ] };
+    include "level3(ralt_switch)"
+};

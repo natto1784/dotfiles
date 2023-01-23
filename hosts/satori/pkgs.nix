@@ -18,8 +18,8 @@
     rnix-lsp
     vulkan-tools
     vulkan-headers
-    igrep
     jq
+    dconf
   ];
 
   programs = {
@@ -30,6 +30,7 @@
         pinentryFlavor = "curses";
       };
     };
+
     git = {
       enable = true;
       package = pkgs.git.override {
@@ -38,6 +39,7 @@
         withManual = false;
       };
     };
+
     zsh = {
       enable = true;
       histSize = 30000;
@@ -50,10 +52,9 @@
       };
       ohMyZsh.enable = true;
     };
-    dconf.enable = true;
     adb.enable = true;
     light.enable = true;
-    proxychains = {
+    /* proxychains = {
       enable = true;
       chain.type = "dynamic";
       proxyDNS = true;
@@ -65,8 +66,8 @@
           port = 2217;
         };
       };
-    };
-    slock.enable = true;
-    gamemode.enable  = true;
+    }; */
+    gamemode.enable = true;
+    nm-applet.enable = true;
   };
 }

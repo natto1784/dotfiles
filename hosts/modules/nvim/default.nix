@@ -4,10 +4,6 @@
   programs.neovim = {
     enable = true;
     package = pkgs.neovim-nightly;
-    # package = inputs.nvim-overlay.packages.${pkgs.system}.default;
-    #   package = pkgs.neovim-nightly.overrideAttrs (_:{
-    #     nativeBuildInputs = with pkgs; [ unzip cmake pkgconfig gettext tree-sitter ];
-    #   });
     defaultEditor = false;
     configure = {
       customRC = ''

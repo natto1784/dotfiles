@@ -29,14 +29,14 @@
         };
       };
       extraLayouts = {
-        us-colemak = {
-          description = "Colemak with MOD-dh";
+        colemak = {
+          description = "Colemak Layouts";
           languages = [ "eng" ];
-          symbolsFile = ./colemak-dh;
+          symbolsFile = ./colemak;
         };
       };
-      layout = "us-colemak";
-      xkbVariant = "basic";
+      layout = "colemak";
+      xkbVariant = "dhz"; # trying to ditch DHz now
       autoRepeatDelay = 320;
       autoRepeatInterval = 30;
     };

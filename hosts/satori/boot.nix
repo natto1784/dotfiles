@@ -3,7 +3,7 @@
 {
   boot = {
     supportedFilesystems = [ "zfs" ];
-    kernelPackages = pkgs.linuxPackages_5_15;
+    kernelPackages = pkgs.linuxPackages_latest;
     initrd = {
       availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" "vfio-pci" ];
       /*     preDeviceCommands = ''
@@ -15,7 +15,7 @@
         '';*/
       kernelModules = [ ];
     };
-    kernelParams = [ "intel_pstate=active" "intel_iommu=on" ];
+    kernelParams = [ "intel_pstate=active" "intel_iommu=on" "nvidia_drm.modeset=1" ];
     kernelModules = [ "kvm-intel" "snd-seq" "snd-rawmidi" "joydev" ];
     extraModulePackages = with config.boot.kernelPackages; [ nvidia_x11 v4l2loopback ];
     loader = {

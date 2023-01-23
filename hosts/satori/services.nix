@@ -3,7 +3,6 @@
 {
   services = {
     tor.enable = true;
-    logmein-hamachi.enable = true;
     openssh = {
       enable = true;
       permitRootLogin = "yes";
@@ -26,7 +25,7 @@
   };
   systemd.services = {
     tor.wantedBy = lib.mkForce [ ];
-    logmein-hamachi.wantedBy = lib.mkForce [ ];
+    libvirtd.wantedBy = lib.mkForce [ ];
   };
 
   security.pki.certificateFiles = [ ../../cert.pem ];
