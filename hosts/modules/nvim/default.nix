@@ -37,7 +37,7 @@
           (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars))
           vim-latex-live-preview
           lspkind-nvim
-          base16-vim
+          catppuccin-nvim
         ];
       };
     };

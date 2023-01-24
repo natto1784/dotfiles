@@ -34,3 +34,6 @@ set mail_check=60
 auto_view text/html		
 alternative_order text/enriched text/plain text/html text
 macro index,pager U "<shell-escape>mbsync -a<enter>" "run mbsync to sync all emails"
+macro index A \
+    "<tag-pattern>~N<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
+    "mark all new as read"

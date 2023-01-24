@@ -11,6 +11,7 @@
       LV2_PATH = lib.makeSearchPath "lib/lv2" (with pkgs; [ calf ]);
       QT_X11_NO_MITSHM = "1";
       HM_CONF_DIR = "/etc/nixos";
+      QT_QPA_PLATFORMTHEME = "gtk2";
     };
 
     shellAliases = rec {

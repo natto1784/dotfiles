@@ -1,11 +1,10 @@
+--i do not really maintain this anymore since emacs is my main editor now
+
 vim.api.nvim_set_option("termguicolors", true)
-local comm = vim.api.nvim_command
-local bind = vim.api.nvim_set_keymap
-local setvar = vim.api.nvim_set_var
-local getvar = vim.api.nvim_get_var
+local bind = vim.keymap.set
 
 function hi(hi_var, hi_value)
-    comm("hi " .. hi_var .. " " .. hi_value)
+    vim.cmd("hi " .. hi_var .. " " .. hi_value)
 end
 --SETTINGS
 vim.o.cmdheight = 1
@@ -20,7 +19,6 @@ vim.o.cmdheight = 1
 vim.o.mouse = "a"
 vim.o.splitbelow = true
 vim.o.splitright = true
---comm("set nowrap")
 vim.o.conceallevel = 0
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
@@ -42,12 +40,8 @@ vim.o.cursorcolumn = true
 
 --Colemak-DH bind fuction for hjkl [mnei]) 
 local function cdhbind(a, b) 
-	bind('n', a:lower(),  b:lower(), { noremap = true})
-	bind('n', a:upper(),  b:upper(), { noremap = true})
-	bind('o', a:lower(),  b:lower(), { noremap = true})
-	bind('o', a:upper(),  b:upper(), { noremap = true})
-	bind('x', a:lower(),  b:lower(), { noremap = true})
-	bind('x', a:upper(),  b:upper(), { noremap = true})
+	bind('', a:lower(),  b:lower())
+	bind('', a:upper(),  b:upper())
 end
 
 cdhbind('m', 'h')
@@ -61,20 +55,19 @@ cdhbind('f', 'e')
 cdhbind('t', 'f')
 cdhbind('j', 't')
 
-bind('n', "<M-s>", ":w<CR>", {noremap=true})
-bind('n', "<M-n>", ":resize -2<CR>", {noremap=true, silent=true})
-bind('n', "<M-e>", ":resize +2<CR>", {noremap=true, silent=true})
-bind('n', "<M-m>", ":vertical resize -2<CR>", {noremap=true, silent=true})
-bind('n', "<M-i>", ":vertical resize +2<CR>", {noremap=true, silent=true})
-bind('v', '<', "<gv", {noremap=true})
-bind('v', '>', ">gv", {noremap=true})
-bind('n', "<C-q>", "<C-w>q", {noremap=true})
-bind('n', "<C-m>", "<C-w>h", {noremap=true})
-bind('n', "<C-n>", "<C-w>j", {noremap=true})
-bind('n', "<C-e>", "<C-w>k", {noremap=true})
-bind('n', "<C-i>", "<C-w>l", {noremap=true})
-bind('n', "<M-v>", ":vsplit<CR>", {noremap=true, silent=true})
-bind('n', "<M-h>", ":split<CR>", {noremap=true, silent=true})
+bind('n', "<M-n>", ":resize -2<CR>")
+bind('n', "<M-e>", ":resize +2<CR>")
+bind('n', "<M-m>", ":vertical resize -2<CR>")
+bind('n', "<M-i>", ":vertical resize +2<CR>")
+bind('v', '<', "<gv")
+bind('v', '>', ">gv")
+bind('n', "<C-q>", "<C-w>q")
+bind('n', "<C-m>", "<C-w>h")
+bind('n', "<C-n>", "<C-w>j")
+bind('n', "<C-e>", "<C-w>k")
+bind('n', "<C-i>", "<C-w>l")
+bind('n', "<M-v>", ":vsplit<CR>")
+bind('n', "<M-h>", ":split<CR>")
 
 --RUN AND REPL (using vim-floaterm)
 
@@ -94,7 +87,7 @@ function _G.CompileRun()
         ['typescript']= 'tsc ' .. file .. ' && node ' .. noext .. '.js && rm ' .. noext .. '.js'
     }
     filetype = vim.api.nvim_buf_get_option(0, "filetype")
-    if commandMap[filetype] ~= nil then comm("FloatermNew --autoclose=0 " .. commandMap[filetype]) end
+    if commandMap[filetype] ~= nil then vim("FloatermNew --autoclose=0 " .. commandMap[filetype]) end
 end
  
 function _G.Repl()
@@ -110,17 +103,16 @@ function _G.Repl()
         ['lua']       = 'lua'
     }
     filetype = vim.api.nvim_buf_get_option(0, "filetype")
-    if commandMap[filetype] ~= nil then comm("FloatermNew " .. commandMap[filetype]) end
+    if commandMap[filetype] ~= nil then vim.cmd("FloatermNew " .. commandMap[filetype]) end
 end
-bind('n', "<F5>", ":call v:lua.CompileRun()<CR>", {silent=true})
-bind('n', "<F6>", ":call v:lua.Repl()<CR>", {silent=true})
+bind('n', "<F5>", ":call v:lua.CompileRun()<CR>")
+bind('n', "<F6>", ":call v:lua.Repl()<CR>")
 
 
 
 --PLUGINS CONFIG
 
 --nvim-tree.lua
-
 require'nvim-tree'.setup {
   diagnostics = {
     enable = true,
@@ -146,16 +138,28 @@ require'nvim-tree'.setup {
 	    window_picker = {
 	      enable = true,
 	      exclude = {
-		filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
-		buftype = { "nofile", "terminal", "help" },
+            filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
+            buftype = { "nofile", "terminal", "help" },
 	      },
 	    },
 	  },
   },
+  view = {
+    adaptive_size = true,
+    mappings = {
+      list = {
+        { key = "e", action = "" },
+        { key = "m", action = "" },
+        { key = "f", action = "rename_basename" }
+      },
+    },
+  },
 }
-bind('n', "<M-o>", ":NvimTreeToggle<CR>", {noremap=true, silent=true})
-bind('n', "<Space>r", ":NvimTreeRefresh<CR>", {noremap=true, silent=true})
-bind('n', "<Space>f", ":NvimTreeFindFile<CR>", {noremap=true, silent=true})
+
+bind('n', "<M-o>", ":NvimTreeToggle<CR>")
+bind('n', "<Space>r", ":NvimTreeRefresh<CR>")
+bind('n', "<Space>f", ":NvimTreeFindFile<CR>")
+bind('n', "<Space>f", ":NvimTreeFindFile<CR>")
 
 
 --floaterm
@@ -177,18 +181,18 @@ vim.g.closetag_emptyTags_caseSensitive = 1
 vim.g.closetag_shortcut = '>'
 
 --nerdcommenter
-bind('n',"<C-c>","<plug>NERDCommenterToggle", {noremap=true, silent=true})
-bind('n',"<C-d>","<plug>NERDCommenterSexy", {noremap=true, silent=true})
+bind('n',"<M-c>","<plug>NERDCommenterToggle")
+bind('n',"<M-d>","<plug>NERDCommenterSexy")
 
 --barbar
-bind('n', "<M-,>", ":BufferPrevious<CR>", {silent=true, noremap=true})
-bind('n', "<M-.>", ":BufferNext<CR>", {silent=true, noremap=true})
-bind('n', "<M-<>", ":BufferMovePrevious<CR>", {silent=true, noremap=true})
-bind('n', "<M->>", ":BufferMoveNext<CR>", {silent=true, noremap=true})
-bind('n', "<M-w>", ":BufferClose<CR>", {silent=true, noremap=true})
+bind('n', "<M-,>", ":BufferPrevious<CR>")
+bind('n', "<M-.>", ":BufferNext<CR>")
+bind('n', "<M-<>", ":BufferMovePrevious<CR>")
+bind('n', "<M->>", ":BufferMoveNext<CR>")
+bind('n', "<M-w>", ":BufferClose<CR>")
 for i = 1,8,1
 do
-    bind('n', string.format("<M-%d>", i), string.format(":BufferGoto %d<CR>", i), {silent=true, noremap=true})
+    bind('n', string.format("<M-%d>", i), string.format(":BufferGoto %d<CR>", i))
 end
 
 --presence.nvim
@@ -223,7 +227,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<M-k>', vim.lsp.buf.hover, bufopts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', "<M-f>", function() vim.lsp.buf.format { async = true } end, bufopts)
+  vim.keymap.set('n', "<M-C-f>", function() vim.lsp.buf.format { async = true } end, bufopts)
 end
 
 local servers = { "clangd", "rust_analyzer", "tsserver", "hls", "pylsp", "texlab", "rnix", "terraform_lsp", "html", "cssls", "jsonls", "svelte", "gopls" }
@@ -313,10 +317,10 @@ cmp.setup {
     },
 }
 
-comm("set shortmess+=c")
+vim.cmd("set shortmess+=c")
 
 --STATUSLINE
-comm("set noruler")
+vim.cmd("set noruler")
 vim.o.laststatus = 2
 local function mode()
     local mode_map = {
@@ -340,11 +344,21 @@ end
 
 --theming
 local dark = true
-comm("colorscheme base16-solarized-dark")
 
-hi("Light", "guibg=#eee8d5 guifg=#002b36")
-hi("Misc", "guibg=#dc322f guifg=#fdf6e3")
-hi("Dark", "guibg=#002b36 guifg=#839496")
+require("catppuccin").setup({
+    flavour = "mocha",
+    background = {
+        light = "latte",
+        dark = "mocha",
+    },
+})
+
+vim.cmd("colorscheme catppuccin")
+
+local colors = require("catppuccin.palettes").get_palette "latte"
+hi("Light", "guibg=" .. colors.text .. " guifg=" .. colors.crust)
+hi("Misc", "guibg=" .. colors.pink .. " guifg=" .. colors.base)
+hi("Dark", "guibg=" .. colors.crust .. " guifg=" .. colors.text)
 
 local function git()
     local branch = io.popen([[git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n']]):read("*a")
@@ -375,15 +389,22 @@ vim.o.statusline = table.concat(statusline)
 
 function _G.ToggleTheme()
   if dark then
-    comm("colorscheme base16-solarized-light")
+    vim.cmd("set background=light")
+    local colors = require("catppuccin.palettes").get_palette "latte"
+    hi("Light", "guibg=" .. colors.crust .. " guifg=" .. colors.text)
+    hi("Misc", "guibg=" .. colors.peach .. " guifg=" .. colors.text)
+    hi("Dark", "guibg=" .. colors.text .. " guifg=" .. colors.crust)
+    vim.o.statusline = table.concat(statusline)
   else
-    comm("colorscheme base16-solarized-dark")
+    vim.cmd("set background=dark")
+    local colors = require("catppuccin.palettes").get_palette "mocha"
+    hi("Light", "guibg=" .. colors.text .. " guifg=" .. colors.crust)
+    hi("Misc", "guibg=" .. colors.pink .. " guifg=" .. colors.base)
+    hi("Dark", "guibg=" .. colors.crust .. " guifg=" .. colors.text)
+    vim.o.statusline = table.concat(statusline)
   end
   dark = not dark
-  hi("Light", "guibg=#eee8d5 guifg=#002b36")
-  hi("Dark", "guibg=#002b36 guifg=#839496")
-  hi("Misc", "guibg=#dc322f guifg=#fdf6e3")
-  vim.o.statusline = table.concat(statusline)
 end
-bind('n', "<F7>", ":call v:lua.ToggleTheme()<CR>", {silent=true})
+
+bind('n', "<F7>", ":call v:lua.ToggleTheme()<CR>")
 vim.g.tex_flavor = "latex"

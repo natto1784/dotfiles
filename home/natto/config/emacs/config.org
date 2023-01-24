@@ -1,34 +1,11 @@
-#+TITLE: My Emacs Configuration
-#+AUTHOR: Amneesh Singh
+# #+TITLE: My Emacs Configuration
+# #+AUTHOR: Amneesh Singh
 #+PROPERTY: header-args:emacs-lisp :tangle yes
-
-* Color Variables
-idk random variables to match my color theme
-#+begin_src emacs-lisp
-  ; -*- lexical-binding: t; -*-
-( setq
- c-bg        "#073642"
- c-fg        "#eee8d5"
- c-red       "#dc322f"
- c-green     "#859900"
- c-yellow    "#b58900"
- c-blue      "#268bd2"
- c-magenta   "#d33682"
- c-cyan      "#2aa198"
- c-white     "#eee8d5"
- c-black     "#002b36"
- c-red-2     "#cb4b16"
- c-green-2   "#586e75"
- c-yellow-2  "#657b83"
- c-blue-2    "#839496"
- c-magenta-2 "#6c71c4"
- c-cyan-2    "#93a1a1"
- c-white-2   "#fdf6e3")
-#+end_src
 
 * Settings
 ** Setting the default face
 #+begin_src emacs-lisp
+ ; -*- lexical-binding: t; -*-
 (set-frame-font "Fira Code 13" nil t)
 (add-to-list 'default-frame-alist '(font . "Fira Code-13"))
 #+end_src
@@ -43,6 +20,7 @@ idk random variables to match my color theme
 ;; (cua-mode 1)
 (global-display-line-numbers-mode 1)
 (xterm-mouse-mode 1)
+(setq ring-bell-function 'ignore)
 #+end_src
 
 ** Setting some variables
@@ -53,7 +31,6 @@ idk random variables to match my color theme
       scroll-step 1
       display-line-numbers-type 'relative
       confirm-kill-processes nil
-      dark-theme t
       inhibit-startup-screen t)
 (setq-default tab-width 2
               indent-tabs-mode nil)
@@ -84,14 +61,10 @@ idk random variables to match my color theme
 
 *** Set theme
 #+begin_src emacs-lisp
-(use-package doom-themes
+(use-package catppuccin-theme
   :config
-  (setq doom-themes-enable-bold t   
-        doom-themes-enable-italic t
-        doom-themes-treemacs-theme "doom-colors")
-  (load-theme 'doom-solarized-dark t)
-  (doom-themes-treemacs-config)
-  (doom-themes-org-config))
+  (load-theme 'catppuccin t)
+  (setq dark-theme t))
 #+end_src
 
 ** Configure Selectrum
@@ -267,11 +240,6 @@ For autocomplete
 
 (use-package nix-mode
   :mode "\\.nix\\'")
-(add-to-list 'lsp-language-id-configuration '(nix-mode . "nix"))
-(lsp-register-client
- (make-lsp-client :new-connection (lsp-stdio-connection '("rnix-lsp"))
-                  :major-modes '(nix-mode)
-                  :server-id 'nix))
 
 (use-package hcl-mode
   :mode
@@ -418,29 +386,29 @@ For autocomplete
 * Custom mode line
 #+begin_src emacs-lisp
 (defface mode-line-buf-name
-  `((t :foreground ,c-fg
-       :background ,c-bg
+  `((t :foreground ,(catppuccin-get-color 'text)
+       :background ,(catppuccin-get-color 'base)
        :weight bold
      ))
   "Custom face for buffer name"
   :group 'mode-line-faces )
 (defface mode-line-maj-mode
-  `((t :foreground ,c-fg
-       :background ,c-bg
+  `((t :foreground ,(catppuccin-get-color 'text)
+       :background ,(catppuccin-get-color 'base)
      ))
   "Custom face for major mode"
   :group 'mode-line-faces )
 
 (defface mode-line-vc
-  `((t :foreground ,c-fg
-       :background ,c-red-2
+  `((t :foreground ,(catppuccin-get-color 'base)
+       :background ,(catppuccin-get-color 'sky)
        :weight bold
      ))
   "Custom face for VC"
   :group 'mode-line-faces )
 (defface mode-line-info
-  `((t :foreground ,c-bg
-       :background ,c-cyan
+  `((t :foreground ,(catppuccin-get-color 'base)
+       :background ,(catppuccin-get-color 'green)
        :weight bold
      ))
   "For showing line and column number"
@@ -459,17 +427,16 @@ For autocomplete
        (setq exclude-ln (cdr exclude-ln)))
 (let ((default-color (cons (face-background 'mode-line)
                            (face-foreground 'mode-line))))
-  (add-hook 'post-command-hook
-       (lambda ()
-         (let ((color (cond ((minibufferp) default-color)
-                            ((evil-insert-state-p) (cons c-magenta c-fg))
-                            ((evil-visual-state-p) (cons c-cyan    c-fg))
-                            ((evil-normal-state-p) (cons c-fg      c-bg))
-                            ((buffer-modified-p)   (cons c-blue    c-fg))
-                            (t default-color))))
-	   (set-face-background 'mode-line-buf-name (car color))
-	   (set-face-foreground 'mode-line-buf-name (cdr color))
-	   ))))
+      (add-hook 'post-command-hook
+            (lambda ()
+              (let ((color (cond ((minibufferp) default-color)
+                                ((evil-insert-state-p) (cons (catppuccin-get-color 'mauve) (catppuccin-get-color 'base)))
+                                ((evil-normal-state-p) (cons (catppuccin-get-color 'yellow) (catppuccin-get-color 'base)))
+                                ((evil-visual-state-p) (cons (catppuccin-get-color 'teal) (catppuccin-get-color 'base)))
+                                ((buffer-modified-p) (cons (catppuccin-get-color 'red) (catppuccin-get-color 'text)))
+                                (t default-color))))
+          (set-face-background 'mode-line-buf-name (car color))
+          (set-face-foreground 'mode-line-buf-name (cdr color))))))
 #+end_src
 
 * Pop-up terminal
@@ -595,14 +562,13 @@ This returns the command to run in the terminal
 #+begin_src emacs-lisp
 (defun toggle-theme-shade ()
   (if (symbol-value dark-theme)
-	    (progn (disable-theme 'doom-solarized-dark)
-	           (load-theme 'doom-solarized-light t))
-	  (progn (disable-theme 'doom-solarized-light)
-	         (load-theme 'doom-solarized-dark t)))
+	    (progn (setq catppuccin-flavor 'latte)
+             (catppuccin-reload))
+	    (progn (setq catppuccin-flavor 'mocha)
+             (catppuccin-reload)))
   (setq-local dark-theme (not dark-theme))
   (centaur-tabs-display-update)
-  (centaur-tabs-headline-match)
-  )
+  (centaur-tabs-headline-match))
 
 (general-define-key
  :states '(normal)

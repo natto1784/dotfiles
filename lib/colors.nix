@@ -30,7 +30,7 @@ let
     mantle = "#181825";
     crust = "#11111B";
 
-    background = crust;
+    background = base;
     foreground = text;
   };
 in

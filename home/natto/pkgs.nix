@@ -82,5 +82,6 @@
     anki-bin
     tor-browser-bundle-bin
     mailcap
+    libsForQt5.qtstyleplugins
   ];
 }

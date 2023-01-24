@@ -22,6 +22,7 @@ in
     };
     initExtra = ''
       . ${secretPath};
+      unsetopt extendedGlob
     '';
   };
 

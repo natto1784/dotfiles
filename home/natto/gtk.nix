@@ -14,5 +14,4 @@
       name = "Zafiro-icons-Dark";
     };
   };
-  qt.platformTheme = "gtk";
 }
