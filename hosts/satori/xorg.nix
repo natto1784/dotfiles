@@ -6,7 +6,6 @@
 #  '';
 #in
 {
-  console.useXkbConfig = true;
   services = {
     xserver = {
       enable = true;
@@ -35,8 +34,8 @@
           symbolsFile = ./colemak;
         };
       };
-      layout = "colemak";
-      xkbVariant = "dhz"; # trying to ditch DHz now
+      layout = "us";
+      xkbVariant = "colemak_dh"; # trying to ditch DHz now
       autoRepeatDelay = 320;
       autoRepeatInterval = 30;
     };

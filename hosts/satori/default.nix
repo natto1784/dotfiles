@@ -10,6 +10,7 @@
       ./services.nix
       ./graphics.nix
       ./xorg.nix
+      ./wayland.nix
       ./nix.nix
     ];
   system.stateVersion = "21.05";

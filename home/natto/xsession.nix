@@ -10,18 +10,6 @@
     gtk.enable = true;
   };
 
-  gtk = {
-    enable = true;
-    theme = {
-      package = pkgs.numix-solarized-gtk-theme;
-      name = "NumixSolarizedDarkMagenta";
-    };
-    iconTheme = {
-      package = pkgs.zafiro-icons;
-      name = "Zafiro-icons-Dark";
-    };
-  };
-
   xsession = {
     enable = true;
     windowManager = {
@@ -38,4 +26,29 @@
       };
     };
   };
+
+  home.packages = with pkgs; [
+    (dmenu.override { patches = [ ./patches/dmenu.patch ]; })
+    (st.override {
+      patches = [ ./patches/st.patch ];
+      extraLibs = [ harfbuzz ];
+    })
+    xclip
+    xorg.xkbcomp
+    xorg.xmodmap
+    sxiv
+    xdotool
+    (xfce.thunar.override {
+      thunarPlugins = with xfce; [
+        thunar-media-tags-plugin
+        thunar-volman
+        thunar-archive-plugin
+      ];
+    })
+    xfce.xfconf
+    xfce.tumbler
+    flameshot
+    xmobar
+    stalonetray
+  ];
 }

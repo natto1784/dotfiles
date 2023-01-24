@@ -1,11 +1,14 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, ... }:
+let
+  home = config.home.homeDirectory;
+in
 {
   services = {
     mpd = {
       enable = true;
-      musicDirectory = "${config.home.homeDirectory}/Music";
-      dbFile = "${config.home.homeDirectory}/.config/mpd/database";
-      dataDir = "${config.home.homeDirectory}/.config/mpd";
+      musicDirectory = "${home}/Music";
+      dbFile = "${home}/.config/mpd/database";
+      dataDir = "${home}/.config/mpd";
       network = {
         startWhenNeeded = true;
         listenAddress = "any";
@@ -26,38 +29,6 @@
         };
       };
     };
-
-    dunst = {
-      enable = true;
-      settings = {
-        global = {
-          font = "Monospace 10";
-          frame_color = "#93a1a1";
-          separator_color = "#93a1a1";
-          shrink = true;
-          icon_theme = config.gtk.iconTheme.name;
-        };
-
-        urgency_low = {
-          background = "#586e75";
-          foreground = "#eee8d5";
-          timeout = 5;
-        };
-
-        urgency_normal = {
-          background = "#073642";
-          foreground = "#eee8d5";
-          timeout = 5;
-        };
-
-        urgency_critical = {
-          background = "#dc322f";
-          foreground = "#eee8d5";
-          timeout = 0;
-        };
-      };
-    };
-
   };
 
   systemd.user.services = {
@@ -83,5 +54,26 @@
         ExecStart = "${pkgs.mpdas}/bin/mpdas -c ${config.age.secrets.mpdasrc.path}";
       };
     };
+  };
+
+  home = {
+    packages = with pkgs; [
+      (ncmpcpp.override {
+        visualizerSupport = true;
+        clockSupport = true;
+      })
+      mpdas
+      mpc_cli
+    ];
+
+    file.ncmpcpp = {
+      source = ./config/ncmpcpp/config;
+      target = "${config.xdg.configHome}/ncmpcpp/config";
+    };
+  };
+
+  age.secrets.mpdasrc = {
+    file = ./secrets/mpdasrc.age;
+    path = "${home}/.config/mpdasrc";
   };
 }

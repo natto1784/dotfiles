@@ -19,6 +19,7 @@
       ];
     };
   };
+  console.useXkbConfig = true;
 
   fonts.fonts = with pkgs; [
     fira-mono

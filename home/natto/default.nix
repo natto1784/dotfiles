@@ -8,13 +8,15 @@
 
   imports = [
     ./email.nix
-    ./secrets
     ./programs.nix
     ./xsession.nix
     ./wayland.nix
-    ./services.nix
     ./pkgs.nix
     ./stuff.nix
     ./emacs.nix
+    ./dunst.nix
+    ./git.nix
+    ./mpd.nix
+    ./zsh.nix
   ];
 }

@@ -4,10 +4,8 @@
 
     # A/V, codec and media stuff
     ffmpeg-full
-    pamixer
-    mpdas
+    wireplumber
     mpv
-    mpc_cli
     pulseaudio
     pavucontrol
     spotify
@@ -16,22 +14,12 @@
     # Utils
     rage
     curl
-    (dmenu.override { patches = [ ./patches/dmenu.patch ]; })
-    (st.override {
-      patches = [ ./patches/st.patch ];
-      extraLibs = [ harfbuzz ];
-    })
     yt-dlp
-    xclip
-    xorg.xkbcomp
-    xorg.xmodmap
     p7zip
     unrar
-    sxiv
     vim
     jmtpfs
     neofetch
-    xdotool
     (inputs.nbfc.packages.${pkgs.system}.nbfc-client-c)
     (flake.packages.${pkgs.system}.customscripts)
     translate-shell
@@ -40,16 +28,6 @@
     undervolt
 
     # GUI utils
-    (xfce.thunar.override {
-      thunarPlugins = with xfce; [
-        thunar-media-tags-plugin
-        thunar-volman
-        thunar-archive-plugin
-      ];
-    })
-    xfce.xfconf
-    xfce.tumbler
-    flameshot
     (discord.override {
       nss = nss_latest;
     })
@@ -58,12 +36,8 @@
     luajit
     dunst
     feh
-    xmobar
-    arc-theme
-    arc-icon-theme
     authy
     gnome.zenity
-    stalonetray
 
     # Wine and games and stuff
     steam
@@ -108,10 +82,5 @@
     anki-bin
     tor-browser-bundle-bin
     mailcap
-    (ncmpcpp.override {
-      visualizerSupport = true;
-      clockSupport = true;
-    })
-    libsForQt5.qtstyleplugins
   ];
 }
