@@ -6,12 +6,13 @@
         enable = true;
       };
       hyprland = {
-        enable = false;
+        enable = true;
         xwayland = {
           enable = true;
           hidpi = true;
         };
         nvidiaPatches = true;
+        extraConfig = builtins.readFile ./config/hypr/hyprland.conf;
       };
     };
   };

@@ -14,6 +14,7 @@
     ./pkgs.nix
     ./stuff.nix
     ./emacs.nix
+    ./gtk.nix
     ./dunst.nix
     ./git.nix
     ./mpd.nix

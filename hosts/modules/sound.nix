@@ -9,8 +9,8 @@
         support32Bit = true;
       };
       pulse.enable = true;
-      #     jack.enable = true;
       socketActivation = true;
+      wireplumber.enable = true;
 
       config.pipewire = {
         context.objects = [
@@ -78,11 +78,4 @@
     };
   };
   sound.enable = true;
-  /*  hardware = {
-    pulseaudio = {
-    enable = true;
-    support32Bit = true;
-    package = pkgs.pulseaudio.override { jackaudioSupport = true; };
-    };
-    };*/
 }
