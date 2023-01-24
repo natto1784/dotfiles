@@ -9,7 +9,7 @@
   imports = [
     ./email.nix
     ./programs.nix
-    ./xsession.nix
+   # ./xsession.nix :(
     ./wayland.nix
     ./pkgs.nix
     ./stuff.nix

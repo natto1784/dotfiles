@@ -7,6 +7,17 @@
   age.sshKeyPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
 
   home = {
+    pointerCursor = {
+      package = pkgs.catppuccin-cursors.mochaFlamingo;
+      name = "Catppuccin-Mocha-Flamingo-Cursors";
+      size = 32;
+      x11 = {
+        enable = true;
+        defaultCursor = "crosshair";
+      };
+      gtk.enable = true;
+    };
+
     sessionVariables = {
       LV2_PATH = lib.makeSearchPath "lib/lv2" (with pkgs; [ calf ]);
       QT_X11_NO_MITSHM = "1";
@@ -18,17 +29,6 @@
       ec = "emacsclient";
       ecc = ec + " -c";
       ecnw = ec + " -nw";
-    };
-
-    file = with config; {
-      stalonetray = {
-        source = ./config/stalonetrayrc;
-        target = "${home.homeDirectory}/.stalonetrayrc";
-      };
-      mpv = {
-        source = ./config/mpv/mpv.conf;
-        target = "${xdg.configHome}/mpv/mpv.conf";
-      };
     };
   };
   i18n = {

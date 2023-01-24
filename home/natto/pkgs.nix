@@ -5,7 +5,6 @@
     # A/V, codec and media stuff
     ffmpeg-full
     wireplumber
-    mpv
     pulseaudio
     pavucontrol
     spotify
@@ -31,6 +30,7 @@
     (discord.override {
       nss = nss_latest;
     })
+    inputs.webcord.legacyPackages.${pkgs.system}.webcord
     qbittorrent
     hexchat
     luajit

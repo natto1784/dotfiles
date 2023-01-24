@@ -1,15 +1,5 @@
 { pkgs, config, flake, ... }:
 {
-  home.pointerCursor = {
-    package = flake.packages.${pkgs.system}.simp1e-cursors;
-    name = "Simp1e-Solarized-Light";
-    x11 = {
-      enable = true;
-      defaultCursor = "crosshair";
-    };
-    gtk.enable = true;
-  };
-
   xsession = {
     enable = true;
     windowManager = {
@@ -51,4 +41,9 @@
     xmobar
     stalonetray
   ];
+
+  home.file.stalonetray = {
+    source = ./config/stalonetrayrc;
+    target = "${config.home.homeDirectory}/.stalonetrayrc";
+  };
 }

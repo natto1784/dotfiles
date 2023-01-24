@@ -410,7 +410,8 @@
         "nix-gaming": "nix-gaming",
         "nixpkgs": "nixpkgs_3",
         "nvim-overlay": "nvim-overlay",
-        "rust-overlay": "rust-overlay"
+        "rust-overlay": "rust-overlay",
+        "webcord": "webcord"
       }
     },
     "rust-overlay": {
@@ -476,6 +477,22 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "webcord": {
+      "locked": {
+        "lastModified": 1672958964,
+        "narHash": "sha256-3SB6mTMTiek1B1zie7oD3DWJWVqKDaB5znQ+Nz6jz/Y=",
+        "owner": "huantianad",
+        "repo": "nixpkgs",
+        "rev": "1d1ed8fbb244fe3d242ebd3d2ad4e647235719eb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "huantianad",
+        "ref": "webcord",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },

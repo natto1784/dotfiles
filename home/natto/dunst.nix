@@ -23,7 +23,7 @@
 
         urgency_normal = {
           inherit background foreground;
-          frame_color = green;
+          frame_color = mauve;
           timeout = 5;
         };
 

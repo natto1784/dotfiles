@@ -30,6 +30,7 @@
       inputs.nixpkgs.url = github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836;
     };
     hyprland.url = github:hyprwm/Hyprland;
+    webcord.url = github:huantianad/nixpkgs/webcord;
   };
 
   outputs = inputs@{ self, ... }:
@@ -49,6 +50,7 @@
           config = {
             allowUnfree = true;
             allowBroken = true;
+            allowInsecure = true;
           };
           overlays = [
             inputs.nvim-overlay.overlay
