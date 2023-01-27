@@ -50,6 +50,8 @@ myXmobarrc = "~/.xmonad/lib/xmobar.hs"
 myWorkspaces = clickable $ ["\xf269", "\xf120", "\xf121", "\xf392", "\xf008", "\xf07b", "\xf11b", "\xf086", "\xf074" ]
     where clickable l = ["<action=`xdotool key super+" ++ show (n) ++ "`>" ++ ws ++ "</action>" | (i,ws) <- zip [1..9] l, let n = i ]
 
+playerctl = "playerctl -p 'playerctld,%any'"
+
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   [ ((modMask, xK_Return),
      spawn $ XMonad.terminal conf)
@@ -70,22 +72,22 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn "flameshot gui -d 10000")
 
   , ((modMask, xK_p),
-     spawn "playerctl play-pause")
+     spawn (playerctl ++ " play-pause"))
 
   , ((0, xF86XK_AudioPlay),
-     spawn "playerctl play-pause")
+     spawn (playerctl ++ " play-pause"))
 
   , ((modMask, xF86XK_AudioNext),
-     spawn "playerctl next")
+     spawn (playerctl ++ " next"))
 
   , ((modMask, xF86XK_AudioPrev),
-     spawn "playerctl previous")
+     spawn (playerctl ++ " previous"))
 
   , ((0, xF86XK_AudioPrev),
-     spawn "playerctl position 5-")
+     spawn (playerctl ++ " position 5-"))
 
   , ((0, xF86XK_AudioNext),
-     spawn "playerctl position 5+")
+     spawn (playerctl ++ " position 5+"))
 
   , ((0, xF86XK_AudioRaiseVolume),
      spawn "pamixer --allow-boost -ui 5")

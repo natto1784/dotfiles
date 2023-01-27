@@ -141,7 +141,7 @@ Free %: ${round(100 - EWW_RAM.used_mem_perc, 2)}%"
               :class "battery")
              (system_metric
               :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
-              :tooltip "Free Disk: ${round(EWW_DISK['/'].free / EWW_DISK['/'].total * 100, 2)} GB
+              :tooltip "Free Disk: ${round(EWW_DISK['/'].free / 1024 / 1024, 2)} GB
 Free Disk %: ${round(EWW_DISK['/'].free / EWW_DISK['/'].total * 100, 2)}%"
               :class "disk"))))
 

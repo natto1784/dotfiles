@@ -10,7 +10,7 @@
     ./email.nix
     ./programs.nix
     ./eww
-   # ./xsession.nix :(
+    # ./xsession.nix :(
     ./wayland.nix
     ./pkgs.nix
     ./stuff.nix

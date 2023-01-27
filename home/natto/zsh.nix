@@ -8,7 +8,6 @@ in
     autocd = true;
     history = rec {
       expireDuplicatesFirst = true;
-      ignoreDups = true;
       size = 30000;
       save = size;
     };

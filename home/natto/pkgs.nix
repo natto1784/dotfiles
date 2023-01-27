@@ -46,6 +46,7 @@
     dunst
     authy
     gnome.zenity
+    iwgtk
 
     # Wine and games and stuff
     steam
