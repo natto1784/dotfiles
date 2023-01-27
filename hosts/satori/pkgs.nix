@@ -46,6 +46,5 @@
     adb.enable = true;
     light.enable = true;
     gamemode.enable = true;
-    nm-applet.enable = true;
   };
 }

@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = github:nixos/nixpkgs/nixpkgs-unstable;
+    stable.url = github:nixos/nixpkgs/release-22.11;
     flake-parts.url = github:hercules-ci/flake-parts;
     home-manager = {
       url = github:nix-community/home-manager;
@@ -29,7 +30,14 @@
       url = github:nix-community/neovim-nightly-overlay;
       inputs.nixpkgs.url = github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836;
     };
-    hyprland.url = github:hyprwm/Hyprland;
+    hyprland = {
+      url = github:hyprwm/Hyprland;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hyprland-contrib = {
+      url = github:hyprwm/contrib;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     webcord.url = github:huantianad/nixpkgs/webcord;
   };
 

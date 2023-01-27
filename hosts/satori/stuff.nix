@@ -23,17 +23,17 @@
   console.useXkbConfig = true;
 
   fonts.fonts = with pkgs; [
-    fira-mono
     fira-code
+    fira-mono
+    monoid
+    font-awesome
+    material-icons
+    material-design-icons
     lohit-fonts.devanagari
     lohit-fonts.gurmukhi
-    nerdfonts
-    font-awesome
-    monoid
     office-code-pro
     eb-garamond
     noto-fonts-cjk
-    hanazono
     takao
     liberation_ttf
   ];

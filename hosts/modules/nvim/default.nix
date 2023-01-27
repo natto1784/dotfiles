@@ -38,6 +38,7 @@
           vim-latex-live-preview
           lspkind-nvim
           catppuccin-nvim
+          yuck-vim
         ];
       };
     };
