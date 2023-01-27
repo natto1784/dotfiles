@@ -1,0 +1,14 @@
+(deflisten workspace "bar/hyprworkspaces")
+(defvar numerals "[\"१\", \"२\", \"३\", \"४\", \"५\", \"६\", \"७\", \"८\", \"९\", \"०\"]")
+
+(defwidget workspaces []
+           (eventbox
+            :cursor "pointer"
+		        (box
+             :class "workspaces"
+		         (for ws in {workspace.list}
+		              (button
+                   :class "${ws == workspace.current ? 'workspace-active' : 'workspace-inactive'}"
+					         :onclick "hyprctl dispatch workspace ${ws}"
+					         {ws <= 10 ? numerals[ws - 1] : ws }))
+             )))

@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+##########################################
+# workspace script to work with hyprland #
+##########################################
+
+# i dont really have multiple monitors rn
+
+# active workspace
+current=1
+list_workspaces() {
+    workspace_list=$(hyprctl -j workspaces | jq -rc '[.[]|.id]|sort')
+}
+
+workspaces() {
+  echo '{"current": '"${current}"',"list": '"${workspace_list}"'}'
+}
+
+list_workspaces
+workspaces
+hyprctl dispatch workspace $current
+
+socat -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r event; do
+  case ${event%>>*} in
+    "workspace")
+      current=${event##*>>}
+      workspaces
+      ;;
+    "createworkspace"|"destroyworkspace")
+      list_workspaces
+      workspaces
+      ;;
+  esac
+done

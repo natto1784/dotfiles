@@ -1,0 +1,20 @@
+(include "bar/music.yuck")
+(include "bar/workspaces.yuck")
+(include "bar/system.yuck")
+
+(defwidget bar []
+           (box :class "bar" :orientation "h" :spacing 40
+                (workspaces)
+                (music_compact)
+                (system)))
+
+(defwindow bar
+           :monitor 0
+           :geometry (geometry :x "0%"
+                               :y "0%"
+                               :width "100%"
+                               :height "40px"
+                               :anchor "top center")
+           :stacking "fg"
+           :exclusive true
+           (bar))

@@ -1,0 +1,271 @@
+$rosewater: #F5E0DC;
+$flamingo: #F2CDCD;
+$pink: #F5C2E7;
+$mauve: #CBA6F7;
+$red: #F38BA8;
+$maroon: #EBA0AC;
+$peach: #FAB387;
+$yellow: #F9E2AF;
+$green: #A6E3A1;
+$teal: #94E2D5;
+$sky: #89DCEB;
+$sapphire: #74C7EC;
+$blue: #89B4FA;
+$lavender: #B4BEFE;
+$text: #CDD6F4;
+$subtext1: #BAC2DE;
+$subtext0: #A6ADC8;
+$overlay2: #9399B2;
+$overlay1: #7F849C;
+$overlay0: #6C7086;
+$surface2: #585B70;
+$surface1: #45475A;
+$surface0: #313244;
+$base: #1E1E2E;
+$mantle: #181825;
+$crust: #11111B;
+
+$background: $base;
+$foreground: $text;
+
+* {
+    all: unset;
+}
+
+tooltip {
+  background: $background;
+  border: 1px solid $pink;
+  border-radius: 2px;
+
+  label {
+      padding: 5px;
+  }
+}
+
+@mixin color-shadow($color, $opacity: 0.08, $on-hover: 1) {
+    color: $color;
+
+    @if $on-hover == 0 {
+        box-shadow: 0 0 0 9999px rgba($color, $opacity) inset;
+    } @else {
+        &:hover {
+            box-shadow: 0 0 0 9999px rgba($color, $opacity) inset;
+        }
+    }
+}
+
+.bar, .music-large {
+    font-family: "Fira Mono";
+    background: $background;
+    
+    button:hover {
+        transition: 0.15s;
+    }
+
+    scale trough, circular-progress {
+        background: $surface1;
+    }
+}
+
+.workspaces { 
+    font-size: 16px;
+    font-family: "Lohit Devanagari";
+
+    button {
+        background: none;
+    }
+
+    .workspace-active {
+        @include color-shadow($mauve, $on-hover: 0);
+        font-size: 20px;
+    }
+
+    .workspace-inactive {
+        @include color-shadow($flamingo);
+    }
+}
+
+.music {
+    button {
+        background: none;
+        padding: 0 10px;
+    }
+    
+    .music-control {
+        @include color-shadow($mauve);
+        font-family: "Font Awesome 6 Free";
+        font-size: 18px;
+    }
+
+    .music-title {
+        @include color-shadow($sapphire);
+        font-size: 16px;
+    }
+}
+
+.music-large {
+    border: solid 3px $sapphire;
+    color: $mauve;
+    border-radius: 5px;
+    
+    .music-large-cover {
+        background-size: cover;
+        background-position: center;
+        border-radius: 5px;
+        margin:  15px 0 15px 15px;
+        min-height: 200px;
+        min-width: 200px;
+    }
+
+    .music-large-controls {
+        margin: 15px;
+        
+        scale trough {
+            min-height: 5px;
+            margin: 0 15px;
+            
+            highlight {
+                background-image: linear-gradient(to right, $sapphire, $teal);
+            }
+            
+            slider {
+                border-radius: 4px;
+                background: $background;
+                border: 2px $mauve solid;
+                margin: -10px -10px;
+                transition: 0.2s;
+
+                &:hover {
+                    box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.1); 
+                }
+
+                &:active {
+                    box-shadow: 0 0 0 1px inset, 0 0 0 8px rgba(255, 255, 255, 0.1); 
+                }
+            }
+        }
+        
+        .music-large-artist {
+            font-size: 18px;
+            color: $mauve;
+        }
+
+        .music-large-album {
+            font-size: 16px;
+            color: $sapphire;
+        }
+    }
+}
+
+.system {
+    button {
+        background: none;
+        font-size: 20px;
+        padding: 0 10px;
+    }
+    
+    .system-scale {
+        min-width: 100px;
+    }
+
+    scale trough {
+        min-height: 20px;
+        min-width: 120px;
+        border-radius: 3px;
+        
+        highlight {
+            all: unset;
+            border-radius: 3px;
+        }
+        
+        slider {
+            all:unset;
+            border: none;
+            min-width: 0;
+            min-height: 0;
+        }
+    }
+
+    .system-sound {
+        button {
+            @include color-shadow($green);
+            padding-right: 5px;
+        }
+
+        scale trough highlight {
+            background-color: $green;
+        }
+    }
+
+    .system-bright {
+        button {
+            @include color-shadow($yellow);
+        }
+
+        scale trough highlight {
+            background-color: $yellow;
+        }
+    }
+
+    .system-temp {
+        button {
+            @include color-shadow($red);
+        }
+    }
+    
+    .system-net {
+        button {
+            @include color-shadow($mauve);
+        }
+    }
+
+    .system-separator {
+        min-width: 5px;
+        background-color: $sapphire;
+    }
+
+    .system-metrics {
+        transition: 0.2s;
+
+        label {
+            padding: 0 5px;
+            font-size: 20px;
+        }
+
+        circular-progress {
+            margin: 0 5px;
+        }
+        
+        .system-metric-cpu {
+            color: $teal;
+        }
+    
+        .system-metric-battery {
+            color: $yellow;
+        }
+        
+        .system-metric-memory {
+            color: $pink;
+        }
+    
+        .system-metric-disk {
+            color: $blue;
+        }
+    }
+}
+
+.system-time {
+    label {
+        color: $foreground;
+        padding: 0 5px;
+        font-weight: bold;
+    }
+
+    .system-time-time {
+        font-size: 18px;
+    }
+
+    .system-time-date {
+        font-size: 20px;
+    }
+}

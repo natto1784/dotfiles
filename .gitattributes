@@ -1,1 +1,3 @@
 flake.lock linguist-generated
+*.yuck linguist-language=lisp
+**/emacs/config.org linguist-language=elisp

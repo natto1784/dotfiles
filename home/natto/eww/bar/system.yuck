@@ -1,0 +1,187 @@
+(defvar system_sound_control false)
+(defvar system_sound_mute false)
+
+(defpoll volume :interval "3s"
+         "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2 * 100}'")
+
+(defwidget system_sound []
+           (eventbox
+            :cursor "pointer"
+            :onhover "${EWW_CMD} update system_sound_control=true"
+            :onhoverlost "${EWW_CMD} update system_sound_control=false"
+            :tooltip "${ system_sound_mute ? 'Muted' : 'Volume: ${volume}%'}"
+            (box
+             :space-evenly false
+             :orientation "h"
+             :class "system-sound"
+             (revealer
+              :transition "slideleft"
+              :reveal system_sound_control
+              :duration "250ms"
+              (scale
+               :class "system-scale"
+               :min 0
+               :max 151
+               :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%"
+               :value {volume}
+               ))
+             (button
+              ; since we do not know the initial state, we will just update the variable
+              :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && ${EWW_CMD} update system_sound_mute=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $3 ~ /MUTED/ ? \"true\" : \"false\"}')"
+              {system_sound_mute ? "" : volume > 75 ? "" : "" })
+             )))
+
+(defvar system_bright_control false)
+
+(defpoll bright :interval "3s" "light")
+
+(defwidget system_bright []
+           (eventbox
+            :cursor "pointer"
+            :onhover "${EWW_CMD} update system_bright_control=true"
+            :onhoverlost "${EWW_CMD} update system_bright_control=false"
+            :tooltip "Brightness: ${round(bright,0)}%"
+            (box
+             :space-evenly false
+             :orientation "h"
+             :class "system-bright"
+             (revealer
+              :transition "slideleft"
+              :reveal system_bright_control
+              :duration "250ms"
+              (scale
+               :class "system-scale"
+               :min 5
+               :max 101
+               :onchange "light -S {}"
+               :value {bright}
+               ))
+             (button
+              :onclick "light -S ${bright < 51 ? 100 : 50}"
+              ""))))
+
+(defwidget system_temp []
+           (eventbox
+            :cursor "pointer"
+            :tooltip {EWW_TEMPS["CORETEMP_PACKAGE_ID_0"] != "" ? "CPU: ${EWW_TEMPS['CORETEMP_PACKAGE_ID_0']} C" : EWW_TEMPS}
+            :class "system-temp"
+            (button
+             "")))
+
+(defpoll system_net_ethernet :interval "4s" :initial ""
+         "nmcli -f NAME,TYPE con show --active | awk '$NF == \"ethernet\" {NF--; print}'")
+
+(defpoll system_net_wifi :interval "4s" :initial ""
+         "nmcli -f NAME,TYPE con show --active | awk '$NF == \"wifi\" { NF--; print}'")
+
+(defwidget system_net []
+           (eventbox
+            :cursor "pointer"
+            :class "system-net"
+            :visible {system_net_ethernet != ""  || system_net_wifi != ""}
+            :tooltip {EWW_NET}
+            (box
+             :orientation "h"
+             (button
+              :visible {system_net_ethernet != ""}
+              :tooltip {system_net_ethernet}
+              "")
+             (button
+              :visible {system_net_wifi != ""}
+              :tooltip {system_net_wifi}
+              :onclick "iwgtk &"
+              ""))))
+
+(defwidget system_info []
+           (box
+            :orientation "h"
+            :space-evenly false
+            :spacing 5
+            (system_sound)
+            (system_bright)
+            (system_temp)))
+
+(defpoll system_cpu_freq :interval "2s" :initial "0"
+         "cat /proc/cpuinfo | awk '/cpu MHz/ { sum += $4; n++} END { if (n != 0) print sum / n; }'")
+
+(defwidget system_metric [value class tooltip]
+           (box
+            :orientation "h"
+            :space-evenly false
+            :class "system-metric-${class}"
+            :tooltip "${tooltip}"
+            (circular-progress
+             :value value
+             :start-at 0
+             :thickness 4
+             (label :text ""))))
+
+(defwidget system_metrics []
+           (eventbox
+            :cursor "pointer"
+            :class "system-metrics"
+            :tooltip "test"
+            :onclick "${EWW_CMD} open --toggle system"
+            (box
+             :space-evenly false
+             (system_metric
+              :value {EWW_CPU.avg}
+              :tooltip "CPU Usage: ${round(EWW_CPU.avg, 2)}%${system_cpu_freq == '0' ? '' : '
+CPU Freq: ${system_cpu_freq} MHz'}"
+              :class "cpu")
+             (system_metric
+              :value {EWW_RAM.used_mem_perc}
+              :tooltip "Free Memory: ${round(EWW_RAM.free_mem / 1024 / 1024, 2)} MB
+Available Memory: ${round(EWW_RAM.available_mem / 1024 / 1024, 2)} MB
+Free %: ${round(100 - EWW_RAM.used_mem_perc, 2)}%"
+              :class "memory")
+             (system_metric
+              :value {EWW_BATTERY.total_avg}
+              :tooltip "Battery ${round(EWW_BATTERY.total_avg, 0)}%"
+              :class "battery")
+             (system_metric
+              :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
+              :tooltip "Free Disk: ${round(EWW_DISK['/'].free / EWW_DISK['/'].total * 100, 2)} GB
+Free Disk %: ${round(EWW_DISK['/'].free / EWW_DISK['/'].total * 100, 2)}%"
+              :class "disk"))))
+
+(defvar system_date_reveal false)
+
+(defpoll time :interval "1s"
+         "date '+%H:%M:%S'")
+
+(defpoll date :interval "10m"
+         "date '+%b %d'")
+
+(defwidget system_time []
+           (eventbox
+            :onhover "${EWW_CMD} update system_date_reveal=true"
+            :onhoverlost "${EWW_CMD} update system_date_reveal=false"
+            (box
+             :space-evenly false
+             :orientation "h"
+             :class "system-time"
+             (label :class "system-time-time" :text {time})
+             (revealer
+              :transition "slideright"
+              :reveal system_date_reveal
+              :duration "250ms"
+              (label :class "system-time-date" :text {date})))))
+
+(defwidget system_separator [?visible] (box :class "system-separator" :visible {visible == "false" ? false : true}))
+
+(defwidget system []
+           (box
+            :halign "end"
+            :class "system"
+            :space-evenly false
+            :spacing 5
+            (system_separator)
+            (system_info)
+            (system_separator
+             :visible "${system_net_ethernet != "" || system_net_wifi != ""}")
+            (system_net)
+            (system_separator)
+            (system_metrics)
+            (system_separator)
+            (system_time)))

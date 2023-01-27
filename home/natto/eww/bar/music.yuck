@@ -1,0 +1,92 @@
+(defvar playerctl "playerctl -p 'playerctld,%any'")
+
+; https://github.com/elkowar/eww/issues/518
+(deflisten music :initial ""
+           "playerctl -p 'playerctld,%any' --follow metadata --format '{\"artist\":\"{{artist}}\",\"album\":\"{{album}}\",\"title\":\"{{trunc(title,40)}}\",\"full_title\":\"{{title}}\",\"cover\":\"{{mpris:artUrl}}\", \"status\":\"{{lc(status)}}\",\"duration\":\"{{duration(mpris:length)}}\",\"raw_duration\":\"{{mpris:length}}\",\"position\":\"{{duration(position)}}\",\"raw_position\":\"{{position}}\"}'")
+
+(defwidget music_controls[]
+           (box
+            (button :class "music-control" :onclick "${playerctl} previous" "")
+            (button :class "music-control" :onclick "${playerctl} play-pause" {music.status == "playing" ? "" : "" })
+            (button :class "music-control" :onclick "${playerctl} next" "")))
+
+(defwidget music_large []
+           (box
+            :halign "center"
+            :class "music-large"
+            :orientation "h"
+            (box
+            :class "music-large-cover"
+            :visible {music.cover != ""}
+            :style "background-image: url(\"${music.cover}\");")
+            (box
+             :orientation "v"
+             :class "music-large-controls"
+             :spacing {music.cover == "" ? 10 : 0}
+             (label
+              :visible {music.artist != ""}
+              :class "music-large-artist"
+              :text {music.artist})
+             (label
+              :visible {music.album != ""}
+              :class "music-large-album"
+              :text {music.album})
+             (eventbox
+              :cursor "pointer"
+              (music_controls))
+             (box
+              (label
+               :visible {music.position != ""}
+               :xalign {music.duration == "" ? 0.5 : 0}
+               :style {music.duration == "" ? "font-size: 18px;": ""}
+               :text {music.position})              
+              (label
+               :visible {music.duration != ""}
+               :xalign {music.position == "" ? 0.5 : 1}
+               :style {music.position == "" ? "font-size: 18px;": ""}
+               :text {music.duration}))
+             (eventbox
+              :class "music-large-scale"
+              :cursor "pointer"
+              :visible {music.raw_duration != "" && music.raw_position != "" }
+              (scale
+               :min 0
+               :max {music.raw_duration / 1000000}
+               :onchange "${playerctl} position {}"
+               :value {music.raw_position / 1000000})))))
+
+(defvar music_control false)
+
+(defwidget music_compact []
+           (eventbox
+            :cursor "pointer"
+            :onhover "${EWW_CMD} update music_control=true"
+            :onhoverlost "${EWW_CMD} update music_control=false"
+            :visible {music.title != "" && music.status != "stopped" && music != ""}
+            :halign "center"
+            (box
+             :class "music"
+             :space-evenly "false"
+             (button
+              :class "music-title"
+              :onclick "${EWW_CMD} open --toggle music"
+              :tooltip "${music.title} by ${music.artist}"
+              :onrightclick "wl-copy \"${music.artist} - ${music.full_title}\""
+              {music.title})
+             (revealer
+              :transition "slideright"
+              :reveal music_control
+              :duration "200ms"
+              (music_controls)
+              ))))
+
+(defwindow music
+           :stacking "overlay"
+           :monitor 0
+           :geometry (geometry
+                      :x "0%"
+                      :y "20px"
+                      :width "0%"
+                      :height "0%"
+                      :anchor "top center")
+           (music_large))

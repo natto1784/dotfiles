@@ -5,12 +5,13 @@
     hostName = "satori";
     hostId = "beca3df0";
     defaultGateway = "192.168.1.1";
-    wireless = {
-      enable = false;
-      iwd.enable = true;
-      interfaces = [ "wlp0s20f3" ];
+    networkmanager = {
+      enable = true;
+      wifi = {
+        powersave = true;
+        backend = "iwd";
+      };
     };
-    networkmanager.enable = true;
     firewall = {
       allowedTCPPorts = [ 22 18172 6600 8001 25565 ];
       allowedUDPPorts = [ 22 17840 18172 ];
