@@ -1,5 +1,5 @@
 (include "bar/music.yuck")
-(include "bar/workspaces.yuck")
+(include "bar/hyprworkspaces.yuck")
 (include "bar/system.yuck")
 
 (defwidget bar []

@@ -10,5 +10,4 @@
 		              (button
                    :class "${ws == workspace.current ? 'workspace-active' : 'workspace-inactive'}"
 					         :onclick "hyprctl dispatch workspace ${ws}"
-					         {ws <= 10 ? numerals[ws - 1] : ws }))
-             )))
+					         {ws <= 10 ? numerals[ws - 1] : ws })))))

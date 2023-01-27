@@ -16,6 +16,7 @@
   systemd.user.services.eww = {
     Unit = {
       Description = "EWW Daemon";
+      PartOf = ["graphical-session.target"];
     };
     Service =
       let
@@ -25,8 +26,8 @@
         ] ++ (import ./bar pkgs);
       in
       {
-        Environment = "PATH=${lib.makeBinPath deps}";
         Type = "simple";
+        Environment = "PATH=${lib.makeBinPath deps}";
         Restart = "on-failure";
         ExecStart = "${config.programs.eww.package}/bin/eww daemon --no-daemonize";
       };

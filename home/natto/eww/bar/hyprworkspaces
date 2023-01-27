@@ -18,7 +18,7 @@ workspaces() {
 
 list_workspaces
 workspaces
-hyprctl dispatch workspace $current
+hyprctl dispatch workspace $current || true
 
 socat -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r event; do
   case ${event%>>*} in

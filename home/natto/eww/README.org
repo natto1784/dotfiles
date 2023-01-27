@@ -1,0 +1,4 @@
+#+OPTIONS: toc:nil
+Inspired by
++ [[https://github.com/saimoomedits/eww-widgets/tree/cfb2523a4e37ed2979e964998d9a4c37232b2975][saimoomedits]]
++ [[https://github.com/fufexan/dotfiles/tree/db777ae5a76db34608dd486ed9238e9129252bbc/home/programs/eww][fufexan]]

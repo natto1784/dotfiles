@@ -101,9 +101,6 @@
             (system_bright)
             (system_temp)))
 
-(defpoll system_cpu_freq :interval "2s" :initial "0"
-         "cat /proc/cpuinfo | awk '/cpu MHz/ { sum += $4; n++} END { if (n != 0) print sum / n; }'")
-
 (defwidget system_metric [value class tooltip]
            (box
             :orientation "h"
@@ -126,8 +123,8 @@
              :space-evenly false
              (system_metric
               :value {EWW_CPU.avg}
-              :tooltip "CPU Usage: ${round(EWW_CPU.avg, 2)}%${system_cpu_freq == '0' ? '' : '
-CPU Freq: ${system_cpu_freq} MHz'}"
+              :tooltip "CPU Usage: ${round(EWW_CPU.avg, 2)}%
+CPU Freq: ${EWW_CPU.cores[0].freq} MHz}"
               :class "cpu")
              (system_metric
               :value {EWW_RAM.used_mem_perc}
@@ -141,7 +138,7 @@ Free %: ${round(100 - EWW_RAM.used_mem_perc, 2)}%"
               :class "battery")
              (system_metric
               :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
-              :tooltip "Free Disk: ${round(EWW_DISK['/'].free / 1024 / 1024, 2)} GB
+              :tooltip "Free Disk: ${round(EWW_DISK['/'].free / 1024 / 1024 / 1024, 2)} GB
 Free Disk %: ${round(EWW_DISK['/'].free / EWW_DISK['/'].total * 100, 2)}%"
               :class "disk"))))
 
