@@ -3,7 +3,7 @@ let
   home = config.home.homeDirectory;
 in
 {
-  services = {
+  services = rec {
     mpd = {
       enable = true;
       musicDirectory = "${home}/Music";
@@ -18,7 +18,7 @@ in
     };
 
     mpd-discord-rpc = {
-      enable = true;
+      inherit (mpd) enable;
       settings = {
         id = 1039532008424099850; # dont really care
         format = {
@@ -29,6 +29,16 @@ in
         };
       };
     };
+
+    mpdris2 = {
+      inherit (mpd) enable;
+      mpd = {
+        inherit (mpd) musicDirectory;
+        host = "localhost";
+      };
+    };
+
+    playerctld.enable = true;
   };
 
   systemd.user.services = {
@@ -62,8 +72,8 @@ in
         visualizerSupport = true;
         clockSupport = true;
       })
-      mpdas
       mpc_cli
+      playerctl
     ];
 
     file.ncmpcpp = {

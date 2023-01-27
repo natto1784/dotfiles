@@ -11,6 +11,7 @@
     imagemagick
 
     # Utils
+    neofetch
     rage
     curl
     yt-dlp
@@ -18,7 +19,6 @@
     unrar
     vim
     jmtpfs
-    neofetch
     (inputs.nbfc.packages.${pkgs.system}.nbfc-client-c)
     (flake.packages.${pkgs.system}.customscripts)
     translate-shell
@@ -31,17 +31,24 @@
       nss = nss_latest;
     })
     inputs.webcord.legacyPackages.${pkgs.system}.webcord
+    (xfce.thunar.override {
+      thunarPlugins = with xfce; [
+        thunar-media-tags-plugin
+        thunar-volman
+        thunar-archive-plugin
+      ];
+    })
+    xfce.xfconf
+    xfce.tumbler
     qbittorrent
     hexchat
     luajit
     dunst
-    feh
     authy
     gnome.zenity
 
     # Wine and games and stuff
     steam
-    wineWowPackages.stable
     winetricks
     #   (inputs.nix-gaming.packages.${pkgs.system}.osu-stable)
     (flake.packages.${pkgs.system}.tlauncher)

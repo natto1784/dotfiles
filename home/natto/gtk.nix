@@ -10,8 +10,8 @@
       };
     };
     iconTheme = {
-      package = pkgs.zafiro-icons;
-      name = "Zafiro-icons-Dark";
+      package = pkgs.papirus-icon-theme;
+      name = "Papirus-Dark";
     };
   };
 }

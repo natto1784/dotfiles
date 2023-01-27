@@ -1,4 +1,4 @@
-{ pkgs, config, colors, ... }:
+{ pkgs, config, colors, inputs, ... }:
 {
   wayland = {
     windowManager = {
@@ -49,5 +49,11 @@
 
   home.packages = with pkgs; [
     tofi
+    wineWowPackages.waylandFull
+    imv
+    grim
+    slurp
+    inputs.hyprland-contrib.packages.${pkgs.system}.grimblast
+    wl-clipboard
   ];
 }

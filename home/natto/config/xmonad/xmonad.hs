@@ -70,22 +70,22 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn "flameshot gui -d 10000")
 
   , ((modMask, xK_p),
-     spawn "mpc toggle")
+     spawn "playerctl play-pause")
 
   , ((0, xF86XK_AudioPlay),
-     spawn "mpc toggle")
+     spawn "playerctl play-pause")
 
   , ((modMask, xF86XK_AudioNext),
-     spawn "mpc next")
+     spawn "playerctl next")
 
   , ((modMask, xF86XK_AudioPrev),
-     spawn "mpc prev")
+     spawn "playerctl previous")
 
   , ((0, xF86XK_AudioPrev),
-     spawn "mpc seek -00:00:05")
+     spawn "playerctl position 5-")
 
   , ((0, xF86XK_AudioNext),
-     spawn "mpc seek +00:00:05")
+     spawn "playerctl position 5+")
 
   , ((0, xF86XK_AudioRaiseVolume),
      spawn "pamixer --allow-boost -ui 5")

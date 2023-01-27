@@ -236,6 +236,8 @@ For autocomplete
 
 (use-package rustic)
 
+(use-package yuck-mode)
+
 (use-package wgsl-mode)
 
 (use-package nix-mode
