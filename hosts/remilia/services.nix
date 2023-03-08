@@ -77,12 +77,6 @@ in
     };
   };
 
-  users.users.root.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJHingN2Aho+KGgEvBMjtoez+W1svl9uVoa4vG0d646j"
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILCH975XCps+VCzo8Fpp5BkbtiFmj9y3//FBVYlQ7/yo"
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMu+SbTrfE62nT7gkZCwiOVOlI2TkVz+RJQ49HbnHvnQ"
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKFyKi0HYfkgvEDvjzmDRGwAq2z2KOkfv7scTVSnonBh"
-  ];
   security.acme = {
     acceptTerms = true;
     certs = {

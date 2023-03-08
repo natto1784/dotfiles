@@ -26,23 +26,22 @@
       enable = false;
       iwd.enable = true;
     };
+
     interfaces = {
       eth0 = {
-        useDHCP = false;
         ipv4.addresses = [{
           prefixLength = 24;
           address = "192.168.1.159";
         }];
       };
       wlan0 = {
-        useDHCP = false;
         ipv4.addresses = [{
           prefixLength = 24;
           address = "192.168.1.159";
         }];
       };
     };
-    wireguard.interfaces.wg0 = with network.address.wireguard.ips; {
+    wireguard.interfaces.wg0 = with network.addresses.wireguard.ips; {
       ips = [ marisa ];
       listenPort = 17840;
       privateKeyFile = "/var/secrets/wg.key";

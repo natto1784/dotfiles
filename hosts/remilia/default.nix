@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, network, ... }:
 {
   imports = [
     ./networking.nix
@@ -15,6 +15,7 @@
     shell = pkgs.zsh;
     home = "/home/bat";
     extraGroups = [ "wheel" ];
+    openssh.authorizedKeys.keys = network.commonSSHKeys;
   };
 
   system.stateVersion = "21.11";

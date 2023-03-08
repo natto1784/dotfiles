@@ -1,7 +1,6 @@
 { pkgs, config, colors, ... }:
 {
   programs = {
-    home-manager.enable = true;
     firefox = {
       enable = true;
       profiles.natto = {
@@ -22,8 +21,6 @@
       };
     };
     go.enable = true;
-    password-store.enable = true;
-    direnv.enable = true;
     foot = {
       enable = true;
       settings = {

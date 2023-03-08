@@ -6,7 +6,7 @@
       enable = true;
       extraRules = [
         {
-          users = [ ];
+          users = [ "wheel" ];
           keepEnv = true;
           persist = true;
         }
@@ -18,6 +18,7 @@
     git
     htop
     vim
+    tmux
     wireguard-tools
     rnix-lsp
     nmap
