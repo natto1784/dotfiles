@@ -1,7 +1,7 @@
-{ config, pkgs, lib, network, ... }:
+{ config, pkgs, lib', network, ... }:
 {
   mailserver =
-    let domain = network.addresses.domain.natto; in
+    let domain = lib'.network.addresses.domain.natto; in
     rec {
       enable = true;
       fqdn = "mail.${domain}";

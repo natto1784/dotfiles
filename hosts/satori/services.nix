@@ -3,7 +3,10 @@
 {
   services = {
     tor.enable = true;
-    openssh.enable = true;
+    openssh = {
+      enable = true;
+      settings.permitRootLogin = "yes";
+    };
     ratbagd.enable = true;
     btrfs.autoScrub.enable = true;
     zfs.autoScrub.enable = true;
