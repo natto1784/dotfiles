@@ -2,14 +2,15 @@
 let
   key = "53EC089EF230E47A83BA8F8195949BD4B853F559";
   host = "mail.weirdnatto.in";
+  realName = "Amneesh Singh";
+  address = "natto@weirdnatto.in";
 in
 {
   accounts.email = {
     accounts = {
       natto = rec {
-        realName = "Amneesh Singh";
+        inherit address realName;
         primary = true;
-        address = "natto@weirdnatto.in";
         userName = address;
         gpg = {
           inherit key;
@@ -61,7 +62,7 @@ in
     };
   };
   home = {
-    packages = with pkgs; [ mailcap ];
+    packages = with pkgs; [ mailcap w3m ];
     file = {
       mailcap = {
         source = ./config/mailcap;

@@ -17,10 +17,7 @@
       url = github:oxalica/rust-overlay;
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-gaming = {
-      url = github:fufexan/nix-gaming;
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nix-gaming.url = github:fufexan/nix-gaming;
     nbfc = {
       url = github:nbfc-linux/nbfc-linux;
       inputs.nixpkgs.follows = "nixpkgs";
@@ -38,7 +35,6 @@
       url = github:hyprwm/contrib;
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    webcord.url = github:huantianad/nixpkgs/webcord;
   };
 
   outputs = inputs@{ self, ... }:

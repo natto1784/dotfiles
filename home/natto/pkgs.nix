@@ -25,12 +25,13 @@
     powertop
     cachix
     undervolt
+    w3m
 
     # GUI utils
     (discord.override {
       nss = nss_latest;
     })
-    inputs.webcord.legacyPackages.${pkgs.system}.webcord
+    webcord
     (xfce.thunar.override {
       thunarPlugins = with xfce; [
         thunar-media-tags-plugin
@@ -51,9 +52,10 @@
     # Wine and games and stuff
     steam
     winetricks
-    #   (inputs.nix-gaming.packages.${pkgs.system}.osu-stable)
-    (flake.packages.${pkgs.system}.tlauncher)
+    lutris
+    flake.packages.${pkgs.system}.tlauncher
     mangohud
+    inputs.nix-gaming.packages.${pkgs.system}.osu-stable
 
     # Programming and dev stuff
     rust-analyzer

@@ -55,5 +55,6 @@
     slurp
     inputs.hyprland-contrib.packages.${pkgs.system}.grimblast
     wl-clipboard
+    swaybg
   ];
 }
