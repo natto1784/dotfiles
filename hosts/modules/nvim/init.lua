@@ -38,6 +38,8 @@ vim.o.cursorcolumn = true
 
 --KEYBINDS
 
+--[[
+A relic of the past
 --Colemak-DH bind fuction for hjkl [mnei]) 
 local function cdhbind(a, b) 
 	bind('', a:lower(),  b:lower())
@@ -68,6 +70,7 @@ bind('n', "<C-e>", "<C-w>k")
 bind('n', "<C-i>", "<C-w>l")
 bind('n', "<M-v>", ":vsplit<CR>")
 bind('n', "<M-h>", ":split<CR>")
+]]--
 
 --RUN AND REPL (using vim-floaterm)
 
@@ -213,8 +216,6 @@ require'nvim-treesitter.configs'.setup {
 
 --vim-latex-live-preview
 vim.g.livepreview_previewer = "zathura"
-
-
 
 require'colorizer'.setup()
 

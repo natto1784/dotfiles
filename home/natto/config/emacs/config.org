@@ -438,7 +438,8 @@ Compilation shortcuts for standalone files
 * Keybinds
 ** General
 *** Colemak translations
-#+begin_src emacs-lisp
+not using this anymore
+#+begin_src emacs-lisp :tangle no
 (use-package evil-colemak-basics
   :init
   (setq evil-colemak-basics-layout-mod 'mod-dh)
@@ -468,16 +469,16 @@ Compilation shortcuts for standalone files
     :keymaps '(global override vterm-mode-map)
     :states evil-states
     "M-o" 'treemacs
-    "M-v" 'split-window-vertically
-    "M-h" 'split-window-horizontally
-    "M-m" 'windmove-left
-    "M-n" 'windmove-down
-    "M-e" 'windmove-up
-    "M-i" 'windmove-right
-    "M-C-m" 'shrink-window-horizontally
-    "M-C-i" 'enlarge-window-horizontally
-    "M-C-e" 'shrink-window
-    "M-C-n" 'enlarge-window
+    "M-S-v" 'split-window-vertically
+    "M-S-h" 'split-window-horizontally
+    "M-h" 'windmove-left
+    "M-j" 'windmove-down
+    "M-k" 'windmove-up
+    "M-l" 'windmove-right
+    "M-C-h" 'shrink-window-horizontally
+    "M-C-j" 'enlarge-window-horizontally
+    "M-C-k" 'shrink-window
+    "M-C-l" 'enlarge-window
     "M-,"  'centaur-tabs-backward
     "M-."  'centaur-tabs-forward
     "C-q"  'delete-window
