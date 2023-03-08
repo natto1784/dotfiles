@@ -38,6 +38,7 @@
     package = pkgs.nixUnstable;
     extraOptions = ''
       experimental-features = nix-command flakes
+      builders-use-substitutes = true
     '';
     settings.trusted-users = [ "root" ];
     buildMachines = [{
@@ -48,8 +49,5 @@
       supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
     }];
     distributedBuilds = true;
-    extraOptions = ''
-      builders-use-substitutes = true
-    '';
   };
 }

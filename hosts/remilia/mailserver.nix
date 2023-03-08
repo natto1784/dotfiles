@@ -16,6 +16,9 @@
         "masti@${domain}" = {
           hashedPasswordFile = "/var/secrets/masti@${domain}.key";
         };
+        "chamar@${domain}" = {
+          hashedPasswordFile = "/var/secrets/chamar@${domain}.key";
+        };
       };
       enablePop3 = false;
       enablePop3Ssl = false;

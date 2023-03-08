@@ -16,7 +16,7 @@
   systemd.user.services.eww = {
     Unit = {
       Description = "EWW Daemon";
-      PartOf = ["graphical-session.target"];
+      PartOf = [ "graphical-session.target" ];
     };
     Service =
       let

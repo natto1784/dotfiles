@@ -56,7 +56,7 @@ in
           "f.${domain}" = genericHttpRProxy { addr = "http://${marisa}:8888"; };
           "radio.${domain}" = genericHttpRProxy { addr = "http://${satori}:8001"; };
           "git.${domain}" = genericHttpRProxy {
-            addr = "http://${marisa}:5001";
+            addr = "http://${marisa}:5000";
             conf = "client_max_body_size 64M;";
           };
           "nomad.${domain}" = genericHttpRProxy {
