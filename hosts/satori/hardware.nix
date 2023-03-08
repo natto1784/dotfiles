@@ -19,18 +19,18 @@
       fsType = "vfat";
     };
 
+  fileSystems."/media/real" =
+    {
+      device = "/dev/disk/by-uuid/8086be20-c770-46be-bd8f-5bd2d7735c7d";
+      fsType = "btrfs";
+      options = [ "rw" ];
+    };
+
   fileSystems."/media/ntfs" =
     {
       device = "/dev/disk/by-uuid/A4CC66B6CC668282";
       fsType = "ntfs";
       options = [ "uid=natto" "gid=users" "umask=0022" "rw" ];
-    };
-
-  fileSystems."/media/real" =
-    {
-      device = "/dev/disk/by-uuid/6372bc0c-0917-469d-a845-2ce65513e306";
-      fsType = "ext4";
-      options = [ "rw" ];
     };
 
   zramSwap = {
@@ -39,6 +39,10 @@
     memoryPercent = 30;
     priority = -1;
   };
+
+  swapDevices = [
+    { device = "/var/swap"; size = 4096; }
+  ];
 
   powerManagement = {
     enable = true;

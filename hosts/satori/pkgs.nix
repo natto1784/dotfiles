@@ -23,6 +23,8 @@
   ];
 
   programs = {
+    git.enable = true;
+
     gnupg = {
       agent = {
         enableSSHSupport = true;

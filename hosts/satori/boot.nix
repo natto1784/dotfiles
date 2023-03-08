@@ -15,7 +15,7 @@
         '';*/
       kernelModules = [ ];
     };
-    kernelParams = [ "intel_pstate=active" "intel_iommu=on" "nvidia_drm.modeset=1" ];
+    kernelParams = [ "intel_pstate=active" "intel_iommu=on" "nvidia_drm.modeset=1" "clearcpuid=512" ];
     kernelModules = [ "kvm-intel" "snd-seq" "snd-rawmidi" "joydev" ];
     extraModulePackages = with config.boot.kernelPackages; [ nvidia_x11 v4l2loopback ];
     loader = {
