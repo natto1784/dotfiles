@@ -7,8 +7,7 @@ let
     globalArgs
   ];
   personalModules = [ ./modules/sound.nix ];
-  serverModules = [ ./modules/server.nix ];
-  builders = [ ./modules/x86builder.nix ];
+  serverModules = [ ./modules/minimal.nix ];
 in
 {
   flake.nixosConfigurations = {
@@ -43,8 +42,7 @@ in
         { nixpkgs.pkgs = self.legacyPackages.${system}; }
       ]
       ++ commonModules
-      ++ serverModules
-      ++ builders;
+      ++ serverModules;
     };
   };
 }

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 {
   imports =
     [
@@ -6,7 +6,8 @@
       ./hardware.nix
       ./boot.nix
       ./services.nix
-      ./stuff.nix
     ];
+
+  time.timeZone = "Asia/Kolkata";
   system.stateVersion = "21.05";
 }

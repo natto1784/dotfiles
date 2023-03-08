@@ -12,6 +12,7 @@
       socketActivation = true;
       wireplumber.enable = true;
 
+      # https://nixos.wiki/wiki/PipeWire#Low-latency_setup
       config.pipewire = {
         context.objects = [
           {

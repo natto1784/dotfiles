@@ -1,6 +1,5 @@
 { config, pkgs, ... }:
 {
-  time.timeZone = "Asia/Kolkata";
   security = {
     sudo.enable = false;
     doas = {
@@ -14,6 +13,18 @@
       ];
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    git
+    htop
+    vim
+    wireguard-tools
+    rnix-lsp
+    nmap
+    gcc
+    postgresql #for the client cli
+  ];
+
   programs = {
     gnupg = {
       agent = {
@@ -22,11 +33,23 @@
       };
     };
   };
+
   nix = {
     package = pkgs.nixUnstable;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
     settings.trusted-users = [ "root" ];
+    buildMachines = [{
+      hostName = "satori";
+      systems = [ "x86_64-linux" "aarch64-linux" ];
+      maxJobs = 4;
+      speedFactor = 2;
+      supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+    }];
+    distributedBuilds = true;
+    extraOptions = ''
+      builders-use-substitutes = true
+    '';
   };
 }
