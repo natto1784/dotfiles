@@ -5,7 +5,7 @@
     tor.enable = true;
     openssh = {
       enable = true;
-      settings.permitRootLogin = "yes";
+      settings.PermitRootLogin = "yes";
     };
     ratbagd.enable = true;
     btrfs.autoScrub.enable = true;
@@ -28,10 +28,17 @@
   };
 
   security.pki.certificateFiles = [ ../../cert.pem ];
-  virtualisation.libvirtd = {
-    enable = true;
-    onBoot = "ignore";
-    onShutdown = "shutdown";
-    qemu.runAsRoot = true;
+  virtualisation = {
+    docker = {
+      enable = true;
+      enableNvidia = true;
+      autoPrune.enable = true;
+    };
+    libvirtd = {
+      enable = true;
+      onBoot = "ignore";
+      onShutdown = "shutdown";
+      qemu.runAsRoot = true;
+    };
   };
 }

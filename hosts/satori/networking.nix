@@ -13,7 +13,7 @@
     };
 
     firewall = {
-      allowedTCPPorts = [ 22 18172 6600 8001 25565 ];
+      allowedTCPPorts = [ 22 18172 6600 8001 7590 25565 ];
       allowedUDPPorts = [ 22 17840 18172 ];
       trustedInterfaces = [ "docker0" ];
     };
