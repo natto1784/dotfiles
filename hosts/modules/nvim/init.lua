@@ -3,9 +3,6 @@
 vim.api.nvim_set_option("termguicolors", true)
 local bind = vim.keymap.set
 
-function hi(hi_var, hi_value)
-    vim.cmd("hi " .. hi_var .. " " .. hi_value)
-end
 --SETTINGS
 vim.o.cmdheight = 1
 vim.o.modifiable = true
@@ -90,7 +87,7 @@ function _G.CompileRun()
         ['typescript']= 'tsc ' .. file .. ' && node ' .. noext .. '.js && rm ' .. noext .. '.js'
     }
     filetype = vim.api.nvim_buf_get_option(0, "filetype")
-    if commandMap[filetype] ~= nil then vim("FloatermNew --autoclose=0 " .. commandMap[filetype]) end
+    if commandMap[filetype] ~= nil then vim.cmd("FloatermNew --autoclose=0 " .. commandMap[filetype]) end
 end
  
 function _G.Repl()
@@ -172,7 +169,6 @@ vim.g.floaterm_keymap_prev   = '<F3>'
 vim.g.floaterm_keymap_new    = '<F4>'
 vim.g.floaterm_gitcommit='floaterm'
 vim.g.floaterm_autoinsert=1
-vim.g.floaterm_shell="/usr/bin/env zsh"
 vim.g.floaterm_position="bottom"
 vim.g.floaterm_width=0.99
 vim.g.floaterm_height=0.6
@@ -355,6 +351,10 @@ require("catppuccin").setup({
 })
 
 vim.cmd("colorscheme catppuccin")
+
+function hi(hi_var, hi_value)
+    vim.cmd("hi " .. hi_var .. " " .. hi_value)
+end
 
 local colors = require("catppuccin.palettes").get_palette "latte"
 hi("Light", "guibg=" .. colors.text .. " guifg=" .. colors.crust)

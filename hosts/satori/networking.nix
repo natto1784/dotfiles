@@ -6,10 +6,7 @@
     hostId = "beca3df0";
     networkmanager = {
       enable = true;
-      wifi = {
-        powersave = true;
-        backend = "iwd";
-      };
+      wifi.powersave = true;
     };
 
     firewall = {
