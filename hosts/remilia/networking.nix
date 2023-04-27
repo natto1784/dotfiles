@@ -17,8 +17,8 @@
             let
               t = lib.splitString ":" x.destination;
             in
-            with builtins;
-            "iptables -t nat -A POSTROUTING -d ${head t} -p tcp -m tcp --dport ${head (tail t)} -j MASQUERADE"
+            with lib;
+            "iptables -t nat -A POSTROUTING -d ${head t} -p tcp -m tcp --dport ${last t} -j MASQUERADE"
           )
           config.networking.nat.forwardPorts;
       };

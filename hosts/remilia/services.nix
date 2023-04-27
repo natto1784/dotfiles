@@ -4,6 +4,7 @@ let
 in
 {
   services = {
+    cron.enable = true;
     openssh = {
       enable = true;
       permitRootLogin = "yes";
@@ -23,14 +24,15 @@ in
       appendHttpConfig = ''
         map $uri $expires {
           default off;
-          ~\.(jpg|jpeg|png|gif|ico|css|js)$ 30d;
+          ~\.(jpg|jpeg|png|gif|ico)$ 30d;
         }
       '';
       virtualHosts =
         let
           genericHttpRProxy = { addr, ssl ? true, conf ? "" }: {
-            addSSL = ssl;
             enableACME = ssl;
+            # addSSL = ssl;
+            forceSSL = ssl;
             locations."/" = {
               proxyPass = toString addr;
               extraConfig = ''
@@ -54,7 +56,20 @@ in
           "vault.${domain}" = genericHttpRProxy { addr = "https://${marisa}:8800"; };
           "consul.${domain}" = genericHttpRProxy { addr = "http://${marisa}:8500"; };
           "f.${domain}" = genericHttpRProxy { addr = "http://${marisa}:8888"; };
-          "radio.${domain}" = genericHttpRProxy { addr = "http://${satori}:8001"; };
+ #         "radio.${domain}" = genericHttpRProxy { addr = "http://${satori}:8001"; };
+          "radio.${domain}" = {
+            addSSL = true;
+            enableACME = true;
+            locations."/" = {
+              proxyPass = "http://${satori}:7590";
+              extraConfig = ''
+                expires $expires;
+                proxy_set_header Host $host;
+              '';
+            };
+            locations."= /".return = "301 /radio";
+           };
+
           "git.${domain}" = genericHttpRProxy {
             addr = "http://${marisa}:5000";
             conf = "client_max_body_size 64M;";
@@ -64,13 +79,6 @@ in
             conf = ''
               proxy_buffering off;
               proxy_read_timeout 310s;
-            '';
-          };
-          "alo.${domain}" = genericHttpRProxy {
-            addr = "http://${marisa}:4004";
-            conf = ''
-              proxy_set_header X-Real-IP $remote_addr;
-              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
             '';
           };
         };
