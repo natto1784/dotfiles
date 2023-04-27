@@ -49,7 +49,6 @@
 
   home.packages = with pkgs; [
     tofi
-    wineWowPackages.waylandFull
     imv
     grim
     slurp

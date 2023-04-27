@@ -31,7 +31,6 @@
     flameshot
     xmobar
     stalonetray
-    wineWowPackages.stable
   ];
 
   home.file.stalonetray = {

@@ -47,18 +47,17 @@
     dunst
     authy
     gnome.zenity
-    iwgtk
 
     # Wine and games and stuff
+    wineWowPackages.stable
     steam
     winetricks
     lutris
     flake.packages.${pkgs.system}.tlauncher
     mangohud
-    inputs.nix-gaming.packages.${pkgs.system}.osu-stable
+    inputs.nix-gaming.packages.${pkgs.system}.osu-lazer-bin
 
     # Programming and dev stuff
-    rust-analyzer
     (texlive.combine {
       inherit (texlive)
         scheme-small

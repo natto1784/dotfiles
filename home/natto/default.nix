@@ -10,7 +10,7 @@
     ./email.nix
     ./programs.nix
     ./eww
-    # ./xsession.nix :(
+    # ./xsession.nix
     ./wayland.nix
     ./pkgs.nix
     ./stuff.nix
@@ -18,7 +18,7 @@
     ./gtk.nix
     ./dunst.nix
     ./git.nix
-    ./mpd.nix
+    ./music.nix
     ./zsh.nix
   ];
 }

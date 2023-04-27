@@ -1,4 +1,4 @@
-(deflisten workspace "bar/hyprworkspaces")
+(deflisten workspace :initial "{}" "bar/hyprworkspaces")
 (defvar numerals "[\"१\", \"२\", \"३\", \"४\", \"५\", \"६\", \"७\", \"८\", \"९\", \"०\"]")
 
 (defwidget workspaces []

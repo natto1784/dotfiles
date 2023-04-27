@@ -23,7 +23,7 @@ in
         id = 1039532008424099850; # dont really care
         format = {
           large_image = "koishi";
-          small_image = "";
+          small_image = "koishifumo";
           large_text = "real";
           small_text = "the";
         };
@@ -74,6 +74,9 @@ in
       })
       mpc_cli
       playerctl
+      (tauon.override {
+        withDiscordRPC = true;
+      })
     ];
 
     file.ncmpcpp = {

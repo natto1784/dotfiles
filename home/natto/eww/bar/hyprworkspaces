@@ -9,7 +9,7 @@
 # active workspace
 current=1
 list_workspaces() {
-    workspace_list=$(hyprctl -j workspaces | jq -rc '[.[]|.id]|sort')
+    workspace_list=$(hyprctl -j workspaces | jq -rc '[.[]|.id]|sort' || "[]")
 }
 
 workspaces() {
@@ -18,7 +18,7 @@ workspaces() {
 
 list_workspaces
 workspaces
-hyprctl dispatch workspace $current || true
+hyprctl dispatch workspace $current &>/dev/null || true
 
 socat -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r event; do
   case ${event%>>*} in

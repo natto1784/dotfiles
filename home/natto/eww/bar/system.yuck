@@ -89,7 +89,6 @@
              (button
               :visible {system_net_wifi != ""}
               :tooltip {system_net_wifi}
-              :onclick "iwgtk &"
               ""))))
 
 (defwidget system_info []
