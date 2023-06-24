@@ -5,8 +5,6 @@ set sidebar_visible
 set mail_check_stats
 bind attach,index,pager \CU next-page
 bind attach,index,pager \CD previous-page
-bind attach,index,pager n next-entry
-bind attach,index,pager e previous-entry
 bind attach,index,pager 9 group-reply
 bind pager g top
 bind pager G bottom

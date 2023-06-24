@@ -12,7 +12,8 @@
 
 ** Some mode settings based on personal preferences
 #+begin_src emacs-lisp
-(global-hl-line-mode 1)
+(add-hook 'prog-mode-hook #'hl-line-mode)
+(add-hook 'text-mode-hook #'hl-line-mode)
 (scroll-bar-mode 0)
 (tool-bar-mode 0)
 (menu-bar-mode 0)
@@ -235,11 +236,17 @@ For autocomplete
  (direnv-mode))
 #+end_src
 
+** STM32
+#+begin_src emacs-lisp
+(use-package stm32-emacs)
+#+end_src
+
 ** Lang support
 #+begin_src emacs-lisp
 (use-package haskell-mode)
 (use-package lsp-latex)
 (use-package rustic)
+(use-package typescript-mode)
 (use-package yuck-mode)
 (use-package wgsl-mode)
 (use-package nix-mode

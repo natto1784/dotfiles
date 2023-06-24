@@ -19,7 +19,6 @@
     unrar
     vim
     jmtpfs
-    (inputs.nbfc.packages.${pkgs.system}.nbfc-client-c)
     (flake.packages.${pkgs.system}.customscripts)
     translate-shell
     powertop
@@ -77,6 +76,7 @@
         pdfsync
         tocloft
         enumitem
+        multirow
         tcolorbox;
     })
     python3Packages.pygments
@@ -88,7 +88,7 @@
     openjdk
 
     # Misc
-    anki-bin
+    anki
     tor-browser-bundle-bin
     mailcap
     libsForQt5.qtstyleplugins
