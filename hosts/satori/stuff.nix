@@ -42,7 +42,7 @@
     isNormalUser = true;
     shell = pkgs.zsh;
     home = "/home/natto";
-    extraGroups = [ "wheel" "adbusers" "video" "libvirtd" "docker" "networkmanager" ];
+    extraGroups = [ "wheel" "adbusers" "video" "libvirtd" "docker" "networkmanager" "dialout" ];
   };
 
   virtualisation = {
@@ -53,4 +53,17 @@
   };
 
   gtk.iconCache.enable = true;
+
+  # sound stuff
+  sound.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa = {
+      enable = true;
+      support32Bit = true;
+    };
+    pulse.enable = true;
+    socketActivation = true;
+    wireplumber.enable = true;
+  };
 }

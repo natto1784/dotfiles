@@ -6,7 +6,7 @@ let
     ./modules/nvim
     globalArgs
   ];
-  personalModules = [ ./modules/sound.nix ];
+  personalModules = [ ];
   serverModules = [ ./modules/minimal.nix ];
 in
 {

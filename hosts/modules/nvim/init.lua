@@ -121,7 +121,6 @@ require'nvim-tree'.setup {
     enable = true,
     update_root = true,
   },
-  ignore_ft_on_setup = { "startify" },  
   renderer = {
     highlight_opened_files = "all",
     highlight_git = true

@@ -20,6 +20,8 @@
     vulkan-headers
     jq
     dconf
+    stlink
+    stlink-gui
   ];
 
   programs = {

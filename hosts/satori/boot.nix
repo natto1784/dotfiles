@@ -2,7 +2,6 @@
 
 {
   boot = {
-    supportedFilesystems = [ "zfs" ];
     kernelPackages = pkgs.linuxPackages_latest;
     initrd = {
       availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" "vfio-pci" ];
