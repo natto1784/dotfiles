@@ -38,6 +38,7 @@ in
       system = "x86_64-linux";
       modules = [
         ./remilia
+        ./modules/x86builder.nix
         inputs.mailserver.nixosModules.mailserver
         { nixpkgs.pkgs = self.legacyPackages.${system}; }
       ]

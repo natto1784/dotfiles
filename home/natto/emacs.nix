@@ -10,7 +10,7 @@ let
         use-package
         (epkgs.tree-sitter-langs.withPlugins (_: epkgs.tree-sitter-langs.plugins))
       ];
-     /* override = {
+      /* override = {
         stm32-emacs = trivialBuild rec {
           pname = "stm32-emacs";
           version = haskellPackages.Agda.version;

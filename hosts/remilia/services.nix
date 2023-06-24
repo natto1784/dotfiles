@@ -56,7 +56,7 @@ in
           "vault.${domain}" = genericHttpRProxy { addr = "https://${marisa}:8800"; };
           "consul.${domain}" = genericHttpRProxy { addr = "http://${marisa}:8500"; };
           "f.${domain}" = genericHttpRProxy { addr = "http://${marisa}:8888"; };
- #         "radio.${domain}" = genericHttpRProxy { addr = "http://${satori}:8001"; };
+          #         "radio.${domain}" = genericHttpRProxy { addr = "http://${satori}:8001"; };
           "radio.${domain}" = {
             addSSL = true;
             enableACME = true;
@@ -68,7 +68,7 @@ in
               '';
             };
             locations."= /".return = "301 /radio";
-           };
+          };
 
           "git.${domain}" = genericHttpRProxy {
             addr = "http://${marisa}:5000";
