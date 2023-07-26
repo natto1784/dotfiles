@@ -14,14 +14,12 @@
     ripgrep
     kbd
     gcc
-    virtmanager
     rnix-lsp
     vulkan-tools
     vulkan-headers
     jq
     dconf
-    stlink
-    stlink-gui
+    inputs.nbfc.packages.${pkgs.system}.nbfc
   ];
 
   programs = {

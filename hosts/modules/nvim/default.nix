@@ -1,6 +1,9 @@
 { inputs, config, pkgs, ... }:
 
 {
+  environment.sessionVariables = {
+    EDITOR = "nvim";
+  };
   programs.neovim = {
     enable = true;
     package = pkgs.neovim-nightly;

@@ -27,7 +27,18 @@
         #       useOSProber = true;
         efiSupport = true;
         device = "nodev";
-        splashImage = ./cirno.png;
+        theme = pkgs.stdenvNoCC.mkDerivation rec {
+          version = "1.2.0";
+          name = "minegrub-theme";
+          src = pkgs.fetchFromGitHub {
+            owner = "Lxtharia";
+            repo = "minegrub-theme";
+            rev = "v${version}";
+            sha256 = "sha256-n/fJSFrrPPyTBS8/XHaARyCxccRZiqPhhNFq0x8Q2kA=";
+          };
+          installPhase = "cp -r . $out";
+        };
+        #splashImage = ./cirno.png;
         splashMode = "stretch";
         configurationName = "nixbruh";
       };
