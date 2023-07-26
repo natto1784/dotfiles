@@ -4,7 +4,7 @@
     ./networking.nix
     ./hardware.nix
     ./boot.nix
-    ./services.nix
+    ./services
   ];
 
   users.users.spark = {
@@ -14,7 +14,10 @@
     extraGroups = [ "wheel" ];
     openssh.authorizedKeys.keys = lib'.network.commonSSHKeys;
   };
+  programs.zsh.enable = true;
 
   time.timeZone = "Asia/Kolkata";
   system.stateVersion = "21.05";
+
+  security.pki.certificateFiles = [ ../../cert.pem ../../consul-agent-ca.pem ];
 }
