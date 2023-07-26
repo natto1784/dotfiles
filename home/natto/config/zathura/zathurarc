@@ -8,3 +8,4 @@ map S rotate
 map f zoom in
 map q zoom out
 map p follow link
+set selection-clipboard clipboard

@@ -15,6 +15,7 @@
       enable = true;
       prompt.theme = "pure";
       autosuggestions.color = "fg=yellow,bold";
+      utility.safeOps = false;
     };
     initExtra = ''
       unsetopt extendedGlob

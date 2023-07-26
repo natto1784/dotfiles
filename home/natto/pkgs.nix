@@ -25,8 +25,10 @@
     cachix
     undervolt
     w3m
+    steam-run
 
     # GUI utils
+    slack
     (discord.override {
       nss = nss_latest;
     })
@@ -50,8 +52,8 @@
     # Wine and games and stuff
     wineWowPackages.stable
     steam
-    winetricks
     lutris
+    winetricks
     flake.packages.${pkgs.system}.tlauncher
     mangohud
     inputs.nix-gaming.packages.${pkgs.system}.osu-lazer-bin

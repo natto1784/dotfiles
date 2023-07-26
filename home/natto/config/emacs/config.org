@@ -7,7 +7,7 @@
 #+begin_src emacs-lisp
  ; -*- lexical-binding: t; -*-
 (set-frame-font "Fira Code 13" nil t)
-(add-to-list 'default-frame-alist '(font . "Fira Code-13"))
+;(add-to-list 'default-frame-alist '(font . "Fira Code-13"))
 #+end_src
 
 ** Some mode settings based on personal preferences

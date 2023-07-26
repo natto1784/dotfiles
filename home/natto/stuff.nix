@@ -25,11 +25,6 @@
       QT_QPA_PLATFORMTHEME = "gtk2";
     };
 
-    shellAliases = rec {
-      ec = "emacsclient";
-      ecc = ec + " -c";
-      ecnw = ec + " -nw";
-    };
   };
   i18n = {
     inputMethod = {

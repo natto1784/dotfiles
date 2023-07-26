@@ -20,6 +20,11 @@
         default-bg = "rgba(0,0,0,0.8)";
       };
     };
+
+    sioyek = {
+      enable = true;
+    };
+
     go.enable = true;
     foot = {
       enable = true;
@@ -58,5 +63,8 @@
         save-position-on-quit = true;
       };
     };
+  };
+  home.sessionVariables = {
+    BROWSER = "firefox";
   };
 }
