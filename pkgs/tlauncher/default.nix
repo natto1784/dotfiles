@@ -1,28 +1,23 @@
-{ stdenv
-, openjdk8
-, buildFHSUserEnv
-, fetchzip
-}:
-
+{ pkgs ? import <nixpkgs> { } }:
 let
-  version = "2.86";
-  jar = stdenv.mkDerivation {
+  version = "2.885";
+  jar = pkgs.stdenv.mkDerivation {
     pname = "tlauncher-jar";
     inherit version;
-    src = fetchzip {
+    src = pkgs.fetchzip {
       name = "tlauncher.zip";
       url = "https://dl2.tlauncher.org/f.php?f=files%2FTLauncher-${version}.zip";
-      sha256 = "sha256-Tpia/GtPfeO8/Tca0fE7z387FRpkXfS1CtvX/oNJDag=";
+      sha256 = "sha256-Erpctwdefb+pTKb5UHkEirAQyVmnPFWjS3345hTllOE=";
       stripRoot = false;
     };
     installPhase = ''
       cp $src/*.jar $out
     '';
   };
-  fhs = buildFHSUserEnv {
+  fhs = pkgs.buildFHSUserEnv {
     name = "tlauncher";
     runScript = ''
-      ${openjdk8}/bin/java -jar "${jar}" "$@"
+      ${pkgs.openjdk8}/bin/java -jar "${jar}" "$@"
     '';
     targetPkgs = pkgs: with pkgs; [
       openal
@@ -64,7 +59,7 @@ let
     ]);
   };
 in
-stdenv.mkDerivation rec {
+pkgs.stdenv.mkDerivation rec {
   pname = "tlauncher";
   inherit version;
   dontUnpack = true;
