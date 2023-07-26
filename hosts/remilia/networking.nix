@@ -33,6 +33,10 @@
       internalInterfaces = [ "wg0" ];
       forwardPorts = [
         {
+          destination = "${marisa}:22001";
+          sourcePort = 22001;
+        }
+        {
           destination = "${satori}:6600";
           sourcePort = 6600;
         }
