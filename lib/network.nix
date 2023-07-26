@@ -1,5 +1,5 @@
 {
-  addresses = {
+  addresses = rec {
     wireguard = rec {
       ipPrefix = "10.55.0";
       prefixLength = 24;
@@ -13,6 +13,7 @@
     domain = {
       natto = "weirdnatto.in";
     };
+    subdomain = builtins.mapAttrs(_: domain: (sub: "${sub}.${domain}")) domain;
   };
 
   commonSSHKeys = [

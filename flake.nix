@@ -17,6 +17,10 @@
       url = github:oxalica/rust-overlay;
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    filehost = {
+      url = github:natto1784/simpler-filehost;
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-gaming.url = github:fufexan/nix-gaming;
     nbfc = {
       url = github:nbfc-linux/nbfc-linux;

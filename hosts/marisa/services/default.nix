@@ -2,7 +2,9 @@
 {
 
   imports = [
-   # ./hashicorp.nix
+    # ./hashicorp.nix
+    ./filehost.nix
+    ./gitea.nix
   ];
 
   # Add secrets to nomad, consul and vault
@@ -12,12 +14,22 @@
       #     default-cgroupns-mode = "host";
     };
   };
-  systemd.tmpfiles.rules = [ "d /run/vault - vault vault 1h" ];
   services = {
     openssh = {
       enable = true;
-      permitRootLogin = "yes";
+      ports = [22 22001];
     };
+    postgresql = {
+      enable = true;
+      authentication = ''
+        local gitea all ident map=gitea-map
+      '';
+      identMap =
+        ''
+          gitea-map gitea gitea
+        '';
+    };
+
   };
 }
 
