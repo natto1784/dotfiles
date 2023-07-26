@@ -53,34 +53,34 @@ in
             serverAliases = [ "www.${domain}" ];
           };
           "znc.weirdnatto.in" = genericHttpRProxy { addr = "https://${marisa}:9898"; };
-          "vault.${domain}" = genericHttpRProxy { addr = "https://${marisa}:8800"; };
-          "consul.${domain}" = genericHttpRProxy { addr = "http://${marisa}:8500"; };
+          # "vault.${domain}" = genericHttpRProxy { addr = "https://${marisa}:8800"; };
+          # "consul.${domain}" = genericHttpRProxy { addr = "http://${marisa}:8500"; };
           "f.${domain}" = genericHttpRProxy { addr = "http://${marisa}:8888"; };
-          #         "radio.${domain}" = genericHttpRProxy { addr = "http://${satori}:8001"; };
-          "radio.${domain}" = {
+          "radio.${domain}" = genericHttpRProxy { addr = "http://${satori}:8001"; };
+          /* "radio.${domain}" = {
             addSSL = true;
             enableACME = true;
             locations."/" = {
-              proxyPass = "http://${satori}:7590";
-              extraConfig = ''
-                expires $expires;
-                proxy_set_header Host $host;
-              '';
+            proxyPass = "http://${satori}:7590";
+            extraConfig = ''
+            expires $expires;
+            proxy_set_header Host $host;
+            '';
             };
             locations."= /".return = "301 /radio";
-          };
+            };*/
 
-          "git.${domain}" = genericHttpRProxy {
-            addr = "http://${marisa}:5000";
+          /*  "git.${domain}" = genericHttpRProxy {
+            addr = "http://${marisa}:5001";
             conf = "client_max_body_size 64M;";
-          };
-          "nomad.${domain}" = genericHttpRProxy {
+            };
+            "nomad.${domain}" = genericHttpRProxy {
             addr = "http://${marisa}:4646";
             conf = ''
-              proxy_buffering off;
-              proxy_read_timeout 310s;
+            proxy_buffering off;
+            proxy_read_timeout 310s;
             '';
-          };
+            };*/
         };
     };
   };

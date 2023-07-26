@@ -7,7 +7,7 @@
       {
         interfaces = {
           ens3 = {
-            allowedTCPPorts = [ 80 81 443 444 993 465 143 25 22001 22002 9898 8999 99 5201 4444 ]
+            allowedTCPPorts = [ 80 81 443 444 993 465 143 25 22 22001 22002 4444 ]
               ++ (map (x: x.sourcePort) config.networking.nat.forwardPorts);
             allowedUDPPorts = [ 17840 ];
           };
@@ -32,10 +32,6 @@
       externalInterface = "ens3";
       internalInterfaces = [ "wg0" ];
       forwardPorts = [
-        {
-          destination = "${marisa}:2002";
-          sourcePort = 22;
-        }
         {
           destination = "${satori}:6600";
           sourcePort = 6600;

@@ -17,6 +17,7 @@
     extraGroups = [ "wheel" ];
     openssh.authorizedKeys.keys = lib'.network.commonSSHKeys;
   };
+  programs.zsh.enable = true;
 
   system.stateVersion = "21.11";
 }
