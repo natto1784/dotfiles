@@ -27,7 +27,7 @@
             ENABLED = true;
             FROM = "masti@${domain}";
             TYPE = "smtp";
-            HOST = domain;
+            HOST = "mail.${domain}";
             IS_TLS_ENABLED = true;
             USER = FROM;
             REGISTER_MAIL_CONFIRM = true;

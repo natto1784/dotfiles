@@ -13,7 +13,6 @@
     domain = {
       natto = "weirdnatto.in";
     };
-    subdomain = builtins.mapAttrs(_: domain: (sub: "${sub}.${domain}")) domain;
   };
 
   commonSSHKeys = [

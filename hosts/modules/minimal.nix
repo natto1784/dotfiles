@@ -23,7 +23,6 @@
     rnix-lsp
     nmap
     gcc
-    postgresql #for the client cli
   ];
 
   programs = {
