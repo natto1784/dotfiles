@@ -68,6 +68,10 @@
             publicKey = "SqskEH7hz7Gv9ZS+FYLRFgKZyJCFbBFCyuvzBYnbfVU=";
             allowedIPs = [ ips.satori ];
           }
+          {
+            publicKey = "IHYIan9Xq2PBTSzcMdHpzx4PM67l09WdsGa6s+siyH0=";
+            allowedIPs = [ ips.hina ];
+          }
         ];
       };
     };

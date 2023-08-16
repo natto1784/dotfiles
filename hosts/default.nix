@@ -45,5 +45,17 @@ in
       ++ commonModules
       ++ serverModules;
     };
+
+    #Oracle Cloud VM
+    hina = nixpkgs.lib.nixosSystem rec {
+      system = "x86_64-linux";
+      modules = [
+        ./hina
+        ./modules/x86builder.nix
+        { nixpkgs.pkgs = self.legacyPackages.${system}; }
+      ]
+      ++ commonModules
+      ++ serverModules;
+    };
   };
 }

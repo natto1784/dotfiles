@@ -22,7 +22,7 @@ in
         home = {
           homeDirectory = "/home/spark";
           username = "spark";
-          stateVersion = "22.11";
+          stateVersion = "23.05";
         };
       }] ++ commonModules;
       pkgs = self.legacyPackages.aarch64-linux;
@@ -33,7 +33,18 @@ in
         home = {
           homeDirectory = "/home/bat";
           username = "bat";
-          stateVersion = "22.11";
+          stateVersion = "23.05";
+        };
+      }] ++ commonModules;
+      pkgs = self.legacyPackages.x86_64-linux;
+    };
+
+    spin = inputs.home-manager.lib.homeManagerConfiguration {
+      modules = [{
+        home = {
+          homeDirectory = "/home/spin";
+          username = "spin";
+          stateVersion = "23.05";
         };
       }] ++ commonModules;
       pkgs = self.legacyPackages.x86_64-linux;

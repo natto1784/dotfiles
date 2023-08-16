@@ -8,6 +8,7 @@
         remilia = "${ipPrefix}.1";
         marisa = "${ipPrefix}.2";
         satori = "${ipPrefix}.3";
+        hina = "${ipPrefix}.4";
       };
     };
     domain = {
@@ -21,5 +22,6 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOSQnDNrNP69tIK7U2D7qaMjycfIjpgx0at4U2D5Ufib"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK5V/hdkTTQSkDLXaEwY8xb/T8+sWtw5c6UjYOPaTrO8"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKFyKi0HYfkgvEDvjzmDRGwAq2z2KOkfv7scTVSnonBh"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIICEow6+G9F0JjvVwnyrFoObFAKKBQQ2wwScST0Xzs1l"
   ];
 }

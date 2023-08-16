@@ -10,11 +10,6 @@ in
       permitRootLogin = "yes";
       ports = [ 22 22002 ];
     };
-    znc = {
-      enable = true;
-      mutable = true;
-      useLegacyConfig = false;
-    };
     nginx = {
       enable = true;
       clientMaxBodySize = "512m";
@@ -52,7 +47,6 @@ in
             };
             serverAliases = [ "www.${domain}" ];
           };
-          "znc.weirdnatto.in" = genericHttpRProxy { addr = "https://${remilia}:9898"; };
           # "vault.${domain}" = genericHttpRProxy { addr = "https://${marisa}:8800"; };
           # "consul.${domain}" = genericHttpRProxy { addr = "http://${marisa}:8500"; };
           "f.${domain}" = genericHttpRProxy { addr = "http://${marisa}:8000"; };
