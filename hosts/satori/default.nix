@@ -9,9 +9,6 @@
       ./boot.nix
       ./services.nix
       ./graphics.nix
-      ./xorg.nix
-      ./wayland.nix
-      ./nix.nix
     ];
   system.stateVersion = "23.05";
 }

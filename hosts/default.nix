@@ -6,7 +6,11 @@ let
     ./modules/nvim
     globalArgs
   ];
-  personalModules = [ ];
+  personalModules = [
+    ./modules/xorg.nix
+    ./modules/wayland.nix
+    ./modules/nix.nix
+  ];
   serverModules = [ ./modules/minimal.nix ];
 in
 {

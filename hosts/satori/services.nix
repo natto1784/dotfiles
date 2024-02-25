@@ -1,23 +1,4 @@
 { lib, config, pkgs, ... }:
-let
-  udev-cypherock = pkgs.stdenvNoCC.mkDerivation {
-    name = "udev-cypher";
-
-    dontBuild = true;
-    dontConfigure = true;
-    dontUnpack = true;
-
-    installPhase = ''
-      mkdir -p $out/lib/udev/rules.d
-      touch $out/lib/udev/rules.d/21-cypherock.rules
-      cat << 'EOF' >> $out/lib/udev/rules.d/21-cypherock.rules
-      SUBSYSTEM=="input", GROUP="input", MODE="0666"
-      SUBSYSTEM=="usb", ATTRS{idVendor}=="3503", ATTRS{idProduct}=="0103", MODE="666", GROUP="plugdev"
-      KERNEL=="hidraw*", ATTRS{idVendor}=="3503", ATTRS{idProduct}=="0103", MODE="0666", GROUP="plugdev"
-      EOF
-    '';
-  };
-in
 {
   services = {
     tor.enable = true;
@@ -27,9 +8,6 @@ in
     };
     ratbagd.enable = true;
     btrfs.autoScrub.enable = true;
-    udev = {
-      packages = [ pkgs.stlink udev-cypherock ];
-    };
     gvfs.enable = true;
     tlp = {
       enable = true;
@@ -40,6 +18,20 @@ in
     logind.extraConfig = "RuntimeDirectorySize=30%";
     mysql.enable = true;
     mysql.package = pkgs.mariadb;
+
+    /*    nomad = {
+      enable = true;
+      enableDocker = true;
+      dropPrivileges = false;
+      extraPackages = with pkgs; [ consul cni-plugins ];
+      extraSettingsPaths = [ "/home/natto/hclconfigs/nomad/nomad.json" ];
+      };
+
+      consul = {
+      enable = true;
+      package = pkgs.consul;
+      extraConfigFiles = [ "/home/natto/hclconfigs/consul/consul.json" ];
+    };*/
   };
 
   systemd.services = {
@@ -52,7 +44,6 @@ in
     docker = {
       enable = true;
       enableNvidia = true;
-      autoPrune.enable = true;
     };
     libvirtd = {
       enable = true;

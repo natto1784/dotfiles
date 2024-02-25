@@ -22,7 +22,7 @@
   };
   console.useXkbConfig = true;
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     fira-code
     fira-mono
     monoid
@@ -46,6 +46,7 @@
   };
 
   virtualisation = {
+    waydroid.enable = true;
     podman = {
       enable = true;
       enableNvidia = true;
@@ -66,4 +67,32 @@
     socketActivation = true;
     wireplumber.enable = true;
   };
+  /*
+    environment.etc =
+    let
+      json = pkgs.formats.json { };
+    in
+    {
+      "pipewire/pipewire.conf.d/50-noise.conf".source = json.generate "50-noise.conf" {
+        context.modules = [
+          {
+            name = "libpipewire-module-echo-cancel";
+            args = {
+              capture.props = {
+                node.name = "Echo Cancellation Capture";
+              };
+              source.props = {
+                node.name = "Echo Cancellation Source";
+              };
+              sink.props = {
+                node.name = "Echo Cancellation Sink";
+              };
+              playback.props = {
+                node.name = "Echo Cancellation Playback";
+              };
+            };
+          }
+        ];
+      };
+    };*/
 }

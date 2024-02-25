@@ -39,6 +39,10 @@
       url = github:hyprwm/contrib;
       #inputs.nixpkgs.follows = "nixpkgs";
     };
+    aagl-gtk = {
+      url = github:ezKEa/aagl-gtk-on-nix;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ self, ... }:
@@ -52,22 +56,27 @@
         ./lib
       ];
 
-      perSystem = { pkgs, system, ... }: rec {
-        legacyPackages = import inputs.nixpkgs {
-          inherit system;
-          config = {
-            allowUnfree = true;
-            allowBroken = true;
-            allowInsecure = true;
+      perSystem = { system, ... }:
+        let
+          pkgs = import inputs.nixpkgs {
+            inherit system;
+            config = {
+              allowUnfree = true;
+              allowBroken = true;
+              allowInsecure = true;
+            };
+            overlays = [
+              inputs.nvim-overlay.overlay
+              inputs.emacs-overlay.overlay
+              inputs.rust-overlay.overlays.default
+            ];
           };
-          overlays = [
-            inputs.nvim-overlay.overlay
-            inputs.emacs-overlay.overlay
-            inputs.rust-overlay.overlays.default
-          ];
-        };
+        in
+        {
+          legacyPackages = pkgs;
+          _module.args.pkgs = pkgs;
 
-        formatter = pkgs.nixpkgs-fmt;
-      };
+          formatter = pkgs.nixpkgs-fmt;
+        };
     };
 }
