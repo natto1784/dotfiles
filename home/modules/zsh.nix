@@ -10,7 +10,7 @@
     };
     enableAutosuggestions = true;
     enableCompletion = true;
-    enableSyntaxHighlighting = true;
+    syntaxHighlighting.enable = true;
     prezto = {
       enable = true;
       prompt.theme = "pure";

@@ -1,5 +1,5 @@
-# #+TITLE: My Emacs Configuration
-# #+AUTHOR: Amneesh Singh
+#+TITLE: My Emacs Configuration
+#+AUTHOR: Amneesh Singh
 #+PROPERTY: header-args:emacs-lisp :tangle yes
 
 * Settings
@@ -23,6 +23,9 @@
 (setq ring-bell-function 'ignore
       gc-cons-threshold most-positive-fixnum
       initial-major-mode 'fundamental-mode)
+(unless (display-graphic-p)
+        (require 'evil-terminal-cursor-changer)
+        (evil-terminal-cursor-changer-activate))
 #+end_src
 
 ** Setting some variables
@@ -132,6 +135,8 @@ Add selectrum-prescient
 To undo and redo easily like vi
 #+begin_src emacs-lisp
 (use-package undo-tree
+  :init
+  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
   :config
   (global-undo-tree-mode 1))
 #+end_src
@@ -199,8 +204,7 @@ For autocomplete
   :after lsp-mode
   :config
   (add-to-list 'company-backends 'company-dabbrev)
-  (setq company-backends (cons 'company-files (remove 'company-files company-backends)))
-  (add-to-list 'company-backends 'company-emoji)
+  (setq company-backends (append '(company-files) (remove 'company-files company-backends)))
   (company-mode 1))
 #+end_src
 
@@ -208,11 +212,6 @@ For autocomplete
 #+begin_src emacs-lisp
 (use-package company-quickhelp
   :hook (company-mode . company-quickhelp-mode))
-#+end_src
-
-*** Extra company packages
-#+begin_src emacs-lisp
-(use-package company-emoji)
 #+end_src
 
 ** Treesitter

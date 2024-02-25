@@ -10,7 +10,7 @@
   };
 
   age.secrets.gitconfig = {
-    file = ./secrets/.gitconfig.age;
+    file = ./secrets/gitconfig.age;
     path = "${config.home.homeDirectory}/.gitconfig";
   };
 }

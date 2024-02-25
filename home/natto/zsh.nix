@@ -9,7 +9,7 @@ in
   '';
 
   age.secrets.zshenv_secret = {
-    file = ./secrets/.zshenv_secret;
+    file = ./secrets/zshenv_secret;
     path = secretPath;
     mode = "660";
   };

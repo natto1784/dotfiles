@@ -9,9 +9,7 @@
         enable = true;
         xwayland = {
           enable = true;
-          hidpi = true;
         };
-        nvidiaPatches = true;
         extraConfig = (builtins.readFile ./config/hypr/hyprland.conf)
           + (with config.home.pointerCursor; ''
           exec-once=hyprctl setcursor ${name} ${toString size}

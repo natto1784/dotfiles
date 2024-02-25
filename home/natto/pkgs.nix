@@ -50,13 +50,14 @@
     gnome.zenity
 
     # Wine and games and stuff
+    lutris
     wineWowPackages.stable
     steam
     lutris
     winetricks
     flake.packages.${pkgs.system}.tlauncher
     mangohud
-    inputs.nix-gaming.packages.${pkgs.system}.osu-lazer-bin
+    #   inputs.nix-gaming.packages.${pkgs.system}.osu-lazer-bin
 
     # Programming and dev stuff
     (texlive.combine {
@@ -86,7 +87,6 @@
     ghc
     nodejs
     rust-bin.nightly.latest.default
-    clang-tools
     openjdk
 
     # Misc
