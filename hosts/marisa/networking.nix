@@ -6,13 +6,13 @@
       allowedTCPPorts = [
         22 # ssh
         80 # http
-      #  5454
+        #  5454
         5001 #gitea
         4646 #nomad
-      #  8500 #vault nomad consul
+        #  8500 #vault nomad consul
         8000 #simpler-filehost
-      #  6666 #concourse
-      #  202 #gitea-ssh
+        #  6666 #concourse
+        #  202 #gitea-ssh
       ];
       allowedUDPPorts = [ 17840 ];
       trustedInterfaces = [ "docker0" ];

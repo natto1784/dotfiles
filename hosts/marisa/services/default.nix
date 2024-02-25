@@ -17,7 +17,7 @@
   services = {
     openssh = {
       enable = true;
-      ports = [22 22001];
+      ports = [ 22 22001 ];
     };
     postgresql = {
       enable = true;

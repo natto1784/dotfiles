@@ -27,15 +27,8 @@
           enable = true;
         };
       };
-      extraLayouts = {
-        colemak = {
-          description = "Colemak Layouts";
-          languages = [ "eng" ];
-          symbolsFile = ./colemak;
-        };
-      };
-      layout = "us";
-      xkbVariant = "colemak_dh"; # trying to ditch DHz now
+      xkb.layout = "us";
+      xkb.variant = "colemak_dh"; # trying to ditch DHz now
       autoRepeatDelay = 320;
       autoRepeatInterval = 30;
     };
