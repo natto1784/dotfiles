@@ -55,11 +55,12 @@
       ];
 
       perSystem = { system, pkgs, ... }:
-        {
+        rec {
           formatter = pkgs.nixpkgs-fmt;
           devShells.default = with pkgs; mkShell {
             packages = [
               nixd
+              formatter
             ];
           };
         };

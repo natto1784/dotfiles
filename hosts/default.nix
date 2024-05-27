@@ -3,7 +3,7 @@ let
   inherit (inputs) nixpkgs;
 
   commonModules = [
-    ./nvim
+    ./nvim.nix
     globalArgs
   ];
   desktopModules = [
