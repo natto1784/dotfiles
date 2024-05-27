@@ -5,7 +5,7 @@
       builders-use-substitutes = true
     '';
     buildMachines = [{
-      hostName = "satori";
+      hostName = "okina";
       systems = [ "x86_64-linux" "aarch64-linux" ];
       maxJobs = 4;
       speedFactor = 2;
