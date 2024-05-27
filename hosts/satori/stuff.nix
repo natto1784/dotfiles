@@ -32,9 +32,9 @@
 
   virtualisation = {
     waydroid.enable = true;
+    containers.cdi.dynamic.nvidia.enable = true;
     podman = {
       enable = true;
-      enableNvidia = true;
     };
   };
 
