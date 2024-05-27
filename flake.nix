@@ -51,7 +51,7 @@
         ./hosts
         ./home
         ./pkgs
-        ./lib
+        ./conf
       ];
 
       perSystem = { system, pkgs, ... }:

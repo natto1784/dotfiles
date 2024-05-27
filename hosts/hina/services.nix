@@ -1,6 +1,6 @@
-{ config, pkgs, lib, lib', ... }:
+{ config, pkgs, lib, conf, ... }:
 let
-  domain = lib'.network.addresses.domain.natto;
+  domain = conf.network.addresses.domain.natto;
 in
 {
   services = {
@@ -20,7 +20,7 @@ in
 
     nginx = {
       enable = true;
-      virtualHosts = with lib'.network.addresses.wireguard.ips; {
+      virtualHosts = with conf.network.addresses.wireguard.ips; {
         "znc.${domain}" = {
           enableACME = true;
           forceSSL = true;

@@ -1,4 +1,4 @@
-{ pkgs, config, lib', ... }:
+{ pkgs, config, conf, ... }:
 {
   programs = {
     firefox = {
@@ -34,7 +34,7 @@
           font-bold = "Fira Mono:style=Bold:pixelsize=18";
         };
         scrollback.lines = 4000;
-        colors = with lib'.colors.default; {
+        colors = with conf.colors.default; {
           inherit foreground background;
           regular0 = surface1;
           regular1 = red;

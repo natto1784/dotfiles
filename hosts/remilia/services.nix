@@ -1,6 +1,6 @@
-{ config, pkgs, lib, lib', ... }:
+{ config, pkgs, lib, conf, ... }:
 let
-  domain = lib'.network.addresses.domain.natto;
+  domain = conf.network.addresses.domain.natto;
 in
 {
   services = {
@@ -37,7 +37,7 @@ in
             };
           };
         in
-        with lib'.network.addresses.wireguard.ips; {
+        with conf.network.addresses.wireguard.ips; {
           "${domain}" = {
             addSSL = true;
             enableACME = true;

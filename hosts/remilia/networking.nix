@@ -1,4 +1,4 @@
-{ lib, config, lib', pkgs, ... }:
+{ lib, config, conf, pkgs, ... }:
 {
   networking = {
     useDHCP = false;
@@ -27,7 +27,7 @@
         useDHCP = true;
       };
     };
-    nat = with lib'.network.addresses.wireguard.ips; {
+    nat = with conf.network.addresses.wireguard.ips; {
       enable = true;
       externalInterface = "ens3";
       internalInterfaces = [ "wg0" ];
@@ -46,7 +46,7 @@
         }
       ];
     };
-    wireguard.interfaces = with lib'.network.addresses.wireguard; {
+    wireguard.interfaces = with conf.network.addresses.wireguard; {
       wg0 = {
         ips = [ ips.remilia ];
         listenPort = 17840;

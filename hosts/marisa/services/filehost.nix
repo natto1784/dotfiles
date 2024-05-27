@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, lib', ... }:
+{ config, pkgs, inputs, conf, ... }:
 {
   systemd.services.filehost = {
     enable = true;
@@ -7,7 +7,7 @@
       Type = "simple";
       Environment = [
         "TITLE=nattofiles"
-        "USER_URL=https://f.${lib'.network.addresses.domain.natto}"
+        "USER_URL=https://f.${conf.network.addresses.domain.natto}"
         "ROCKET_LIMITS={file=\"512MB\",data-form=\"512MB\"}"
         "ROCKET_LOG_LEVEL=debug"
         "ROCKET_ADDRESS=0.0.0.0"

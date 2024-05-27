@@ -1,4 +1,4 @@
-{ config, pkgs, lib', ... }:
+{ config, pkgs, conf, ... }:
 {
   services = {
     gitea = rec {
@@ -13,7 +13,7 @@
       mailerPasswordFile = "/var/secrets/giteamailer.pass";
       settings =
         let
-          domain = lib'.network.addresses.domain.natto;
+          domain = conf.network.addresses.domain.natto;
         in
         {
           server = rec {

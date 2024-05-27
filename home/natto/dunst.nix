@@ -1,10 +1,10 @@
-{ config, lib', ... }:
+{ config, conf, ... }:
 {
   services = {
     dunst = {
       enable = true;
       iconTheme = with config.gtk.iconTheme; { inherit name package; };
-      settings = with lib'.colors.hex; {
+      settings = with conf.colors.hex; {
         global = {
           mouse_left_click = "close_current";
           mouse_right_click = "do_action";

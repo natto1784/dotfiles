@@ -1,4 +1,4 @@
-{ config, pkgs, lib', ... }:
+{ config, pkgs, conf, ... }:
 {
   imports = [
     ./networking.nix
@@ -14,7 +14,7 @@
     shell = pkgs.zsh;
     home = "/home/spin";
     extraGroups = [ "wheel" ];
-    openssh.authorizedKeys.keys = lib'.network.commonSSHKeys;
+    openssh.authorizedKeys.keys = conf.network.commonSSHKeys;
   };
   programs.zsh.enable = true;
 

@@ -1,4 +1,4 @@
-{ pkgs, config, lib', inputs, ... }:
+{ pkgs, config, conf, inputs, ... }:
 {
   wayland = {
     windowManager = {
@@ -14,7 +14,7 @@
           + (with config.home.pointerCursor; ''
           exec-once=hyprctl setcursor ${name} ${toString size}
         '')
-          + (with lib'.colors.argb { a = "ee"; };''
+          + (with conf.colors.argb { a = "ee"; };''
           general {
             col.active_border = 0x${mauve} 0x${flamingo} 135deg
             col.inactive_border = 0x${surface0}
@@ -25,7 +25,7 @@
   };
 
   home.file.tofi = {
-    source = pkgs.writeText "tofi-config" (pkgs.lib.generators.toKeyValue { } (with lib'.colors.default; {
+    source = pkgs.writeText "tofi-config" (pkgs.lib.generators.toKeyValue { } (with conf.colors.default; {
       # https://github.com/philj56/tofi/blob/master/themes/fullscreen
       width = "100%";
       height = "100%";

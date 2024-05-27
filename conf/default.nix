@@ -4,7 +4,7 @@
     _module.args = {
       inherit inputs self;
       flake = self;
-      lib' = {
+      conf = {
         colors = import ./colors.nix;
         network = import ./network.nix;
       };
