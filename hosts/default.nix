@@ -17,6 +17,16 @@ let
 in
 {
   flake.nixosConfigurations = {
+    # Desktop
+    okina = nixpkgs.lib.nixosSystem rec {
+      system = "x86_64-linux";
+      modules = [
+        ./okina
+      ]
+      ++ desktopModules
+      ++ commonModules;
+    };
+
     #Home laptop
     satori = nixpkgs.lib.nixosSystem rec {
       system = "x86_64-linux";

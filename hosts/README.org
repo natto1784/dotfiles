@@ -1,4 +1,5 @@
-+ satori is my home laptop
++ okina is my home desktop
++ satori is my almost trashed laptop
 + marisa is my Raspberry Pi 4 (B)
 + remilia is my cloud VM
 + hina is another cloud VM I use for ZNC
