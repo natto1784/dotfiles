@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = github:nixos/nixpkgs/nixpkgs-unstable;
-    stable.url = github:nixos/nixpkgs/release-22.11;
+    stable.url = github:nixos/nixpkgs/release-23.11;
     flake-parts.url = github:hercules-ci/flake-parts;
     home-manager = {
       url = github:nix-community/home-manager;
@@ -11,10 +11,6 @@
     };
     mailserver = {
       url = gitlab:simple-nixos-mailserver/nixos-mailserver;
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    rust-overlay = {
-      url = github:oxalica/rust-overlay;
       inputs.nixpkgs.follows = "nixpkgs";
     };
     filehost = {
@@ -32,8 +28,10 @@
       #     inputs.nixpkgs.url = github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836;
     };
     hyprland = {
-      url = github:hyprwm/Hyprland;
-      #inputs.nixpkgs.follows = "nixpkgs";
+      type = "git";
+      url = "https://github.com/hyprwm/Hyprland";
+      submodules = true;
+      #     inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland-contrib = {
       url = github:hyprwm/contrib;
@@ -56,27 +54,14 @@
         ./lib
       ];
 
-      perSystem = { system, ... }:
-        let
-          pkgs = import inputs.nixpkgs {
-            inherit system;
-            config = {
-              allowUnfree = true;
-              allowBroken = true;
-              allowInsecure = true;
-            };
-            overlays = [
-              inputs.nvim-overlay.overlay
-              inputs.emacs-overlay.overlay
-              inputs.rust-overlay.overlays.default
+      perSystem = { system, pkgs, ... }:
+        {
+          formatter = pkgs.nixpkgs-fmt;
+          devShells.default = with pkgs; mkShell {
+            packages = [
+              nixd
             ];
           };
-        in
-        {
-          legacyPackages = pkgs;
-          _module.args.pkgs = pkgs;
-
-          formatter = pkgs.nixpkgs-fmt;
         };
     };
 }

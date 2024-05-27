@@ -7,7 +7,7 @@ in
     cron.enable = true;
     openssh = {
       enable = true;
-      permitRootLogin = "yes";
+      settings.PermitRootLogin = "yes";
       ports = [ 22 22002 ];
     };
     nginx = {

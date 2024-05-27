@@ -20,7 +20,6 @@
     vim
     tmux
     wireguard-tools
-    rnix-lsp
     nmap
     gcc
   ];
@@ -29,16 +28,14 @@
     gnupg = {
       agent = {
         enable = true;
-        pinentryFlavor = "curses";
       };
     };
   };
 
   nix = {
-    package = pkgs.nixUnstable;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
-    settings.trusted-users = [ "root" "spark" ];
+    settings.trusted-users = [ "root" ];
   };
 }

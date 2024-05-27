@@ -8,7 +8,7 @@ in
 
     openssh = {
       enable = true;
-      permitRootLogin = "yes";
+      settings.PermitRootLogin = "yes";
       ports = [ 22 ];
     };
 

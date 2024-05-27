@@ -14,12 +14,26 @@
     ripgrep
     kbd
     gcc
-    rnix-lsp
     vulkan-tools
     vulkan-headers
     jq
     dconf
-    inputs.nbfc.packages.${pkgs.system}.nbfc
+  ];
+
+  fonts.packages = with pkgs; [
+    fira-code
+    fira-mono
+    monoid
+    font-awesome
+    material-icons
+    material-design-icons
+    lohit-fonts.devanagari
+    lohit-fonts.gurmukhi
+    office-code-pro
+    eb-garamond
+    noto-fonts-cjk
+    takao
+    liberation_ttf
   ];
 
   programs = {
@@ -29,7 +43,6 @@
       agent = {
         enableSSHSupport = true;
         enable = true;
-        pinentryFlavor = "curses";
       };
     };
 
@@ -44,9 +57,7 @@
       };
     };
 
-
     adb.enable = true;
-    light.enable = true;
     gamemode.enable = true;
   };
 }

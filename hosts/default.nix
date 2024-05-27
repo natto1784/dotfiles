@@ -3,15 +3,17 @@ let
   inherit (inputs) nixpkgs;
 
   commonModules = [
-    ./modules/nvim
+    ./nvim
     globalArgs
   ];
-  personalModules = [
-    ./modules/xorg.nix
-    ./modules/wayland.nix
-    ./modules/nix.nix
+  desktopModules = [
+    ./xorg.nix
+    ./wayland.nix
+    ./nix.nix
+    ./desktop-pkgs.nix
+    ./sound.nix
   ];
-  serverModules = [ ./modules/minimal.nix ];
+  serverModules = [ ./minimal.nix ];
 in
 {
   flake.nixosConfigurations = {
@@ -20,9 +22,8 @@ in
       system = "x86_64-linux";
       modules = [
         ./satori
-        { nixpkgs.pkgs = self.legacyPackages.${system}; }
       ]
-      ++ personalModules
+      ++ desktopModules
       ++ commonModules;
     };
 
@@ -31,7 +32,6 @@ in
       system = "aarch64-linux";
       modules = [
         ./marisa
-        { nixpkgs.pkgs = self.legacyPackages.${system}; }
       ]
       ++ commonModules
       ++ serverModules;
@@ -42,9 +42,8 @@ in
       system = "x86_64-linux";
       modules = [
         ./remilia
-        ./modules/x86builder.nix
+        ./x86builder.nix
         inputs.mailserver.nixosModules.mailserver
-        { nixpkgs.pkgs = self.legacyPackages.${system}; }
       ]
       ++ commonModules
       ++ serverModules;
@@ -55,8 +54,7 @@ in
       system = "x86_64-linux";
       modules = [
         ./hina
-        ./modules/x86builder.nix
-        { nixpkgs.pkgs = self.legacyPackages.${system}; }
+        ./x86builder.nix
       ]
       ++ commonModules
       ++ serverModules;

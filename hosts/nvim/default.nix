@@ -6,7 +6,7 @@
   };
   programs.neovim = {
     enable = true;
-    package = pkgs.neovim-nightly;
+    package = inputs.nvim-overlay.packages.${pkgs.system}.neovim;
     defaultEditor = false;
     configure = {
       customRC = ''

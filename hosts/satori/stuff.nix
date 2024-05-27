@@ -1,4 +1,4 @@
-{ lib, config, agenix, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 {
   time.timeZone = "Asia/Kolkata";
 
@@ -22,21 +22,6 @@
   };
   console.useXkbConfig = true;
 
-  fonts.packages = with pkgs; [
-    fira-code
-    fira-mono
-    monoid
-    font-awesome
-    material-icons
-    material-design-icons
-    lohit-fonts.devanagari
-    lohit-fonts.gurmukhi
-    office-code-pro
-    eb-garamond
-    noto-fonts-cjk
-    takao
-    liberation_ttf
-  ];
 
   users.users.natto = {
     isNormalUser = true;
@@ -54,45 +39,4 @@
   };
 
   gtk.iconCache.enable = true;
-
-  # sound stuff
-  sound.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa = {
-      enable = true;
-      support32Bit = true;
-    };
-    pulse.enable = true;
-    socketActivation = true;
-    wireplumber.enable = true;
-  };
-  /*
-    environment.etc =
-    let
-      json = pkgs.formats.json { };
-    in
-    {
-      "pipewire/pipewire.conf.d/50-noise.conf".source = json.generate "50-noise.conf" {
-        context.modules = [
-          {
-            name = "libpipewire-module-echo-cancel";
-            args = {
-              capture.props = {
-                node.name = "Echo Cancellation Capture";
-              };
-              source.props = {
-                node.name = "Echo Cancellation Source";
-              };
-              sink.props = {
-                node.name = "Echo Cancellation Sink";
-              };
-              playback.props = {
-                node.name = "Echo Cancellation Playback";
-              };
-            };
-          }
-        ];
-      };
-    };*/
 }
