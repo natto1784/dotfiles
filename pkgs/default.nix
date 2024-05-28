@@ -5,4 +5,8 @@
       default = packages;
     };
   };
+
+  perSystem = { pkgs, ... }: {
+    packages = self.overlays.default null pkgs;
+  };
 }

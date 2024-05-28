@@ -37,10 +37,6 @@
       url = github:hyprwm/contrib;
       #inputs.nixpkgs.follows = "nixpkgs";
     };
-    aagl-gtk = {
-      url = github:ezKEa/aagl-gtk-on-nix;
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = inputs@{ self, ... }:
@@ -62,6 +58,9 @@
               nixd
               formatter
             ];
+          };
+          _module.args.pkgs = import inputs.nixpkgs {
+            inherit system;
           };
         };
     };

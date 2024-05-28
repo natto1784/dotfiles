@@ -1,10 +1,8 @@
-{ config, pkgs, self, ... }:
+{ self, ... }:
 {
   nixpkgs = {
     config = {
-      allowUnfree = true;
       allowBroken = true;
-      allowInsecure = true;
     };
     overlays = [
       self.overlays.default
