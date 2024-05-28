@@ -30,7 +30,7 @@ in
     {
       natto-laptop = inputs.home-manager.lib.homeManagerConfiguration {
         modules = nattoModules ++ [
-          { laptop = true; }
+          { natto.laptop = true; }
         ];
         pkgs = mkPkgs "x86_64-linux";
       };
