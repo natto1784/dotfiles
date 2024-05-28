@@ -1,4 +1,4 @@
-{ self, inputs, globalArgs, ... }:
+{ inputs, globalArgs, ... }:
 let
   inherit (inputs) nixpkgs;
 
@@ -18,7 +18,7 @@ in
 {
   flake.nixosConfigurations = {
     # Desktop
-    okina = nixpkgs.lib.nixosSystem rec {
+    okina = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./okina
@@ -28,7 +28,7 @@ in
     };
 
     #Home laptop
-    satori = nixpkgs.lib.nixosSystem rec {
+    satori = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./satori
@@ -38,7 +38,7 @@ in
     };
 
     #Home server (RPi4)
-    marisa = nixpkgs.lib.nixosSystem rec {
+    marisa = nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";
       modules = [
         ./marisa
@@ -48,7 +48,7 @@ in
     };
 
     #Oracle Cloud VM
-    remilia = nixpkgs.lib.nixosSystem rec {
+    remilia = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./remilia
@@ -60,7 +60,7 @@ in
     };
 
     #Oracle Cloud VM
-    hina = nixpkgs.lib.nixosSystem rec {
+    hina = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./hina
