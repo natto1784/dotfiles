@@ -2,7 +2,7 @@
 {
   programs.eww = {
     enable = true;
-    package = pkgs.eww-wayland;
+    package = pkgs.eww;
     configDir = lib.cleanSourceWith {
       src = ./.;
       filter = name: _:
@@ -22,8 +22,22 @@
       let
         deps = [
           config.programs.eww.package
+        ] ++ lib.optional
+          config.wayland.windowManager.hyprland.enable
           config.wayland.windowManager.hyprland.package
-        ] ++ (import ./bar pkgs);
+        ++ (with pkgs; [
+          coreutils
+          bash
+          jq
+          less
+          gawk
+          socat
+          playerctl
+          networkmanager
+          iwgtk
+          wireplumber
+        ])
+        ++ lib.optional config.laptop pkgs.light;
       in
       {
         Type = "simple";

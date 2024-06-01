@@ -1,4 +1,4 @@
-{ config, ... }:
+{ ... }:
 {
   programs.zsh = {
     enable = true;
@@ -8,7 +8,7 @@
       size = 30000;
       save = size;
     };
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
     prezto = {

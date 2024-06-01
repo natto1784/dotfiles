@@ -18,7 +18,8 @@ in
     };
 
     mpd-discord-rpc = {
-      inherit (mpd) enable;
+      #     inherit (mpd) enable;
+      enable = false;
       settings = {
         id = 1039532008424099850; # dont really care
         format = {
@@ -37,8 +38,6 @@ in
         host = "localhost";
       };
     };
-
-    playerctld.enable = true;
   };
 
   systemd.user.services = {
@@ -68,12 +67,12 @@ in
 
   home = {
     packages = with pkgs; [
+      playerctl
+      mpc_cli
       (ncmpcpp.override {
         visualizerSupport = true;
         clockSupport = true;
       })
-      mpc_cli
-      playerctl
       (tauon.override {
         withDiscordRPC = true;
       })
@@ -82,6 +81,10 @@ in
     file.ncmpcpp = {
       source = ./config/ncmpcpp/config;
       target = "${config.xdg.configHome}/ncmpcpp/config";
+    };
+
+    sessionVariables = {
+      # LV2_PATH = lib.makeSearchPath "lib/lv2" (with pkgs; [ calf ]);
     };
   };
 

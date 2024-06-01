@@ -1,7 +1,6 @@
-{ config, flake, inputs, pkgs, ... }:
+{ flake, pkgs, config, ... }:
 {
   home.packages = with pkgs; [
-
     # A/V, codec and media stuff
     ffmpeg-full
     wireplumber
@@ -18,20 +17,12 @@
     p7zip
     unrar
     vim
-    jmtpfs
-    (flake.packages.${pkgs.system}.customscripts)
-    translate-shell
-    powertop
+    (flake.packages.${system}.customscripts)
     cachix
-    undervolt
-    w3m
     steam-run
 
     # GUI utils
     slack
-    (discord.override {
-      nss = nss_latest;
-    })
     webcord
     (xfce.thunar.override {
       thunarPlugins = with xfce; [
@@ -44,20 +35,8 @@
     xfce.tumbler
     qbittorrent
     hexchat
-    luajit
     dunst
-    authy
     gnome.zenity
-
-    # Wine and games and stuff
-    lutris
-    wineWowPackages.stable
-    steam
-    lutris
-    winetricks
-    flake.packages.${pkgs.system}.tlauncher
-    mangohud
-    #   inputs.nix-gaming.packages.${pkgs.system}.osu-lazer-bin
 
     # Programming and dev stuff
     (texlive.combine {
@@ -83,16 +62,14 @@
         tcolorbox;
     })
     python3Packages.pygments
-    inform7
-    ghc
-    nodejs
-    rust-bin.nightly.latest.default
-    openjdk
 
     # Misc
     anki
     tor-browser-bundle-bin
     mailcap
     libsForQt5.qtstyleplugins
+  ] ++ lib.optionals config.isLaptop [
+    powertop
+    undervolt
   ];
 }

@@ -1,6 +1,6 @@
 { lib, ... }:
 {
-  options.natto.laptop = lib.mkOption {
+  options.isLaptop = lib.mkOption {
     type = lib.types.bool;
     default = false;
     example = true;

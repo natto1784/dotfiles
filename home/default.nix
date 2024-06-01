@@ -1,8 +1,8 @@
 { self, inputs, globalArgs, ... }:
 let
-  commonModules = [
-    ./modules/zsh.nix
-    ./modules/programs.nix
+  common = [
+    ./common/zsh.nix
+    ./common/programs.nix
     globalArgs
   ];
 
@@ -22,15 +22,15 @@ in
 
       nattoModules = [
         ./natto
-        ./modules/laptop.nix
+        ./common/laptop.nix
         inputs.hyprland.homeManagerModules.default
         inputs.agenix.homeManagerModules.default
-      ] ++ commonModules;
+      ] ++ common;
     in
     {
       natto-laptop = inputs.home-manager.lib.homeManagerConfiguration {
         modules = nattoModules ++ [
-          { natto.laptop = true; }
+          { isLaptop = true; }
         ];
         pkgs = mkPkgs "x86_64-linux";
       };
@@ -50,7 +50,7 @@ in
             username = "spark";
             stateVersion = "23.05";
           };
-        }] ++ commonModules;
+        }] ++ common;
         pkgs = self.legacyPackages.aarch64-linux;
       };
 
@@ -61,7 +61,7 @@ in
             username = "bat";
             stateVersion = "23.05";
           };
-        }] ++ commonModules;
+        }] ++ common;
         pkgs = self.legacyPackages.x86_64-linux;
       };
 
@@ -72,7 +72,7 @@ in
             username = "spin";
             stateVersion = "23.05";
           };
-        }] ++ commonModules;
+        }] ++ common;
         pkgs = self.legacyPackages.x86_64-linux;
       };
     };

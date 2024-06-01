@@ -1,5 +1,9 @@
 { pkgs, config, conf, inputs, ... }:
 {
+  imports = [
+    # ./eww
+  ];
+
   wayland = {
     windowManager = {
       sway = {

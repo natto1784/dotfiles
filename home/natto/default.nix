@@ -9,16 +9,16 @@
   imports = [
     ./email.nix
     ./programs.nix
-    ./eww
     # ./xsession.nix
     ./wayland.nix
     ./pkgs.nix
     ./stuff.nix
-    ./emacs.nix
+    #./emacs.nix
     ./gtk.nix
     ./dunst.nix
     ./git.nix
     ./music.nix
     ./zsh.nix
+    ./games.nix
   ];
 }
