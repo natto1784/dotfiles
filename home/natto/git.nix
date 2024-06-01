@@ -12,5 +12,6 @@
   age.secrets.gitconfig = {
     file = ./secrets/gitconfig.age;
     path = "${config.home.homeDirectory}/.gitconfig";
+    symlink = false;
   };
 }

@@ -11,6 +11,7 @@ in
   age.secrets.zshenv_secret = {
     file = ./secrets/zshenv_secret;
     path = secretPath;
+    symlink = false;
     mode = "660";
   };
 }
