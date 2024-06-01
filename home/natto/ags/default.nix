@@ -9,6 +9,7 @@ let
     procps
     coreutils
     imagemagick
+    systemd
     config.wayland.windowManager.hyprland.package
   ] ++ lib.optional config.isLaptop brightnessctl;
 

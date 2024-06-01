@@ -8,3 +8,4 @@ Currently has a bar, a media box, an unstyled calendar and a settings(?) menu.
 - hyprland: requires hyprland (🤯)
 - battery: requires upower
 - system-tray: requires libdbusmenu-gtk3
+- systemd: for power commands

@@ -31,9 +31,7 @@
 
     emacs-overlay.url = github:nix-community/emacs-overlay;
 
-    nvim-overlay = {
-      url = github:nix-community/neovim-nightly-overlay;
-    };
+    nvim-overlay.url = github:nix-community/neovim-nightly-overlay;
 
     hyprland = {
       type = "git";
