@@ -95,6 +95,9 @@
         .weather {
           color: $rosewater;
         }
+        & > * {
+          margin: 10px;
+        }
       }
 
       .power-menu {

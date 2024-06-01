@@ -47,7 +47,7 @@ export default () => {
     },
     Widget.Icon({
       icon: data.bind().as((d) => {
-        const condition = d?.["weatherDesc"]?.[0]?.["value"];
+        const condition = d?.["weatherDesc"]?.[0]?.["value"]?.split(/[\s,]+/)?.[0];
         return `weather-${conditionIcons[condition]}-symbolic`;
       }),
     }),
