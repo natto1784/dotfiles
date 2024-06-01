@@ -1,6 +1,8 @@
 { pkgs, config, conf, inputs, ... }:
 {
   imports = [
+    inputs.hyprland.homeManagerModules.default
+
     ./ags
     # ./eww
   ];

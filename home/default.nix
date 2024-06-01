@@ -3,7 +3,6 @@ let
   common = [
     ./common/zsh.nix
     ./common/programs.nix
-    globalArgs
   ];
 
   mkPkgs = system: import inputs.nixpkgs {
@@ -15,6 +14,8 @@ let
     };
     overlays = [ self.overlays.default ];
   };
+
+  extraSpecialArgs = globalArgs;
 in
 {
   flake.homeConfigurations =
@@ -24,11 +25,11 @@ in
         ./natto
         ./common/laptop.nix
         inputs.agenix.homeManagerModules.default
-        inputs.hyprland.homeManagerModules.default
       ] ++ common;
     in
     {
       natto-laptop = inputs.home-manager.lib.homeManagerConfiguration {
+        inherit extraSpecialArgs;
         modules = nattoModules ++ [
           { isLaptop = true; }
         ];
@@ -36,6 +37,7 @@ in
       };
 
       natto = inputs.home-manager.lib.homeManagerConfiguration {
+        inherit extraSpecialArgs;
         modules = nattoModules;
         pkgs = mkPkgs "x86_64-linux";
       };
@@ -44,6 +46,7 @@ in
 
     // {
       spark = inputs.home-manager.lib.homeManagerConfiguration {
+        inherit extraSpecialArgs;
         modules = [{
           home = {
             homeDirectory = "/home/spark";
@@ -55,6 +58,7 @@ in
       };
 
       bat = inputs.home-manager.lib.homeManagerConfiguration {
+        inherit extraSpecialArgs;
         modules = [{
           home = {
             homeDirectory = "/home/bat";
@@ -66,6 +70,7 @@ in
       };
 
       spin = inputs.home-manager.lib.homeManagerConfiguration {
+        inherit extraSpecialArgs;
         modules = [{
           home = {
             homeDirectory = "/home/spin";

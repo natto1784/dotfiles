@@ -1,13 +1,11 @@
 { inputs, self, ... }:
 {
   config._module.args.globalArgs = {
-    _module.args = {
-      inherit inputs self;
-      flake = self;
-      conf = {
-        colors = import ./colors.nix;
-        network = import ./network.nix;
-      };
+    inherit inputs self;
+    flake = self;
+    conf = {
+      colors = import ./colors.nix;
+      network = import ./network.nix;
     };
   };
 }

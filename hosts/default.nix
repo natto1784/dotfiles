@@ -4,7 +4,9 @@ let
 
   commonModules = [
     ./nvim.nix
-    globalArgs
+    {
+      _module.args = globalArgs;
+    }
   ];
   desktopModules = [
     ./xorg.nix
