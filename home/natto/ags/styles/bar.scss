@@ -1,0 +1,40 @@
+.bar {
+  background: $background;
+
+  .hyprland {
+    background: none;
+
+    button.focused {
+      transition-duration: 0;
+      color: $mauve;
+      box-shadow: 0 0 0 9999px rgba($mauve, 0.08) inset;
+    }
+
+    button.unfocused {
+      background: none;
+      color: $flamingo;
+    }
+  }
+
+  .music {
+    .music-title {
+      color: $sapphire;
+    }
+
+    .music-controls button {
+      color: $yellow;
+    }
+  }
+
+  .network .network-icon {
+    color: $lavender;
+  }
+
+  .date-wrapper {
+    color: $text;
+  }
+
+  .tray-button {
+    color: $flamingo;
+  }
+}

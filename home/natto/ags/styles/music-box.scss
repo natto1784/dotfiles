@@ -1,0 +1,79 @@
+.music-box {
+  .music-box-unwrapped {
+    margin-top: 15px;
+    .music-player {
+      background: $base;
+      border: 2px solid $mauve;
+      border-radius: 13px;
+      .cover-art {
+        margin: 2em;
+        border-radius: 13px;
+        background-size: cover;
+        background-position: center;
+      }
+      .music-details {
+        $shadow: 0px 0px 10px rgba(black, 0.8);
+        padding: 2em;
+        .title {
+          font-size: 30px;
+          color: $pink;
+          text-shadow: $shadow;
+        }
+        .icon-wrapper {
+          .icon {
+            font-size: 24px;
+            color: $yellow;
+          }
+          .artist {
+            color: $yellow;
+            text-shadow: $shadow;
+          }
+        }
+
+        .length-label,
+        .position-label {
+          text-shadow: $shadow;
+        }
+        .music-controls {
+          border-radius: 20px 8px 20px 8px;
+          padding: 5px;
+          margin: 0px 10px;
+          background: rgba($base, 0.5);
+          button {
+            font-size: 30px;
+            &:hover {
+              box-shadow: none;
+            }
+          }
+        }
+
+        scale trough {
+          min-height: 10px;
+          margin: 0 15px;
+
+          highlight {
+            background-image: linear-gradient(to right, $sapphire, $blue);
+          }
+
+          slider {
+            border-radius: 4px;
+            background: $background;
+            margin: -10px -10px;
+            transition: 0.1s;
+
+            &:hover {
+              border: 2px $mauve solid;
+              box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.1);
+            }
+
+            &:active {
+              box-shadow:
+                0 0 0 1px inset,
+                0 0 0 8px rgba(255, 255, 255, 0.1);
+            }
+          }
+        }
+      }
+    }
+  }
+}

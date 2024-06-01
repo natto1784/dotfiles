@@ -1,6 +1,7 @@
 { pkgs, config, conf, inputs, ... }:
 {
   imports = [
+    ./ags
     # ./eww
   ];
 

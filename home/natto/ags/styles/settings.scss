@@ -1,0 +1,112 @@
+.settings {
+  .settings-unwrapped {
+    margin-top: 10px;
+    border: 2px solid $mauve;
+    border-radius: 4px;
+    background: $base;
+
+    .metrics {
+      & > * {
+        background-color: rgba(255, 255, 255, 0.03);
+        border-radius: 4px;
+        margin: 10px;
+        padding: 10px;
+        .metric-progress {
+          min-width: 40px;
+          min-height: 40px;
+          font-size: 4px;
+          margin: 4px;
+          .metric-icon {
+            font-size: 15px;
+          }
+        }
+      }
+      .cpu-metric {
+        color: $mauve;
+      }
+      .memory-metric {
+        color: $flamingo;
+      }
+      .disk-metric {
+        color: $pink;
+      }
+      .battery-metric {
+        color: $yellow;
+      }
+    }
+
+    .settings-col {
+      .sliders {
+        $icon-size: 15px;
+        $scale-height: 20px;
+
+        margin: 10px;
+        scale trough {
+          min-height: $scale-height;
+          min-width: 160px;
+          border-radius: 3px;
+
+          highlight {
+            all: unset;
+            border-radius: 3px;
+          }
+
+          slider {
+            $slider-height: $scale-height + 5px;
+
+            min-width: $slider-height;
+            min-height: $slider-height;
+            border-radius: $slider-height;
+            background: $text;
+            box-shadow: 0 2px 0 0 rgba(255, 255, 255, 0.1);
+          }
+        }
+
+        .volume {
+          .volume-icon {
+            font-size: $icon-size;
+            color: $green;
+          }
+
+          scale trough highlight {
+            background-color: $green;
+          }
+        }
+
+        .brightness {
+          .brightness-icon {
+            font-size: $icon-size;
+            color: $yellow;
+          }
+
+          scale trough highlight {
+            background-color: $yellow;
+          }
+        }
+      }
+
+      .settings-col-temps {
+        .temperature {
+          color: $blue;
+        }
+        .temperature-hot {
+          color: $red;
+        }
+        .weather {
+          color: $rosewater;
+        }
+      }
+
+      .power-menu {
+        margin: 20px;
+        button {
+          &:hover {
+            color: $red;
+            box-shadow: none;
+          }
+          font-size: 24px;
+        }
+      }
+    }
+  }
+}

@@ -23,8 +23,8 @@ in
       nattoModules = [
         ./natto
         ./common/laptop.nix
-        inputs.hyprland.homeManagerModules.default
         inputs.agenix.homeManagerModules.default
+        inputs.hyprland.homeManagerModules.default
       ] ++ common;
     in
     {
