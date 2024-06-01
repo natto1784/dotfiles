@@ -11,6 +11,16 @@ let
     imagemagick
     config.wayland.windowManager.hyprland.package
   ] ++ lib.optional config.isLaptop brightnessctl;
+
+
+  configDir = lib.cleanSourceWith {
+    src = ./.;
+    filter = name: _:
+      let
+        baseName = baseNameOf (toString name);
+      in
+        !(lib.hasSuffix ".nix" baseName);
+  };
 in
 {
   imports = [
@@ -18,6 +28,11 @@ in
   ];
 
   programs.ags.enable = true;
+
+  xdg.configFile."ags" = {
+    source = configDir;
+    recursive = true;
+  };
 
   systemd.user.services.ags = {
     Unit = {
