@@ -54,7 +54,7 @@ in
             stateVersion = "23.05";
           };
         }] ++ common;
-        pkgs = self.legacyPackages.aarch64-linux;
+        pkgs = mkPkgs "aarch64-linux";
       };
 
       bat = inputs.home-manager.lib.homeManagerConfiguration {
@@ -66,7 +66,7 @@ in
             stateVersion = "23.05";
           };
         }] ++ common;
-        pkgs = self.legacyPackages.x86_64-linux;
+        pkgs = mkPkgs "x86_64-linux";
       };
 
       spin = inputs.home-manager.lib.homeManagerConfiguration {
@@ -78,7 +78,7 @@ in
             stateVersion = "23.05";
           };
         }] ++ common;
-        pkgs = self.legacyPackages.x86_64-linux;
+        pkgs = mkPkgs "x86_64-linux";
       };
     };
 }
