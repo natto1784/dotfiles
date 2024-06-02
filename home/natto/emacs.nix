@@ -13,6 +13,8 @@ let
     };
 in
 {
+  nixpkgs.overlays = [ inputs.emacs-overlay.overlays.default ];
+
   home = {
     file = with config; {
       "config.org" = {

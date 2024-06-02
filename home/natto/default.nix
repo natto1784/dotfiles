@@ -13,7 +13,7 @@
     ./wayland.nix
     ./pkgs.nix
     ./stuff.nix
-    #./emacs.nix
+    ./emacs.nix
     ./gtk.nix
     ./dunst.nix
     ./git.nix

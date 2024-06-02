@@ -1,13 +1,13 @@
 #+TITLE: My Emacs Configuration
 #+AUTHOR: Amneesh Singh
-#+PROPERTY: header-args:emacs-lisp :tangle yes
+#+PROPERTY: header-args :emacs-lisp :tangle yes
 
 * Settings
 ** Setting the default face
 #+begin_src emacs-lisp
  ; -*- lexical-binding: t; -*-
 (set-frame-font "Fira Code 13" nil t)
-;(add-to-list 'default-frame-alist '(font . "Fira Code-13"))
+(add-to-list 'default-frame-alist '(font . "Fira Code-13"))
 #+end_src
 
 ** Some mode settings based on personal preferences
@@ -54,11 +54,14 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 (require 'use-package)
+#+end_src
+
+*** Profiling
+#+begin_src emacs-lisp
 (use-package benchmark-init
-  :ensure t
   :config
   ;; To disable collection of benchmark data after init is done.
-  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+  :init (benchmark-init/deactivate))
 #+end_src
 
 ** Visual packages
@@ -74,13 +77,15 @@
 (use-package catppuccin-theme
   :config
   (load-theme 'catppuccin t)
-  (setq dark-theme t))
+  :custom
+  (dark-theme t))
 #+end_src
 
 ** Configure Selectrum
 Enable selectrum
 #+begin_src emacs-lisp
 (use-package selectrum
+  :defer t
   :config
   (selectrum-mode +1))
 #+end_src
@@ -130,7 +135,6 @@ Add selectrum-prescient
   (evil-mode 1))
 #+end_src
 
-
 *** Configure undo tree
 To undo and redo easily like vi
 #+begin_src emacs-lisp
@@ -151,7 +155,10 @@ To undo and redo easily like vi
 ** Treemacs
 *** Configure treemacs
 #+begin_src emacs-lisp
-(use-package treemacs)
+(use-package treemacs
+  :defer t
+  :config
+  (treemacs-project-follow-mode))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -165,12 +172,14 @@ To undo and redo easily like vi
 *** Configure lsp-mode
 #+begin_src emacs-lisp
 (use-package lsp-mode
+  :defer t
   :commands lsp)
 #+end_src
 
 *** Configure lsp-ui
 #+begin_src emacs-lisp
 (use-package lsp-ui
+  :defer t
   :init
   (setq lsp-ui-doc-delay 1.0
         lsp-ui-doc-show-with-mouse t
@@ -178,22 +187,22 @@ To undo and redo easily like vi
         lsp-ui-doc-show-with-cursor t)
   :config
   (lsp-ui-peek-enable 1)
-  (lsp-ui-doc-enable 1))
-#+end_src
-
-*** Language specific LSP packages
-#+begin_src emacs-lisp
-(use-package lsp-haskell)
+  (lsp-ui-doc-enable 1)
+  :hook (lsp-mode . lsp-ui-mode))
 #+end_src
 
 *** Configure flycheck
 #+begin_src emacs-lisp
-(use-package flycheck)
+(use-package flycheck
+  :defer t)
 #+end_src
 
 *** Configure dap-mode
 #+begin_src emacs-lisp
-(use-package dap-mode)
+(use-package dap-mode
+  :defer t
+  :hook ((lsp-mode . dap-mode)
+         (lsp-mode . dap-ui-mode)))
 #+end_src
 
 ** Company
@@ -205,7 +214,8 @@ For autocomplete
   :config
   (add-to-list 'company-backends 'company-dabbrev)
   (setq company-backends (append '(company-files) (remove 'company-files company-backends)))
-  (company-mode 1))
+  :hook (after-init . global-company-mode))
+
 #+end_src
 
 *** Configure company-quickhelp
@@ -230,31 +240,30 @@ For autocomplete
 ** Direnv
 #+begin_src emacs-lisp
 (use-package direnv
- :defer t
  :config
  (direnv-mode))
 #+end_src
 
-** STM32
+** Languages
 #+begin_src emacs-lisp
-(use-package stm32-emacs)
-#+end_src
-
-** Lang support
-#+begin_src emacs-lisp
-(use-package haskell-mode)
-(use-package lsp-latex)
-(use-package rustic)
-(use-package typescript-mode)
-(use-package yuck-mode)
-(use-package wgsl-mode)
+(use-package lsp-haskell
+  :mode "\\.hs\\'")
+(use-package lsp-latex
+  :mode "\\.tex\\'")
+(use-package rustic
+  :mode "\\.rs\\'")
+(use-package typescript-mode
+  :mode ("\\.ts\\'" "\\.tsx\\'"))
+(use-package wgsl-mode
+  :mode "\\.wgsl\\'")
 (use-package nix-mode
   :mode "\\.nix\\'")
 (use-package hcl-mode
   :mode
   "\\.hcl\\'"
   "\\.nomad\\'")
-(use-package go-mode)
+(use-package go-mode
+  :mode "\\.go\\'")
 #+end_src
 
 ** Magit
@@ -262,8 +271,8 @@ For autocomplete
 (use-package magit :defer t)
 #+end_src
 
-* VTerm
-** Configure vterm
+** VTerm
+*** Configure vterm
 #+begin_src emacs-lisp
 (use-package vterm
   :config
@@ -288,17 +297,27 @@ For autocomplete
 #+end_src
 
 ** Centaur Tabs
-#+begin_src emacs-lisp
+Do not use centaur tabs for now
+#+begin_src emacs-lisp :tangle no
 (use-package centaur-tabs
+  :defer t
+  :custom
+  (centaur-tabs-style "rounded")
+	(centaur-tabs-height 18)
+	(centaur-tabs-set-modified-marker t)
+	(centaur-tabs-set-icons t)
   :config
-  (setq centaur-tabs-style "rounded"
-	centaur-tabs-height 18
-	centaur-tabs-set-modified-marker t
-	centaur-tabs-set-icons t)
+  (centaur-tabs-mode t)
   (centaur-tabs-group-by-projectile-project)
-  (centaur-tabs-mode nil)
   (set-face-attribute 'tab-line nil :inherit 'centaur-tabs-unselected)
-  (centaur-tabs-headline-match))
+  (centaur-tabs-headline-match)
+  :bind
+  (:map evil-normal-state-map
+    ("M-," . centaur-tabs-forward)
+    ("M-." . centaur-tabs-backward))
+  (:map evil-motion-state-map
+    ("M-," . centaur-tabs-forward)
+    ("M-." . centaur-tabs-backward)))
 #+end_src
 
 ** Misc packages
@@ -322,38 +341,38 @@ For autocomplete
 (use-package flex-autopair)
 #+end_src
 
-* Org
+** Org
 ** Add org-mode
 #+begin_src emacs-lisp
 (use-package org
-  :after evil
   :defer t
+  :after evil
   :config
-  (setq evil-want-C-i-jump nil
-        org-adapt-indentation t
-        org-src-fontify-natively t
-        org-src-strip-leading-and-trailing-blank-lines t
-        org-src-preserve-indentation t
-        org-src-tab-acts-natively t)
   (define-key org-mode-map (kbd "RET") 'org-return-and-maybe-indent)
-  (evil-define-key 'normal org-mode-map (kbd "TAB") 'org-cycle))
+  (evil-define-key 'normal org-mode-map (kbd "TAB") 'org-cycle)
+  :custom
+  (evil-want-C-i-jump nil)
+  (org-adapt-indentation t)
+  (org-src-fontify-natively t)
+  (org-src-strip-leading-and-trailing-blank-lines t)
+  (org-src-preserve-indentation t)
+  (org-src-tab-acts-natively t))
 #+end_src
 
 ** Add org-bullets
 #+begin_src emacs-lisp
  (use-package org-bullets
   :defer t
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+  :hook ((org-mode . org-bullets-mode)))
 #+end_src
 
 ** Babel and exports
 #+begin_src emacs-lisp
 (use-package htmlize :defer t)
-(add-to-list 'org-latex-packages-alist '("" "minted"))
-(setq org-latex-listings 'minted) 
 
-(setq org-latex-pdf-process
+(setq org-latex-listings 'minted
+      org-latex-packages-alist '(("" "minted"))
+      org-latex-pdf-process
       '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
@@ -363,10 +382,8 @@ For autocomplete
 
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((awk . t)
-   (python . t)
+ '((python . t)
    (C . t)
-   (shell . t)
    (sql . t)
    (latex . t)))
 #+end_src
@@ -385,8 +402,7 @@ For autocomplete
 switched to doom modeline after using my own modeline for a while
 #+begin_src emacs-lisp
 (use-package doom-modeline
-  :ensure t
-  :hook (after-init . doom-modeline-mode))
+  :init (doom-modeline-mode 1))
 #+end_src
 
 * Pop-up terminal
@@ -425,6 +441,7 @@ Compilation shortcuts for standalone files
            ("java" (concat "java " full))
            ("py" (concat "python " full))
            ("cpp" (concat "g++ " full " -o " file " && " file " && rm " file))
+           ("cc" (concat "g++ " full " -o " file " && " file " && rm " file))
            ("hs" (concat "runhaskell " full))
            ("sh" (concat "sh " full))
            ("js" (concat "node " full))
@@ -455,7 +472,8 @@ not using this anymore
 
 *** Misc binds
 #+begin_src emacs-lisp
-(use-package general)
+(use-package general
+  :ensure t)
 
 (setq evil-states
   '(visual normal motion))
@@ -475,18 +493,16 @@ not using this anymore
     :keymaps '(global override vterm-mode-map)
     :states evil-states
     "M-o" 'treemacs
-    "M-S-v" 'split-window-vertically
-    "M-S-h" 'split-window-horizontally
+    "M-s-v" 'split-window-vertically
+    "M-s-h" 'split-window-horizontally
     "M-h" 'windmove-left
     "M-j" 'windmove-down
     "M-k" 'windmove-up
     "M-l" 'windmove-right
     "M-C-h" 'shrink-window-horizontally
-    "M-C-j" 'enlarge-window-horizontally
-    "M-C-k" 'shrink-window
-    "M-C-l" 'enlarge-window
-    "M-,"  'centaur-tabs-backward
-    "M-."  'centaur-tabs-forward
+    "M-C-l" 'enlarge-window-horizontally
+    "M-C-j" 'shrink-window
+    "M-C-k" 'enlarge-window
     "C-q"  'delete-window
     "M-C-S-q"  'kill-buffer-and-window
     "M-w"  'centaur-tabs--kill-this-buffer-dont-ask
@@ -505,6 +521,6 @@ not using this anymore
       "<f5>" (lambda () (interactive) (run-in-vterm (candrun))))
     (general-define-key
       :keymaps 'vterm-mode-map
-      "<f2>" 'vterm-toggle-forward
-      "<f3>" 'vterm-toggle-backward)))
+      "<f3>" 'vterm-toggle-forward
+      "<f2>" 'vterm-toggle-backward)))
 #+end_src
