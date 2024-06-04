@@ -13,6 +13,11 @@
       enable = true;
       drivers = [ pkgs.hplip ];
     };
+    avahi = lib.mkIf config.services.printing.enable {
+      enable = true;
+      nssmdns = true;
+      openFirewall = true;
+    };
   };
 
   systemd.services = {
