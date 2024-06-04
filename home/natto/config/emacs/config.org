@@ -23,9 +23,6 @@
 (setq ring-bell-function 'ignore
       gc-cons-threshold most-positive-fixnum
       initial-major-mode 'fundamental-mode)
-(unless (display-graphic-p)
-        (require 'evil-terminal-cursor-changer)
-        (evil-terminal-cursor-changer-activate))
 #+end_src
 
 ** Setting some variables
@@ -147,9 +144,11 @@ To undo and redo easily like vi
   
 *** Miscellaneous evil related packages
 #+begin_src emacs-lisp
-(use-package evil-terminal-cursor-changer)
-(use-package evil-anzu
-  :after evil)
+(use-package evil-terminal-cursor-changer
+  :if (not (display-graphic-p))
+  :config
+  (evil-terminal-cursor-changer-activate))
+(use-package evil-anzu :after evil)
 #+end_src
 
 ** Treemacs
@@ -161,7 +160,6 @@ To undo and redo easily like vi
   (treemacs-project-follow-mode))
 
 (use-package treemacs-evil :after treemacs)
-(use-package treemacs-magit :after treemacs)
 (use-package treemacs-projectile :after treemacs)
 (use-package treemacs-all-the-icons :after treemacs)
 #+end_src
