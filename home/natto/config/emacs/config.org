@@ -159,13 +159,11 @@ To undo and redo easily like vi
   :defer t
   :config
   (treemacs-project-follow-mode))
-#+end_src
 
-#+begin_src emacs-lisp
-(use-package treemacs-evil :defer t)
-(use-package treemacs-magit :defer t)
-(use-package treemacs-projectile :defer t)
-(use-package treemacs-all-the-icons :defer t)
+(use-package treemacs-evil :after treemacs)
+(use-package treemacs-magit :after treemacs)
+(use-package treemacs-projectile :after treemacs)
+(use-package treemacs-all-the-icons :after treemacs)
 #+end_src
 
 ** LSP
@@ -516,7 +514,8 @@ not using this anymore
       :keymaps '(global override vterm-mode-map)
       :states evil-states
       "<f4>"  (lambda () (interactive) (vterm t))
-      "C-<f1>" 'vterm-toggle-cd
+      "C-S-t" 'vterm-toggle-cd
+      "C-t" 'vterm-toggle
       "<f1>" 'vterm-toggle
       "<f5>" (lambda () (interactive) (run-in-vterm (candrun))))
     (general-define-key

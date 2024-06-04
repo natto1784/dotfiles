@@ -1,29 +1,21 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, lib, ... }:
 let
-  mymacs = config: # with inputs.emacs-overlay.packages.${pkgs.system}; already resolved with overlay
-    with pkgs; emacsWithPackagesFromUsePackage {
-      inherit config;
-      package = emacs-pgtk;
-      alwaysEnsure = true;
-      alwaysTangle = true;
-      extraEmacsPackages = epkgs: with epkgs; [
-        use-package
-        (epkgs.tree-sitter-langs.withPlugins (_: epkgs.tree-sitter-langs.plugins))
-      ];
-    };
+  emacs = pkgs.emacs-pgtk;
+  configFile = ./config/emacs/config.org;
+  enable = true;
 in
 {
   nixpkgs.overlays = [ inputs.emacs-overlay.overlays.default ];
 
   home = {
-    file = with config; {
-      "config.org" = {
-        source = ./config/emacs/config.org;
-        target = "${home.homeDirectory}/.emacs.d/config.org";
-      };
+    file = {
       "init.el" = {
-        source = ./config/emacs/init.el;
-        target = "${home.homeDirectory}/.emacs.d/init.el";
+        source = pkgs.runCommandLocal "tangle-emacs" { } ''
+          ${pkgs.coreutils}/bin/ln -s ${configFile} ./config.org
+          ${emacs}/bin/emacs -Q --batch ./config.org -f org-babel-tangle
+          cp ./config.el $out
+        '';
+        target = "${config.home.homeDirectory}/.emacs.d/init.el";
       };
     };
     shellAliases = rec {
@@ -35,8 +27,21 @@ in
     };
   };
   programs.emacs = {
-    enable = true;
-    package = mymacs ./config/emacs/config.org;
+    inherit enable;
+    package = pkgs.emacsWithPackagesFromUsePackage {
+      config = configFile;
+      package = emacs;
+      alwaysEnsure = true;
+      alwaysTangle = true;
+      extraEmacsPackages = epkgs: with epkgs; [
+        use-package
+        (tree-sitter-langs.withPlugins (_: tree-sitter-langs.plugins))
+      ];
+    };
   };
-  services.emacs.enable = true;
+  services.emacs = {
+    inherit enable;
+    defaultEditor = true;
+  };
+  systemd.user.services.emacs.Service.Environment = "COLORTERM=truecolor";
 }
