@@ -62,6 +62,11 @@
       enable = true;
       package = pkgs.mesa.drivers;
       package32 = pkgs.pkgsi686Linux.mesa.drivers;
+      extraPackages = with pkgs; [
+        intel-media-driver
+        intel-compute-runtime
+        onevpl-intel-gpu
+      ];
     };
   };
 }
