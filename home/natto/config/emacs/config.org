@@ -501,7 +501,7 @@ not using this anymore
     "M-C-k" 'enlarge-window
     "C-q"  'delete-window
     "M-C-S-q"  'kill-buffer-and-window
-    "M-w"  'centaur-tabs--kill-this-buffer-dont-ask
+    "M-w"  (lambda () (interactive) (kill-buffer (current-buffer)))
     "M-S-w"  'kill-window)
 #+end_src
 
