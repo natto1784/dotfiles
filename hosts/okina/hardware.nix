@@ -25,12 +25,13 @@
       fsType = "ext4";
     };
 
-  fileSystems."/media/real" =
+/*  fileSystems."/media/real" =
     {
       device = "/dev/disk/by-uuid/8086be20-c770-46be-bd8f-5bd2d7735c7d";
       fsType = "btrfs";
       options = [ "compress-force=zstd:3" ];
     };
+    */
 
   /* fileSystems."/media/ntfs" =
     {

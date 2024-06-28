@@ -23,7 +23,7 @@
 
     # GUI utils
     slack
-    webcord
+    vesktop
     (xfce.thunar.override {
       thunarPlugins = with xfce; [
         thunar-media-tags-plugin
