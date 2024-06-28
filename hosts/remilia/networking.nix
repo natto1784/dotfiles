@@ -65,12 +65,16 @@
             allowedIPs = [ ips.marisa ];
           }
           {
-            publicKey = "SqskEH7hz7Gv9ZS+FYLRFgKZyJCFbBFCyuvzBYnbfVU=";
+            publicKey = "oliAKHloLOulQrDwG+2NZIYg0sQAsuQ/q/lLkPCdcRE=";
             allowedIPs = [ ips.satori ];
           }
           {
             publicKey = "IHYIan9Xq2PBTSzcMdHpzx4PM67l09WdsGa6s+siyH0=";
             allowedIPs = [ ips.hina ];
+          }
+          {
+            publicKey = "BRdWQYPyfZeEWGtghhoYZf90nOsU/kXB3vOFJ6A17Ao=";
+            allowedIPs = [ ips.okina ];
           }
         ];
       };
