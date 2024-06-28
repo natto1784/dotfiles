@@ -3,6 +3,7 @@
   nixpkgs = {
     config = {
       allowBroken = true;
+      allowUnfree = true;
     };
     overlays = [
       self.overlays.default
@@ -15,14 +16,12 @@
     '';
     settings = {
       auto-optimise-store = true;
-      trusted-users = [ "root" "natto" ];
+      trusted-users = [ "root" "@wheel" ];
       substituters = [
-        "https://nix-gaming.cachix.org"
         "https://nix-community.cachix.org"
-        #       "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
+        "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
       ];
       trusted-public-keys = [
-        "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
     };

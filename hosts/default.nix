@@ -4,6 +4,7 @@ let
 
   commonModules = [
     ./nvim.nix
+    ./nix.nix
     {
       _module.args = globalArgs;
     }
@@ -11,7 +12,6 @@ let
   desktopModules = [
     ./xorg.nix
     ./wayland.nix
-    ./nix.nix
     ./desktop-pkgs.nix
     ./sound.nix
   ];
