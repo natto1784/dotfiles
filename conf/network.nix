@@ -9,6 +9,7 @@
         marisa = "${ipPrefix}.2";
         satori = "${ipPrefix}.3";
         hina = "${ipPrefix}.4";
+        okina = "${ipPrefix}.5";
       };
     };
     domain = {
