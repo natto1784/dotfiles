@@ -19,6 +19,7 @@
     };
     initExtra = ''
       unsetopt extendedGlob
+      [[ -f ~/.zsh_custom ]] && source ~/.zsh_custom
     '';
   };
 }

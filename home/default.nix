@@ -80,5 +80,13 @@ in
         }] ++ common;
         pkgs = mkPkgs "x86_64-linux";
       };
+
+      amneesh = inputs.home-manager.lib.homeManagerConfiguration {
+        inherit extraSpecialArgs;
+        modules = [
+          ./amneesh.nix
+        ] ++ common;
+        pkgs = mkPkgs "x86_64-linux";
+      };
     };
 }
