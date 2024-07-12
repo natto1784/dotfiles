@@ -8,11 +8,14 @@
     packages = with pkgs; [
       htop
       nattovim
+      clang-tools
+      llvmPackages.clang
     ];
   };
 
   imports = [
     ./natto/emacs.nix
+   # ./natto/wayland.nix
   ];
 
   xdg.mime.enable = true;
