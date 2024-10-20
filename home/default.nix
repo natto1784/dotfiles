@@ -81,6 +81,18 @@ in
         pkgs = mkPkgs "x86_64-linux";
       };
 
+      kero = inputs.home-manager.lib.homeManagerConfiguration {
+        inherit extraSpecialArgs;
+        modules = [{
+          home = {
+            homeDirectory = "/home/kero";
+            username = "kero";
+            stateVersion = "24.05";
+          };
+        }] ++ common;
+        pkgs = mkPkgs "aarch64-linux";
+      };
+
       amneesh = inputs.home-manager.lib.homeManagerConfiguration {
         inherit extraSpecialArgs;
         modules = [

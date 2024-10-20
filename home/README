@@ -3,5 +3,6 @@ natto-laptop : default user for satori   (laptop       - NixOS Unstable)
 bat          : default user for remilia  (Oracle VM    - NixOS Unstable)
 spin         : default user for hina     (Oracle VM    - NixOS Unstable)
 spark        : default user for marisa   (RPi4         - NixOS Unstable)
+kero         : default user for suwako   (ARM OracleVM - NixOS Unstable)
 amneesh      : default user for nightbug (Workplace PC - Ubuntu 22.04)
 

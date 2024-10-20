@@ -71,5 +71,15 @@ in
       ++ commonModules
       ++ serverModules;
     };
+
+    #Oracle Cloud VM
+    suwako = nixpkgs.lib.nixosSystem {
+      system = "aarch64-linux";
+      modules = [
+        ./suwako
+      ]
+      ++ commonModules
+      ++ serverModules;
+    };
   };
 }

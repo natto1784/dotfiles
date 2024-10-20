@@ -3,3 +3,4 @@
 + marisa is my Raspberry Pi 4 (B)
 + remilia is my cloud VM
 + hina is another cloud VM I use for ZNC
++ suwako is an ARM cloud VM
