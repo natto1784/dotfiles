@@ -13,11 +13,11 @@ in
     nvidia-offload
   ];
   hardware = {
-    opengl = {
-      driSupport32Bit = true;
+    graphics = {
+      enable32Bit = true;
       enable = true;
-      package = pkgs.mesa.drivers;
-      package32 = pkgs.pkgsi686Linux.mesa.drivers;
+      package = pkgs.mesa;
+      package32 = pkgs.pkgsi686Linux.mesa;
     };
     nvidia = {
       package = config.boot.kernelPackages.nvidia_x11;
