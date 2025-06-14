@@ -22,7 +22,6 @@
     steam-run
 
     # GUI utils
-    slack
     vesktop
     (xfce.thunar.override {
       thunarPlugins = with xfce; [
@@ -36,7 +35,7 @@
     qbittorrent
     hexchat
     dunst
-    gnome.zenity
+    zenity
 
     # Programming and dev stuff
     (texlive.combine {
@@ -59,6 +58,8 @@
         tocloft
         enumitem
         multirow
+        adjustbox
+        titlesec
         tcolorbox;
     })
     python3Packages.pygments

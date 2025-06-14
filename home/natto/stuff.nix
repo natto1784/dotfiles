@@ -9,7 +9,7 @@
   home = {
     pointerCursor = {
       package = pkgs.catppuccin-cursors.mochaFlamingo;
-      name = "Catppuccin-Mocha-Flamingo-Cursors";
+      name = "catppuccin-mocha-flamingo-cursors";
       size = 32;
       x11 = {
         enable = true;
@@ -27,7 +27,8 @@
   };
   i18n = {
     inputMethod = {
-      enabled = "fcitx5";
+      enable = true;
+      type = "fcitx5";
       fcitx5.addons = with pkgs; [ fcitx5-m17n fcitx5-mozc ];
     };
   };

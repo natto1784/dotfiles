@@ -1,6 +1,6 @@
 { config, pkgs, inputs, lib, ... }:
 let
-  emacs = pkgs.emacs-pgtk;
+  emacs = pkgs.emacs-git-pgtk;
   configFile = ./config/emacs/config.org;
   enable = true;
 in
