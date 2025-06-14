@@ -31,7 +31,7 @@
     lohit-fonts.gurmukhi
     office-code-pro
     eb-garamond
-    noto-fonts-cjk
+    noto-fonts-cjk-sans
     takao
     liberation_ttf
   ];
