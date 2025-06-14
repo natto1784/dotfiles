@@ -3,9 +3,8 @@ let
   secretPath = "${config.home.homeDirectory}/.zshenv_secret";
 in
 {
-  programs.zsh.initExtra = lib.mkForce ''
+  programs.zsh.initContent = lib.mkAfter ''
     . ${secretPath};
-    unsetopt extendedGlob
   '';
 
   age.secrets.zshenv_secret = {

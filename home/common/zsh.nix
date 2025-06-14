@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 {
   programs.zsh = {
     enable = true;
@@ -16,8 +16,11 @@
       prompt.theme = "pure";
       autosuggestions.color = "fg=yellow,bold";
       utility.safeOps = false;
+      extraConfig = lib.mkBefore ''
+        export GREP_COLORS="ms=01;31"
+      '';
     };
-    initExtra = ''
+    initContent = lib.mkAfter ''
       unsetopt extendedGlob
       [[ -f ~/.zsh_custom ]] && source ~/.zsh_custom
     '';
