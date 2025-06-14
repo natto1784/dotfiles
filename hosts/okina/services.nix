@@ -15,7 +15,7 @@
     };
     avahi = lib.mkIf config.services.printing.enable {
       enable = true;
-      nssmdns = true;
+      nssmdns4 = true;
       openFirewall = true;
     };
   };
