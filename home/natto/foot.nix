@@ -1,32 +1,6 @@
-{ pkgs, config, conf, ... }:
+{ conf, ... }:
 {
   programs = {
-    firefox = {
-      enable = true;
-      profiles.natto = {
-        name = "natto";
-      };
-    };
-    chromium = {
-      enable = true;
-      package = pkgs.ungoogled-chromium;
-    };
-    zathura = {
-      enable = true;
-      extraConfig = builtins.readFile ./config/zathura/zathurarc;
-      options = {
-        recolor = true;
-        recolor-lightcolor = "rgba(0,0,0,0)";
-        default-bg = "rgba(0,0,0,0.8)";
-      };
-    };
-
-    sioyek = {
-      enable = true;
-    };
-
-    password-store.enable = true;
-    go.enable = true;
     foot = {
       enable = true;
       settings = {
@@ -56,16 +30,5 @@
         };
       };
     };
-    mpv = {
-      enable = true;
-      config = {
-        force-window = true;
-        keep-open = true;
-        save-position-on-quit = true;
-      };
-    };
-  };
-  home.sessionVariables = {
-    BROWSER = "firefox";
   };
 }

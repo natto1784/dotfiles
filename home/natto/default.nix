@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ ... }:
 {
   home = {
     homeDirectory = "/home/natto";
@@ -8,12 +8,15 @@
 
   imports = [
     ./email.nix
-    ./programs.nix
+    ./pass.nix
+    ./browser.nix
+    ./pdf.nix
+    ./mpv.nix
+    ./foot.nix
     # ./xsession.nix
     ./wayland.nix
     ./pkgs.nix
     ./stuff.nix
-    ./emacs.nix
     ./gtk.nix
     ./dunst.nix
     ./git.nix
