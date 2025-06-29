@@ -3,19 +3,19 @@ let
   inherit (inputs) nixpkgs;
 
   commonModules = [
+    {
+      _module.args = globalArgs;
+    }
     ./programs/neovim
     ./programs/nix
     ./programs/zsh
     ./programs/gnupg
     ./programs/git
     ./programs/doas
-    {
-      _module.args = globalArgs;
-    }
   ];
   desktopModules = [
     ./programs/adb
-    ./xorg.nix
+    ./services/xserver
     ./wayland.nix
     ./sound.nix
   ];
