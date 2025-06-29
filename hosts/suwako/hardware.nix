@@ -12,7 +12,7 @@
   ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/e87c20b9-f451-45bf-b863-385ac9c290cf ";
+    device = "/dev/disk/by-label/cloudimg-rootfs";
     fsType = "ext4";
   };
 
