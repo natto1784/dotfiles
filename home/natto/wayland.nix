@@ -1,8 +1,6 @@
 { pkgs, config, conf, inputs, ... }:
 {
   imports = [
-    inputs.hyprland.homeManagerModules.default
-
     ./ags
     # ./eww
   ];
@@ -14,6 +12,8 @@
       };
       hyprland = {
         enable = true;
+        package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+        portalPackage = inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
         xwayland = {
           enable = true;
         };

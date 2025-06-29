@@ -16,7 +16,6 @@ let
   desktopModules = [
     ./programs/adb
     ./services/xserver
-    ./wayland.nix
     ./sound.nix
   ];
 in
