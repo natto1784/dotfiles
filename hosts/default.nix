@@ -7,6 +7,7 @@ let
     ./nix.nix
     ./programs/zsh
     ./programs/gnupg
+    ./programs/git
     {
       _module.args = globalArgs;
     }
@@ -15,7 +16,6 @@ let
     ./programs/adb
     ./xorg.nix
     ./wayland.nix
-    ./desktop-pkgs.nix
     ./sound.nix
   ];
   serverModules = [ ./minimal.nix ];
