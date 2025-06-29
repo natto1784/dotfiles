@@ -12,6 +12,7 @@
     in
     rec {
       enable = true;
+      stateVersion = 1;
       fqdn = "mail.${domain}";
       sendingFqdn = fqdn;
       domains = [ domain ];
