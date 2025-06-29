@@ -15,6 +15,7 @@ let
   ];
   desktopModules = [
     ./programs/adb
+    ./programs/dconf
     ./services/xserver
     ./sound.nix
   ];
