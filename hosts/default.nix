@@ -5,14 +5,14 @@ let
   commonModules = [
     ./nvim.nix
     ./nix.nix
-    ./modules/zsh
-    ./modules/gnupg
+    ./programs/zsh
+    ./programs/gnupg
     {
       _module.args = globalArgs;
     }
   ];
   desktopModules = [
-    ./modules/adb
+    ./programs/adb
     ./xorg.nix
     ./wayland.nix
     ./desktop-pkgs.nix
