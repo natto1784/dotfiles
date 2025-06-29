@@ -114,7 +114,8 @@ in
       amneesh = inputs.home-manager.lib.homeManagerConfiguration {
         inherit extraSpecialArgs;
         modules = [
-          ./amneesh.nix
+        ./common/emacs
+          ./amneesh
         ] ++ common;
         pkgs = mkPkgs "x86_64-linux";
       };

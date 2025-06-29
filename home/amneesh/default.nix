@@ -18,10 +18,6 @@
     ];
   };
 
-  imports = [
-    ./programs/emacs
-  ];
-
   xdg.mime.enable = true;
   targets.genericLinux.enable = true;
   programs.bash.enable = true;
