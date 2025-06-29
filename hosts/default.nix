@@ -11,6 +11,7 @@ let
     }
   ];
   desktopModules = [
+    ./modules/adb
     ./xorg.nix
     ./wayland.nix
     ./desktop-pkgs.nix

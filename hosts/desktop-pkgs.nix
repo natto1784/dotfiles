@@ -1,4 +1,4 @@
-{ lib, config, inputs, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -29,8 +29,5 @@
         enable = true;
       };
     };
-
-    adb.enable = true;
-    gamemode.enable = true;
   };
 }
