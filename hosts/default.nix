@@ -4,7 +4,7 @@ let
 
   commonModules = [
     ./nvim.nix
-    ./nix.nix
+    ./programs/nix
     ./programs/zsh
     ./programs/gnupg
     ./programs/git
