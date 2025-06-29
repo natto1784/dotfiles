@@ -17,7 +17,7 @@ let
     ./programs/adb
     ./programs/dconf
     ./services/xserver
-    ./sound.nix
+    ./services/pipewire
   ];
 in
 {
