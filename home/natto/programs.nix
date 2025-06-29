@@ -25,6 +25,7 @@
       enable = true;
     };
 
+    password-store.enable = true;
     go.enable = true;
     foot = {
       enable = true;

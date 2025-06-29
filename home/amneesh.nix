@@ -14,8 +14,7 @@
   };
 
   imports = [
-    ./natto/emacs.nix
-   # ./natto/wayland.nix
+     ./programs/emacs
   ];
 
   xdg.mime.enable = true;

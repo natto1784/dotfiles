@@ -37,33 +37,6 @@
     dunst
     zenity
 
-    # Programming and dev stuff
-    (texlive.combine {
-      inherit (texlive)
-        scheme-small
-        babel
-        lm
-        graphics-def
-        url
-        mhchem
-        wrapfig
-        capt-of
-        minted
-        fvextra
-        xstring
-        catchfile
-        framed
-        upquote
-        pdfsync
-        tocloft
-        enumitem
-        multirow
-        adjustbox
-        titlesec
-        tcolorbox;
-    })
-    python3Packages.pygments
-
     # Misc
     anki
     tor-browser-bundle-bin

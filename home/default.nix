@@ -1,8 +1,9 @@
 { self, inputs, globalArgs, ... }:
 let
   common = [
-    ./common/zsh.nix
-    ./common/programs.nix
+    { programs.home-manager.enable = true; }
+    ./common/zsh
+    ./common/direnv
   ];
 
   mkPkgs = system: import inputs.nixpkgs {
@@ -23,7 +24,8 @@ in
 
       nattoModules = [
         ./natto
-        ./modules/fonts
+        ./common/fonts
+        ./common/emacs
         ./common/laptop.nix
         inputs.agenix.homeManagerModules.default
       ] ++ common;
