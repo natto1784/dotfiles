@@ -8,6 +8,7 @@ let
     ./programs/zsh
     ./programs/gnupg
     ./programs/git
+    ./programs/doas
     {
       _module.args = globalArgs;
     }

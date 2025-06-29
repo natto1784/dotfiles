@@ -8,17 +8,6 @@
     rtkit.enable = true;
     polkit.enable = true;
     sudo.enable = true;
-    doas = {
-      enable = true;
-      extraRules = [
-        {
-          users = [ "natto" ];
-          keepEnv = true;
-          persist = true;
-          setEnv = [ "SSH_AUTH_SOCK" "PATH" "SHELL" ];
-        }
-      ];
-    };
   };
   console.useXkbConfig = true;
 
