@@ -45,7 +45,7 @@
 
     agenix.url = github:ryantm/agenix;
 
-    ags.url = github:Aylur/ags;
+    ags.url = github:Aylur/ags/v1;
   };
 
   outputs = inputs@{ self, ... }:
