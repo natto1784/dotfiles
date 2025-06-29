@@ -19,7 +19,6 @@ let
     ./wayland.nix
     ./sound.nix
   ];
-  serverModules = [ ./minimal.nix ];
 in
 {
   flake.nixosConfigurations = {
@@ -49,8 +48,7 @@ in
       modules = [
         ./marisa
       ]
-      ++ commonModules
-      ++ serverModules;
+      ++ commonModules;
     };
 
     #Oracle Cloud VM
@@ -61,8 +59,7 @@ in
         ./x86builder.nix
         inputs.mailserver.nixosModules.mailserver
       ]
-      ++ commonModules
-      ++ serverModules;
+      ++ commonModules;
     };
 
     #Oracle Cloud VM
@@ -72,8 +69,7 @@ in
         ./hina
         ./x86builder.nix
       ]
-      ++ commonModules
-      ++ serverModules;
+      ++ commonModules;
     };
 
     #Oracle Cloud VM
@@ -82,8 +78,7 @@ in
       modules = [
         ./suwako
       ]
-      ++ commonModules
-      ++ serverModules;
+      ++ commonModules;
     };
   };
 }
