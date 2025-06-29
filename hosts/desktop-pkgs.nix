@@ -36,6 +36,7 @@
     liberation_ttf
   ];
 
+
   programs = {
     git.enable = true;
 
@@ -43,17 +44,6 @@
       agent = {
         enableSSHSupport = true;
         enable = true;
-      };
-    };
-
-    zsh = {
-      enable = true;
-      histSize = 30000;
-      enableBashCompletion = true;
-      enableCompletion = true;
-      autosuggestions = {
-        enable = true;
-        highlightStyle = "fg=yellow,bold";
       };
     };
 

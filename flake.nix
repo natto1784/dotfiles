@@ -61,7 +61,7 @@
 
       perSystem = { system, pkgs, ... }:
         rec {
-          formatter = pkgs.nixpkgs-fmt;
+          formatter = pkgs.nixfmt-rfc-style;
           devShells.default = with pkgs; mkShell {
             packages = [
               nixd

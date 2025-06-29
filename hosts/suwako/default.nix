@@ -17,7 +17,5 @@
     openssh.authorizedKeys.keys = conf.network.commonSSHKeys;
   };
 
-  programs.zsh.enable = true;
-
   system.stateVersion = "24.05";
 }

@@ -5,6 +5,7 @@ let
   commonModules = [
     ./nvim.nix
     ./nix.nix
+    ./modules/zsh
     {
       _module.args = globalArgs;
     }
