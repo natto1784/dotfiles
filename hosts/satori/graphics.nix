@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   nvidia-offload = pkgs.writeShellScriptBin "nvi" ''
     export __NV_PRIME_RENDER_OFFLOAD=1
@@ -23,11 +28,15 @@ in
       package = config.boot.kernelPackages.nvidia_x11;
       prime = {
         #      sync.enable = true;
-        offload = { enable = true; };
+        offload = {
+          enable = true;
+        };
         intelBusId = "PCI:0:2:0";
         nvidiaBusId = "PCI:1:0:0";
       };
-      modesetting = { enable = true; };
+      modesetting = {
+        enable = true;
+      };
       powerManagement = {
         enable = true;
         finegrained = true;

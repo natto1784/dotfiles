@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   key = "53EC089EF230E47A83BA8F8195949BD4B853F559";
   host = "mail.weirdnatto.in";
@@ -51,18 +56,17 @@ in
       enable = true;
       package = pkgs.neomutt;
       sort = "reverse-date";
-      extraConfig =
-        lib.concatMapStringsSep
-          "\n"
-          builtins.readFile
-          [
-            ./config/neomutt/neomuttrc
-            ./config/neomutt/theme
-          ];
+      extraConfig = lib.concatMapStringsSep "\n" builtins.readFile [
+        ./config/neomutt/neomuttrc
+        ./config/neomutt/theme
+      ];
     };
   };
   home = {
-    packages = with pkgs; [ mailcap w3m ];
+    packages = with pkgs; [
+      mailcap
+      w3m
+    ];
     file = {
       mailcap = {
         source = ./config/mailcap;

@@ -2,36 +2,36 @@
   description = "dotfiles";
 
   inputs = {
-    nixpkgs.url = github:nixos/nixpkgs/nixpkgs-unstable;
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    stable.url = github:nixos/nixpkgs/release-24.05;
+    stable.url = "github:nixos/nixpkgs/release-24.05";
 
-    flake-parts.url = github:hercules-ci/flake-parts;
+    flake-parts.url = "github:hercules-ci/flake-parts";
 
     home-manager = {
-      url = github:nix-community/home-manager;
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     mailserver = {
-      url = gitlab:simple-nixos-mailserver/nixos-mailserver;
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     filehost = {
-      url = github:natto1784/simpler-filehost;
+      url = "github:natto1784/simpler-filehost";
     };
 
-    nix-gaming.url = github:fufexan/nix-gaming;
+    nix-gaming.url = "github:fufexan/nix-gaming";
 
     nbfc = {
-      url = github:nbfc-linux/nbfc-linux;
+      url = "github:nbfc-linux/nbfc-linux";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    emacs-overlay.url = github:nix-community/emacs-overlay;
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
 
-    nvim-overlay.url = github:nix-community/neovim-nightly-overlay;
+    nvim-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
     hyprland = {
       type = "git";
@@ -40,17 +40,21 @@
     };
 
     hyprland-contrib = {
-      url = github:hyprwm/contrib;
+      url = "github:hyprwm/contrib";
     };
 
-    agenix.url = github:ryantm/agenix;
+    agenix.url = "github:ryantm/agenix";
 
-    ags.url = github:Aylur/ags/v1;
+    ags.url = "github:Aylur/ags/v1";
   };
 
-  outputs = inputs@{ self, ... }:
+  outputs =
+    inputs@{ self, ... }:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ "x86_64-linux" "aarch64-linux" ];
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
 
       imports = [
         ./hosts
@@ -59,15 +63,18 @@
         ./conf
       ];
 
-      perSystem = { system, pkgs, ... }:
+      perSystem =
+        { system, pkgs, ... }:
         rec {
           formatter = pkgs.nixfmt-rfc-style;
-          devShells.default = with pkgs; mkShell {
-            packages = [
-              nixd
-              formatter
-            ];
-          };
+          devShells.default =
+            with pkgs;
+            mkShell {
+              packages = [
+                nixd
+                formatter
+              ];
+            };
           _module.args.pkgs = import inputs.nixpkgs {
             inherit system;
           };

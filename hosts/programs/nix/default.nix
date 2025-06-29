@@ -16,7 +16,10 @@
     '';
     settings = {
       auto-optimise-store = true;
-      trusted-users = [ "root" "@wheel" ];
+      trusted-users = [
+        "root"
+        "@wheel"
+      ];
       substituters = [
         "https://nix-community.cachix.org"
         "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"

@@ -1,6 +1,6 @@
 #Catpuccin Mocha
 let
-  colors = rec{
+  colors = rec {
     rosewater = "#F5E0DC";
     flamingo = "#F2CDCD";
     pink = "#F5C2E7";
@@ -37,5 +37,9 @@ in
 rec {
   default = with builtins; mapAttrs (_: color: substring 1 6 color) colors; # hex without hash
   hex = colors; # hex with hash
-  argb = { a ? "ff" }: builtins.mapAttrs (_:color: a + color) default; # ARGB
+  argb =
+    {
+      a ? "ff",
+    }:
+    builtins.mapAttrs (_: color: a + color) default; # ARGB
 }

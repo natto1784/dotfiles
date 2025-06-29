@@ -24,10 +24,11 @@ in
       alwaysEnsure = true;
       alwaysTangle = true;
       defaultInitFile = true;
-      extraEmacsPackages = epkgs: with epkgs; [
-        use-package
-        (tree-sitter-langs.withPlugins (_: tree-sitter-langs.plugins))
-      ];
+      extraEmacsPackages =
+        epkgs: with epkgs; [
+          use-package
+          (tree-sitter-langs.withPlugins (_: tree-sitter-langs.plugins))
+        ];
     };
   };
   services.emacs = {

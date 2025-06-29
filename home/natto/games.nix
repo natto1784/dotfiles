@@ -11,4 +11,3 @@
 
   programs.mangohud.enable = true;
 }
-

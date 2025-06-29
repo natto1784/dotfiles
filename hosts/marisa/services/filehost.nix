@@ -1,4 +1,10 @@
-{ config, pkgs, inputs, conf, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  conf,
+  ...
+}:
 {
   systemd.services.filehost = {
     enable = true;

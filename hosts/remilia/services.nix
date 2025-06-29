@@ -1,4 +1,10 @@
-{ config, pkgs, lib, conf, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  conf,
+  ...
+}:
 let
   domain = conf.network.addresses.domain.natto;
 in
@@ -8,7 +14,10 @@ in
     openssh = {
       enable = true;
       settings.PermitRootLogin = "yes";
-      ports = [ 22 22002 ];
+      ports = [
+        22
+        22002
+      ];
     };
     nginx = {
       enable = true;
@@ -24,20 +33,29 @@ in
       '';
       virtualHosts =
         let
-          genericHttpRProxy = { addr, ssl ? true, conf ? "" }: {
-            enableACME = ssl;
-            # addSSL = ssl;
-            forceSSL = ssl;
-            locations."/" = {
-              proxyPass = toString addr;
-              extraConfig = ''
-                expires $expires;
-                proxy_set_header Host $host;
-              '' + conf;
+          genericHttpRProxy =
+            {
+              addr,
+              ssl ? true,
+              conf ? "",
+            }:
+            {
+              enableACME = ssl;
+              # addSSL = ssl;
+              forceSSL = ssl;
+              locations."/" = {
+                proxyPass = toString addr;
+                extraConfig =
+                  ''
+                    expires $expires;
+                    proxy_set_header Host $host;
+                  ''
+                  + conf;
+              };
             };
-          };
         in
-        with conf.network.addresses.wireguard.ips; {
+        with conf.network.addresses.wireguard.ips;
+        {
           "${domain}" = {
             addSSL = true;
             enableACME = true;
@@ -51,7 +69,8 @@ in
           # "consul.${domain}" = genericHttpRProxy { addr = "http://${marisa}:8500"; };
           "f.${domain}" = genericHttpRProxy { addr = "http://${marisa}:8000"; };
           "radio.${domain}" = genericHttpRProxy { addr = "http://${satori}:8001"; };
-          /* "radio.${domain}" = {
+          /*
+            "radio.${domain}" = {
             addSSL = true;
             enableACME = true;
             locations."/" = {
@@ -62,13 +81,15 @@ in
             '';
             };
             locations."= /".return = "301 /radio";
-            };*/
+            };
+          */
 
           "git.${domain}" = genericHttpRProxy {
             addr = "http://${marisa}:5001";
             conf = "client_max_body_size 64M;";
           };
-          /*"nomad.${domain}" = genericHttpRProxy {
+          /*
+            "nomad.${domain}" = genericHttpRProxy {
             addr = "http://${marisa}:4646";
             conf = ''
             proxy_buffering off;
@@ -80,4 +101,3 @@ in
     };
   };
 }
-

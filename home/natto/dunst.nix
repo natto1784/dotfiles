@@ -3,7 +3,9 @@
   services = {
     dunst = {
       enable = true;
-      iconTheme = with config.gtk.iconTheme; { inherit name package; };
+      iconTheme = with config.gtk.iconTheme; {
+        inherit name package;
+      };
       settings = with conf.colors.hex; {
         global = {
           mouse_left_click = "close_current";

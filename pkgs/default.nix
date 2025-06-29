@@ -1,4 +1,5 @@
-{ self, ... }: {
+{ self, ... }:
+{
   flake = {
     overlays = rec {
       packages = import ./packages.nix;
@@ -6,7 +7,9 @@
     };
   };
 
-  perSystem = { pkgs, ... }: {
-    packages = self.overlays.default null pkgs;
-  };
+  perSystem =
+    { pkgs, ... }:
+    {
+      packages = self.overlays.default null pkgs;
+    };
 }

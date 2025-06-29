@@ -26,21 +26,23 @@ in
     # Desktop
     okina = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      modules = [
-        ./okina
-      ]
-      ++ desktopModules
-      ++ commonModules;
+      modules =
+        [
+          ./okina
+        ]
+        ++ desktopModules
+        ++ commonModules;
     };
 
     #Home laptop
     satori = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      modules = [
-        ./satori
-      ]
-      ++ desktopModules
-      ++ commonModules;
+      modules =
+        [
+          ./satori
+        ]
+        ++ desktopModules
+        ++ commonModules;
     };
 
     #Home server (RPi4)
@@ -48,8 +50,7 @@ in
       system = "aarch64-linux";
       modules = [
         ./marisa
-      ]
-      ++ commonModules;
+      ] ++ commonModules;
     };
 
     #Oracle Cloud VM
@@ -59,8 +60,7 @@ in
         ./remilia
         ./x86builder.nix
         inputs.mailserver.nixosModules.mailserver
-      ]
-      ++ commonModules;
+      ] ++ commonModules;
     };
 
     #Oracle Cloud VM
@@ -69,8 +69,7 @@ in
       modules = [
         ./hina
         ./x86builder.nix
-      ]
-      ++ commonModules;
+      ] ++ commonModules;
     };
 
     #Oracle Cloud VM
@@ -78,8 +77,7 @@ in
       system = "aarch64-linux";
       modules = [
         ./suwako
-      ]
-      ++ commonModules;
+      ] ++ commonModules;
     };
   };
 }

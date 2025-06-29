@@ -1,16 +1,20 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}:
 
 {
-  imports =
-    [
-      (modulesPath + "/profiles/qemu-guest.nix")
-    ];
+  imports = [
+    (modulesPath + "/profiles/qemu-guest.nix")
+  ];
 
-  fileSystems."/" =
-    {
-      device = "/dev/disk/by-uuid/d91adce2-9059-4a8a-86e7-dee6ecc85b2b";
-      fsType = "ext4";
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/d91adce2-9059-4a8a-86e7-dee6ecc85b2b";
+    fsType = "ext4";
+  };
 
   swapDevices = [
     {

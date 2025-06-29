@@ -1,4 +1,10 @@
-{ config, lib, pkgs, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
   xdg = {
     enable = true;
     userDirs.enable = true;
@@ -29,7 +35,10 @@
     inputMethod = {
       enable = true;
       type = "fcitx5";
-      fcitx5.addons = with pkgs; [ fcitx5-m17n fcitx5-mozc ];
+      fcitx5.addons = with pkgs; [
+        fcitx5-m17n
+        fcitx5-mozc
+      ];
     };
   };
 }

@@ -1,4 +1,10 @@
-{ config, pkgs, lib, conf, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  conf,
+  ...
+}:
 let
   domain = conf.network.addresses.domain.natto;
 in
@@ -32,4 +38,3 @@ in
     };
   };
 }
-

@@ -17,19 +17,20 @@
   services = {
     openssh = {
       enable = true;
-      ports = [ 22 22001 ];
+      ports = [
+        22
+        22001
+      ];
     };
     postgresql = {
       enable = true;
       authentication = ''
         local gitea all ident map=gitea-map
       '';
-      identMap =
-        ''
-          gitea-map gitea gitea
-        '';
+      identMap = ''
+        gitea-map gitea gitea
+      '';
     };
 
   };
 }
-

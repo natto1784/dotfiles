@@ -1,26 +1,35 @@
-{ pkgs, lib, config, inputs, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  inputs,
+  ...
+}:
 let
   cfg = config.programs.ags;
 
-  deps = with pkgs; [
-    sass
-    gawk
-    bash
-    procps
-    coreutils
-    imagemagick
-    systemd
-    config.wayland.windowManager.hyprland.package
-  ] ++ lib.optional config.isLaptop brightnessctl;
-
+  deps =
+    with pkgs;
+    [
+      sass
+      gawk
+      bash
+      procps
+      coreutils
+      imagemagick
+      systemd
+      config.wayland.windowManager.hyprland.package
+    ]
+    ++ lib.optional config.isLaptop brightnessctl;
 
   configDir = lib.cleanSourceWith {
     src = ./.;
-    filter = name: _:
+    filter =
+      name: _:
       let
         baseName = baseNameOf (toString name);
       in
-        !(lib.hasSuffix ".nix" baseName);
+      !(lib.hasSuffix ".nix" baseName);
   };
 in
 {
@@ -28,7 +37,10 @@ in
     inputs.ags.homeManagerModules.default
   ];
 
-  programs.ags.enable = true;
+  programs.ags = {
+    enable = true;
+    #   package = pkgs.ags_1;
+  };
 
   xdg.configFile."ags" = {
     source = configDir;

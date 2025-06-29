@@ -1,4 +1,11 @@
-{ wrapNeovimUnstable, neovimUtils, neovim-unwrapped, nvimPackage ? neovim-unwrapped, vimPlugins, ... }:
+{
+  wrapNeovimUnstable,
+  neovimUtils,
+  neovim-unwrapped,
+  nvimPackage ? neovim-unwrapped,
+  vimPlugins,
+  ...
+}:
 let
   nvimConfig = neovimUtils.makeNeovimConfig {
     plugins = with vimPlugins; [
@@ -24,8 +31,11 @@ let
     ];
   };
 in
-wrapNeovimUnstable nvimPackage (nvimConfig // {
-  luaRcContent = ''
-    ${builtins.readFile ./init.lua}
-  '';
-})
+wrapNeovimUnstable nvimPackage (
+  nvimConfig
+  // {
+    luaRcContent = ''
+      ${builtins.readFile ./init.lua}
+    '';
+  }
+)

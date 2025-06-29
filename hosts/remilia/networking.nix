@@ -1,27 +1,43 @@
-{ lib, config, conf, pkgs, ... }:
+{
+  lib,
+  config,
+  conf,
+  pkgs,
+  ...
+}:
 {
   networking = {
     useDHCP = false;
     hostName = "remilia";
-    firewall =
-      {
-        interfaces = {
-          ens3 = {
-            allowedTCPPorts = [ 80 81 443 444 993 465 143 25 22 22001 22002 4444 ]
-              ++ (map (x: x.sourcePort) config.networking.nat.forwardPorts);
-            allowedUDPPorts = [ 17840 ];
-          };
+    firewall = {
+      interfaces = {
+        ens3 = {
+          allowedTCPPorts = [
+            80
+            81
+            443
+            444
+            993
+            465
+            143
+            25
+            22
+            22001
+            22002
+            4444
+          ] ++ (map (x: x.sourcePort) config.networking.nat.forwardPorts);
+          allowedUDPPorts = [ 17840 ];
         };
-        extraCommands = lib.concatMapStringsSep "\n"
-          (x:
-            let
-              t = lib.splitString ":" x.destination;
-            in
-            with lib;
-            "iptables -t nat -A POSTROUTING -d ${head t} -p tcp -m tcp --dport ${last t} -j MASQUERADE"
-          )
-          config.networking.nat.forwardPorts;
       };
+      extraCommands = lib.concatMapStringsSep "\n" (
+        x:
+        let
+          t = lib.splitString ":" x.destination;
+        in
+        with lib;
+        "iptables -t nat -A POSTROUTING -d ${head t} -p tcp -m tcp --dport ${last t} -j MASQUERADE"
+      ) config.networking.nat.forwardPorts;
+    };
     interfaces = {
       ens3 = {
         useDHCP = true;

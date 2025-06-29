@@ -6,7 +6,10 @@
       enable = true;
       enableDocker = true;
       dropPrivileges = false;
-      extraPackages = with pkgs; [ consul cni-plugins ];
+      extraPackages = with pkgs; [
+        consul
+        cni-plugins
+      ];
       extraSettingsPaths = [ "/run/nomad/nomad.json" ];
     };
     vault = {
@@ -27,4 +30,3 @@
     };
   };
 }
-

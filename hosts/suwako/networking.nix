@@ -1,16 +1,25 @@
-{ lib, config, conf, pkgs, ... }:
+{
+  lib,
+  config,
+  conf,
+  pkgs,
+  ...
+}:
 {
   networking = {
     useDHCP = false;
     hostName = "suwako";
-    firewall =
-      {
-        interfaces = {
-          enp0s6 = {
-            allowedTCPPorts = [ 22 443 80 ];
-          };
+    firewall = {
+      interfaces = {
+        enp0s6 = {
+          allowedTCPPorts = [
+            22
+            443
+            80
+          ];
         };
       };
+    };
     interfaces = {
       enp0s6 = {
         useDHCP = true;

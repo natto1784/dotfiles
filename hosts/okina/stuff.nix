@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 {
   time.timeZone = "Asia/Kolkata";
 
@@ -9,13 +14,23 @@
     polkit.enable = true;
     sudo.enable = true;
   };
+
   console.useXkbConfig = true;
 
   users.users.natto = {
     isNormalUser = true;
     shell = pkgs.zsh;
     home = "/home/natto";
-    extraGroups = [ "wheel" "adbusers" "video" "libvirtd" "docker" "networkmanager" "dialout" "pipewire" ];
+    extraGroups = [
+      "wheel"
+      "adbusers"
+      "video"
+      "libvirtd"
+      "docker"
+      "networkmanager"
+      "dialout"
+      "pipewire"
+    ];
   };
 
   virtualisation = {

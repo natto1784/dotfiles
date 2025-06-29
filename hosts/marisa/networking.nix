@@ -1,4 +1,9 @@
-{ config, pkgs, conf, ... }:
+{
+  config,
+  pkgs,
+  conf,
+  ...
+}:
 {
   networking = {
     hostName = "marisa";
@@ -7,10 +12,10 @@
         22 # ssh
         80 # http
         #  5454
-        5001 #gitea
-        4646 #nomad
+        5001 # gitea
+        4646 # nomad
         #  8500 #vault nomad consul
-        8000 #simpler-filehost
+        8000 # simpler-filehost
         #  6666 #concourse
         #  202 #gitea-ssh
       ];
@@ -25,16 +30,20 @@
 
     interfaces = {
       eth0 = {
-        ipv4.addresses = [{
-          prefixLength = 24;
-          address = "192.168.1.159";
-        }];
+        ipv4.addresses = [
+          {
+            prefixLength = 24;
+            address = "192.168.1.159";
+          }
+        ];
       };
       wlan0 = {
-        ipv4.addresses = [{
-          prefixLength = 24;
-          address = "192.168.1.159";
-        }];
+        ipv4.addresses = [
+          {
+            prefixLength = 24;
+            address = "192.168.1.159";
+          }
+        ];
       };
     };
     wireguard.interfaces.wg0 = with conf.network.addresses.wireguard.ips; {
@@ -52,6 +61,9 @@
       ];
     };
     defaultGateway = "192.168.1.1";
-    nameservers = [ "1.1.1.1" "8.8.8.8" ];
+    nameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+    ];
   };
 }

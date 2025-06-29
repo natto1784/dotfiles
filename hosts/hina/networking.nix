@@ -1,16 +1,25 @@
-{ lib, config, conf, pkgs, ... }:
+{
+  lib,
+  config,
+  conf,
+  pkgs,
+  ...
+}:
 {
   networking = {
     useDHCP = false;
     hostName = "hina";
-    firewall =
-      {
-        interfaces = {
-          ens3 = {
-            allowedTCPPorts = [ 9898 80 443 ];
-          };
+    firewall = {
+      interfaces = {
+        ens3 = {
+          allowedTCPPorts = [
+            9898
+            80
+            443
+          ];
         };
       };
+    };
     interfaces = {
       ens3 = {
         useDHCP = true;

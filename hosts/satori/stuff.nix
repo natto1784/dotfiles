@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 {
   time.timeZone = "Asia/Kolkata";
 
@@ -11,12 +16,19 @@
   };
   console.useXkbConfig = true;
 
-
   users.users.natto = {
     isNormalUser = true;
     shell = pkgs.zsh;
     home = "/home/natto";
-    extraGroups = [ "wheel" "adbusers" "video" "libvirtd" "docker" "networkmanager" "dialout" ];
+    extraGroups = [
+      "wheel"
+      "adbusers"
+      "video"
+      "libvirtd"
+      "docker"
+      "networkmanager"
+      "dialout"
+    ];
   };
 
   virtualisation = {

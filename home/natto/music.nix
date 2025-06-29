@@ -84,7 +84,6 @@ in
     };
   };
 
-
   age.secrets.mpdasrc = {
     file = ./secrets/mpdasrc.age;
     path = "${home}/.config/mpdasrc";

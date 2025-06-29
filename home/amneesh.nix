@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   home = {
     homeDirectory = "/home/amneesh";
@@ -14,7 +19,7 @@
   };
 
   imports = [
-     ./programs/emacs
+    ./programs/emacs
   ];
 
   xdg.mime.enable = true;

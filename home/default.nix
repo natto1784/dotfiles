@@ -1,4 +1,9 @@
-{ self, inputs, globalArgs, ... }:
+{
+  self,
+  inputs,
+  globalArgs,
+  ...
+}:
 let
   common = [
     { programs.home-manager.enable = true; }
@@ -6,15 +11,17 @@ let
     ./common/direnv
   ];
 
-  mkPkgs = system: import inputs.nixpkgs {
-    inherit system;
-    config = {
-      allowUnfree = true;
-      allowBroken = true;
-      allowInsecure = true;
+  mkPkgs =
+    system:
+    import inputs.nixpkgs {
+      inherit system;
+      config = {
+        allowUnfree = true;
+        allowBroken = true;
+        allowInsecure = true;
+      };
+      overlays = [ self.overlays.default ];
     };
-    overlays = [ self.overlays.default ];
-  };
 
   extraSpecialArgs = globalArgs;
 in
@@ -50,49 +57,57 @@ in
     // {
       spark = inputs.home-manager.lib.homeManagerConfiguration {
         inherit extraSpecialArgs;
-        modules = [{
-          home = {
-            homeDirectory = "/home/spark";
-            username = "spark";
-            stateVersion = "23.05";
-          };
-        }] ++ common;
+        modules = [
+          {
+            home = {
+              homeDirectory = "/home/spark";
+              username = "spark";
+              stateVersion = "23.05";
+            };
+          }
+        ] ++ common;
         pkgs = mkPkgs "aarch64-linux";
       };
 
       bat = inputs.home-manager.lib.homeManagerConfiguration {
         inherit extraSpecialArgs;
-        modules = [{
-          home = {
-            homeDirectory = "/home/bat";
-            username = "bat";
-            stateVersion = "23.05";
-          };
-        }] ++ common;
+        modules = [
+          {
+            home = {
+              homeDirectory = "/home/bat";
+              username = "bat";
+              stateVersion = "23.05";
+            };
+          }
+        ] ++ common;
         pkgs = mkPkgs "x86_64-linux";
       };
 
       spin = inputs.home-manager.lib.homeManagerConfiguration {
         inherit extraSpecialArgs;
-        modules = [{
-          home = {
-            homeDirectory = "/home/spin";
-            username = "spin";
-            stateVersion = "23.05";
-          };
-        }] ++ common;
+        modules = [
+          {
+            home = {
+              homeDirectory = "/home/spin";
+              username = "spin";
+              stateVersion = "23.05";
+            };
+          }
+        ] ++ common;
         pkgs = mkPkgs "x86_64-linux";
       };
 
       kero = inputs.home-manager.lib.homeManagerConfiguration {
         inherit extraSpecialArgs;
-        modules = [{
-          home = {
-            homeDirectory = "/home/kero";
-            username = "kero";
-            stateVersion = "24.05";
-          };
-        }] ++ common;
+        modules = [
+          {
+            home = {
+              homeDirectory = "/home/kero";
+              username = "kero";
+              stateVersion = "24.05";
+            };
+          }
+        ] ++ common;
         pkgs = mkPkgs "aarch64-linux";
       };
 

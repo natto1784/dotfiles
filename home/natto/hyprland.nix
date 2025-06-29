@@ -1,4 +1,11 @@
-{ pkgs, inputs, config, conf, ... }: {
+{
+  pkgs,
+  inputs,
+  config,
+  conf,
+  ...
+}:
+{
   wayland = {
     windowManager = {
       hyprland = {
@@ -8,16 +15,17 @@
         xwayland = {
           enable = true;
         };
-        extraConfig = (builtins.readFile ./config/hypr/hyprland.conf)
+        extraConfig =
+          (builtins.readFile ./config/hypr/hyprland.conf)
           + (with config.home.pointerCursor; ''
-          exec-once=hyprctl setcursor ${name} ${toString size}
-        '')
-          + (with conf.colors.argb { a = "ee"; };''
-          general {
-            col.active_border = 0x${mauve} 0x${flamingo} 135deg
-            col.inactive_border = 0x${surface0}
-          }
-        '');
+            exec-once=hyprctl setcursor ${name} ${toString size}
+          '')
+          + (with conf.colors.argb { a = "ee"; }; ''
+            general {
+              col.active_border = 0x${mauve} 0x${flamingo} 135deg
+              col.inactive_border = 0x${surface0}
+            }
+          '');
       };
     };
   };

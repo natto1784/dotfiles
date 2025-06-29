@@ -21,10 +21,10 @@
     ./zsh.nix
     ./games.nix
 
-    /* when xserver */
+    # when xserver
     # ./xsession.nix
 
-    /* when wayland */
+    # when wayland
     ./wayland.nix
     ./hyprland.nix
     ./foot.nix

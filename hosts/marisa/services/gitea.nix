@@ -1,4 +1,9 @@
-{ config, pkgs, conf, ... }:
+{
+  config,
+  pkgs,
+  conf,
+  ...
+}:
 {
   services = {
     gitea = rec {
@@ -38,4 +43,3 @@
     };
   };
 }
-
