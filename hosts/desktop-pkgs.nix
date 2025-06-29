@@ -22,12 +22,5 @@
 
   programs = {
     git.enable = true;
-
-    gnupg = {
-      agent = {
-        enableSSHSupport = true;
-        enable = true;
-      };
-    };
   };
 }

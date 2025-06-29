@@ -6,6 +6,7 @@ let
     ./nvim.nix
     ./nix.nix
     ./modules/zsh
+    ./modules/gnupg
     {
       _module.args = globalArgs;
     }

@@ -24,14 +24,6 @@
     gcc
   ];
 
-  programs = {
-    gnupg = {
-      agent = {
-        enable = true;
-      };
-    };
-  };
-
   nix = {
     extraOptions = ''
       experimental-features = nix-command flakes
