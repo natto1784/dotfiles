@@ -18,8 +18,7 @@ in
     };
 
     mpd-discord-rpc = {
-      #     inherit (mpd) enable;
-      enable = false;
+      inherit (mpd) enable;
       settings = {
         id = 1039532008424099850; # dont really care
         format = {

@@ -12,9 +12,6 @@
     ./browser.nix
     ./pdf.nix
     ./mpv.nix
-    ./foot.nix
-    # ./xsession.nix
-    ./wayland.nix
     ./pkgs.nix
     ./stuff.nix
     ./gtk.nix
@@ -23,5 +20,15 @@
     ./music.nix
     ./zsh.nix
     ./games.nix
+
+    /* when xserver */
+    # ./xsession.nix
+
+    /* when wayland */
+    ./wayland.nix
+    ./hyprland.nix
+    ./foot.nix
+    ./tofi.nix
+    ./ags
   ];
 }

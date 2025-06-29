@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, lib, ... }:
+{ pkgs, inputs, ... }:
 let
   emacs = pkgs.emacs-git-pgtk;
   configFile = ./config/emacs/config.org;
