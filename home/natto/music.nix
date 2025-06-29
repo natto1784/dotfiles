@@ -66,6 +66,7 @@ in
 
   home = {
     packages = with pkgs; [
+      spotify
       playerctl
       mpc_cli
       (ncmpcpp.override {
@@ -80,10 +81,6 @@ in
     file.ncmpcpp = {
       source = ./config/ncmpcpp/config;
       target = "${config.xdg.configHome}/ncmpcpp/config";
-    };
-
-    sessionVariables = {
-      # LV2_PATH = lib.makeSearchPath "lib/lv2" (with pkgs; [ calf ]);
     };
   };
 

@@ -6,7 +6,6 @@
     wireplumber
     pulseaudio
     pavucontrol
-    spotify
     imagemagick
 
     # Utils
@@ -21,7 +20,7 @@
     cachix
     steam-run
 
-    # GUI utils
+    # GUI
     vesktop
     (xfce.thunar.override {
       thunarPlugins = with xfce; [
@@ -38,8 +37,6 @@
     zenity
 
     # Misc
-    anki
-    tor-browser-bundle-bin
     mailcap
     libsForQt5.qtstyleplugins
   ] ++ lib.optionals config.isLaptop [
