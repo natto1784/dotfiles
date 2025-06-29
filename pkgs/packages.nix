@@ -4,7 +4,6 @@ let
 in
 {
   customscripts = call ./customscripts { };
-  tlauncher = call ./tlauncher { };
   simp1e-cursors = call ./simp1e { };
   nattovim = call ./nattovim { };
 }
