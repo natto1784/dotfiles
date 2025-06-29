@@ -24,7 +24,6 @@
     libvirtd.wantedBy = lib.mkForce [ ];
   };
 
-  security.pki.certificateFiles = [ ../../cert.pem ];
   virtualisation = {
     docker = {
       enable = true;

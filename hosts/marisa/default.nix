@@ -17,6 +17,4 @@
 
   time.timeZone = "Asia/Kolkata";
   system.stateVersion = "21.05";
-
-  security.pki.certificateFiles = [ ../../cert.pem ../../consul-agent-ca.pem ];
 }

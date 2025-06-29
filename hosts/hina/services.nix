@@ -31,12 +31,5 @@ in
       };
     };
   };
-
-  security.acme = {
-    acceptTerms = true;
-    certs = lib.mapAttrs (n: _: { email = "natto@${domain}"; })
-      (lib.filterAttrs (_: v: v.enableACME) config.services.nginx.virtualHosts);
-  };
-  security.pki.certificateFiles = [ ../../cert.pem ];
 }
 

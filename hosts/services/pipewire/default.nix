@@ -1,6 +1,5 @@
-{ lib, config, pkgs, ... }: {
-  # sound stuff
-  sound.enable = true;
+{ ... }:
+{
   services.pipewire = {
     enable = true;
     alsa = {

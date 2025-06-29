@@ -12,6 +12,7 @@ let
     ./programs/gnupg
     ./programs/git
     ./programs/doas
+    ./security
   ];
   desktopModules = [
     ./programs/adb
