@@ -23,6 +23,7 @@ in
 
       nattoModules = [
         ./natto
+        ./modules/fonts
         ./common/laptop.nix
         inputs.agenix.homeManagerModules.default
       ] ++ common;
