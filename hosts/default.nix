@@ -3,7 +3,7 @@ let
   inherit (inputs) nixpkgs;
 
   commonModules = [
-    ./nvim.nix
+    ./programs/neovim
     ./programs/nix
     ./programs/zsh
     ./programs/gnupg
