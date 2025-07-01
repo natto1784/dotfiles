@@ -17,7 +17,7 @@
       sendingFqdn = fqdn;
       domains = [ domain ];
       certificateDomains = [ "mail.${domain}" ];
-      certificateScheme = 3;
+      certificateScheme = "acme-nginx";
       loginAccounts = {
         "natto@${domain}" = {
           hashedPasswordFile = "/var/secrets/natto@${domain}.key";
