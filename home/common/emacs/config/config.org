@@ -82,28 +82,35 @@
 Enable vertico
 #+begin_src emacs-lisp
 (use-package vertico
-  :ensure t
-  :config
-  (vertico-mode 1))
+  :init
+  (vertico-mode)
+  :bind (:map vertico-map
+              ("C-j" . vertico-next)
+              ("C-k" . vertico-previous)))
 #+end_src
 
-Add selectrum-prescient
+Marginalia for description
 #+begin_src emacs-lisp
-(use-package selectrum-prescient
+(use-package marginalia
+  :after vertico
   :config
-  (selectrum-prescient-mode +1)
-  (prescient-persist-mode +1))
+  (marginalia-mode 1))
 #+end_src
 
+Orderless
 #+begin_src emacs-lisp
-
 (use-package orderless
-  :after selectrum
+  :after vertico
   :config
-  (setq completion-styles '(orderless basic))
-  (savehist-mode)
-  (setq orderless-skip-highlighting (lambda () selectrum-is-active)
-        selectrum-highlight-candidates-function #'orderless-highlight-matches))
+  (setq completion-styles '(orderless basic)))
+#+end_src
+
+Consult
+#+begin_src emacs-lisp
+(use-package consult
+  :bind (("M-s M-g" . consult-grep)
+         ("M-s M-f" . consult-find)
+         ("M-s M-b" . consult-buffer)))
 #+end_src
 
 ** Evil
@@ -130,12 +137,22 @@ Add selectrum-prescient
   (evil-define-key 'visual global-map (kbd ">") 'my/evil-shift-right)
   (evil-define-key 'visual global-map (kbd "<") 'my/evil-shift-left)
   (evil-mode 1))
+#+end_src
 
+*** Evil related packages
+#+begin_src emacs-lisp
 (use-package evil-collection
   :after evil
   :ensure t
   :config
   (evil-collection-init))
+
+(use-package evil-terminal-cursor-changer
+  :after evil
+  :if (not (display-graphic-p))
+  :config
+  (evil-terminal-cursor-changer-activate))
+(use-package evil-anzu :after evil)
 #+end_src
 
 *** Configure undo tree
@@ -148,15 +165,6 @@ To undo and redo easily like vi
   (global-undo-tree-mode 1))
 #+end_src
   
-*** Miscellaneous evil related packages
-#+begin_src emacs-lisp
-(use-package evil-terminal-cursor-changer
-  :if (not (display-graphic-p))
-  :config
-  (evil-terminal-cursor-changer-activate))
-(use-package evil-anzu :after evil)
-#+end_src
-
 ** Treemacs
 *** Configure treemacs
 #+begin_src emacs-lisp
