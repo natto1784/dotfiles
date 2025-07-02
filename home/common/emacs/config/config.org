@@ -78,13 +78,13 @@
   (dark-theme t))
 #+end_src
 
-** Configure Selectrum
-Enable selectrum
+** Minibuffer
+Enable vertico
 #+begin_src emacs-lisp
-(use-package selectrum
-  :defer t
+(use-package vertico
+  :ensure t
   :config
-  (selectrum-mode +1))
+  (vertico-mode 1))
 #+end_src
 
 Add selectrum-prescient
@@ -130,6 +130,12 @@ Add selectrum-prescient
   (evil-define-key 'visual global-map (kbd ">") 'my/evil-shift-right)
   (evil-define-key 'visual global-map (kbd "<") 'my/evil-shift-left)
   (evil-mode 1))
+
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
 #+end_src
 
 *** Configure undo tree
