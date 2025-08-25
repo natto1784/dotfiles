@@ -15,6 +15,7 @@
 
   imports = [
     ./pkgs.nix
+    ./nixgl.nix
 
     # From personal
     ../natto/ags

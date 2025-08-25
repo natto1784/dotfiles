@@ -1,6 +1,39 @@
 {
   description = "dotfiles";
 
+  outputs =
+    inputs@{ self, ... }:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+
+      imports = [
+        ./hosts
+        ./home
+        ./pkgs
+        ./conf
+      ];
+
+      perSystem =
+        { system, pkgs, ... }:
+        rec {
+          formatter = pkgs.nixfmt-rfc-style;
+          devShells.default =
+            with pkgs;
+            mkShell {
+              packages = [
+                nixd
+                formatter
+              ];
+            };
+          _module.args.pkgs = import inputs.nixpkgs {
+            inherit system;
+          };
+        };
+    };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
@@ -46,38 +79,7 @@
     agenix.url = "github:ryantm/agenix";
 
     ags.url = "github:Aylur/ags/v1";
+
+    nixgl.url = "github:nix-community/nixGL";
   };
-
-  outputs =
-    inputs@{ self, ... }:
-    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [
-        "x86_64-linux"
-        "aarch64-linux"
-      ];
-
-      imports = [
-        ./hosts
-        ./home
-        ./pkgs
-        ./conf
-      ];
-
-      perSystem =
-        { system, pkgs, ... }:
-        rec {
-          formatter = pkgs.nixfmt-rfc-style;
-          devShells.default =
-            with pkgs;
-            mkShell {
-              packages = [
-                nixd
-                formatter
-              ];
-            };
-          _module.args.pkgs = import inputs.nixpkgs {
-            inherit system;
-          };
-        };
-    };
 }
