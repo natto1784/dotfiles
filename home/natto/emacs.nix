@@ -1,7 +1,7 @@
 { pkgs, inputs, ... }:
 let
   emacs = pkgs.emacs-git-pgtk;
-  configFile = ./config/config.org;
+  configFile = ./config/emacs/config.org;
   enable = true;
 in
 {

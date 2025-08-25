@@ -13,23 +13,11 @@
   age.identityPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
 
   home = {
-    pointerCursor = {
-      package = pkgs.catppuccin-cursors.mochaFlamingo;
-      name = "catppuccin-mocha-flamingo-cursors";
-      size = 32;
-      x11 = {
-        enable = true;
-        defaultCursor = "crosshair";
-      };
-      gtk.enable = true;
-    };
-
     sessionVariables = {
       QT_X11_NO_MITSHM = "1";
       HM_CONF_DIR = "/etc/nixos";
       QT_QPA_PLATFORMTHEME = "gtk2";
     };
-
   };
   i18n = {
     inputMethod = {

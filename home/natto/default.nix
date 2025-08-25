@@ -20,6 +20,8 @@
     ./music.nix
     ./zsh.nix
     ./games.nix
+    ./cursor.nix
+    ./emacs.nix
 
     # when xserver
     # ./xsession.nix

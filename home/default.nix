@@ -9,6 +9,8 @@ let
     { programs.home-manager.enable = true; }
     ./common/zsh
     ./common/direnv
+    ./common/laptop.nix
+    inputs.agenix.homeManagerModules.default
   ];
 
   mkPkgs =
@@ -29,26 +31,21 @@ in
   flake.homeConfigurations =
     let
 
-      nattoModules = [
-        ./natto
-        ./common/fonts
-        ./common/emacs
-        ./common/laptop.nix
-        inputs.agenix.homeManagerModules.default
-      ] ++ common;
     in
     {
       natto-laptop = inputs.home-manager.lib.homeManagerConfiguration {
         inherit extraSpecialArgs;
-        modules = nattoModules ++ [
+        modules = [
+          ./natto
           { isLaptop = true; }
-        ];
+        ]
+        ++ common;
         pkgs = mkPkgs "x86_64-linux";
       };
 
       natto = inputs.home-manager.lib.homeManagerConfiguration {
         inherit extraSpecialArgs;
-        modules = nattoModules;
+        modules = [ ./natto ];
         pkgs = mkPkgs "x86_64-linux";
       };
 
@@ -65,7 +62,8 @@ in
               stateVersion = "23.05";
             };
           }
-        ] ++ common;
+        ]
+        ++ common;
         pkgs = mkPkgs "aarch64-linux";
       };
 
@@ -79,7 +77,8 @@ in
               stateVersion = "23.05";
             };
           }
-        ] ++ common;
+        ]
+        ++ common;
         pkgs = mkPkgs "x86_64-linux";
       };
 
@@ -93,7 +92,8 @@ in
               stateVersion = "23.05";
             };
           }
-        ] ++ common;
+        ]
+        ++ common;
         pkgs = mkPkgs "x86_64-linux";
       };
 
@@ -107,16 +107,17 @@ in
               stateVersion = "24.05";
             };
           }
-        ] ++ common;
+        ]
+        ++ common;
         pkgs = mkPkgs "aarch64-linux";
       };
 
       amneesh = inputs.home-manager.lib.homeManagerConfiguration {
         inherit extraSpecialArgs;
         modules = [
-          ./common/emacs
           ./amneesh
-        ] ++ common;
+        ]
+        ++ common;
         pkgs = mkPkgs "x86_64-linux";
       };
     };
