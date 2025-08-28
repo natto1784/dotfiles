@@ -59,6 +59,7 @@ in
       Environment = "PATH=${lib.makeBinPath deps}";
       ExecStart = "${cfg.package}/bin/ags";
       Restart = "on-failure";
+      RestartSec = 10;
     };
     Install.WantedBy = [ "graphical-session.target" ];
   };
