@@ -7,7 +7,7 @@
     autoStart = enable;
     settings = {
       address = "0.0.0.0";
-      port = 5901;
+      port = 5900;
     };
   };
 }

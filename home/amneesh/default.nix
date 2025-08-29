@@ -16,6 +16,8 @@
   imports = [
     ./pkgs.nix
     ./nixgl.nix
+    # wayland
+    ./wayvnc.nix
 
     # From personal
     ../natto/ags
@@ -24,8 +26,7 @@
     ../natto/dunst.nix
     ../natto/gtk.nix
     ../natto/cursor.nix
-
-    # When wayland
+    # wayland
     ../natto/wayland.nix
     ../natto/hyprland.nix
     ../natto/tofi.nix
