@@ -2,49 +2,93 @@
   config,
   lib,
   pkgs,
+  inputs,
+  conf,
   ...
 }:
 let
-  key = "53EC089EF230E47A83BA8F8195949BD4B853F559";
-  host = "mail.weirdnatto.in";
   realName = "Amneesh Singh";
-  address = "natto@weirdnatto.in";
 in
 {
   accounts.email = {
     accounts = {
-      natto = rec {
-        inherit address realName;
-        primary = true;
-        userName = address;
-        gpg = {
-          inherit key;
-          signByDefault = true;
+      natto =
+        let
+          domain = conf.network.addresses.domain.natto;
+          address = "natto@${domain}";
+          host = "mail.${domain}";
+        in
+        {
+          inherit realName address;
+          primary = true;
+          userName = address;
+          gpg = {
+            key = "3C4BDBE7BBF45B52C14EA193007257B05FCC86A8";
+            signByDefault = true;
+          };
+          imap = {
+            inherit host;
+            tls.enable = true;
+          };
+          imapnotify.enable = true;
+          smtp = {
+            inherit host;
+            tls.enable = true;
+          };
+          mbsync = {
+            enable = true;
+            create = "both";
+          };
+          passwordCommand = "pass show email/${address}";
+          neomutt = {
+            enable = true;
+            extraMailboxes = [
+              "Sent"
+              "Drafts"
+              "Trash"
+              "Junk"
+            ];
+          };
         };
-        imap = {
-          inherit host;
-          tls.enable = true;
+
+      amneesh =
+        let
+          domain = conf.network.addresses.domain.amneesh;
+          address = "me@${domain}";
+          host = "mail.${domain}";
+        in
+        {
+          inherit address realName;
+          userName = address;
+
+          gpg = {
+            key = "0C2FDA374F2D48D9F9F0F7788EAAB36980C424C2";
+            signByDefault = true;
+          };
+
+          imap = {
+            inherit host;
+            tls.enable = true;
+          };
+          imapnotify.enable = true;
+          smtp = {
+            inherit host;
+            tls.enable = true;
+          };
+          mbsync = {
+            enable = true;
+            create = "both";
+          };
+          passwordCommand = "pass show email/${address}";
+          neomutt = {
+            enable = true;
+            extraMailboxes = [
+              "Sent"
+              "Drafts"
+              "Junk"
+            ];
+          };
         };
-        imapnotify.enable = true;
-        smtp = {
-          inherit host;
-          tls.enable = true;
-        };
-        mbsync = {
-          enable = true;
-          create = "both";
-        };
-        passwordCommand = "pass show email/${address}";
-        neomutt = {
-          enable = true;
-          extraMailboxes = [
-            "Sent"
-            "Drafts"
-            "Trash"
-            "Junk"
-          ];
-        };
-      };
     };
   };
   services = {

@@ -28,97 +28,95 @@ let
   extraSpecialArgs = globalArgs;
 in
 {
-  flake.homeConfigurations =
-    let
-
-    in
-    {
-      natto-laptop = inputs.home-manager.lib.homeManagerConfiguration {
-        inherit extraSpecialArgs;
-        modules = [
-          ./natto
-          { isLaptop = true; }
-        ]
-        ++ common;
-        pkgs = mkPkgs "x86_64-linux";
-      };
-
-      natto = inputs.home-manager.lib.homeManagerConfiguration {
-        inherit extraSpecialArgs;
-        modules = [ ./natto ];
-        pkgs = mkPkgs "x86_64-linux";
-      };
-
-    }
-
-    // {
-      spark = inputs.home-manager.lib.homeManagerConfiguration {
-        inherit extraSpecialArgs;
-        modules = [
-          {
-            home = {
-              homeDirectory = "/home/spark";
-              username = "spark";
-              stateVersion = "23.05";
-            };
-          }
-        ]
-        ++ common;
-        pkgs = mkPkgs "aarch64-linux";
-      };
-
-      bat = inputs.home-manager.lib.homeManagerConfiguration {
-        inherit extraSpecialArgs;
-        modules = [
-          {
-            home = {
-              homeDirectory = "/home/bat";
-              username = "bat";
-              stateVersion = "23.05";
-            };
-          }
-        ]
-        ++ common;
-        pkgs = mkPkgs "x86_64-linux";
-      };
-
-      spin = inputs.home-manager.lib.homeManagerConfiguration {
-        inherit extraSpecialArgs;
-        modules = [
-          {
-            home = {
-              homeDirectory = "/home/spin";
-              username = "spin";
-              stateVersion = "23.05";
-            };
-          }
-        ]
-        ++ common;
-        pkgs = mkPkgs "x86_64-linux";
-      };
-
-      kero = inputs.home-manager.lib.homeManagerConfiguration {
-        inherit extraSpecialArgs;
-        modules = [
-          {
-            home = {
-              homeDirectory = "/home/kero";
-              username = "kero";
-              stateVersion = "24.05";
-            };
-          }
-        ]
-        ++ common;
-        pkgs = mkPkgs "aarch64-linux";
-      };
-
-      amneesh = inputs.home-manager.lib.homeManagerConfiguration {
-        inherit extraSpecialArgs;
-        modules = [
-          ./amneesh
-        ]
-        ++ common;
-        pkgs = mkPkgs "x86_64-linux";
-      };
+  flake.homeConfigurations = {
+    natto-laptop = inputs.home-manager.lib.homeManagerConfiguration {
+      inherit extraSpecialArgs;
+      modules = [
+        ./natto
+        ./common/fonts
+        { isLaptop = true; }
+      ]
+      ++ common;
+      pkgs = mkPkgs "x86_64-linux";
     };
+
+    natto = inputs.home-manager.lib.homeManagerConfiguration {
+      inherit extraSpecialArgs;
+      modules = [
+        ./natto
+        ./common/fonts
+      ]
+      ++ common;
+      pkgs = mkPkgs "x86_64-linux";
+    };
+
+    spark = inputs.home-manager.lib.homeManagerConfiguration {
+      inherit extraSpecialArgs;
+      modules = [
+        {
+          home = {
+            homeDirectory = "/home/spark";
+            username = "spark";
+            stateVersion = "23.05";
+          };
+        }
+      ]
+      ++ common;
+      pkgs = mkPkgs "aarch64-linux";
+    };
+
+    bat = inputs.home-manager.lib.homeManagerConfiguration {
+      inherit extraSpecialArgs;
+      modules = [
+        {
+          home = {
+            homeDirectory = "/home/bat";
+            username = "bat";
+            stateVersion = "23.05";
+          };
+        }
+      ]
+      ++ common;
+      pkgs = mkPkgs "x86_64-linux";
+    };
+
+    spin = inputs.home-manager.lib.homeManagerConfiguration {
+      inherit extraSpecialArgs;
+      modules = [
+        {
+          home = {
+            homeDirectory = "/home/spin";
+            username = "spin";
+            stateVersion = "23.05";
+          };
+        }
+      ]
+      ++ common;
+      pkgs = mkPkgs "x86_64-linux";
+    };
+
+    kero = inputs.home-manager.lib.homeManagerConfiguration {
+      inherit extraSpecialArgs;
+      modules = [
+        {
+          home = {
+            homeDirectory = "/home/kero";
+            username = "kero";
+            stateVersion = "24.05";
+          };
+        }
+      ]
+      ++ common;
+      pkgs = mkPkgs "aarch64-linux";
+    };
+
+    amneesh = inputs.home-manager.lib.homeManagerConfiguration {
+      inherit extraSpecialArgs;
+      modules = [
+        ./amneesh
+      ]
+      ++ common;
+      pkgs = mkPkgs "x86_64-linux";
+    };
+  };
 }
