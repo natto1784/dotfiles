@@ -10,6 +10,7 @@
     ./hardware.nix
     ./boot.nix
     ./services.nix
+    ./mailserver.nix
   ];
 
   time.timeZone = "Asia/Kolkata";

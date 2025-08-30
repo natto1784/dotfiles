@@ -15,6 +15,7 @@
     };
     domain = {
       natto = "weirdnatto.in";
+      amneesh = "amneesh.com";
     };
   };
 

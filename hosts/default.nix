@@ -77,6 +77,7 @@ in
       system = "aarch64-linux";
       modules = [
         ./suwako
+        inputs.mailserver.nixosModules.mailserver
       ] ++ commonModules;
     };
   };
