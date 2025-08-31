@@ -19,6 +19,7 @@
       ];
       kernelModules = [ ];
     };
+
     kernelParams = [ "i915.force_probe=56a1" ];
 
     #   kernelModules = [ "kvm-intel" "i2c-dev" "ddcci_backlight" ];

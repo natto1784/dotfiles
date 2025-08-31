@@ -6,19 +6,19 @@ let
     {
       _module.args = globalArgs;
     }
-    ./programs/neovim
-    ./programs/nix
-    ./programs/zsh
-    ./programs/gnupg
-    ./programs/git
-    ./programs/doas
-    ./security
+    ./common/programs/neovim
+    ./common/programs/nix
+    ./common/programs/zsh
+    ./common/programs/gnupg
+    ./common/programs/git
+    ./common/programs/doas
+    ./common/security
   ];
   desktopModules = [
-    ./programs/adb
-    ./programs/dconf
-    ./services/xserver
-    ./services/pipewire
+    ./common/programs/adb
+    ./common/programs/dconf
+    ./common/services/xserver
+    ./common/services/pipewire
   ];
 in
 {
@@ -26,23 +26,21 @@ in
     # Desktop
     okina = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      modules =
-        [
-          ./okina
-        ]
-        ++ desktopModules
-        ++ commonModules;
+      modules = [
+        ./okina
+      ]
+      ++ desktopModules
+      ++ commonModules;
     };
 
     #Home laptop
     satori = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      modules =
-        [
-          ./satori
-        ]
-        ++ desktopModules
-        ++ commonModules;
+      modules = [
+        ./satori
+      ]
+      ++ desktopModules
+      ++ commonModules;
     };
 
     #Home server (RPi4)
@@ -50,7 +48,8 @@ in
       system = "aarch64-linux";
       modules = [
         ./marisa
-      ] ++ commonModules;
+      ]
+      ++ commonModules;
     };
 
     #Oracle Cloud VM
@@ -58,9 +57,10 @@ in
       system = "x86_64-linux";
       modules = [
         ./remilia
-        ./x86builder.nix
+        ./common/x86builder.nix
         inputs.mailserver.nixosModules.mailserver
-      ] ++ commonModules;
+      ]
+      ++ commonModules;
     };
 
     #Oracle Cloud VM
@@ -68,8 +68,9 @@ in
       system = "x86_64-linux";
       modules = [
         ./hina
-        ./x86builder.nix
-      ] ++ commonModules;
+        ./common/x86builder.nix
+      ]
+      ++ commonModules;
     };
 
     #Oracle Cloud VM
@@ -78,7 +79,8 @@ in
       modules = [
         ./suwako
         inputs.mailserver.nixosModules.mailserver
-      ] ++ commonModules;
+      ]
+      ++ commonModules;
     };
   };
 }
