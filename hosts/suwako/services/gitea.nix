@@ -25,15 +25,14 @@
             HTTP_PORT = 5001;
             ROOT_URL = "https://git.${domain}";
             SSH_DOMAIN = "git.${domain}";
-            SSH_PORT = 22001;
+            SSH_PORT = 22;
             SSH_LISTEN_PORT = SSH_PORT;
           };
           mailer = rec {
             ENABLED = true;
             FROM = "masti@${domain}";
-            TYPE = "smtp";
-            HOST = "mail.${domain}";
-            IS_TLS_ENABLED = true;
+            SMTP_ADDR = "mail.${domain}";
+            PROTOCOL = "smtps";
             USER = FROM;
             REGISTER_MAIL_CONFIRM = true;
           };

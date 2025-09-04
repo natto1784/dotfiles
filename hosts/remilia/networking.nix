@@ -25,7 +25,8 @@
             22001
             22002
             4444
-          ] ++ (map (x: x.sourcePort) config.networking.nat.forwardPorts);
+          ]
+          ++ (map (x: x.sourcePort) config.networking.nat.forwardPorts);
           allowedUDPPorts = [ 17840 ];
         };
       };

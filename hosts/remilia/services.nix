@@ -45,12 +45,11 @@ in
               forceSSL = ssl;
               locations."/" = {
                 proxyPass = toString addr;
-                extraConfig =
-                  ''
-                    expires $expires;
-                    proxy_set_header Host $host;
-                  ''
-                  + conf;
+                extraConfig = ''
+                  expires $expires;
+                  proxy_set_header Host $host;
+                ''
+                + conf;
               };
             };
         in
@@ -65,10 +64,11 @@ in
             };
             serverAliases = [ "www.${domain}" ];
           };
-          # "vault.${domain}" = genericHttpRProxy { addr = "https://${marisa}:8800"; };
-          # "consul.${domain}" = genericHttpRProxy { addr = "http://${marisa}:8500"; };
-          "f.${domain}" = genericHttpRProxy { addr = "http://${marisa}:8000"; };
+
+          # MPD server
           "radio.${domain}" = genericHttpRProxy { addr = "http://${satori}:8001"; };
+
+          # Some random music server I once had
           /*
             "radio.${domain}" = {
             addSSL = true;
@@ -84,10 +84,24 @@ in
             };
           */
 
-          "git.${domain}" = genericHttpRProxy {
-            addr = "http://${marisa}:5001";
-            conf = "client_max_body_size 64M;";
-          };
+          # Gitea
+          /*
+            "git.${domain}" = genericHttpRProxy {
+              addr = "http://${marisa}:5001";
+              conf = "client_max_body_size 64M;";
+            };
+          */
+
+          # Personal filehost
+          # "f.${domain}" = genericHttpRProxy { addr = "http://${marisa}:8000"; };
+
+          # Hashicorp Vault
+          # "vault.${domain}" = genericHttpRProxy { addr = "https://${marisa}:8800"; };
+
+          # Hashicorp Consul
+          # "consul.${domain}" = genericHttpRProxy { addr = "http://${marisa}:8500"; };
+
+          # Hashicorp Nomad
           /*
             "nomad.${domain}" = genericHttpRProxy {
             addr = "http://${marisa}:4646";

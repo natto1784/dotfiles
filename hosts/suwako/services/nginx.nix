@@ -52,6 +52,12 @@ in
           '';
         };
 
+        # Gitea
+        "git.${domain}" = genericHttpRProxy {
+          addr = "http://${suwako}:5001";
+          conf = "client_max_body_size 64M;";
+        };
+
         # Personal filehost
         "f.${domain}" = genericHttpRProxy { addr = "http://${suwako}:8000"; };
       };
