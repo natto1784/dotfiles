@@ -92,6 +92,10 @@
             publicKey = "BRdWQYPyfZeEWGtghhoYZf90nOsU/kXB3vOFJ6A17Ao=";
             allowedIPs = [ ips.okina ];
           }
+          {
+            publicKey = "JriOM0LQr/YbdeIH++qY4O32vlcc8L2AC1MDoFGCpmA=";
+            allowedIPs = [ ips.suwako ];
+          }
         ];
       };
     };
