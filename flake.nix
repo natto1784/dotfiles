@@ -19,7 +19,7 @@
       perSystem =
         { system, pkgs, ... }:
         rec {
-          formatter = pkgs.nixfmt-rfc-style;
+          formatter = pkgs.nixfmt-tree;
           devShells.default =
             with pkgs;
             mkShell {

@@ -9,7 +9,7 @@
     ./networking.nix
     ./hardware.nix
     ./boot.nix
-    ./services.nix
+    ./services
     ./mailserver.nix
   ];
 
