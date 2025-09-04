@@ -13,7 +13,6 @@
     ratbagd.enable = true;
     btrfs.autoScrub.enable = true;
     gvfs.enable = true;
-    logind.extraConfig = "RuntimeDirectorySize=30%";
     printing = {
       enable = true;
       drivers = [ pkgs.hplip ];
