@@ -3,7 +3,6 @@
 
   imports = [
     # ./hashicorp.nix
-    ./filehost.nix
     ./gitea.nix
   ];
 

@@ -3,6 +3,7 @@
   imports = [
     ./nginx.nix
     ./pufferpanel.nix
+    ./filehost.nix
   ];
 
   virtualisation.docker = {
