@@ -16,6 +16,6 @@ in
         lib.filterAttrs (_: v: v.enableACME) nginx.virtualHosts
       );
     };
-    pki.certificateFiles = [ ../../cert.pem ];
+    pki.certificateFiles = [ ../../../cert.pem ];
   };
 }
