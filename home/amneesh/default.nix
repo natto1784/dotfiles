@@ -17,6 +17,7 @@
     ./pkgs.nix
     ./nixgl.nix
     # wayland
+    ./hyprlock.nix
     ./wayvnc.nix
 
     # From personal
@@ -28,6 +29,9 @@
     ../natto/cursor.nix
     # wayland
     ../natto/wayland.nix
+    ../natto/hypridle.nix
+    ../natto/hyprlock.nix
+    ../natto/hyprpaper.nix
     ../natto/hyprland.nix
     ../natto/tofi.nix
     ../natto/foot.nix
