@@ -67,7 +67,6 @@ in
   home = {
     packages = with pkgs; [
       spotify
-      playerctl
       mpc_cli
       (ncmpcpp.override {
         visualizerSupport = true;
@@ -89,4 +88,6 @@ in
     path = "${home}/.config/mpdasrc";
     symlink = false;
   };
+
+  services.playerctld.enable = true;
 }

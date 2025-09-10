@@ -28,6 +28,9 @@
 
     # when wayland
     ./wayland.nix
+    ./hyprpaper.nix
+    ./hyprlock.nix
+    ./hypridle.nix
     ./hyprland.nix
     ./foot.nix
     ./tofi.nix

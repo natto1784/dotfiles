@@ -26,24 +26,23 @@
     };
     Service =
       let
-        deps =
-          [
-            config.programs.eww.package
-          ]
-          ++ lib.optional config.wayland.windowManager.hyprland.enable config.wayland.windowManager.hyprland.package
-          ++ (with pkgs; [
-            coreutils
-            bash
-            jq
-            less
-            gawk
-            socat
-            playerctl
-            networkmanager
-            iwgtk
-            wireplumber
-          ])
-          ++ lib.optional config.laptop pkgs.light;
+        deps = [
+          config.programs.eww.package
+        ]
+        ++ lib.optional config.wayland.windowManager.hyprland.enable config.wayland.windowManager.hyprland.package
+        ++ (with pkgs; [
+          coreutils
+          bash
+          jq
+          less
+          gawk
+          socat
+          playerctl
+          networkmanager
+          iwgtk
+          wireplumber
+        ])
+        ++ lib.optional config.laptop pkgs.light;
       in
       {
         Type = "simple";
