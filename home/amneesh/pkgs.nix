@@ -11,7 +11,6 @@
   };
 
   home.packages = with pkgs; [
-    clang-tools
     cmake
     corkscrew
     dtc
@@ -23,5 +22,6 @@
     ninja
     thunderbird
     wget
+    xfce.thunar
   ];
 }
