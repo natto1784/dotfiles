@@ -52,7 +52,7 @@
           text = "Layout: $LAYOUT";
           font_size = 25;
           color = "0x${text}";
-          position = "2%, -2%";
+          position = "30, -30";
           valign = "top";
           halign = "left";
         }
@@ -61,7 +61,7 @@
           text = "$TIME";
           font_size = 90;
           color = "0x${text}";
-          position = "-2%, 0";
+          position = "-30, 0";
           valign = "top";
           halign = "right";
         }
@@ -70,7 +70,7 @@
           text = "cmd[update:3600000] date +\"%A, %d %B %Y\"";
           font_size = 25;
           color = "0x${text}";
-          position = "-2%, -10%";
+          position = "-30, -150";
           valign = "top";
           halign = "right";
         }
