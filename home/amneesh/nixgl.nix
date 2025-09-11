@@ -21,5 +21,9 @@ in
     ];
   };
 
+  # hyprland
   wayland.windowManager.hyprland.package = lib.mkForce (wrap hyprland);
+
+  # hypridle
+  services.hypridle.package = lib.mkForce (wrap pkgs.hypridle);
 }
