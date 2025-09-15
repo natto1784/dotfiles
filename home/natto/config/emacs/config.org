@@ -1,5 +1,5 @@
 #+TITLE: My Emacs Configuration
-#+AUTHOR: Amneesh Singh
+#+AUTHOR: natto1784
 #+PROPERTY: header-args :emacs-lisp :tangle yes
 
 * Settings
@@ -87,6 +87,13 @@ Enable vertico
   :bind (:map vertico-map
               ("C-j" . vertico-next)
               ("C-k" . vertico-previous)))
+#+end_src
+
+Save history over restarts
+#+begin_src emacs-lisp
+(use-package savehist
+  :init
+  (savehist-mode))
 #+end_src
 
 Marginalia for description
@@ -183,7 +190,9 @@ To undo and redo easily like vi
 #+begin_src emacs-lisp
 (use-package lsp-mode
   :defer t
-  :commands lsp)
+  :commands lsp
+  :init
+  (setq lsp-enable-on-type-formatting nil))
 #+end_src
 
 *** Configure lsp-ui
@@ -276,9 +285,24 @@ For autocomplete
   :mode "\\.go\\'")
 #+end_src
 
-** Magit
+** Git
+magit for git operations
 #+begin_src emacs-lisp
 (use-package magit :defer t)
+#+end_src
+
+blamer for git blame
+#+begin_src emacs-lisp
+(use-package blamer
+  :defer 20
+  :custom
+  (blamer-idle-time 0.3)
+  (blamer-min-offset 70)
+  :config
+  (global-blamer-mode 1)
+  :init
+  (setq blamer-show-avatar-p nil
+        blamer-max-commit-message-length 72))
 #+end_src
 
 ** VTerm
