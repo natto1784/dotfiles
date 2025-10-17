@@ -20,6 +20,7 @@
 (fringe-mode 0)
 (global-display-line-numbers-mode 1)
 (xterm-mouse-mode 1)
+(electric-pair-mode)
 (setq ring-bell-function 'ignore
       gc-cons-threshold most-positive-fixnum
       initial-major-mode 'fundamental-mode)
@@ -265,6 +266,8 @@ For autocomplete
 
 ** Languages
 #+begin_src emacs-lisp
+(use-package dts-mode
+  :mode ("\\.dts\\'" "\\.dtsi\\'" "\\.overlay\\'"))
 (use-package lsp-haskell
   :mode "\\.hs\\'")
 (use-package lsp-latex
@@ -371,8 +374,6 @@ Do not use centaur tabs for now
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
-
-(use-package flex-autopair)
 #+end_src
 
 ** Org
@@ -483,14 +484,32 @@ Compilation shortcuts for standalone files
            ("rs" (concat "rustc " full " -o " file " && " file " && rm " file)))))
 #+end_src
 
-* Custom Functions
+* LLMs
+** gptel
 #+begin_src emacs-lisp
-(defun detach-process ()
-  "Run processes but detached from the parent"
-  (interactive)
-  (let ((command (read-string "Enter command:")))
-    (call-process-shell-command (concat command " &") nil 0)))
+(use-package gptel
+  :config
+  (setq  gptel-model 'claude-sonnet-4-20250514
+         gptel-backend (gptel-make-anthropic "Claude"
+                        :stream t
+                        :protocol "https"
+                        :key (getenv "ANTHROPIC_API_KEY")
+                        :host (getenv "ANTHROPIC_API_BASE_DOMAIN")))
+  (setq gptel-default-mode 'org-mode)
+  :bind (("C-c g" . gptel)))
+
 #+end_src
+
+** Aidermacs
+#+begin_src emacs-lisp
+(use-package aidermacs
+  :bind (("C-c a" . aidermacs-transient-menu))
+  :custom
+  ; See the Configuration section below
+  (aidermacs-default-chat-mode 'architect)
+  (aidermacs-default-model "sonnet"))
+#+end_src
+
 
 * Keybinds
 ** General
