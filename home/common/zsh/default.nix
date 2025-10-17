@@ -17,7 +17,7 @@
       autosuggestions.color = "fg=yellow,bold";
       utility.safeOps = false;
       extraConfig = lib.mkBefore ''
-        export GREP_COLORS="ms=01;31"
+        export GREP_COLORS="mt=01;31"
       '';
     };
     initContent = lib.mkAfter ''
