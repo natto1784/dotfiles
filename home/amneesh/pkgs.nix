@@ -23,5 +23,7 @@
     thunderbird
     wget
     xfce.thunar
+    libreoffice
+    git-repo
   ];
 }
