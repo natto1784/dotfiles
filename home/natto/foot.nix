@@ -8,7 +8,7 @@
           font = "Fira Mono:style=Regular:pixelsize=18";
           font-bold = "Fira Mono:style=Bold:pixelsize=18";
         };
-        scrollback.lines = 4000;
+        scrollback.lines = 10000;
         colors = with conf.colors.default; {
           inherit foreground background;
           regular0 = surface1;

@@ -18,6 +18,7 @@
     ./nixgl.nix
     # wayland
     ./hyprlock.nix
+    ./screen.nix
     ./wayvnc.nix
 
     # From personal
