@@ -14,7 +14,7 @@ let
   ];
 
   mkPkgs =
-    system:
+    system: overlays:
     import inputs.nixpkgs {
       inherit system;
       config = {
@@ -22,7 +22,7 @@ let
         allowBroken = true;
         allowInsecure = true;
       };
-      overlays = [ self.overlays.default ];
+      overlays = overlays ++ [ self.overlays.default ];
     };
 
   extraSpecialArgs = globalArgs;
@@ -37,7 +37,7 @@ in
         { isLaptop = true; }
       ]
       ++ common;
-      pkgs = mkPkgs "x86_64-linux";
+      pkgs = mkPkgs "x86_64-linux" [ ];
     };
 
     natto = inputs.home-manager.lib.homeManagerConfiguration {
@@ -47,7 +47,7 @@ in
         ./common/fonts
       ]
       ++ common;
-      pkgs = mkPkgs "x86_64-linux";
+      pkgs = mkPkgs "x86_64-linux" [ ];
     };
 
     spark = inputs.home-manager.lib.homeManagerConfiguration {
@@ -62,7 +62,7 @@ in
         }
       ]
       ++ common;
-      pkgs = mkPkgs "aarch64-linux";
+      pkgs = mkPkgs "aarch64-linux" [ ];
     };
 
     bat = inputs.home-manager.lib.homeManagerConfiguration {
@@ -77,7 +77,7 @@ in
         }
       ]
       ++ common;
-      pkgs = mkPkgs "x86_64-linux";
+      pkgs = mkPkgs "x86_64-linux" [ ];
     };
 
     spin = inputs.home-manager.lib.homeManagerConfiguration {
@@ -92,7 +92,7 @@ in
         }
       ]
       ++ common;
-      pkgs = mkPkgs "x86_64-linux";
+      pkgs = mkPkgs "x86_64-linux" [ ];
     };
 
     kero = inputs.home-manager.lib.homeManagerConfiguration {
@@ -107,7 +107,7 @@ in
         }
       ]
       ++ common;
-      pkgs = mkPkgs "aarch64-linux";
+      pkgs = mkPkgs "aarch64-linux" [ ];
     };
 
     amneesh = inputs.home-manager.lib.homeManagerConfiguration {
@@ -116,7 +116,7 @@ in
         ./amneesh
       ]
       ++ common;
-      pkgs = mkPkgs "x86_64-linux";
+      pkgs = mkPkgs "x86_64-linux" [ (import ./overlays/standalone.nix) ];
     };
   };
 }

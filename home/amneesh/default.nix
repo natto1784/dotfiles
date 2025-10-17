@@ -16,8 +16,6 @@
   imports = [
     ./pkgs.nix
     ./nixgl.nix
-    # wayland
-    ./hyprlock.nix
     ./screen.nix
     ./wayvnc.nix
 
@@ -28,7 +26,6 @@
     ../natto/dunst.nix
     ../natto/gtk.nix
     ../natto/cursor.nix
-    # wayland
     ../natto/wayland.nix
     ../natto/hypridle.nix
     ../natto/hyprlock.nix
