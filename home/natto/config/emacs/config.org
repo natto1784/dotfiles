@@ -58,8 +58,7 @@
 #+begin_src emacs-lisp
 (use-package benchmark-init
   :config
-  ;; To disable collection of benchmark data after init is done.
-  :init (benchmark-init/deactivate))
+  (add-hook 'after-init-hook 'benchmark-init/deactivate) )
 #+end_src
 
 ** Visual packages
@@ -139,6 +138,7 @@ Consult
 (use-package evil
   :init
   (setq-default evil-shift-width 2)
+  (setq evil-want-keybinding nil)
   :config
   (evil-set-initial-state 'vterm-mode 'insert)
   (evil-set-undo-system 'undo-tree)
@@ -235,7 +235,6 @@ For autocomplete
   (add-to-list 'company-backends 'company-dabbrev)
   (setq company-backends (append '(company-files) (remove 'company-files company-backends)))
   :hook (after-init . global-company-mode))
-
 #+end_src
 
 *** Configure company-quickhelp
@@ -358,20 +357,33 @@ Do not use centaur tabs for now
 #+end_src
 
 ** Misc packages
-#+begin_src emacs-lisp 
+*** Icons
+For installing icons
+#+begin_src emacs-lisp
 (use-package all-the-icons
+  :defer t
   :if (display-graphic-p))
+#+end_src
 
-(use-package elcord :defer t)
-
+*** Projectile
+For tracking project root
+#+begin_src emacs-lisp
 (use-package projectile
   :defer t
   :config
   (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
   (projectile-mode +1))
+#+end_src
 
+*** Rainbow
+For highlighting colors
+#+begin_src emacs-lisp
 (use-package rainbow-mode :defer t)
+#+end_src
 
+*** Rainbow delimiters
+To make distinguishing parens easier
+#+begin_src emacs-lisp
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
@@ -488,6 +500,7 @@ Compilation shortcuts for standalone files
 ** gptel
 #+begin_src emacs-lisp
 (use-package gptel
+  :defer t
   :config
   (setq  gptel-model 'claude-sonnet-4-20250514
          gptel-backend (gptel-make-anthropic "Claude"
@@ -503,6 +516,7 @@ Compilation shortcuts for standalone files
 ** Aidermacs
 #+begin_src emacs-lisp
 (use-package aidermacs
+  :defer t
   :bind (("C-c a" . aidermacs-transient-menu))
   :custom
   ; See the Configuration section below
