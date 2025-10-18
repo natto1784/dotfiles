@@ -388,6 +388,33 @@ To make distinguishing parens easier
   :hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
 
+*** Olivetti
+When you want write prose or something similar
+#+begin_src emacs-lisp
+(use-package olivetti
+  :defer t
+  :diminish olivetti-mode
+  :custom
+  (olivetti-body-width 100)
+  (olivetti-minimum-body-width 50)
+  (olivetti-style 'fancy)
+  (olivetti-recall-visual-line-mode-entry-state t)
+  :config
+  (defvar-local my/olivetti--saved-line-numbers nil
+    "Stores the previous value of `display-line-numbers` before enabling Olivetti.")
+
+  (defun my/olivetti-toggle-line-numbers ()
+    "Hide line numbers when entering Olivetti, restore when exiting."
+    (if olivetti-mode
+        (progn
+          (setq my/olivetti--saved-line-numbers display-line-numbers)
+          (setq display-line-numbers nil))
+      (setq display-line-numbers my/olivetti--saved-line-numbers)))
+
+  (add-hook 'olivetti-mode-hook #'my/olivetti-toggle-line-numbers))
+#+end_src
+
+
 ** Org
 ** Add org-mode
 #+begin_src emacs-lisp
@@ -435,21 +462,30 @@ To make distinguishing parens easier
    (latex . t)))
 #+end_src
 
-* Mode specific hooks
-#+begin_src emacs-lisp
-(add-hook 'c-mode-hook 'lsp)
-(add-hook 'c++-mode-hook 'lsp)
-(add-hook 'haskell-mode-hook #'lsp)
-(add-hook 'haskell-literate-mode-hook #'lsp)
-#+end_src
-
 * Random eye candy stuff
-
-* Custom mode line
-switched to doom modeline after using my own modeline for a while
+* Mode line
+** Doom modeline
+Switched to doom modeline after using my own modeline for a while
 #+begin_src emacs-lisp
 (use-package doom-modeline
   :init (doom-modeline-mode 1))
+#+end_src
+Also show columns
+#+begin_src emacs-lisp
+(column-number-mode 1)
+#+end_src
+
+** Nyan Mode
+#+begin_src emacs-lisp
+(use-package nyan-mode
+  :ensure t
+  :init
+  (when (display-graphic-p)
+    (nyan-mode 1))
+  :custom
+  (nyan-animate-nyancat t)
+  :config
+  (nyan-start-animation))
 #+end_src
 
 * Pop-up terminal
