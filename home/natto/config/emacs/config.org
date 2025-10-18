@@ -514,24 +514,6 @@ Stolen from [[https://www.reddit.com/r/emacs/comments/ft84xy/run_shell_command_i
     (vterm-send-return)))
 #+end_src
 
-Compilation shortcuts for standalone files
-#+begin_src emacs-lisp
-(defun candrun ()
-  (let ((full buffer-file-name)
-        (file (file-name-sans-extension buffer-file-name)))
-    (pcase (file-name-extension full)
-           ("c" (concat "gcc " full " -lm -pthread -o " file " && " file " && rm " file))
-           ("java" (concat "java " full))
-           ("py" (concat "python " full))
-           ("cpp" (concat "g++ " full " -o " file " && " file " && rm " file))
-           ("cc" (concat "g++ " full " -o " file " && " file " && rm " file))
-           ("hs" (concat "runhaskell " full))
-           ("sh" (concat "sh " full))
-           ("js" (concat "node " full))
-           ("ts" (concat "tsc " full " && node " file ".js && rm " file ".js" ))
-           ("rs" (concat "rustc " full " -o " file " && " file " && rm " file)))))
-#+end_src
-
 * LLMs
 ** gptel
 #+begin_src emacs-lisp
@@ -562,8 +544,7 @@ Compilation shortcuts for standalone files
 
 
 * Keybinds
-** General
-*** Colemak translations
+** Colemak translations
 not using this anymore
 #+begin_src emacs-lisp :tangle no
 (use-package evil-colemak-basics
@@ -573,6 +554,7 @@ not using this anymore
   (global-evil-colemak-basics-mode))
 #+end_src
 
+** General
 *** Misc binds
 #+begin_src emacs-lisp
 (use-package general
@@ -621,8 +603,7 @@ not using this anymore
       "<f4>"  (lambda () (interactive) (vterm t))
       "C-S-t" 'vterm-toggle-cd
       "C-t" 'vterm-toggle
-      "<f1>" 'vterm-toggle
-      "<f5>" (lambda () (interactive) (run-in-vterm (candrun))))
+      "<f1>" 'vterm-toggle)
     (general-define-key
       :keymaps 'vterm-mode-map
       "<f3>" 'vterm-toggle-forward
