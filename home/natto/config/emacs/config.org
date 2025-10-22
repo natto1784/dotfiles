@@ -34,7 +34,9 @@
       scroll-step 1
       display-line-numbers-type 'relative
       confirm-kill-processes nil
-      inhibit-startup-screen t)
+      inhibit-startup-screen t
+      isearch-lazy-count t
+      lazy-count-prefix-format "[%s/%s] ")
 (setq-default tab-width 2
               indent-tabs-mode nil)
 #+end_src
@@ -76,6 +78,15 @@
   (load-theme 'catppuccin t)
   :custom
   (dark-theme t))
+#+end_src
+
+*** Indent guides
+#+begin_src emacs-lisp
+(use-package highlight-indent-guides
+  :config
+  (setq highlight-indent-guides-method 'column)
+  :hook
+  (prog-mode . highlight-indent-guides-mode))
 #+end_src
 
 ** Minibuffer
@@ -544,7 +555,8 @@ Stolen from [[https://www.reddit.com/r/emacs/comments/ft84xy/run_shell_command_i
 
 
 * Keybinds
-** Colemak translations
+** General
+*** Colemak translations
 not using this anymore
 #+begin_src emacs-lisp :tangle no
 (use-package evil-colemak-basics
@@ -554,7 +566,6 @@ not using this anymore
   (global-evil-colemak-basics-mode))
 #+end_src
 
-** General
 *** Misc binds
 #+begin_src emacs-lisp
 (use-package general

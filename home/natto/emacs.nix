@@ -24,11 +24,21 @@ in
       alwaysEnsure = true;
       alwaysTangle = true;
       defaultInitFile = true;
-      extraEmacsPackages =
-        epkgs: with epkgs; [
+      extraEmacsPackages = epkgs: with epkgs; [
           use-package
           (tree-sitter-langs.withPlugins (_: tree-sitter-langs.plugins))
         ];
+
+      override = final: prev: {
+        evil = prev.melpaPackages.evil.overrideAttrs(_: {
+          src = pkgs.fetchFromGitHub {
+            owner = "natto1784";
+            repo = "evil";
+            rev = "isearch-lazy-count";
+            sha256 = "sha256-YqXoqPqOWRvszzktb0MYHMe590mzTQxCMgBloy3MHkQ=";
+          };
+        });
+      };
     };
   };
   services.emacs = {
