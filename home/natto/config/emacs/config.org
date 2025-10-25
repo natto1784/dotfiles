@@ -203,8 +203,8 @@ To undo and redo easily like vi
 (use-package lsp-mode
   :defer t
   :commands lsp
-  :init
-  (setq lsp-enable-on-type-formatting nil))
+  :init (setq lsp-enable-on-type-formatting nil)
+  :hook (prog-mode . lsp-deferred))
 #+end_src
 
 *** Configure lsp-ui
