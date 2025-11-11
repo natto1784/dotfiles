@@ -1,6 +1,7 @@
 { conf, ... }:
 let
   domain = conf.network.addresses.domain.natto;
+  chutiya = conf.network.addresses.domain.chutiya;
 in
 {
   services.nginx = {
@@ -35,6 +36,17 @@ in
       in
       with conf.network.addresses.wireguard.ips;
       {
+
+        "${chutiya}" = {
+          addSSL = true;
+          enableACME = true;
+          locations."/" = {
+            root = "/var/lib/chutiya";
+            index = "index.html";
+          };
+          serverAliases = [ "www.${chutiya}" ];
+        };
+
         "moj.${domain}" = genericHttpRProxy { addr = "https://${suwako}:25565"; };
 
         "puffer.${domain}" = genericHttpRProxy {
@@ -59,7 +71,15 @@ in
         };
 
         # Personal filehost
-        "f.${domain}" = genericHttpRProxy { addr = "http://${suwako}:8000"; };
+        "f.${chutiya}" = genericHttpRProxy {
+          addr = "http://${suwako}:8001";
+          conf = "client_max_body_size 512M;";
+        };
+
+        "f.${domain}" = genericHttpRProxy {
+          addr = "http://${suwako}:8000";
+          conf = "client_max_body_size 512M;";
+        };
       };
   };
 }

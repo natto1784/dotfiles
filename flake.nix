@@ -52,7 +52,7 @@
     };
 
     filehost = {
-      url = "github:natto1784/simpler-filehost";
+      url = "github:natto1784/yamaf";
     };
 
     nix-gaming.url = "github:fufexan/nix-gaming";

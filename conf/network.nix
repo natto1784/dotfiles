@@ -16,6 +16,7 @@
     domain = {
       natto = "weirdnatto.in";
       amneesh = "amneesh.com";
+      chutiya = "chutiya.online";
     };
   };
 
