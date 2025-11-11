@@ -1,7 +1,6 @@
 {
-  config,
-  pkgs,
   conf,
+  lib,
   ...
 }:
 {
@@ -35,6 +34,18 @@
             PROTOCOL = "smtps";
             USER = FROM;
             REGISTER_MAIL_CONFIRM = true;
+          };
+          service = {
+            ENABLE_CAPTCHA = true;
+            EMAIL_DOMAIN_ALLOWLIST = lib.strings.concatStringsSep "," [
+              "gmail.com"
+              "outlook.com"
+              "proton.me"
+              "protonmail.com"
+              conf.network.addresses.domain.natto
+              conf.network.addresses.domain.amneesh
+              conf.network.addresses.domain.chutiya
+            ];
           };
           oauth2_client.REGISTER_MAIL_CONFIRM = true;
           actions.ENABLED = false;
