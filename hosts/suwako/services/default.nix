@@ -4,7 +4,7 @@
     ./nginx.nix
     ./pufferpanel.nix
     ./filehost.nix
-    ./gitea.nix
+    ./forgejo.nix
   ];
 
   virtualisation.docker = {
@@ -22,11 +22,14 @@
 
     postgresql = {
       enable = true;
+
       authentication = ''
-        local gitea all ident map=gitea-map
+        # forgejo
+        local forgejo all ident map=forgejo-map
       '';
+
       identMap = ''
-        gitea-map gitea gitea
+        forgejo-map forgejo forgejo
       '';
     };
   };

@@ -1,25 +1,30 @@
 {
   conf,
-  lib,
+  pkgs,
   ...
 }:
 {
   services = {
-    gitea = rec {
-      appName = "Natto Tea";
+    forgejo = {
       enable = true;
+
+      package = pkgs.forgejo;
       database = {
-        name = "gitea";
-        user = "gitea";
-        passwordFile = "/var/secrets/giteadb.pass";
+        name = "forgejo";
+        user = "forgejo";
+        passwordFile = "/var/secrets/forgejodb.pass";
         type = "postgres";
       };
-      mailerPasswordFile = "/var/secrets/giteamailer.pass";
+      secrets.mailer.PASSWD = "/var/secrets/forgejomailer.pass";
       settings =
         let
           domain = conf.network.addresses.domain.natto;
         in
         {
+          DEFAULT.APP_NAME = "Natto Forge";
+          oauth2_client.REGISTER_MAIL_CONFIRM = true;
+          actions.ENABLED = false;
+
           server = rec {
             HTTP_PORT = 5001;
             ROOT_URL = "https://git.${domain}";
@@ -27,6 +32,7 @@
             SSH_PORT = 22;
             SSH_LISTEN_PORT = SSH_PORT;
           };
+
           mailer = rec {
             ENABLED = true;
             FROM = "masti@${domain}";
@@ -35,20 +41,14 @@
             USER = FROM;
             REGISTER_MAIL_CONFIRM = true;
           };
+
           service = {
             ENABLE_CAPTCHA = true;
-            EMAIL_DOMAIN_ALLOWLIST = lib.strings.concatStringsSep "," [
-              "gmail.com"
-              "outlook.com"
-              "proton.me"
-              "protonmail.com"
-              conf.network.addresses.domain.natto
-              conf.network.addresses.domain.amneesh
-              conf.network.addresses.domain.chutiya
-            ];
+            DISABLE_REGISTRATION = false;
+            USER_REGISTRATION_MODE = "manual";
+            REGISTER_EMAIL_CONFIRM = true;
+            REQUIRE_SIGNIN_VIEW = "expensive";
           };
-          oauth2_client.REGISTER_MAIL_CONFIRM = true;
-          actions.ENABLED = false;
         };
     };
   };
